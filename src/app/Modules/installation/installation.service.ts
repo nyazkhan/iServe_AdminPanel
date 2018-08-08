@@ -31,10 +31,18 @@ export class InstallationService {
         const InstallationHistory_api = `/m/installation/${i}/history`
         return this.customHttp.get(InstallationHistory_api)
       }
-      getServiceEngAgainstInstallationId(i){
+      getServiceEngAgainstinstallationId(i){
         // let header = this.getAccessToken();
         const Installation_api = `/m/installation/${i}/service-engineer`
         return this.customHttp.get(Installation_api)
       }
-  
+
+
+
+      assingEngineer(fd,id){
+        // let header = this.getAccessToken();
+        const Installation_api = `/m/installation/${id}`
+        return this.customHttp.put(Installation_api, fd)
+   
+      }
 }
