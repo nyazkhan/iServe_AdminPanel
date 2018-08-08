@@ -25,15 +25,30 @@ export class SidebarComponent implements OnInit {
             name:'Incidents',
             icon:'build',
             route:'/incidents'
+          },
+          {
+            name:'installation',
+            icon:'dashboard',
+            route:'/installation'
           }
       ]
     }
-    if(localStorage.role == 'CEO'){
+    if(localStorage.getItem("currentUserName") == 'superadmin'){
       this.list = [
           {
             name:'Dashboard',
             icon:'dashboard',
-            route:'dashboard'
+            route:'/dashboard'
+          },
+          {
+            name:'Service Engineer',
+            icon:'build',
+            route:'/engineer'
+          },
+          {
+            name:'Brand Manager',
+            icon:'dashboard',
+            route:'/manager'
           }
       ]
     }
