@@ -1,0 +1,236 @@
+
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">style</i>
+                    </div>
+                    <p class="card-category">Purchased</p>
+                    <h3 class="card-title">10,708
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i> Last 24 Hours
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">attach_money</i>
+                    </div>
+                    <p class="card-category">Revenue</p>
+                    <h3 class="card-title">$34,245</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i> Last 24 Hours
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-danger card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">info_outline</i>
+                    </div>
+                    <p class="card-category">Incidents</p>
+                    <h3 class="card-title">895</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i> Last 24 Hours
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-info card-header-icon">
+                    <div class="card-icon">
+                          <i class="material-icons">offline_pin</i>
+                    </div>
+                    <p class="card-category">Incidents Fixed</p>
+                    <h3 class="card-title">751</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">date_range</i> Last 24 Hours
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Cards -->
+    <div class="row">
+          <ng-container  *ngIf="role=='superadmin'">
+
+                  <div class="col-md-6">
+                          <div class="card card-chart">
+                                  <div class="card-header card-header-success">
+                              <div id="ceo_customer_sufferers"></div>
+                                  </div>
+                              <div class="card-body">
+                                  <h4 class="card-title">Customer Suffering Report</h4>
+                                  <p class="card-category">
+                                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> 25% </span> increase in today's report.</p>
+                              </div>
+                              <div class="card-footer">
+                                  <div class="stats">
+                                      <i class="material-icons">refresh</i> updated 4 minutes ago
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+        <div class="col-md-6">
+            <div class="card card-chart">
+                <div class="card-header card-header-info">
+                    <div class="feedback-chart">
+                        <div class="rated-happy">
+                          <div class="smiley happy">
+                      <div class="eyes">
+                        <div class="eye"></div>
+                        <div class="eye"></div>
+                      </div>
+                      <div class="mouth"></div>
+                      <div class="card-title">
+                          <h3><b>55%</b></h3>
+                          <h3>Happy</h3>
+                        </div>
+                    </div>
+                      </div>
+                      <div  class="rated-sad">
+                        <div class="smiley normal">
+                      <div class="eyes">
+                        <div class="eye"></div>
+                        <div class="eye"></div>
+                      </div>
+                      <div class="mouth"></div>
+                      <div class="card-title">
+                          <h3><b>27%</b></h3>
+                          <h3>Satisfied</h3>
+                        </div>
+                    </div>
+                      </div>
+                      <div  class="rated-angry"> 
+                        <div class="smiley angry">
+                      <div class="eyes">
+                        <div class="eye"></div>
+                        <div class="eye"></div>
+                      </div>
+                      <div class="mouth"></div>
+                      <div class="card-title">
+                          <h3><b>18%</b></h3>
+                          <h3>Angry</h3>
+                        </div>
+                    </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Voice of Customer</h4>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">access_time</i> Weekly Report
+                    </div>
+                </div>
+            </div>
+        </div>
+          </ng-container>
+<ng-container *ngIf="role=='management'">
+      <div class="col-md-6 col-sm-12">
+              <div class="card card-chart">
+                  <div class="card-header card-header-danger">
+                          <div id="open_incidences"></div>
+                  </div>
+                  <div class="card-body">
+                          <h4 class="card-title">Open Incidents Current</h4>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+                  <div class="card card-chart">
+                      <div class="card-header card-header-warning">
+                              <div id="customer_suffering_report"></div>
+                      </div>
+                      <div class="card-body">
+                              <h4 class="card-title">Customer Suffering Report</h4>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                  <div class="card card-chart">
+                      <div class="card-header card-header-success">
+                              <div id="incident_weekly_report"></div>
+                      </div>
+                      <div class="card-body">
+                              <h4 class="card-title">Incident Weekly Report</h4>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                      <div class="card card-chart">
+                          <div class="card-header card-header-info">
+                                  <div id="regions_chart"></div>
+                          </div>
+                          <div class="card-body">
+                                  <h4 class="card-title">Regional Incitents</h4>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                          <div class="card card-chart">
+                              <div class="card-header card-header-primary">
+                                      <div id="incedents_hour"></div>
+                              </div>
+                              <div class="card-body">
+                                      <h4 class="card-title">Average Incident Life Span (in hours)</h4>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-6 col-sm-12">
+                              <div class="card card-chart">
+                                  <div class="card-header card-header-danger">
+                                          <div id="repair_time"></div>
+                                  </div>
+                                  <div class="card-body">
+                                          <h4 class="card-title">Mean Time To Repair (in days)</h4>
+                                  </div>
+                              </div>
+                          </div>
+
+</ng-container>
+
+    </div>
+    <!-- end of chart cards -->
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="cookingSufferers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cooking & Baking Sufferers</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+                  <div id="sufferers_piechart"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end of modal -->
