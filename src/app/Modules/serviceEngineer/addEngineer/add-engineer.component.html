@@ -1,0 +1,135 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Edit Profile</h4>
+            <p class="card-category">Complete your profile</p>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmit()" #addUserForm="ngForm">
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" matInput required minlength="3" [(ngModel)]="engineerDetails.name" 
+                    name="name" placeholder="Name"
+                      #name="ngModel">
+                    <mat-error *ngIf="name.invalid">Enter Your Name</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput type="number" required minlength="4" [(ngModel)]="engineerDetails.contactNo" 
+                    name="contact" placeholder="Phone No"
+                      #contact="ngModel">
+                    <mat-error *ngIf="contact.invalid">Enter Your 10 Digite Phone No</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" matInput required minlength="4" [(ngModel)]="engineerDetails.username"
+                     name="username" placeholder="User Name"
+                      #username="ngModel">
+                    <mat-error *ngIf="username.invalid">Minimum 4 digite User Name is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input matInput type="password" required minlength="6" [(ngModel)]="engineerDetails.password"
+                     name="password" placeholder="Password"
+                      #password="ngModel">
+                    <mat-error *ngIf="password.invalid">Minimum 6 digite User Name is required</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" matInput required  [(ngModel)]="engineerDetails.address.address"
+                     name="address" placeholder="Address"
+                      #address="ngModel">
+                    <mat-error *ngIf="address.invalid">Enter your Address</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                  <mat-form-field class="example-full-width">
+                    <input matInput type="text" required [(ngModel)]="engineerDetails.address.city" 
+                    name="city" placeholder="city"
+                      #city="ngModel">
+                    <mat-error *ngIf="city.invalid">Enter your city</mat-error>
+                  </mat-form-field>
+                </div>
+              
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" matInput required [(ngModel)]="engineerDetails.address.state" 
+                    name="state" placeholder="State"
+                      #state="ngModel">
+                    <mat-error *ngIf="state.invalid">Enter your State Name</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput type="text" required [(ngModel)]="engineerDetails.address.country" 
+                    name="country" placeholder="country"
+                      #country="ngModel">
+                    <mat-error *ngIf="country.invalid">Enter Your Country Name</mat-error>
+                  </mat-form-field>
+                </div>
+              
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input type="text" matInput required  [(ngModel)]="engineerDetails.address.postalCode"
+                     name="postalCode" placeholder="pincode"
+                      #postalCode="ngModel">
+                    <mat-error *ngIf="postalCode.invalid">Pincode is required</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Address Type" required  multiple [(ngModel)]="engineerDetails.address.addressType" #addressType="ngModel" name="addressType">
+                          <mat-option *ngFor="let Address of addressTypeOptions" [value]="Address">
+                            {{Address}}
+                          </mat-option>
+                        </mat-select>
+                    <mat-error *ngIf="addressType.invalid">Select Address Type</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Product Type Id " multiple required [(ngModel)]="engineerDetails.productTypeIds" #productIds="ngModel" name="productIds">
+                          <mat-option *ngFor="let type of prodTypeOptions" [value]="type.id">
+                            {{type.name}}
+                          </mat-option>
+                        </mat-select>
+                    <mat-error *ngIf="productIds.invalid">Select Product Ids</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                      <mat-select placeholder="Pincodes" required  multiple [(ngModel)]="engineerDetails.pincodes" #pincodes="ngModel" name="pincodes">
+                          <mat-option *ngFor="let pin of pins" [value]="pin.pincode">
+                            {{pin.pincode}}
+                          </mat-option>
+                        </mat-select>
+                    <mat-error *ngIf="pincodes.invalid">Select pincodes</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <button mat-raised-button type="submit" class="btn btn-danger pull-right">Submit</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

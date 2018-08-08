@@ -1,0 +1,106 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h2 class="card-title ">
+              <b>Service Engineer List </b>
+            </h2>
+            <button mat-stroked-button color="warn" class="title-button" (click)="goto()">
+              <b> Add Engineer</b>
+            </button>
+          </div>
+          <!-- <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <th *ngFor="let head of headerRow">
+                    {{head}}
+                  </th>
+
+                </thead>
+                <tbody *ngFor="let row of dataRows let i =index">
+                  <tr>
+                    <td>
+                      <img src="src/assets/img/new_logo.png" alt="boy in a jacket">
+                    </td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.username}}</td>
+                    <td>{{row.contactNo}}</td>
+                    <td> {{row.email}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="card-body">
+    <div class="table-responsive" id="coll">
+        <table class="table table-hover">
+            <thead class=" text-primary">
+                <th *ngFor="let head of headerRow">
+                    {{head}}
+                  </th>
+            </thead>
+            <tbody *ngFor="let row of dataRows let i =index">
+                <tr  data-toggle="collapse" attr.href="#collapseExample{{i}}">
+                  <td><b>{{i+1}}</b></td>  
+                  <td>
+                        <img src="{{row.picUrl}}" >
+                      </td>
+                      <td>{{row.name}}</td>
+                      <td>{{row.username}}</td>
+                      <td>{{row.contactNo}}</td>
+                      <td>{{row.specialist}}</td>
+                    
+                    <td class="d-flex justify-content-between action-buttons">
+                        <!-- <i class="material-icons">edit</i> -->
+                        <i class="material-icons collapse-icon">expand_more</i>
+                    </td>
+
+                </tr>
+                    <tr class="collapse" attr.id="collapseExample{{i}}">
+                        <td colspan=6 class=" incident-details">
+                            <div class="row p-2">
+                                <div class="row">  
+                                    <div class="col-md-6"> <h5><b>{{row.addressType }} </b> &nbsp;
+                                        <i class="fa fa-phone"></i>
+                                        {{row.addressPhone}}<br><br>
+                                      <b>Email Id:</b>{{row.email}}</h5>
+                                         
+                                        <h5><b>Address:</b>
+                                            {{row.address}} ,<br>
+                                             {{row.city}} , {{row.state}} ,<br> {{row.country}}, , 
+                                             {{row.postalCode}}</h5>
+                                          
+                                         <h5><b>Assign Pincodes</b>
+                                            <ul *ngFor="let pin of row.assignPincodes">
+                                            <li>{{pin}}</li>
+                                            </ul></h5>
+                                        </div>
+                                            <div class="col-md-6" >
+                                               
+                                                <ul style="list-style-type:none" *ngFor="let type of row.productTypes let i = index">
+                                                    <li>
+                                                          {{i+1}} . {{type.productCategoryName}}
+                                                    </li>
+                                                </ul>
+                                                
+                                                </div>
+                                            </div>  
+                            </div>
+                            
+                        </td>
+                      </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

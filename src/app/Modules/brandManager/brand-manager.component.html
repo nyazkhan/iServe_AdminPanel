@@ -1,0 +1,49 @@
+ <div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-danger">
+              <h2 class="card-title ">
+                <b>Brand Manager List </b>
+              </h2>
+              <button mat-stroked-button color="warn" class="title-button" (click)="goto()">
+                <b> Add Brand Manager</b>
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class=" text-primary">
+                    <th *ngFor="let head of headerRow">
+                      {{head}}
+                    </th>
+  
+                  </thead>
+                  <tbody *ngFor="let row of dataRows let i =index">
+                    <tr class=" text-danger">
+                      <td><b> {{i+1}} </b></td>
+                      <td>
+                        <img src="{{row.picUrl}}" >
+                      </td>
+                      <td><b>{{row.name}}</b></td>
+                      <td><b>{{row.username}}</b></td>
+                      <td><b>{{row.contactNo}}</b></td>
+                      <td><b>{{row.email}}</b></td>
+                    
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+      
+    
