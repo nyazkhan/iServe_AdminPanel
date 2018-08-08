@@ -1,10 +1,9 @@
 import { Routes } from '@angular/router';
 
-// import { TableListComponent } from '../../table-list/table-list.component';
-// import { MapsComponent } from '../../maps/maps.component';
+
 import { AdminLayoutComponent } from './admin-layout.component';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-// import { BrandManagerComponent } from '../../Modules/brandManager/brand-manager.component';
+// import { InstallationModule } from '../../Modules/installation/installation.module';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -18,9 +17,9 @@ export const AdminLayoutRoutes: Routes = [
 
             },
 
-            // {
-            //     path: 'engineer', loadChildren: '../../Modules/serviceEngineer/service-engineer.module#ServiceEngineerModule',
-            // },
+            {
+                path: 'installation', loadChildren: '../../Modules/installation/installation.module#InstallationModule',
+            },
 
             
         ]
