@@ -21,7 +21,7 @@ export class ServiceEngineerService {
 
 
   // get pincodes from server
-  getPincodes(){
+  getPincode(){
         // const pincode_api =`/sa/pincode-detail`
     return this.customHttp.get("/sa/pincode-detail")
   }
@@ -46,7 +46,7 @@ export class ServiceEngineerService {
 
 
   //get service engineer details  from server 
-  getEngineers(){
+  getEngineer(){
     
         return this.customHttp.get("/sa/service-engineer" )
    

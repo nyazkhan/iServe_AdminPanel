@@ -1,106 +1,372 @@
-<div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-danger">
-            <h2 class="card-title ">
-              <b>Service Engineer List </b>
-            </h2>
-            <button mat-stroked-button color="warn" class="title-button" (click)="goto()">
-              <b> Add Engineer</b>
-            </button>
-          </div>
-          <!-- <div class="card-body">
-            <div class="table-responsive">
-              <table class="table">
-                <thead class=" text-primary">
-                  <th *ngFor="let head of headerRow">
-                    {{head}}
-                  </th>
+<div class="card">
+    <div class="card-header card-header-primary">
+        <div class="d-flex justify-content-between">
+            <h4 class="card-title ">Service Engineer</h4>
+            <div class="dropdown">
+                <a class="nav-link ">
+                    <i class="material-icons" data-toggle="modal" data-target="#actionModal1"> add_to_photos</i>
+                </a>
 
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="card-body">
+        <div class="table-responsive" id="coll">
+            <table class="table table-hover">
+                <thead class=" text-primary">
+                    <th *ngFor="let head of headerRow">
+                        {{head}}
+                    </th>
                 </thead>
                 <tbody *ngFor="let row of dataRows let i =index">
-                  <tr>
-                    <td>
-                      <img src="src/assets/img/new_logo.png" alt="boy in a jacket">
-                    </td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.username}}</td>
-                    <td>{{row.contactNo}}</td>
-                    <td> {{row.email}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
-<div class="card-body">
-    <div class="table-responsive" id="coll">
-        <table class="table table-hover">
-            <thead class=" text-primary">
-                <th *ngFor="let head of headerRow">
-                    {{head}}
-                  </th>
-            </thead>
-            <tbody *ngFor="let row of dataRows let i =index">
-                <tr  data-toggle="collapse" attr.href="#collapseExample{{i}}">
-                  <td><b>{{i+1}}</b></td>  
-                  <td>
-                        <img src="{{row.picUrl}}" >
-                      </td>
-                      <td>{{row.name}}</td>
-                      <td>{{row.username}}</td>
-                      <td>{{row.contactNo}}</td>
-                      <td>{{row.specialist}}</td>
-                    
-                    <td class="d-flex justify-content-between action-buttons">
-                        <!-- <i class="material-icons">edit</i> -->
-                        <i class="material-icons collapse-icon">expand_more</i>
-                    </td>
-
-                </tr>
-                    <tr class="collapse" attr.id="collapseExample{{i}}">
-                        <td colspan=6 class=" incident-details">
-                            <div class="row p-2">
-                                <div class="row">  
-                                    <div class="col-md-6"> <h5><b>{{row.addressType }} </b> &nbsp;
-                                        <i class="fa fa-phone"></i>
-                                        {{row.addressPhone}}<br><br>
-                                      <b>Email Id:</b>{{row.email}}</h5>
-                                         
-                                        <h5><b>Address:</b>
-                                            {{row.address}} ,<br>
-                                             {{row.city}} , {{row.state}} ,<br> {{row.country}}, , 
-                                             {{row.postalCode}}</h5>
-                                          
-                                         <h5><b>Assign Pincodes</b>
-                                            <ul *ngFor="let pin of row.assignPincodes">
-                                            <li>{{pin}}</li>
-                                            </ul></h5>
-                                        </div>
-                                            <div class="col-md-6" >
-                                               
-                                                <ul style="list-style-type:none" *ngFor="let type of row.productTypes let i = index">
-                                                    <li>
-                                                          {{i+1}} . {{type.productCategoryName}}
-                                                    </li>
-                                                </ul>
-                                                
-                                                </div>
-                                            </div>  
-                            </div>
-                            
+                    <tr data-toggle="collapse" attr.href="#collapseExample{{i}}">
+                        <td>
+                            <b>{{i+1}}</b>
                         </td>
-                      </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+                        <td>
+                            <img src="{{row.picUrl}}">
+                        </td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.username}}</td>
+                        <td>{{row.contactNo}}</td>
+                        <td>{{row.specialist}}</td>
 
+                        <td class="d-flex justify-content-between action-buttons">
+                            <i class="material-icons collapse-icon">expand_more</i>
+                        </td>
+
+                    </tr>
+                    <tr class="collapse" attr.id="collapseExample{{i}}">
+                        <td colh5=7 class=" incident-details">
+                            <div class="row p-2">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5>
+                                            <b>{{row.addressType }} </b> &nbsp;
+                                            <i class="fa fa-phone"></i>
+                                            {{row.addressPhone}}
+                                            <br>
+                                            <br>
+                                            <b>Email Id:</b>{{row.email}}</h5>
+
+                                        <h5>
+                                            <b>Address:</b>
+                                            {{row.address}} ,
+                                            <br> {{row.city}} , {{row.state}} ,
+                                            <br> {{row.country}}, , {{row.postalCode}}
+                                        </h5>
+
+                                        <h5>
+                                            <b>Assign Pincodes</b>
+                                            <ul *ngFor="let pin of row.assignPincodes">
+                                                <li>{{pin}}</li>
+                                            </ul>
+                                        </h5>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <ul style="list-style-type:none" *ngFor="let type of row.productTypes let i = index">
+                                            <li>
+                                                {{i+1}} . {{type.productCategoryName}}
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <!-- barand manager form -->
+
+    <div class="modal fade" id="actionModal1" tabindex="-1" role="dialog" aria-labelledby="actionModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content   card ">
+                <div class="card-header card-header-success card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">add_to_photos
+                        </i>
+                    </div>
+                    <h3 class="card-title">ADD MANAGER</h3>
+                </div>
+                <div class="modal-body">
+                    <!-- <form (ngSubmit)="onSubmit()" #managerForm="ngForm">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name"> Name:</label>
+                                    <br>
+                                    <input type="text" required class="form-control" id="name" name="name" [(ngModel)]="engineerDetails.name" #name="ngModel"> </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="nickName">nick Name:</label>
+                                    <br>
+                                    <input type="text" class="form-control" id="nickName" name="nickName" [(ngModel)]="engineerDetails.nickName" #nickName="ngModel"> </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="userName">User Name:</label>
+                                    <br>
+                                    <input type="text" required minlength="4" maxlength="20" class="form-control" id="userName" name="userName" [(ngModel)]="engineerDetails.username"
+                                        #userName="ngModel"> </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="password">Password:</label>
+                                    <br>
+                                    <input type="text" required class="form-control" id="password" name="password" [(ngModel)]="engineerDetails.password" #password="ngModel"> </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="contactNo">Contact No:</label>
+                                    <br>
+                                    <input type="number" required minlength="10" maxlength="13" class="form-control" id="contactNo" name="contactNo" [(ngModel)]="engineerDetails.contactNo"
+                                        #contactNo="ngModel">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <div class="my-3 input-group">
+                                    <div class="input-group-prepend">
+                                        <h5 class="input-group-text">
+                                            <i class="material-icons"> PRODUCTS </i>
+                                        </h5>
+                                    </div>
+                                    <select class="custom-select" name="brnad" [(ngModel)]="engineerDetails.productTypeIds" #brand="ngModel">
+                                        <option *ngFor="let product of prodTypeOptions" [value]="product.id"> {{product.name}} </option>
+
+                                    </select>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" [disabled]="!managerForm.valid" class="btn btn-success">Submit</button>
+                        </div>
+                    </form> -->
+                    <form (ngSubmit)="onSubmit()" #managerForm="ngForm">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label> Name
+                                          
+                                        </label>
+                                        <input type="text" required minlength="4" class="form-control " [(ngModel)]="engineerDetails.name" name="name"
+                                            id="name" #name="ngModel">
+                                        <h4 [hidden]="name.valid || name.untouched" style="color: red">
+                                            name is required
+                                        </h4>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Contact No
+                                        </label>
+                                        <input type="number" required pattern=".{10,11}" class="form-control " [(ngModel)]="engineerDetails.contactNo"
+                                            name="contactNo" id="contactNo" #contactNo="ngModel">
+                                        <h5 [hidden]="contactNo.valid || contactNo.untouched" style="color: red">
+                                            contact No is required
+                                        </h5>
+                                    </div>
+                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group ">
+                                        <label>username
+                                        </label>
+                                        <input type="text" minlength="4" maxlength="20" required [(ngModel)]="engineerDetails.username" name="username" id="username"
+                                            class="form-control " #username="ngModel">
+                    
+                                        <h5 [hidden]="username.valid || username.untouched" style="color: red">
+                                            name with minimum six characters is required
+                                        </h5>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>password
+                                        </label>
+                                        <input type="password" required minlength="6" class="form-control  " [(ngModel)]="engineerDetails.password" name="password"
+                                            id="password"  #password="ngModel">
+                                        <h5 [hidden]="password.valid || password.untouched" style="color: red">
+                                            password with minimum six characters is required
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                    
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Product Type Id
+                                        </label>
+                                        <button *ngIf="pinIstrue" type="button" class="buttonload">
+                                            <i class="fa fa-spinner fa-spin"></i>
+                                        </button>
+                                        <select class="form-control" id="prodTypeOptions" required multiple [(ngModel)]="engineerDetails.productTypeIds" name="prodType"
+                                            #prodType="ngModel">
+                                            <option *ngFor="let product of prodTypeOptions" [value]="product.id">{{product.name}}</option>
+                                        </select>
+                                        <h5 [hidden]="prodType.valid || prodType.untouched" style="color: red">
+                                            prodTypeOptions is required
+                                        </h5>
+                    
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Pin Code
+                                        </label>
+                                        <button *ngIf="pinIstrue" type="button" class="buttonload">
+                                            <i class="fa fa-spinner fa-spin"></i>
+                                        </button>
+                                        <select class="form-control" required multiple [(ngModel)]="engineerDetails.pincodes" name="pincode" #pincode="ngModel">
+                                            <option *ngFor="let pin of pins" [value]="pin.pincode">{{pin.pincode}}</option>
+                                        </select>
+                                        <h5 [hidden]="pincode.valid || pincode.untouched" style="color: red">
+                                            pincode is required
+                                        </h5>
+                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>street / house no
+                                        </label>
+                                        <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.address" name="addres"
+                                          #addres="ngModel">
+                                        <h5 [hidden]="addres.valid || addres.untouched" style="color: red">
+                                            Address is required
+                                        </h5>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Enter City
+                                        </label>
+                                        <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.city" name="city" id="city"
+                                            #city="ngModel">
+                                        <h5 [hidden]="city.valid || city.untouched" style="color: red">
+                                            city Name is required
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Enter State
+                                        </label>
+                                        <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.state" name="state" id="state"
+                                           #state="ngModel">
+                                        <h5 [hidden]="state.valid || state.untouched" style="color: red">
+                                            state Name is required
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Postel Code
+                                        </label>
+                                        <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.postalCode" name="postalcode"
+                                            id="postalcode" #postalcode="ngModel">
+                                        <h5 [hidden]="postalcode.valid || postalcode.untouched" style="color: red">
+                                            postal code is required
+                                        </h5>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Enter country
+                                        </label>
+                                        <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.country" name="country"
+                                            id="country" #country="ngModel">
+                                        <h5 [hidden]="country.valid || country.untouched" style="color: red">
+                                            country Name is required
+                                        </h5>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Enter Address Type
+                                        </label>
+                                        <select class="form-control" required [(ngModel)]="engineerDetails.address.addressType" name="addressType" #addressType="ngModel">
+                                            <option *ngFor="let addr of addressTypeOptions" [value]="addr">{{addr}}</option>
+                                        </select>
+                                        <h5 [hidden]="addressType.valid || addressType.untouched" style="color: red">
+                                            Address type is required
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button  type="submit" [disabled]="!managerForm.valid" class="btn btn-success">Submit</button>
+                                </div>
+                            <!-- <div class="text-center">
+                                <button *ngIf="!loadingButton" type="submit" class="btn btn-success" [disabled]="!managerForm.form.valid  ">Submit</button>
+                                <button *ngIf="loadingButton" type="button" class="btn btn-primary">
+                                    <i class="fa fa-spinner fa-spin"></i>submitting</button>
+                    
+                            </div> -->
+                            <br>
+                    
+                        </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- brand manager form end -->
