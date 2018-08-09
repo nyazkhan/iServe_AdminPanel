@@ -29,7 +29,7 @@ export class Token {
   
     comment?:string;
     updateInfo="assignedServiceEngineer";
-    serviceEngineerId : number;
+    serviceEngineerId : string;
   }
 
   export class RejectComplaint{

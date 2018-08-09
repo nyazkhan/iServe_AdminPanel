@@ -14,6 +14,6 @@ export class EngineerDetails {
         postalCode:"",
         addressType:"",
                 }
-    
+    email:string;
     pincodes:Array<number>=[];
             }

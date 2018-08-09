@@ -3,7 +3,6 @@ import { Routes } from '@angular/router';
 
 import { AdminLayoutComponent } from './admin-layout.component';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-// import { InstallationModule } from '../../Modules/installation/installation.module';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -20,6 +19,12 @@ export const AdminLayoutRoutes: Routes = [
             {
                 path: 'installation', loadChildren: '../../Modules/installation/installation.module#InstallationModule',
             },
+            {
+                path: 'manager', loadChildren: '../../Modules/brandManager/brand-manager.module#BrandManagerModule',
+            },
+            {
+                path: 'engineer', loadChildren: '../../Modules/serviceEngineer/service-engineer.module#ServiceEngineerModule',
+            }
 
             
         ]
