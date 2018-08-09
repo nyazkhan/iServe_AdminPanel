@@ -25,7 +25,7 @@ export class IncidentsComponent implements OnInit {
   currentPage = 1;
   comment: string;
   RejectId: number;
-  statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed"];
+  statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed" ,"Rejected"];
   selectedHeadingIndex = 0;
   headerRow = [" S.No.", "Date", "Product Name", "Product Category", "Problem Category", "Priority", "Status"];
   down: any;
@@ -196,13 +196,31 @@ export class IncidentsComponent implements OnInit {
     this.comment = "";
     this.imgfile = null;
     this.urlTOShowImg = "";
+    this.rejectComplaint = new RejectComplaint();
 
+    this.assingedEngineer = new AssingedEngineer();
   }
 
 
-
+//assign engineer 
   
+  assignFormData(data){
+console.log(data);
 
+const fd = new FormData();
+
+  for (const key in this.assingedEngineer)
+  fd.append(key, this.assingedEngineer[key]);
+this.incidentService.assignEngineer(fd, this.currentId)
+
+.subscribe((res: number) => {
+
+  this.resetform();
+}, (err) => {
+  alert(JSON.stringify(err));
+  // throw err;
+})
+  }
 
 
 
