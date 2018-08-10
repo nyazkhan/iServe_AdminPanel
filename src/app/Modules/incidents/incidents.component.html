@@ -50,21 +50,21 @@
 
                             <td>
                                 <!-- <span class="badge" [ngClass]="row.statusName"> -->
-                                    {{ row.statusName }}
+                                {{ row.statusName }}
                                 <!-- </span> -->
                             </td>
 
 
-                            <td class="d-flex justify-content-between action-buttons">
-                                <i class="material-icons collapse-icon">expand_more</i>
-                            </td>
+
                         </tr>
 
                         <tr class="collapse" attr.id="collapseExample{{i}}">
                             <td colspan=8 class=" incident-details">
                                 <div class="row p-2">
-                                    <div class="col-lg-12" *ngIf="row.description">
-                                        <b>Description</b>
+                                    <div *ngIf="row.description" class="col-lg-12">
+                                        <h4>
+                                            <b>Description</b>
+                                        </h4>
                                         <br>
                                         <p>
                                             {{ row.description }}
@@ -73,185 +73,192 @@
                                     <div class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                                         <div class="row">
                                             <div class="collg-12 col-sm-12">
-                                                <b>Product Details</b>
+                                                <h4>
+                                                    <b>Product Details</b>
+                                                </h4>
+                                            </div>
+
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                <div *ngIf="row.productModelNumber">
+                                                    <b>Model: </b> {{ row.productModelNumber }}
+                                                </div>
+                                                <div *ngIf="row.productCategoryName">
+                                                    <b>Category:</b> {{ row.productCategoryName }}
+                                                </div>
+                                                <div *ngIf="row.productPurchaseDate">
+                                                    <b>Purchase Date:</b> {{ row.productPurchaseDate | date: 'ddMMM,yyyy' }}
+                                                </div>
+                                                <div *ngIf="row.productWarrantyEnd">
+                                                    <b>Product Warranty Till : </b>{{ row.productWarrantyEnd | date: 'ddMMM,yyyy'
+                                                    }}
+                                                </div>
+
                                             </div>
                                             <div *ngIf="row.registeredProductPicUrl" class="col-sm-3 col-md-3 col-lg-3">
                                                 <img class="product-image" [src]="row.registeredProductPicUrl" />
-                                            </div>
-                                            <div class="col-sm-9 col-md-9 col-lg-9">
-                                                <div>
-                                                    <b>Modal: </b> {{ row.productName }}
-                                                </div>
-                                                <div>
-                                                    <b>Category:</b> {{ row.productCategoryName }}
-                                                </div>
-                                                <div>
-                                                    <b>Purchase Date:</b> {{ row.productPurchaseDate | date: 'ddMMM,yyyy' }}
-                                                </div>
-                                                <div>
-                                                    <b>Product Warranty Till:</b>{{ row.productWarrantyEnd | date: 'ddMMM,yyyy' }}
-                                                </div>
-                                                <div>
-                                                    <b>Registration No:</b>{{ row.productRegistrationId }}
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                                         <div class="row">
                                             <div class="col-lg-12 col-sm-12">
-                                                <b>Customer Details</b>
+                                                <h4>
+                                                    <b>Customer Details</b>
+                                                </h4>
+                                            </div>
+
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                <div *ngIf="row.customerName">
+                                                    <b>Name: </b> {{ row.customerName }}
+                                                </div>
+                                                <div *ngIf="row.customerPhone">
+                                                    <b>Phone:</b> +91 {{ row.customerPhone }}
+                                                </div>
+                                                <div *ngIf="row.customerEmail">
+                                                    <b>Email:</b> {{ row.customerEmail }}
+                                                </div>
+                                                <div *ngIf="row.customerAddress">
+                                                    <b>Address:</b> {{ row.customerAddress }} {{ row.customerCity }}, {{ row.customerState
+                                                    }} {{ row.customerPostalCode }} {{ row.customerCountry }}
+                                                </div>
                                             </div>
                                             <div *ngIf="row.customerImage" class="col-sm-3 col-md-3 col-lg-3">
                                                 <img class="product-image" [src]="row.customerImage" />
                                             </div>
-                                            <div class="col-sm-9 col-md-9 col-lg-9">
-                                                <div>
-                                                    <b>Name: </b> {{ row.customerName }}
-                                                </div>
-                                                <div>
-                                                    <b>Phone:</b> +91 {{ row.customerPhone }}
-                                                </div>
-                                                <div>
-                                                    <b>Email:</b> {{ row.customerEmail }}
-                                                </div>
-                                                <div>
-                                                    <b>Address:</b> {{ row.customerAddress }} {{ row.customerCity }}, {{ row.customerState }}
-                                                    {{ row.customerPostalCode }} {{ row.customerCountry }}
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                                    <div *ngIf="row.dealerName || row.dealerAddress || row.dealerContact || row.dealerEmail"class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                                         <div class="row">
                                             <div class="collg-12 col-sm-12">
                                                 <b>Dealer Details</b>
                                             </div>
-                                            <div *ngIf="row.dealerImage" class="col-sm-3 col-md-3 col-lg-3">
-                                                <img class="product-image" [src]="row.dealerImage" />
-                                            </div>
+
                                             <div class="col-sm-9 col-md-9 col-lg-9">
-                                                <div>
+                                                <div *ngIf="row.dealerName">
                                                     <b>Name: </b> {{ row.dealerName }}
                                                 </div>
-                                                <div>
+                                                <div *ngIf="row.dealerContact">
                                                     <b>Phone:</b> {{ row.dealerContact }}
                                                 </div>
-                                                <div>
+                                                <div *ngIf="row.dealerEmail">
                                                     <b>Email:</b> {{ row.dealerEmail }}
                                                 </div>
-                                                <div>
+                                                <div *ngIf="row.dealerAddress">
                                                     <b>Address:</b> {{ row.dealerAddress }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div  class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
-                                        <div *ngIf="row.assignedServiceEngineerId" class="row">
+                                    <div *ngIf="row.statusName!=='New' " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                                        <div class="row">
                                             <div class="collg-12 col-sm-12 ">
-                                                <b>Appointed Engineer</b>
+                                                <h4>
+                                                    <b>Assigned Engineer</b>
+                                                </h4>
+                                            </div>
+
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                <div *ngIf="row.assignedServiceEngineerName">
+                                                    <b>Name: </b> {{ row.assignedServiceEngineerName }}
+                                                </div>
+                                                <div *ngIf="row.assignedServiceEngineerContactNo">
+                                                    <b>Phone:</b> {{ row.assignedServiceEngineerContactNo }}
+                                                </div>
+                                                <div *ngIf="row.assignedServiceEngineerEmail">
+                                                    <b>Email:</b>{{ row.assignedServiceEngineerEmail }}
+                                                </div>
+                                                <button class="btn-sm btn-danger float-right" data-toggle="modal" data-target="#assignModal" (click)="getAssingedId(row.id)">Change</button>
                                             </div>
                                             <div *ngIf="row.assignedServiceEngineerPicUrl" class="col-sm-3 col-md-3 col-lg-3">
                                                 <img class="product-image" [src]="row.assignedServiceEngineerPicUrl" />
                                             </div>
-                                            <div class="col-sm-9 col-md-9 col-lg-9">
-                                                <div>
-                                                    <b>Name: </b> {{ row.assignedServiceEngineerName }}
-                                                </div>
-                                                <div>
-                                                    <b>Phone:</b> {{ row.assignedServiceEngineerContactNo }}
-                                                </div>
-                                                <div>
-                                                    <b>Email:</b>{{ row.assignedServiceEngineerEmail }}
-                                                </div>
-                                                <button class="btn-sm btn-danger float-right"  data-toggle="modal" data-target="#actionModal" (click)="getAssingedId(row.id)">Change</button>
-                                            </div>
-
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
-                                        <div *ngIf="row.assignedServiceEngineerId" class="row">
+                                    <div *ngIf="row.statusName== '!New' || !('Assigned Service Engineer') " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                                        <div class="row">
                                             <div class="collg-12 col-sm-12">
-                                                <b>Schedule Details</b>
+                                                <h4>
+                                                    <b>Schedule Details</b>
+                                                </h4>
                                             </div>
                                             <div class="col-sm-3 col-md-3 col-lg-3">
                                                 <img class="product-image" src="http://www.digitalistmag.com/files/2012/09/273949_l_srgb_s_gl.jpg" />
                                             </div>
                                             <div class="col-sm-9 col-md-9 col-lg-9">
-                                                <div>
-                                                    <b>Date:</b> {{ row.scheduleDate }}
+                                                <div *ngIf="row.lastScheduleDate">
+                                                    <b>Date:</b> {{ row.lastScheduleDate | date: 'ddMMM,yyyy' }}
                                                 </div>
-                                                <div>
-                                                    <b>Time:</b> {{ row.scheduleTime }}
+                                                <div *ngIf="row.lastScheduleDate">
+                                                    <b>Time:</b> {{ row.lastScheduleDate | date: 'hh:mm a' }}
                                                 </div>
-                                                <div>
-                                                    <b>Address:</b> {{ row.scheduleAddress }}
-                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
-                                        <div *ngIf="row.statusName=='Fixed' " class="row">
+                                    <div *ngIf="row.statusName==='Fixed' " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                                        <div class="row">
                                             <div class="collg-12 col-sm-12">
-                                                <b>Fixed Info</b>
+                                                <h4>
+                                                    <b>Fixed Info</b>
+                                                </h4>
                                             </div>
                                             <div *ngIf="row.signatureUrl" class="col-sm-3 col-md-3 col-lg-3">
                                                 <img class="product-image" [src]="row.signatureUrl" />
                                             </div>
                                             <div class="col-sm-9 col-md-9 col-lg-9">
-                                                <div>
-                                                    <b>Date:</b>{{ row.fixedDate }}
+                                                <div *ngIf="row.fixedInfo[0].createdAt">
+                                                    <b>Date:</b>{{row.fixedInfo[0].createdAt | date: 'dd MMM ,yyyy'}}
                                                 </div>
-                                                <div>
-                                                    <b>Time:</b> {{ row.fixedTime }}
+                                                <div *ngIf="row.fixedInfo[0].createdAt">
+                                                    <b>Time:</b>{{row.fixedInfo[0].createdAt | date: 'hh:mm a'}}
                                                 </div>
-                                                <div>
-                                                    <b>Address:</b> {{ row.fixedAddress }}
-                                                </div>
-                                                <div>
-                                                    <b>Comment:</b> {{ row.fixedComment }}
+                                                <div *ngIf="row.fixedInfo[0].autoComment">
+                                                    <b>Comment:</b>{{row.fixedInfo[0].autoComment}}
                                                 </div>
                                             </div>
 
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
-                                        <div *ngIf="row.statusName=='Not Fixed' " class="row">
+                                        <div *ngIf="row.statusName==='Not Fixed' " class="row">
                                             <div class="collg-12 col-sm-12">
-                                                <b>Not Fixed Info</b>
+                                                <h4>
+                                                    <b>Not Fixed Info</b>
+                                                </h4>
+                                            </div>
+
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                <div>
+
+                                                    <!-- <b>Date:</b>>{{row.fixedInfo[0].createdAt | date: 'dd MMM ,yyyy'}} -->
+                                                </div>
+                                                <div>
+                                                    <b>Time:</b>
+                                                    <!-- {{row.fixedInfo[0].createdAt | date: 'hh:mm a'}} -->
+                                                </div>
+
                                             </div>
                                             <div class="col-sm-3 col-md-3 col-lg-3">
                                                 <img class="product-image" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" />
                                             </div>
-                                            <div class="col-sm-9 col-md-9 col-lg-9">
-                                                <div>
-                                                    <b>Date:</b> {{ row.notFixedDate }}
-                                                </div>
-                                                <div>
-                                                    <b>Time:</b> {{ row.notFixedTime }}
-                                                </div>
-                                                <div>
-                                                    <b>Address:</b> {{ row.notFixedAddress }}
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
-                                        <div *ngIf="row.rating" class="row">
+                                    <div *ngIf="row.rating" class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                                        <div class="row">
                                             <div class="collg-12 col-sm-12">
-                                                <b>Feedback</b>
+                                                <h4>
+                                                    <b>Feedback</b>
+                                                </h4>
                                             </div>
-                                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                                <img class="product-image" src="data:image/png;base64,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"
-                                                />
-                                            </div>
+
                                             <div class="col-sm-9 col-md-9 col-lg-9">
                                                 <div>
-                                                    <b>Date:</b> 19/9/2018
+                                                    <b>Date:</b>
+                                                    <!-- {{row.fixedInfo[0].createdAt | date: 'dd MMM ,yyyy'}} -->
                                                 </div>
                                                 <div>
-                                                    <b>Time:</b> 1:00 PM
+                                                    <b>Time:</b>
+                                                    <!-- {{row.fixedInfo[0].createdAt | date: 'hh:mm a'}} -->
                                                 </div>
                                                 <div class="d-flex">
                                                     <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
@@ -264,11 +271,16 @@
                                                     <b>Comment:</b> Skilled person and polite nature.
                                                 </div>
                                             </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <img class="product-image" src="data:image/png;base64,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"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <button class="btn btn-sm btn-outline-success" *ngIf="row.statusName=='New' " type="submit" data-toggle="modal" data-target="#actionModal" (click)="getAssingedId(row.id)">
+                                    <button class="btn btn-sm btn-outline-success" *ngIf="row.statusName=='New' " type="submit" data-toggle="modal" data-target="#assignModal"
+                                        (click)="getAssingedId(row.id)">
                                         <i class="material-icons"> assignment_turned_in </i> Assign</button>
                                     <button class="btn btn-sm btn-outline-primary" type="submit" data-toggle="modal" (click)=" getCommentsId(row.id)" data-target="#commentModal">
                                         <i class="material-icons"> chat </i> History</button>
@@ -301,7 +313,7 @@
 
 
 
-<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModal" aria-hidden="true">
+<div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="assignModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content   card card-stats">
             <div class="card-header card-header-success card-header-icon">
@@ -311,7 +323,7 @@
                 <h3 class="card-title">ASSIGN</h3>
             </div>
             <div class="modal-body">
-                <form  #assignForm="ngForm">
+                <form #assignForm="ngForm">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -323,17 +335,17 @@
 
                         <div class="col-md-12">
 
-                                <div class="form-group">
-                                        <label>Select Service Engineer
-                                        </label>
-                                        <select class="form-control" required [(ngModel)]="assingedEngineer.serviceEngineerId"  name="serviceEng" #serviceEng="ngModel">
-                                            <option *ngFor="let engineer of listServiceEngineer" [value]="engineer.id">{{engineer.name}}</option>
-                                        </select>
-                                        <h5 [hidden]="serviceEng.valid || serviceEng.untouched" style="color: red">
-                                             Service Engineer is Required
-                                        </h5>
-                                    </div>
-                        
+                            <div class="form-group">
+                                <label>Select Service Engineer
+                                </label>
+                                <select class="form-control" required [(ngModel)]="assingedEngineer.serviceEngineerId" name="serviceEng" #serviceEng="ngModel">
+                                    <option *ngFor="let engineer of listServiceEngineer" [value]="engineer.id">{{engineer.name}}</option>
+                                </select>
+                                <h5 [hidden]="serviceEng.valid || serviceEng.untouched" style="color: red">
+                                    Service Engineer is Required
+                                </h5>
+                            </div>
+
 
 
                         </div>
@@ -362,31 +374,35 @@
                 <h3 class="card-title">History</h3>
             </div>
             <div class="modal-body">
-                <div class="card">
-                    <div *ngIf="commentsHistory==0">
+                <div *ngIf="!commentsHistory">
+                    <!-- loader -->
+                    <p>loadin....</p>
+                </div>
+                <div class="card" *ngIf="commentsHistory">
+                    <div *ngIf="commentsHistory.length==0">
                         <h3> New customer No History Available</h3>
                     </div>
-                    <div *ngFor="let comlaint of commentsHistory let i=index ">
+                    <div *ngFor="let comment of commentsHistory let i=index ">
 
-                        <div style="text-align: left" class="row" *ngIf="commentsHistory.lenght!==0">
+                        <div style="text-align: left" class="row" *ngIf="commentsHistory.length!==0">
 
                             <h4>
-                                <b>{{comlaint.statusName}}</b>
+                                <b>{{comment.statusName}}</b>
                             </h4>
                             <div class="col-md-6">
-                                <img style="width:70px" src="{{comlaint.picUrl}}">
+                                <img style="width:70px" src="{{comment.picUrl}}">
                             </div>
                             <div class="col-md-6">
                                 <h5>
-                                    <b>Name:</b>{{comlaint.name }}</h5>
+                                    <b>Name:</b>{{comment.name }}</h5>
                                 <h5>
-                                    <b>Create at:</b>{{comlaint.createdAt | date: 'dd MMM ,yyyy'}}</h5>
+                                    <b>Create at:</b>{{comment.createdAt | date: 'dd MMM ,yyyy'}}</h5>
                                 <h5>
-                                    <b>Schedule Date:</b>{{comlaint.scheduleDate| date: 'dd MMM ,yyyy'}}</h5>
+                                    <b>Schedule Date:</b>{{comment.scheduleDate| date: 'dd MMM ,yyyy'}}</h5>
                                 <h5>
-                                    <b>Comment:</b>{{comlaint.comment}}</h5>
+                                    <b>Comment:</b>{{comment.comment}}</h5>
                                 <h5>
-                                    <b>Auto Comment:</b>{{comlaint.autoComment}}</h5>
+                                    <b>Auto Comment:</b>{{comment.autoComment}}</h5>
 
                             </div>
 

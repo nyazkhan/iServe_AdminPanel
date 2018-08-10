@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IncidentsService } from './incidents.service';
 import { RejectComplaint, AssingedEngineer } from '../../interface/user';
+declare const $:any;
 
 @Component({
   selector: 'app-incidents',
@@ -27,7 +28,7 @@ export class IncidentsComponent implements OnInit {
   RejectId: number;
   statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed" ,"Rejected"];
   selectedHeadingIndex = 0;
-  headerRow = [" S.No.", "Date", "Product Name", "Product Category", "Problem Category", "Priority", "Status"];
+  headerRow = [" S.No.", "Date", "Product Name", "Product Category", "Incident_Category", "Priority", "Status"];
   down: any;
   isDown: boolean = false;
 
@@ -214,7 +215,7 @@ const fd = new FormData();
 this.incidentService.assignEngineer(fd, this.currentId)
 
 .subscribe((res: number) => {
-
+  this.closeAssignModal();
   this.resetform();
 }, (err) => {
   alert(JSON.stringify(err));
@@ -222,6 +223,10 @@ this.incidentService.assignEngineer(fd, this.currentId)
 })
   }
 
+
+  closeAssignModal(){
+    $('#assignModal').modal('hide')
+  }
 
 
  
