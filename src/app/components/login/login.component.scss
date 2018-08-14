@@ -1,0 +1,53 @@
+.bg-image {
+  background-image: url("/assets/img/cover.jpg");
+  height: 100vh;
+  background-size: cover;
+}
+
+.bg-color {
+  background: #080808b0;
+  height: 100vh;
+}
+
+.container {
+  padding-top: 20px;
+  padding-bottom: 200px;
+}
+
+.animated {
+  top: 20px;
+  position: relative;
+  -webkit-animation: mymove 2s;
+  /* Safari 4.0 - 8.0 */
+  animation: mymove 2s;
+}
+
+@-webkit-keyframes mymove {
+  from {
+    top: -400px;
+  }
+  to {
+    top: 20px;
+  }
+}
+
+@keyframes mymove {
+  from {
+    top: -400px;
+  }
+  to {
+    top: 20px;
+  }
+}
+
+select,
+select.form-control {
+  -webkit-appearance: menulist !important;
+}
+
+footer {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
