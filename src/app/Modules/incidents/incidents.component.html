@@ -7,17 +7,17 @@
                     <i class="material-icons"> filter_list </i>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Status</a>
-                    <a class="dropdown-item" href="#">Date</a>
-                    <a class="dropdown-item" href="#">Priority</a>
-                    <a class="dropdown-item" href="#">Category</a>
+                    <a class="dropdown-item" (click)="sortBy('status')">Status</a>
+                    <a class="dropdown-item" (click)="sortBy('date')">Date</a>
+                    <a class="dropdown-item" (click)="sortBy('priority')">Priority</a>
+                    <a class="dropdown-item" (click)="sortBy('category')">Category</a>
                 </div>
             </div>
 
         </div>
         <ul class="nav nav-tabs">
             <li class="nav-item" *ngFor="let status of statusHeading let i=index">
-                <a class="nav-link active" [class.active]="i==selectedHeadingIndex" (click)="filtterIncidents(i)">{{status}}</a>
+                <a class="nav-link active" [class.active]="i==selectedHeadingIndex" (click)="getComplaints(i)">{{status}}</a>
             </li>
 
         </ul>
@@ -39,9 +39,10 @@
 
 
                         <tr (click)="getId(row.id)" data-toggle="collapse" attr.href="#collapseExample{{i}}">
-                            <td>{{i+1}}</td>
+                            <td>{{row.number}}</td>
                             <td>{{row.createdAt | date: 'ddMMM,yyyy'}}</td>
-                            <td>{{row.productName}}</td>
+                            <td>{{row.productName | fixedLength}}</td>
+                            <td>{{row.description | fixedLength }}</td>
                             <td>
                                 {{row.productCategoryName}}
                             </td>
@@ -122,12 +123,12 @@
                                                     }} {{ row.customerPostalCode }} {{ row.customerCountry }}
                                                 </div>
                                             </div>
-                                            <div *ngIf="row.customerImage" class="col-sm-3 col-md-3 col-lg-3">
-                                                <img class="product-image" [src]="row.customerImage" />
+                                            <div *ngIf="row.customerPicUrl" class="col-sm-3 col-md-3 col-lg-3">
+                                                <img class="product-image" [src]="row.customerPicUrl" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div *ngIf="row.dealerName || row.dealerAddress || row.dealerContact || row.dealerEmail"class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                                    <div *ngIf="row.dealerName || row.dealerAddress || row.dealerContact || row.dealerEmail" class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                                         <div class="row">
                                             <div class="collg-12 col-sm-12">
                                                 <b>Dealer Details</b>
@@ -153,7 +154,8 @@
                                         <div class="row">
                                             <div class="collg-12 col-sm-12 ">
                                                 <h4>
-                                                    <b>Assigned Engineer</b>
+                                                    <b>Assigned Engineer</b>&nbsp;
+                                                    <i class=" tiny material-icons" data-toggle="modal" data-target="#assignModal" (click)="getAssingedId(row.id)">create</i>
                                                 </h4>
                                             </div>
 
@@ -167,23 +169,26 @@
                                                 <div *ngIf="row.assignedServiceEngineerEmail">
                                                     <b>Email:</b>{{ row.assignedServiceEngineerEmail }}
                                                 </div>
-                                                <button class="btn-sm btn-danger float-right" data-toggle="modal" data-target="#assignModal" (click)="getAssingedId(row.id)">Change</button>
+                                                <!-- <button class="btn-sm btn-danger float-right" data-toggle="modal" data-target="#assignModal" >Change</button> -->
                                             </div>
                                             <div *ngIf="row.assignedServiceEngineerPicUrl" class="col-sm-3 col-md-3 col-lg-3">
                                                 <img class="product-image" [src]="row.assignedServiceEngineerPicUrl" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div *ngIf="row.statusName== '!New' || !('Assigned Service Engineer') " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+
+
+
+
+
+                                    <div *ngIf="!(row.statusName == 'New' || row.statusName == 'Assigned Service Engineer'|| row.statusName == 'Rejected')" class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                                         <div class="row">
                                             <div class="collg-12 col-sm-12">
                                                 <h4>
                                                     <b>Schedule Details</b>
                                                 </h4>
                                             </div>
-                                            <div class="col-sm-3 col-md-3 col-lg-3">
-                                                <img class="product-image" src="http://www.digitalistmag.com/files/2012/09/273949_l_srgb_s_gl.jpg" />
-                                            </div>
+                                         
                                             <div class="col-sm-9 col-md-9 col-lg-9">
                                                 <div *ngIf="row.lastScheduleDate">
                                                     <b>Date:</b> {{ row.lastScheduleDate | date: 'ddMMM,yyyy' }}
@@ -192,6 +197,9 @@
                                                     <b>Time:</b> {{ row.lastScheduleDate | date: 'hh:mm a' }}
                                                 </div>
 
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <img class="product-image" src="http://www.digitalistmag.com/files/2012/09/273949_l_srgb_s_gl.jpg" />
                                             </div>
                                         </div>
                                     </div>
@@ -202,25 +210,24 @@
                                                     <b>Fixed Info</b>
                                                 </h4>
                                             </div>
+                                           
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                <div *ngIf="row.fixDate">
+                                                    <b>Date:</b>{{row.fixDate | date: 'dd MMM ,yyyy'}}
+                                                </div>
+                                                <div *ngIf="row.fixDate">
+                                                    <b>Time:</b>{{row.fixDate | date: 'hh:mm a'}}
+                                                </div>
+
+                                            </div>
                                             <div *ngIf="row.signatureUrl" class="col-sm-3 col-md-3 col-lg-3">
                                                 <img class="product-image" [src]="row.signatureUrl" />
-                                            </div>
-                                            <div class="col-sm-9 col-md-9 col-lg-9">
-                                                <div *ngIf="row.fixedInfo[0].createdAt">
-                                                    <b>Date:</b>{{row.fixedInfo[0].createdAt | date: 'dd MMM ,yyyy'}}
-                                                </div>
-                                                <div *ngIf="row.fixedInfo[0].createdAt">
-                                                    <b>Time:</b>{{row.fixedInfo[0].createdAt | date: 'hh:mm a'}}
-                                                </div>
-                                                <div *ngIf="row.fixedInfo[0].autoComment">
-                                                    <b>Comment:</b>{{row.fixedInfo[0].autoComment}}
-                                                </div>
                                             </div>
 
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
-                                        <div *ngIf="row.statusName==='Not Fixed' " class="row">
+                                    <div *ngIf="row.statusName==='Not Fixed' " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                                        <div class="row">
                                             <div class="collg-12 col-sm-12">
                                                 <h4>
                                                     <b>Not Fixed Info</b>
@@ -228,13 +235,13 @@
                                             </div>
 
                                             <div class="col-sm-9 col-md-9 col-lg-9">
-                                                <div>
+                                                <div *ngIf="row.lastModifiedAt">
 
-                                                    <!-- <b>Date:</b>>{{row.fixedInfo[0].createdAt | date: 'dd MMM ,yyyy'}} -->
+                                                    <b>Date:</b>>{{row.lastModifiedAt | date: 'dd MMM ,yyyy'}}
                                                 </div>
-                                                <div>
+                                                <div *ngIf="row.lastModifiedAt">
                                                     <b>Time:</b>
-                                                    <!-- {{row.fixedInfo[0].createdAt | date: 'hh:mm a'}} -->
+                                                    {{row.lastModifiedAt | date: 'hh:mm a'}}
                                                 </div>
 
                                             </div>
@@ -284,7 +291,8 @@
                                         <i class="material-icons"> assignment_turned_in </i> Assign</button>
                                     <button class="btn btn-sm btn-outline-primary" type="submit" data-toggle="modal" (click)=" getCommentsId(row.id)" data-target="#commentModal">
                                         <i class="material-icons"> chat </i> History</button>
-                                    <button class="btn btn-sm btn-outline-danger" type="submit" data-toggle="modal" (click)="getRejectId(row.id)" data-target="#rejectModal">
+                                    <button *ngIf="row.statusName!=='Rejected' " class="btn btn-sm btn-outline-danger" type="submit" data-toggle="modal" (click)="getRejectId(row.id)"
+                                        data-target="#rejectModal">
                                         <i class="material-icons"> clear </i> reject</button>
                                 </div>
                             </td>
