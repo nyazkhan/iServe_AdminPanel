@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IncidentsService } from '../../Modules/incidents/incidents.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit {
 
   role:string = localStorage.role;
-  constructor() { }
-
+  constructor(private incidentService: IncidentsService) { }
+  countStatus=[];
   ngOnInit() {
+    this.getchart();
   }
+  getchart() {
+    this.incidentService.getChartData()
+    .subscribe((res:any)=>{
+     this.countStatus=res;
+      console.log(this.countStatus);
 
+    })
+}
 }

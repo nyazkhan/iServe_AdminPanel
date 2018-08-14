@@ -4,6 +4,7 @@ import { IncidentsComponent } from './incidents.component';
 import { RouterModule } from '../../../../node_modules/@angular/router';
 import { FormsModule, ReactiveFormsModule } from '../../../../node_modules/@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FixedLengthPipe } from '../../providers/length.pipe';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
   ],
   declarations: [
     IncidentsComponent,
+    FixedLengthPipe,
   ]
 })
 export class IncidentsModule { }

@@ -69,7 +69,7 @@
     </div>
 
     <!-- Chart Cards -->
-    <div class="row">
+    <div (resize)="getAllCharts()" class="row">
           <ng-container  *ngIf="role=='superadmin'">
 
                   <div class="col-md-6">
@@ -162,10 +162,37 @@
                               <div id="customer_suffering_report"></div>
                       </div>
                       <div class="card-body">
-                              <h4 class="card-title">Customer Suffering Report</h4>
+                              <h4 class="card-title">Incidents against Product Category</h4>
                       </div>
                   </div>
               </div>
+
+
+
+              <div class="col-md-6 col-sm-12">
+                <div class="card card-chart">
+                    <div class="card-header card-header-danger">
+                            <div id="open_incidences"></div>
+                    </div>
+                    <div class="card-body">
+                            <h4 class="card-title">Open Incidents Current</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                    <div class="card card-chart">
+                        <div class="card-header card-header-warning">
+                                <div id="Complaint_Category"></div>
+                        </div>
+                        <div class="card-body">
+                                <h4 class="card-title">Incidents against Incident Category</h4>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
               <div class="col-md-6 col-sm-12">
                   <div class="card card-chart">
                       <div class="card-header card-header-success">

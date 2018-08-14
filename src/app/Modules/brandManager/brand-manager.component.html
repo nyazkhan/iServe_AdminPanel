@@ -1,49 +1,156 @@
- <div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header card-header-danger">
-              <h2 class="card-title ">
-                <b>Brand Manager List </b>
-              </h2>
-              <button mat-stroked-button color="warn" class="title-button" (click)="goto()">
-                <b> Add Brand Manager</b>
-              </button>
+<div class="card">
+    <div class="card-header card-header-primary">
+        <div class="d-flex justify-content-between">
+            <h4 class="card-title ">Brand Manager</h4>
+            <div class="dropdown">
+                <a class="nav-link ">
+                    <i class="material-icons" data-toggle="modal" data-target="#actionModal"> add_to_photos</i>
+                </a>
+
             </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead class=" text-primary">
-                    <th *ngFor="let head of headerRow">
-                      {{head}}
-                    </th>
-  
-                  </thead>
-                  <tbody *ngFor="let row of dataRows let i =index">
-                    <tr class=" text-danger">
-                      <td><b> {{i+1}} </b></td>
-                      <td>
-                        <img src="{{row.picUrl}}" >
-                      </td>
-                      <td><b>{{row.name}}</b></td>
-                      <td><b>{{row.username}}</b></td>
-                      <td><b>{{row.contactNo}}</b></td>
-                      <td><b>{{row.email}}</b></td>
-                    
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+
         </div>
-      </div>
+
     </div>
-  </div>
+
+
+    <div class="card-body">
+
+        <div class="table-responsive" id="coll">
+            <table class="table table-hover ">
+
+                <thead class=" text-primary">
+
+                    <th *ngFor="let head of headerRow">{{ head }}</th>
+
+                </thead>
+                <tbody *ngFor="let row of dataRows let i =index">
+
+
+                    <tr>
+                        <td>
+                            <b> {{i+1}} </b>
+                        </td>
+                        <td>
+                            <img src="{{row.picUrl}}">
+                        </td>
+                        <td>
+                            <b>{{row.name}}</b>
+                        </td>
+                        <td>
+                            <b>{{row.username}}</b>
+                        </td>
+                        <td>
+                            <b>{{row.contactNo}}</b>
+                        </td>
+                        <td>
+                            <b>{{row.email}}</b>
+                        </td>
 
 
 
+                      
+                    </tr>
 
-      
-    
+
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- barand manager form -->
+
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content   card card-stats">
+            <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">add_to_photos
+                        </i>
+                </div>
+                <h3 class="card-title">ADD MANAGER</h3>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="onSubmit()" #managerForm="ngForm">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name"> Name:</label>
+                                <br>
+                                <input type="text" required class="form-control" id="name" name="name" [(ngModel)]="managerDetails.name" #name="ngModel"> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="nickName">nick Name:</label>
+                                <br>
+                                <input type="text" class="form-control" id="nickName" name="nickName" [(ngModel)]="managerDetails.nickName" #nickName="ngModel"> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="userName">User Name:</label>
+                                <br>
+                                <input type="text" required minlength="4" maxlength="20" class="form-control" id="userName" name="userName" [(ngModel)]="managerDetails.username" #userName="ngModel"> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <br>
+                                <input type="text" required class="form-control" id="password" name="password" [(ngModel)]="managerDetails.password" #password="ngModel"> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="contactNo">Contact No:</label>
+                                <br>
+                                <input type="number" required minlength="10" maxlength="13" class="form-control" id="contactNo" name="contactNo" [(ngModel)]="managerDetails.contactNo"
+                                    #contactNo="ngModel">
+                                    
+                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+                            <div class="my-3 input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons"> BRAND ID </i>
+                                    </span>
+                                </div>
+                                <select class="custom-select" name="brnad" [(ngModel)]="managerDetails.brandId" #brand="ngModel">
+                                    <option *ngFor="let brand of brands" [value]="brand.id"> {{brand.name}} </option>
+
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" [disabled]="!managerForm.valid" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- brand manager form end -->

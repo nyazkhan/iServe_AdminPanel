@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IncidentsService } from './incidents.service';
 import { RejectComplaint, AssingedEngineer } from '../../interface/user';
+import { element } from '../../../../node_modules/protractor';
+declare const $: any;
 
 @Component({
   selector: 'app-incidents',
@@ -14,7 +16,7 @@ export class IncidentsComponent implements OnInit {
 
   }
 
-  
+
   currentId: number;
   imgfile: any;
   urlTOShowImg: string;
@@ -25,33 +27,70 @@ export class IncidentsComponent implements OnInit {
   currentPage = 1;
   comment: string;
   RejectId: number;
-  statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed"];
+  statusHeading = ["All"];
+  // statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed" ,"Rejected"];
   selectedHeadingIndex = 0;
-  headerRow = [" S.No.", "Date", "Product Name", "Product Category", "Problem Category", "Priority", "Status"];
+  headerRow = ["Incident_No. ", "Date", "Product Name","Description", "Product Category", "Incident_Category", "Priority", "Status"];
   down: any;
   isDown: boolean = false;
 
   rejectComplaint = new RejectComplaint;
 
   assingedEngineer = new AssingedEngineer;
-  
+
   listServiceEngineer: Array<any>;
 
 
   ngOnInit() {
-    this.getComplaints();
+    this.getComplaints(0);
+    this.getchart();
+    this.getComplaintStatus();
+  }
+  getId(id) {
 
+    this.currentId = id;
+  }
+  getchart() {
+    // this.incidentService.getChartData()
+    // .subscribe((res:any)=>{
+    //   console.log(res);
+    // })
 
   }
-  getId(id){
 
-    this.currentId=id;
+
+
+  getComplaints(i?: number) {
+    this.selectedHeadingIndex = i;
+    this.currentPage = 1;
+    if (i === 0) {
+      this.getAllComplaints();
+    } else {
+      this.getFilterComplants(i);
+    }
+
   }
 
-  getComplaints() {
+
+  getComplaintStatus() {
+    console.log("hello")
+    this.incidentService.getCompStatus()
+      .subscribe((res: any) => {
+        res.forEach(element => {
+          this.statusHeading.push(element.name)
+
+        });
+        console.log(this.statusHeading)
+        console.log(res)
+      })
+  }
+
+
+
+  getAllComplaints() {
 
     this.showLoader = true;
-    this.incidentService.getComplaint(this.currentPage)
+    this.incidentService.getAllComplaint(this.currentPage)
       .subscribe((res: any) => {
         this.complaints = res;
         this.filtercomplaints = res;
@@ -68,6 +107,20 @@ export class IncidentsComponent implements OnInit {
 
 
 
+  //get filter complaints
+  getFilterComplants(i) {
+    this.filtercomplaints=[];
+    this.showLoader = true;
+    this.currentPage = 1;
+    this.incidentService.getFillterComplaint(i, this.currentPage)
+      .subscribe((res: any) => {
+        this.filtercomplaints = res;
+        this.showLoader = false;
+        console.log(res)
+      })
+  }
+
+
 
   onScroll() {
     console.log('scrolled!!');
@@ -75,17 +128,24 @@ export class IncidentsComponent implements OnInit {
   }
 
 
-  filtterIncidents(i) {
-    this.selectedHeadingIndex = i;
-    this.filtercomplaints = [];
+  // filtterIncidents(i) {
+  //   console.log(i + "   id ")
+  //   this.incidentService.getFillterComplaint(i, i)
+  //     .subscribe((res: any) => {
+  //       console.log("filter")
 
-    if (i == 0) {
-      this.filtercomplaints = this.complaints;
-    } else {
-      this.filtercomplaints = this.complaints.filter(element => element.statusName == this.statusHeading[i]);
+  //       console.log(res)
+  //     })
+  //   this.selectedHeadingIndex = i;
+  //   this.filtercomplaints = [];
 
-    }
-  }
+  //   if (i == 0) {
+  //     this.filtercomplaints = this.complaints;
+  //   } else {
+  //     this.filtercomplaints = this.complaints.filter(element => element.statusName == this.statusHeading[i]);
+
+  //   }
+  // }
 
 
 
@@ -93,27 +153,75 @@ export class IncidentsComponent implements OnInit {
 
 
   lodeMore() {
-    this.showLoader = true;
 
-    this.incidentService.getComplaint(this.currentPage + 1)
-      .subscribe((res: Array<any>) => {
-        console.log(this.currentPage);
+    if (this.selectedHeadingIndex === 0) {
+      this.showLoader = true;
+      this.incidentService.getAllComplaint(this.currentPage + 1)
+        .subscribe((res: Array<any>) => {
+          console.log(this.currentPage);
 
-        if (res.length) {
-          console.log('sssssssss');
+          if (res.length) {
+            // console.log('sssssssss');
 
-          this.complaints = this.complaints.concat(res);
-          this.currentPage++;
-          this.filtterIncidents(this.selectedHeadingIndex);
-        }
+            this.filtercomplaints = this.filtercomplaints.concat(res);
+            this.currentPage++;
+            // this.filtterIncidents(this.selectedHeadingIndex);
+          }
 
-        this.showLoader = false;
-      },
-        (err) => {
           this.showLoader = false;
-          alert(JSON.stringify(err));
-          // throw err;
+        },
+          (err) => {
+            this.showLoader = false;
+            alert(JSON.stringify(err));
+            // throw err;
+          })
+    }
+    else {
+      this.showLoader = true;
+      this.incidentService.getFillterComplaint(this.selectedHeadingIndex, this.currentPage + 1)
+        .subscribe((res: Array<any>) => {
+          console.log(this.currentPage);
+
+          if (res.length) {
+            // console.log('sssssssss');
+
+            this.filtercomplaints = this.filtercomplaints.concat(res);
+            this.currentPage++;
+            // this.filtterIncidents(this.selectedHeadingIndex);
+          }
+
+          this.showLoader = false;
+        },
+          (err) => {
+            this.showLoader = false;
+            alert(JSON.stringify(err));
+            // throw err;
+          })
+
+    }
+  }
+
+
+  sortBy(val) {
+    this.showLoader = true;
+    if (this.selectedHeadingIndex === 0) {
+      this.filtercomplaints=[];
+      this.incidentService.getSorting(val)
+      .subscribe((res:any)=>{
+this.filtercomplaints=res;
+this.showLoader = false;
+      })
+
+    } else {
+      this.filtercomplaints=[];
+
+      this.showLoader = true;
+      this.incidentService.getFilterSorting(val, this.selectedHeadingIndex)
+        .subscribe((res) => {
+          this.filtercomplaints = res;
+          this.showLoader = false;
         })
+    }
   }
 
 
@@ -122,7 +230,7 @@ export class IncidentsComponent implements OnInit {
     this.incidentService.getServiceEngAgainstComplaindId(id)
       .subscribe((res: any) => {
         this.listServiceEngineer = res;
-       
+
         console.log(res)
       }, (err) => {
         // throw err;
@@ -170,7 +278,7 @@ export class IncidentsComponent implements OnInit {
     }
   }
 
-  
+
 
 
 
@@ -196,15 +304,37 @@ export class IncidentsComponent implements OnInit {
     this.comment = "";
     this.imgfile = null;
     this.urlTOShowImg = "";
+    this.rejectComplaint = new RejectComplaint();
 
+    this.assingedEngineer = new AssingedEngineer();
+  }
+
+
+  //assign engineer 
+
+  assignFormData(data) {
+    console.log(data);
+
+    const fd = new FormData();
+
+    for (const key in this.assingedEngineer)
+      fd.append(key, this.assingedEngineer[key]);
+    this.incidentService.assignEngineer(fd, this.currentId)
+
+      .subscribe((res: number) => {
+        this.closeAssignModal();
+        this.resetform();
+      }, (err) => {
+        alert(JSON.stringify(err));
+        // throw err;
+      })
+  }
+
+
+  closeAssignModal() {
+    $('#assignModal').modal('hide')
   }
 
 
 
-  
-
-
-
-
- 
 }
