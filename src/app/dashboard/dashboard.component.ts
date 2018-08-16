@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { Observable } from 'rxjs';
-import { TryCatchStmt } from '../../../node_modules/@angular/compiler';
+import { TryCatchStmt } from '@angular/compiler';
 
 declare var google: any;
 declare var require: any;
@@ -445,7 +445,7 @@ export class DashboardComponent implements OnInit {
       (res) => { },
       (err) => { },
       () => {
-        this.getAllCharts();
+        // this.getAllCharts();
       }
     );
 
