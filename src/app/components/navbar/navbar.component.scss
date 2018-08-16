@@ -1,0 +1,13 @@
+.userImage{
+    width: 100px;
+    height: 100px;
+    margin: 20px;
+    border-radius: 50%;
+}
+@media (min-width: 992px){
+.navbar-expand-lg .navbar-nav .dropdown-menu-right {
+    right: 50px;
+    left: auto;
+    top: 50px;
+}
+}
