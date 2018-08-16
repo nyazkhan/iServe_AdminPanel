@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+$light:white;
+$primary:#de2768;
+$success: #4caf50;
+
+.lightColor{
+    color: $light;
+}
+.primaryColor{
+    color: $primary;
+}
+.secondaryColor{
+    color: $success;
+}
+.iconSize{
+    width: 25px;
+}
+.text-center{
+    text-align: center;
+
+}

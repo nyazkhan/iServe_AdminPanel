@@ -1,0 +1,24 @@
+.sidebar{
+    // color:white!important;
+    background-image: url("/assets/img/sidebar.jpg");
+    li{
+        a{
+            color:white
+        }
+    }
+     .nav i {
+         color: white;
+     }
+     .user{
+         margin: 18px;
+         border-bottom: 1px solid gray;
+         padding-bottom: 15px;
+        img{
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+     }
+
+}

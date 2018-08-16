@@ -23,12 +23,12 @@ export class SidebarComponent implements OnInit {
           },
           {
             name:'Incidents',
-            icon:'build',
+            icon:'description',
             route:'/incidents'
           },
           {
             name:'installation',
-            icon:'dashboard',
+            icon:'build',
             route:'/installation'
           }
       ]

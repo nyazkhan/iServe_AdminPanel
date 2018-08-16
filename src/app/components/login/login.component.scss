@@ -1,0 +1,26 @@
+.bg-image {
+  background-image: url("/assets/img/cover.jpg");
+  height: 100vh;
+  background-size: cover;
+}
+
+.bg-color {
+  background: #080808b0;
+  height: 100vh;
+}
+
+.container {
+  padding-top: 20px;
+  padding-bottom: 200px;
+}
+select,
+select.form-control {
+  -webkit-appearance: menulist !important;
+}
+
+footer {
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
