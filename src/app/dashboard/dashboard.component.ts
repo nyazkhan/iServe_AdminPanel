@@ -334,7 +334,7 @@ export class DashboardComponent implements OnInit {
         console.log(res)
         this.stateCount.push(['Province', 'Weekly Open Incidents'])
         this.stateCount.push(['punjab', '56'])
-        this.stateCount.push(['haryana', '56'])
+        this.stateCount.push(['haryana', '4'])
         res.forEach(element => {
           this.stateCount.push([element.state, element.count])
           google.charts.setOnLoadCallback(this.regions_chart(this));
