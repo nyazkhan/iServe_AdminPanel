@@ -8,6 +8,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { AdminLayoutComponent } from './admin-layout.component';
 import { ComponentsModule } from '../../components/components.module';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
+import { FixedLengthPipe } from '../../providers/length.pipe';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +20,7 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
   declarations: [
     AdminLayoutComponent,
     DashboardComponent,
-    
+    FixedLengthPipe,
   ]
 })
 

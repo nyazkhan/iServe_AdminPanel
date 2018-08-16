@@ -37,3 +37,9 @@ export class Token {
     comment:string;
     updateInfo="reject";
   }
+
+ export class RejectInstallation{
+    pic :any;
+    comment:string;
+    updateInfo="reject";
+  }
