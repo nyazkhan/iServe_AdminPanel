@@ -70,6 +70,8 @@ export class BrandManagerComponent implements OnInit {
 
     this.brandService.addManager(fd)
       .subscribe((res: any) => {
+        console.log(res);
+        this.dataRows.unshift(res)
         this.resetform();
         $('#loaderModel').modal('hide')
         this.showNotification("success");

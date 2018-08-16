@@ -16,7 +16,7 @@ export class ServiceEngineerComponent implements OnInit {
   dataRows: any;
   isDataLoad: boolean = true;
 
-  headerRow: Array<string> = ['S.No.', 'Profile Picture', 'Name', 'User Name', 'Phone No', 'specialist', 'More details']
+  headerRow: Array<string> = ['S.No.', 'Profile Picture', 'Name', 'User Name', 'Phone No', 'specialist',]
   engineerDetails = new EngineerDetails
   pinIstrue: boolean = true;
   loadingButton: boolean = false;
@@ -99,6 +99,7 @@ export class ServiceEngineerComponent implements OnInit {
     }
     this.engineerService.addEngineer(fd)
       .subscribe((res: any) => {
+        this.dataRows.unshift(res);
         $('#loaderModel').modal('hide')
         this.showNotification('success');
         this.resetform();
