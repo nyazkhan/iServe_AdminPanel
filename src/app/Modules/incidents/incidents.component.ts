@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IncidentsService } from './incidents.service';
 import { RejectComplaint, AssingedEngineer } from '../../interface/user';
-import { element } from '../../../../node_modules/protractor';
-declare const $: any;
+import { element } from 'protractor';
+declare let $: any;
 
 @Component({
   selector: 'app-incidents',
@@ -28,9 +28,8 @@ export class IncidentsComponent implements OnInit {
   comment: string;
   RejectId: number;
   statusHeading = ["All"];
-  // statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed" ,"Rejected"];
   selectedHeadingIndex = 0;
-  headerRow = ["Incident_No. ", "Date", "Product Name","Description", "Product Category", "Incident_Category", "Priority", "Status"];
+  headerRow = ["Incident_No. ", "Date", "Product Name", "Description", "Product Category", "Incident_Category", "Priority", "Status"];
   down: any;
   isDown: boolean = false;
 
@@ -39,6 +38,9 @@ export class IncidentsComponent implements OnInit {
   assingedEngineer = new AssingedEngineer;
 
   listServiceEngineer: Array<any>;
+
+
+
 
 
   ngOnInit() {
@@ -109,7 +111,7 @@ export class IncidentsComponent implements OnInit {
 
   //get filter complaints
   getFilterComplants(i) {
-    this.filtercomplaints=[];
+    this.filtercomplaints = [];
     this.showLoader = true;
     this.currentPage = 1;
     this.incidentService.getFillterComplaint(i, this.currentPage)
@@ -194,8 +196,8 @@ export class IncidentsComponent implements OnInit {
         },
           (err) => {
             this.showLoader = false;
-            alert(JSON.stringify(err));
-            // throw err;
+            // alert(JSON.stringify(err));
+            throw err;
           })
 
     }
@@ -205,15 +207,15 @@ export class IncidentsComponent implements OnInit {
   sortBy(val) {
     this.showLoader = true;
     if (this.selectedHeadingIndex === 0) {
-      this.filtercomplaints=[];
+      this.filtercomplaints = [];
       this.incidentService.getSorting(val)
-      .subscribe((res:any)=>{
-this.filtercomplaints=res;
-this.showLoader = false;
-      })
+        .subscribe((res: any) => {
+          this.filtercomplaints = res;
+          this.showLoader = false;
+        })
 
     } else {
-      this.filtercomplaints=[];
+      this.filtercomplaints = [];
 
       this.showLoader = true;
       this.incidentService.getFilterSorting(val, this.selectedHeadingIndex)
@@ -233,8 +235,8 @@ this.showLoader = false;
 
         console.log(res)
       }, (err) => {
-        // throw err;
-        alert(JSON.stringify(err));
+        throw err;
+        // alert(JSON.stringify(err));
 
       })
   }
@@ -250,8 +252,8 @@ this.showLoader = false;
         this.commentsHistory = res;
         console.log(res)
       }, (err) => {
-        // throw err;
-        alert(JSON.stringify(err));
+        throw err;
+        // alert(JSON.stringify(err));
 
       })
   }
@@ -291,11 +293,12 @@ this.showLoader = false;
     fd.append("updateInfo ", "reject");
     this.incidentService.rejectComplaint(fd, this.currentId)
       .subscribe((res: number) => {
-
+        this.closeRejectModal();
+        this.showNotification()
         this.resetform();
       }, (err) => {
-        alert(JSON.stringify(err));
-        // throw err;
+        // alert(JSON.stringify(err));
+        throw err;
       })
   }
 
@@ -323,10 +326,11 @@ this.showLoader = false;
 
       .subscribe((res: number) => {
         this.closeAssignModal();
+        this.showNotification();
         this.resetform();
       }, (err) => {
-        alert(JSON.stringify(err));
-        // throw err;
+        // alert(JSON.stringify(err));
+        throw err;
       })
   }
 
@@ -335,6 +339,32 @@ this.showLoader = false;
     $('#assignModal').modal('hide')
   }
 
+
+  closeRejectModal() {
+    $('#rejectModal').modal('hide')
+  }
+
+  showNotification() {
+if("success"){
+    $.notify({
+  
+        icon: "add_alert",
+        message: "Incident Assign successfuly"
+     
+     
+
+    }, {
+        type: 'success',
+        timer: 1000,
+        placement: {
+          from: "top",
+          align: "right"
+        }
+      });
+  }
+  }
+
+// setTimeout(()=> {}, 1000);
 
 
 }

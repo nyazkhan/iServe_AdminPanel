@@ -34,6 +34,7 @@
 
                         <th *ngFor="let head of headerRow">{{ head }}</th>
 
+
                     </thead>
                     <tbody *ngFor="let row of filtercomplaints let i =index">
 
@@ -41,8 +42,8 @@
                         <tr (click)="getId(row.id)" data-toggle="collapse" attr.href="#collapseExample{{i}}">
                             <td>{{row.number}}</td>
                             <td>{{row.createdAt | date: 'ddMMM,yyyy'}}</td>
-                            <td>{{row.productName | fixedLength}}</td>
-                            <td>{{row.description | fixedLength }}</td>
+                            <td>{{row.productName |fixedLength}}</td>
+                            <td>{{row.description| fixedLength }}</td>
                             <td>
                                 {{row.productCategoryName}}
                             </td>
@@ -188,7 +189,7 @@
                                                     <b>Schedule Details</b>
                                                 </h4>
                                             </div>
-                                         
+
                                             <div class="col-sm-9 col-md-9 col-lg-9">
                                                 <div *ngIf="row.lastScheduleDate">
                                                     <b>Date:</b> {{ row.lastScheduleDate | date: 'ddMMM,yyyy' }}
@@ -210,7 +211,7 @@
                                                     <b>Fixed Info</b>
                                                 </h4>
                                             </div>
-                                           
+
                                             <div class="col-sm-9 col-md-9 col-lg-9">
                                                 <div *ngIf="row.fixDate">
                                                     <b>Date:</b>{{row.fixDate | date: 'dd MMM ,yyyy'}}
