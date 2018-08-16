@@ -99,6 +99,7 @@ export class ServiceEngineerComponent implements OnInit {
     }
     this.engineerService.addEngineer(fd)
       .subscribe((res: any) => {
+        this.dataRows.unshift(res);
         $('#loaderModel').modal('hide')
         this.showNotification('success');
         this.resetform();
