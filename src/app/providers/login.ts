@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { Observable } from '../../../node_modules/rxjs';
 import { BASEURL } from './app.constants';
 import { UserInfo } from '../interface/user';
-import { Observable } from '../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 @Injectable()
 export class LoginService {
   constructor(private http: HttpClient) { }

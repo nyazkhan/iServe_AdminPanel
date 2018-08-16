@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LoginService } from './login.service';
-import { Router } from '../../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { User } from '../../interface/user';
 
 
@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit {
               this.storeInfo(res);
             },
               (err) => {
-                // throw err;
-                alert(JSON.stringify(err));
+                throw err;
+                // alert(JSON.stringify(err));
               })
 
         }
@@ -51,10 +51,10 @@ export class LoginComponent implements OnInit {
       }, (err) => {
         // console.log(JSON.stringify(err) + "  errrr");
         this.submitButton = false;
-        // throw err;
+        throw err;
 
 
-        alert(JSON.stringify(err));
+        // alert(JSON.stringify(err));
 
       })
   }
@@ -80,8 +80,8 @@ export class LoginComponent implements OnInit {
       this.navigateTo();
     },
       (err) => {
-        // throw err;
-        alert(JSON.stringify(err));
+        throw err;
+        // alert(JSON.stringify(err));
       })
 }
 }

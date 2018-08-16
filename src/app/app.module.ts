@@ -1,15 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CustomHttpService } from './providers/custom-http.service';
-import { HttpClientModule } from '../../node_modules/@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { LoginComponent } from './components/login/login.component';
 import { LoginService } from './components/login/login.service';
+import { FixedLengthPipe } from './providers/length.pipe';
+// import { GlobalErrorHandlerService } from './providers/errorHandler';
 
 
 
@@ -27,7 +29,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
    
-  
+    FixedLengthPipe,
    
     LoginComponent,
     
@@ -39,7 +41,9 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [LoginService, CustomHttpService],
+  exports:[FixedLengthPipe],
+
+  providers: [LoginService, CustomHttpService ,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

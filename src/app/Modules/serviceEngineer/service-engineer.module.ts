@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServiceEngineerComponent } from './service-engineer.component';
 // import { AddEngineerComponent } from './addEngineer/add-engineer.component';
-import { RouterModule } from '../../../../node_modules/@angular/router';
-import { FormsModule, ReactiveFormsModule } from '../../../../node_modules/@angular/forms';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [

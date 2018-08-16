@@ -285,7 +285,9 @@
                         <div class="modal-footer">
 
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" [disabled]="!engineerForm.valid" class="btn btn-success">Submit</button>
+                            <button *ngIf="!loadingButton" type="submit" [disabled]="!engineerForm.valid" class="btn btn-success">Submit</button>
+                            <button *ngIf="loadingButton" type="button" class="btn btn-primary">
+                                    <i class="fa fa-spinner fa-spin"></i>submitting</button>
                         </div>
                         <!-- <div class="text-center">
                                 <button *ngIf="!loadingButton" type="submit" class="btn btn-success" [disabled]="!engineerForm.form.valid  ">Submit</button>
@@ -306,13 +308,4 @@
 
 
 
-    <!-- loader modal to show loading after form submited -->
-
-    <div class="modal fade" id="loaderModel" tabindex="-1" role="dialog" aria-labelledby="loaderModel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="loadingPage">
-                <i class="fa fa-spinner fa-spin"></i>
-
-            </div>
-        </div>
-    </div>
+    

@@ -166,7 +166,9 @@
                     <div class="modal-footer">
 
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" [disabled]="!managerForm.valid" class="btn btn-success">Submit</button>
+                        <button  *ngIf="!submitButtonHide" type="submit" [disabled]="!managerForm.valid" class="btn btn-success">Submit</button>
+                        <button *ngIf="submitButtonHide" type="button"  class="btn btn-default"> <i class="fa fa-spinner fa-spin"></i>submitting</button>
+
                     </div>
                 </form>
 
@@ -176,13 +178,4 @@
     </div>
 </div>
 <!-- brand manager form end -->
-
-
-<div class="modal fade" id="loaderModel" tabindex="-1" role="dialog" aria-labelledby="loaderModel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-<div class="loadingPage"  >
-        <i  class="fa fa-spinner fa-spin"></i>
-    <!-- loading... -->
-</div>
-        </div>
-    </div>
+ 

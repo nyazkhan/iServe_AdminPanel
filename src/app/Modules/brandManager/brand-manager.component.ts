@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { BrandManagerService } from './brand-manager.service';
 import { ManagerDetails } from '../../interface/manager_details';
 declare const $: any;
@@ -19,6 +19,7 @@ export class BrandManagerComponent implements OnInit {
   loadingButton: boolean = false;
   isBrandId: boolean = false;
   brands: any;
+  submitButtonHide:boolean= false;
   managerDetails = new ManagerDetails;
 
   headerRow: Array<string> = ['S.No.','Profile Picture','Name','User Name','Phone No','Email',]
@@ -59,8 +60,9 @@ export class BrandManagerComponent implements OnInit {
 
  
   onSubmit() {
-    this.closeManagerFormModal();
-    $('#loaderModel').modal('show')
+    this.submitButtonHide=true;
+    // this.closeManagerFormModal();
+    // $('#loaderModel').modal('show')
     this.loadingButton = true;
     const fd = new FormData();
 
@@ -71,12 +73,11 @@ export class BrandManagerComponent implements OnInit {
     this.brandService.addManager(fd)
       .subscribe((res: any) => {
         console.log(res);
-        this.dataRows.unshift(res)
         this.resetform();
-        $('#loaderModel').modal('hide')
+            this.closeManagerFormModal();
+        this.dataRows.unshift(res)
         this.showNotification("success");
       }, (err) => {
-        $('#loaderModel').modal('hide')
         this.showNotification("danger",JSON.stringify(err));
         
       })

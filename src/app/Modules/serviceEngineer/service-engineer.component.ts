@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { ServiceEngineerService } from './service-engineer.service';
 import { EngineerDetails } from '../../interface/engineer_details';
 declare const $: any;
@@ -79,8 +79,8 @@ export class ServiceEngineerComponent implements OnInit {
 
 
   onSubmit() {
-    this.closeEngineerFormModal();
-    $('#loaderModel').modal('show')
+    // this.closeEngineerFormModal();
+    // $('#loaderModel').modal('show')
 
     this.loadingButton = true;
     const fd = new FormData();
@@ -99,13 +99,12 @@ export class ServiceEngineerComponent implements OnInit {
     }
     this.engineerService.addEngineer(fd)
       .subscribe((res: any) => {
-        this.dataRows.unshift(res);
-        $('#loaderModel').modal('hide')
-        this.showNotification('success');
         this.resetform();
+            this.closeEngineerFormModal();
+        this.dataRows.unshift(res);
+        this.showNotification('success');
       }, (err) => {
 
-        $('#loaderModel').modal('hide')
         this.showNotification('danger', JSON.stringify(err));
 
         alert(JSON.stringify(err));
