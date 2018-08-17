@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BrandManagerService } from './brand-manager.service';
 import { ManagerDetails } from '../../interface/manager_details';
+import { TostService } from 'src/app/providers/tost.service';
+
 declare const $: any;
 @Component({
   selector: 'app-brand-manager',
@@ -10,7 +12,7 @@ declare const $: any;
 })
 export class BrandManagerComponent implements OnInit {
 
-  constructor(private router: Router, private brandService: BrandManagerService) { 
+  constructor(private router: Router, private brandService: BrandManagerService,private tostservice: TostService) { 
    
   }
 
@@ -35,11 +37,10 @@ export class BrandManagerComponent implements OnInit {
       .subscribe((res: any) => {
         this.dataRows = res;
         this.isDataLoad = false;
-        console.log(res)
+        // console.log(res)
       },
         (err) => {
-          // throw err;
-          alert(JSON.stringify(err));
+          this.tostservice.showNotificationFailure(err)
         })
   }
 
@@ -52,8 +53,8 @@ export class BrandManagerComponent implements OnInit {
         this.isBrandId = false;
       },
         (err) => {
-          alert(JSON.stringify(err));
-        })
+          this.tostservice.showNotificationFailure(err)
+                })
   }
 
 
@@ -72,14 +73,12 @@ export class BrandManagerComponent implements OnInit {
 
     this.brandService.addManager(fd)
       .subscribe((res: any) => {
-        console.log(res);
         this.resetform();
             this.closeManagerFormModal();
         this.dataRows.unshift(res)
-        this.showNotification("success");
+        this.showNotification();
       }, (err) => {
-        this.showNotification("danger",JSON.stringify(err));
-        
+        this.tostservice.showNotificationFailure(err)        
       })
 
 
@@ -100,8 +99,8 @@ export class BrandManagerComponent implements OnInit {
     
   }
 
-  showNotification(type,error?) {
-    if(type=="success"){
+  showNotification() {
+    
         $.notify({
       
             icon: "add_alert",
@@ -118,30 +117,6 @@ export class BrandManagerComponent implements OnInit {
             }
           });
       } 
-      if (type=="danger") {
-        $.notify({
-      
-          icon: "error_outline",
-          message: '"Failed to submit form data" <br> <b>"Try Again Later"<b> <br> '+error
-       
-       
-  
-      }, {
-          type: 'danger',
-          timer: 1000,
-          placement: {
-            from: "top",
-            align: "right"
-          }
-        });
-      } else {
-        
-      }
-
-
-
-      }
-
-
+     
 
 }

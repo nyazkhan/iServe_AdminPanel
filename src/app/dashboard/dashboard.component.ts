@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
   
   suffering = [];
   constructor(private dashboardservice: DashboardService) {
-
+    this.role = localStorage.getItem("currentUserName");
   }
 
 
@@ -445,7 +445,10 @@ export class DashboardComponent implements OnInit {
       (res) => { },
       (err) => { },
       () => {
-        // this.getAllCharts();
+      //  if (role=='management') {
+        this.getAllCharts();
+      //  }
+        
       }
     );
 
@@ -454,7 +457,7 @@ export class DashboardComponent implements OnInit {
 
     // this.getStatusCount().then(res =>{
     // });
-    this.role = localStorage.getItem("currentUserName");
+    
 
 
 

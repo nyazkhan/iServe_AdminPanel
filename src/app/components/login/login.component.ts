@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { TostService } from 'src/app/providers/tost.service';
+
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
 import { User } from '../../interface/user';
-
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { User } from '../../interface/user';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, private loginservice: LoginService) {
+  constructor(private router: Router, private tostservice: TostService, private loginservice: LoginService,) {
     if (this.loginservice.isLoggedIn()) {
 
       this.navigateTo();
@@ -40,24 +41,25 @@ export class LoginComponent implements OnInit {
               this.storeInfo(res);
             },
               (err) => {
-                throw err;
+             this.tostservice.showNotificationFailure(err)
                 // alert(JSON.stringify(err));
               })
 
-        }
-        else {
+        } else {
           this.navigateTo();
         }
       }, (err) => {
-        // console.log(JSON.stringify(err) + "  errrr");
+       
+        this.tostservice.showNotificationFailure(err)
+        console.log(err);
+        
+       
+        // alert(err);
         this.submitButton = false;
-        throw err;
-
-
-        // alert(JSON.stringify(err));
-
+    
       })
   }
+
 
   navigateTo() {
 
@@ -80,8 +82,8 @@ export class LoginComponent implements OnInit {
       this.navigateTo();
     },
       (err) => {
-        throw err;
-        // alert(JSON.stringify(err));
+        this.tostservice.showNotificationFailure(err)
+ 
       })
-}
+  }
 }
