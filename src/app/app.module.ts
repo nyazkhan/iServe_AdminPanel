@@ -10,8 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { LoginComponent } from './components/login/login.component';
 import { LoginService } from './components/login/login.service';
-import { FixedLengthPipe } from './providers/length.pipe';
-// import { GlobalErrorHandlerService } from './providers/errorHandler';
+import { TostService, } from './providers/tost.service';
 
 
 
@@ -29,7 +28,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
    
-    FixedLengthPipe,
    
     LoginComponent,
     
@@ -41,9 +39,12 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  exports:[FixedLengthPipe],
 
-  providers: [LoginService, CustomHttpService ,],
+  providers: [
+    TostService,
+    LoginService, CustomHttpService ,
+  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
