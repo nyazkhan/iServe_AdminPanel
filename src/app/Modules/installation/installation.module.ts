@@ -4,7 +4,6 @@ import { InstallationComponent } from './installation.component';
 import { RouterModule } from '@angular/router';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { FixedLengthPipe } from '../../providers/length.pipe';
 import { PipeModule } from '../../providers/pipe.module';
 
 @NgModule({

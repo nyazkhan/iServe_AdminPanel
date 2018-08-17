@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RejectInstallation, AssingedEngineer } from '../../interface/user';
 import { InstallationService } from './installation.service';
+import { TostService } from 'src/app/providers/tost.service';
+
 declare const $: any;
 
 @Component({
@@ -12,7 +14,7 @@ export class InstallationComponent implements OnInit {
 
  
  
-    constructor(private installationservice: InstallationService) {
+    constructor(private installationservice: InstallationService , private tostservice :TostService) {
 
   }
  
@@ -29,7 +31,15 @@ export class InstallationComponent implements OnInit {
   currentPage = 1;
   comment: string;
   RejectId: number;
-  statusHeading = ["All"];
+  allHeading = [
+    {
+      name: 'All',
+      color: "#FFD600",
+      id: 0,
+
+    },
+  ]
+  statusHeading:Array<object>;
   headerRow = ["Incident_No. ", "Date", "Product Name","Description", "Product Category", "Incident_Category", "Priority", "Status"];
 
   // statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed" ,"Rejected"];
@@ -77,15 +87,15 @@ export class InstallationComponent implements OnInit {
 
 
   getInstallationStatus() {
-    console.log("hello")
     this.installationservice.getInstallationStatus()
       .subscribe((res: any) => {
-        res.forEach(element => {
-          this.statusHeading.push(element.name)
+ 
+        res.unshift(this.allHeading[0]);
+        this.statusHeading=res;
 
-        });
-        console.log(this.statusHeading)
-        console.log(res)
+      },(err)=>{
+        this.tostservice.showNotificationFailure(err)
+
       })
   }
 
@@ -98,14 +108,13 @@ export class InstallationComponent implements OnInit {
       .subscribe((res: any) => {
         this.Installations = res;
         this.filterInstallation = res;
-        console.log(res);
         this.showLoader = false;
 
       },
         (err) => {
           this.showLoader = false;
-          // throw err;
-          alert(JSON.stringify(err));
+          this.tostservice.showNotificationFailure(err)
+
         })
   }
 
@@ -120,7 +129,9 @@ export class InstallationComponent implements OnInit {
       .subscribe((res: any) => {
         this.filterInstallation = res;
         this.showLoader = false;
-        console.log(res)
+      },(err)=>{
+        this.tostservice.showNotificationFailure(err)
+
       })
   }
 
@@ -162,44 +173,37 @@ export class InstallationComponent implements OnInit {
       this.showLoader = true;
       this.installationservice.getAllInstallation(this.currentPage + 1)
         .subscribe((res: Array<any>) => {
-          console.log(this.currentPage);
 
           if (res.length) {
-            // console.log('sssssssss');
 
             this.filterInstallation = this.filterInstallation.concat(res);
             this.currentPage++;
-            // this.filtterIncidents(this.selectedHeadingIndex);
           }
 
           this.showLoader = false;
         },
           (err) => {
             this.showLoader = false;
-            alert(JSON.stringify(err));
-            // throw err;
+            this.tostservice.showNotificationFailure(err)
           })
     }
     else {
       this.showLoader = true;
       this.installationservice.getFillterInstallation(this.selectedHeadingIndex, this.currentPage + 1)
         .subscribe((res: Array<any>) => {
-          console.log(this.currentPage);
 
           if (res.length) {
-            // console.log('sssssssss');
 
             this.filterInstallation = this.filterInstallation.concat(res);
             this.currentPage++;
-            // this.filtterIncidents(this.selectedHeadingIndex);
           }
 
           this.showLoader = false;
         },
           (err) => {
             this.showLoader = false;
-            alert(JSON.stringify(err));
-            // throw err;
+            this.tostservice.showNotificationFailure(err)
+
           })
 
     }
@@ -214,6 +218,9 @@ export class InstallationComponent implements OnInit {
       .subscribe((res:any)=>{
 this.filterInstallation=res;
 this.showLoader = false;
+      },(err)=>{
+        this.tostservice.showNotificationFailure(err)
+
       })
 
     } else {
@@ -224,6 +231,9 @@ this.showLoader = false;
         .subscribe((res) => {
           this.filterInstallation = res;
           this.showLoader = false;
+        },(err)=>{
+          this.tostservice.showNotificationFailure(err)
+
         })
     }
   }
@@ -235,11 +245,8 @@ this.showLoader = false;
       .subscribe((res: any) => {
         this.listServiceEngineer = res;
 
-        console.log(res)
       }, (err) => {
-        // throw err;
-        alert(JSON.stringify(err));
-
+        this.tostservice.showNotificationFailure(err)
       })
   }
 
@@ -254,8 +261,8 @@ this.showLoader = false;
         this.installationsHistory = res;
         console.log(res)
       }, (err) => {
-        // throw err;
-        alert(JSON.stringify(err));
+        this.tostservice.showNotificationFailure(err)
+
 
       })
   }
@@ -287,8 +294,6 @@ this.showLoader = false;
 
 
   onSubmit() {
-    // console.log(this.assingedEngineer)
-    // console.log(this.comment + "nothing to")
     const fd = new FormData();
     fd.append("comment", this.rejectInstallation.comment);
     fd.append("pic", this.imgfile);
@@ -298,8 +303,8 @@ this.showLoader = false;
 
         this.resetform();
       }, (err) => {
-        alert(JSON.stringify(err));
-        // throw err;
+        this.tostservice.showNotificationFailure(err)
+
       })
   }
 
@@ -317,7 +322,6 @@ this.showLoader = false;
   //assign engineer 
 
   assignFormData(data) {
-    console.log(data);
 
     const fd = new FormData();
 
@@ -329,8 +333,8 @@ this.showLoader = false;
         this.closeAssignModal();
         this.resetform();
       }, (err) => {
-        alert(JSON.stringify(err));
-        // throw err;
+        this.tostservice.showNotificationFailure(err)
+
       })
   }
 

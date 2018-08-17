@@ -16,8 +16,9 @@
 
         </div>
         <ul class="nav nav-tabs">
-            <li class="nav-item" *ngFor="let status of statusHeading let i=index">
-                <a class="nav-link active" [class.active]="i==selectedHeadingIndex" (click)="getComplaints(i)">{{status}}</a>
+            <li class="nav-item" *ngFor="let status of statusHeading ">
+                <a class="nav-link active" [class.active]="status.id==selectedHeadingIndex" 
+                (click)="getComplaints(status.id)">{{status.name}}</a>
             </li>
 
         </ul>

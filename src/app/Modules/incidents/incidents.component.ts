@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IncidentsService } from './incidents.service';
 import { RejectComplaint, AssingedEngineer } from '../../interface/user';
-import { element } from 'protractor';
+import { TostService } from 'src/app/providers/tost.service';
 declare let $: any;
 
 @Component({
@@ -12,7 +12,7 @@ declare let $: any;
 export class IncidentsComponent implements OnInit {
 
 
-  constructor(private incidentService: IncidentsService) {
+  constructor(private incidentService: IncidentsService, private tostservice :TostService) {
 
   }
 
@@ -27,8 +27,16 @@ export class IncidentsComponent implements OnInit {
   currentPage = 1;
   comment: string;
   RejectId: number;
-  statusHeading = ["All"];
-  selectedHeadingIndex = 0;
+  statusHeading:Array<object>
+  allHeading = [
+    {
+      name: 'All',
+      color: "#FFD600",
+      id: 0,
+
+    },
+  ];
+  selectedHeadingIndex=0;
   headerRow = ["Incident_No. ", "Date", "Product Name", "Description", "Product Category", "Incident_Category", "Priority", "Status"];
   down: any;
   isDown: boolean = false;
@@ -75,15 +83,15 @@ export class IncidentsComponent implements OnInit {
 
 
   getComplaintStatus() {
-    console.log("hello")
     this.incidentService.getCompStatus()
       .subscribe((res: any) => {
-        res.forEach(element => {
-          this.statusHeading.push(element.name)
+        res.unshift(this.allHeading[0]);
+        this.statusHeading=res;
+       
+      },
+      (err)=>{
+        this.tostservice.showNotificationFailure(err)
 
-        });
-        console.log(this.statusHeading)
-        console.log(res)
       })
   }
 
@@ -96,14 +104,13 @@ export class IncidentsComponent implements OnInit {
       .subscribe((res: any) => {
         this.complaints = res;
         this.filtercomplaints = res;
-        console.log(res);
         this.showLoader = false;
 
       },
         (err) => {
           this.showLoader = false;
-          // throw err;
-          alert(JSON.stringify(err));
+          this.tostservice.showNotificationFailure(err)
+
         })
   }
 
@@ -118,8 +125,12 @@ export class IncidentsComponent implements OnInit {
       .subscribe((res: any) => {
         this.filtercomplaints = res;
         this.showLoader = false;
-        console.log(res)
-      })
+
+      },
+    (err)=>{
+      this.tostservice.showNotificationFailure(err)
+
+    })
   }
 
 
@@ -144,7 +155,7 @@ export class IncidentsComponent implements OnInit {
   //   if (i == 0) {
   //     this.filtercomplaints = this.complaints;
   //   } else {
-  //     this.filtercomplaints = this.complaints.filter(element => element.statusName == this.statusHeading[i]);
+  //     this.filtercomplaints = this.complaints.filter(element => element.statusName == this.allHeading[i]);
 
   //   }
   // }
@@ -160,44 +171,37 @@ export class IncidentsComponent implements OnInit {
       this.showLoader = true;
       this.incidentService.getAllComplaint(this.currentPage + 1)
         .subscribe((res: Array<any>) => {
-          console.log(this.currentPage);
 
           if (res.length) {
-            // console.log('sssssssss');
 
             this.filtercomplaints = this.filtercomplaints.concat(res);
             this.currentPage++;
-            // this.filtterIncidents(this.selectedHeadingIndex);
           }
 
           this.showLoader = false;
         },
           (err) => {
             this.showLoader = false;
-            alert(JSON.stringify(err));
-            // throw err;
+            this.tostservice.showNotificationFailure(err)
           })
     }
     else {
       this.showLoader = true;
       this.incidentService.getFillterComplaint(this.selectedHeadingIndex, this.currentPage + 1)
         .subscribe((res: Array<any>) => {
-          console.log(this.currentPage);
 
           if (res.length) {
-            // console.log('sssssssss');
 
             this.filtercomplaints = this.filtercomplaints.concat(res);
             this.currentPage++;
-            // this.filtterIncidents(this.selectedHeadingIndex);
           }
 
           this.showLoader = false;
         },
           (err) => {
             this.showLoader = false;
-            // alert(JSON.stringify(err));
-            throw err;
+            this.tostservice.showNotificationFailure(err)
+
           })
 
     }
@@ -212,6 +216,9 @@ export class IncidentsComponent implements OnInit {
         .subscribe((res: any) => {
           this.filtercomplaints = res;
           this.showLoader = false;
+        },(err)=>{
+          this.tostservice.showNotificationFailure(err)
+
         })
 
     } else {
@@ -222,6 +229,9 @@ export class IncidentsComponent implements OnInit {
         .subscribe((res) => {
           this.filtercomplaints = res;
           this.showLoader = false;
+        },(err)=>{
+          this.tostservice.showNotificationFailure(err)
+
         })
     }
   }
@@ -233,10 +243,8 @@ export class IncidentsComponent implements OnInit {
       .subscribe((res: any) => {
         this.listServiceEngineer = res;
 
-        console.log(res)
       }, (err) => {
-        throw err;
-        // alert(JSON.stringify(err));
+        this.tostservice.showNotificationFailure(err)
 
       })
   }
@@ -252,8 +260,7 @@ export class IncidentsComponent implements OnInit {
         this.commentsHistory = res;
         console.log(res)
       }, (err) => {
-        throw err;
-        // alert(JSON.stringify(err));
+        this.tostservice.showNotificationFailure(err)
 
       })
   }
@@ -297,8 +304,7 @@ export class IncidentsComponent implements OnInit {
         this.showNotification()
         this.resetform();
       }, (err) => {
-        // alert(JSON.stringify(err));
-        throw err;
+        this.tostservice.showNotificationFailure(err)
       })
   }
 
@@ -329,8 +335,8 @@ export class IncidentsComponent implements OnInit {
         this.showNotification();
         this.resetform();
       }, (err) => {
-        // alert(JSON.stringify(err));
-        throw err;
+        this.tostservice.showNotificationFailure(err)
+
       })
   }
 
@@ -345,26 +351,25 @@ export class IncidentsComponent implements OnInit {
   }
 
   showNotification() {
-if("success"){
-    $.notify({
-  
+   
+      $.notify({
+
         icon: "add_alert",
         message: "Incident Assign successfuly"
-     
-     
 
-    }, {
-        type: 'success',
-        timer: 1000,
-        placement: {
-          from: "top",
-          align: "right"
-        }
-      });
-  }
-  }
 
-// setTimeout(()=> {}, 1000);
 
+      }, {
+          type: 'success',
+          timer: 1000,
+          placement: {
+            from: "top",
+            align: "right"
+          }
+        });
+    }
+  
+
+  
 
 }
