@@ -11,6 +11,9 @@ declare const $: any;
   styleUrls: ['./brand-manager.component.scss']
 })
 export class BrandManagerComponent implements OnInit {
+  imgfile: any;
+  urlTOShowImg: any;
+  currentId: number;
 
   constructor(private router: Router, private brandService: BrandManagerService,private tostservice: TostService) { 
    
@@ -24,7 +27,7 @@ export class BrandManagerComponent implements OnInit {
   submitButtonHide:boolean= false;
   managerDetails = new ManagerDetails;
 
-  headerRow: Array<string> = ['S.No.','Profile Picture','Name','User Name','Phone No','Email',]
+  headerRow: Array<string> = ['S.No.','Name','User Name','Email','Phone No',""]
   ngOnInit() {
 
     this.getManagers();
@@ -37,7 +40,7 @@ export class BrandManagerComponent implements OnInit {
       .subscribe((res: any) => {
         this.dataRows = res;
         this.isDataLoad = false;
-        // console.log(res)
+        console.log(res)
       },
         (err) => {
           this.tostservice.showNotificationFailure(err)
@@ -58,7 +61,17 @@ export class BrandManagerComponent implements OnInit {
   }
 
 
+  onSelectFile(event) { // called each time file input changes
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      this.imgfile = event.target.files[0];
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
 
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+        this.urlTOShowImg = event.target.result;
+      }
+    }
+  }
  
   onSubmit() {
     this.submitButtonHide=true;
@@ -69,6 +82,9 @@ export class BrandManagerComponent implements OnInit {
 
     for (const key in this.managerDetails) {
       fd.append(key, this.managerDetails[key]);
+      if(this.imgfile){
+        fd.append("pic",this.imgfile)
+      }
     }
 
     this.brandService.addManager(fd)
@@ -86,8 +102,25 @@ export class BrandManagerComponent implements OnInit {
 
 
 
-  resetform() {
 
+ 
+getId( id){
+  this.currentId= id;
+}
+
+deleteManager(){
+this.brandService.deleteManager(this.currentId)
+.subscribe((res:any)=>{
+this.tostservice.showNotificationSuccess(res);
+},(err)=>{
+ this.tostservice.showNotificationFailure(err) 
+})
+}
+
+
+
+  resetform() {
+this.imgfile=null;
     this.managerDetails = new ManagerDetails();
   }
 

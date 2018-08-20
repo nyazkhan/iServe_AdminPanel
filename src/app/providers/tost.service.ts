@@ -8,24 +8,24 @@ export class TostService {
   constructor() { }
 
 
-  // showNotificationSuccess(error) {
+  showNotificationSuccess(error) {
     
-  //     $.notify({
+      $.notify({
 
-  //       icon: "add_alert",
-  //       message: "Manager add successfuly"
+        icon: "add_alert",
+        message: error.message
 
 
 
-  //     }, {
-  //         type: 'success',
-  //         timer: 1000,
-  //         placement: {
-  //           from: "top",
-  //           align: "right"
-  //         }
-  //       });
-  //   }
+      }, {
+          type: 'success',
+          timer: 1000,
+          placement: {
+            from: "top",
+            align: "right"
+          }
+        });
+    }
 
 
 
