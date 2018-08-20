@@ -30,6 +30,9 @@ const routes: Routes = [
    
    
     LoginComponent,
+   
+   
+    
     
   ],
   imports: [

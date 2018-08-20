@@ -68,6 +68,9 @@ export class IncidentsService {
 
 
 
+
+
+
       getChartData(){
         // const I_api = `/m/status/complaint`
 

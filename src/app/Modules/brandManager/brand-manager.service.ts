@@ -29,11 +29,8 @@ getBrandIds(){
   }
 
 
-  //eddit manager details
-  // editManagerDetails(edit_id){
-  //   const edit_api =`/sa/employee/${edit_id}`
-  //   return this.customHttp.get(edit_api )
-  // }
+  
+
 
 
   deleteManager(delete_id){

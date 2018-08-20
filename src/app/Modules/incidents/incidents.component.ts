@@ -27,7 +27,7 @@ export class IncidentsComponent implements OnInit {
   currentPage = 1;
   comment: string;
   RejectId: number;
-  statusHeading:Array<object>
+  statusHeading:Array<any>
   allHeading = [
     {
       name: 'All',
@@ -87,7 +87,6 @@ export class IncidentsComponent implements OnInit {
       .subscribe((res: any) => {
         res.unshift(this.allHeading[0]);
         this.statusHeading=res;
-       
       },
       (err)=>{
         this.tostservice.showNotificationFailure(err)
@@ -242,7 +241,7 @@ export class IncidentsComponent implements OnInit {
     this.incidentService.getServiceEngAgainstComplaindId(id)
       .subscribe((res: any) => {
         this.listServiceEngineer = res;
-
+console.log(res);
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
 

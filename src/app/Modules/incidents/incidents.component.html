@@ -345,15 +345,18 @@
 
                         <div class="col-md-12">
 
-                            <div class="form-group">
+                            <div class="form-group" *ngIf="listServiceEngineer?.length > 0">
                                 <label>Select Service Engineer
                                 </label>
-                                <select class="form-control" required [(ngModel)]="assingedEngineer.serviceEngineerId" name="serviceEng" #serviceEng="ngModel">
+                                <select  class="form-control" required [(ngModel)]="assingedEngineer.serviceEngineerId" name="serviceEng" #serviceEng="ngModel">
                                     <option *ngFor="let engineer of listServiceEngineer" [value]="engineer.id">{{engineer.name}}</option>
                                 </select>
                                 <h5 [hidden]="serviceEng.valid || serviceEng.untouched" style="color: red">
                                     Service Engineer is Required
                                 </h5>
+                            </div>
+                            <div *ngIf="!(listServiceEngineer?.length > 0)">
+                                No service Engineer avalable for this aria
                             </div>
 
 

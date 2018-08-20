@@ -100,7 +100,7 @@ export class CustomHttpService {
             // console.log('Server occurred:', error);
 
             errorInfo.status = err.status;
-            errorInfo.msg=err.message;
+            errorInfo.msg= err.error.error_description;
 
             // if (err.status === 403) {
             //     // unauthorized users

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrandManagerComponent } from './brand-manager.component';
-// import { AddBrandManagerComponent } from './addBrandManager/add-brand-manager.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -15,13 +14,12 @@ import { RouterModule } from '@angular/router';
 
       { path: '', component: BrandManagerComponent },
 
-    //   { path: 'addManager', component: AddBrandManagerComponent },
+      // { path: 'edit', component: EditEngineerComponent },
 
     ])
   ],
   declarations: [
     BrandManagerComponent,
-    // AddBrandManagerComponent,
-  ]
+      ]
 })
 export class BrandManagerModule { }

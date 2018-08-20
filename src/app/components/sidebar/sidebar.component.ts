@@ -10,10 +10,14 @@ export class SidebarComponent implements OnInit {
 
  
   list:SidebarList[];
+  name: string;
+  picUrl:any;
 
   constructor(private router : Router ) { }
 
   ngOnInit() {
+    this.name= localStorage.getItem("name");
+
     if(localStorage.getItem("currentUserName") == 'management'){
       this.list = [
           {
@@ -31,7 +35,9 @@ export class SidebarComponent implements OnInit {
             icon:'build',
             route:'/installation'
           }
-      ]
+      ];
+
+    this.picUrl= localStorage.getItem("picUrl")
     }
     if(localStorage.getItem("currentUserName") == 'superadmin'){
       this.list = [
@@ -50,7 +56,9 @@ export class SidebarComponent implements OnInit {
             icon:'dashboard',
             route:'/manager'
           }
-      ]
+      ];
+      this.picUrl=null;
+
     }
   }
 logout(){

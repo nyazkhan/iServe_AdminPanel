@@ -9,9 +9,11 @@
         <div class="user">
                 <div class="d-flex">
                     <div>
-                    <img src="/assets/img/avatar.jpg" />
+                    <img *ngIf="picUrl !=='null'" src="/assets/img/avatar.jpg" />
+                    <img *ngIf="picUrl =='null'" src="{{picUrl}}" />
+
                 </div>
-                    <span class="lightColor" style=" padding: .5rem 15px;">Tina</span>
+                    <span class="lightColor" style=" padding: .5rem 15px;">{{name}}</span>
                 </div>
                 <!-- <div class="user-info">
                         <a data-toggle="collapse" href="#" class="username">
