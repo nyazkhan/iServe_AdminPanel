@@ -15,7 +15,6 @@
     text-align: center;
 }
 
-
 .action-buttons{
 i{
     position: relative;
@@ -99,8 +98,5 @@ transition:0.2s ease-in box-shadow;
 &:hover{
     background:white;
     box-shadow:0 10px 10px rgba(0,0,0,0.1);
-}
-.alertred{
-    color: red;
 }
 }

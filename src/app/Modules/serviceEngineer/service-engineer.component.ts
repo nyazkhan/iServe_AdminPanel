@@ -11,6 +11,7 @@ declare const $: any;
   styleUrls: ['./service-engineer.component.scss']
 })
 export class ServiceEngineerComponent implements OnInit {
+  currentId: number;
 
 
   constructor(private router: Router, private tostservice: TostService, private engineerService: ServiceEngineerService) { }
@@ -77,6 +78,23 @@ export class ServiceEngineerComponent implements OnInit {
         })
   }
 
+
+  getId(id){
+    this.currentId=id;
+  }
+
+  editManager(){
+    
+  }
+
+  deleteEngineer(){
+this.engineerService.deleteEngineer(this.currentId)
+.subscribe((res:any)=>{
+  this.tostservice.showNotificationSuccess(res)
+},(err)=>{
+  this.tostservice.showNotificationFailure(err)
+})
+  }
 
 
 
