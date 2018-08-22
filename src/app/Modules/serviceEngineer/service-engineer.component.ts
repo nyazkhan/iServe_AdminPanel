@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
 import { ServiceEngineerService } from './service-engineer.service';
 import { EngineerDetails } from '../../interface/engineer_details';
+import { TostService } from 'src/app/providers/tost.service';
+
 declare const $: any;
 @Component({
   selector: 'app-service-engineer',
@@ -11,12 +13,13 @@ declare const $: any;
 export class ServiceEngineerComponent implements OnInit {
 
 
-  constructor(private router: Router, private engineerService: ServiceEngineerService) { }
+  constructor(private router: Router, private tostservice: TostService, private engineerService: ServiceEngineerService) { }
 
   dataRows: any;
   isDataLoad: boolean = true;
-
-  headerRow: Array<string> = ['S.No.', 'Profile Picture', 'Name', 'User Name', 'Phone No', 'specialist',]
+  imgfile: any;
+  urlTOShowImg: string;
+  headerRow: Array<string> = ['S.No.', 'Name', 'User Name', 'Phone No', 'Specialization',]
   engineerDetails = new EngineerDetails
   pinIstrue: boolean = true;
   loadingButton: boolean = false;
@@ -43,11 +46,12 @@ export class ServiceEngineerComponent implements OnInit {
       .subscribe((res: any) => {
         this.dataRows = res;
         this.isDataLoad = false;
-        console.log(res)
+        console.log(res);
+
       },
         (err) => {
 
-          alert(JSON.stringify(err));
+          this.tostservice.showNotificationFailure(err)
         })
   }
 
@@ -58,7 +62,7 @@ export class ServiceEngineerComponent implements OnInit {
         this.pinIstrue = false;
       },
         (err) => {
-          alert(JSON.stringify(err));
+          this.tostservice.showNotificationFailure(err)
         })
   }
 
@@ -69,7 +73,7 @@ export class ServiceEngineerComponent implements OnInit {
         this.prodTypeOptions = res;
       },
         (err) => {
-          alert(JSON.stringify(err));
+          this.tostservice.showNotificationFailure(err)
         })
   }
 
@@ -78,9 +82,21 @@ export class ServiceEngineerComponent implements OnInit {
 
 
 
+  onSelectFile(event) { // called each time file input changes
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      this.imgfile = event.target.files[0];
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event: any) => { // called once readAsDataURL is completed
+        this.urlTOShowImg = event.target.result;
+      }
+    }
+  }
+
   onSubmit() {
-    this.closeEngineerFormModal();
-    $('#loaderModel').modal('show')
+    // this.closeEngineerFormModal();
+    // $('#loaderModel').modal('show')
 
     this.loadingButton = true;
     const fd = new FormData();
@@ -91,24 +107,25 @@ export class ServiceEngineerComponent implements OnInit {
           fd.append(key + "." + key1, this.engineerDetails.address[key1])
         }
       }
-
+      
+     
+      
 
       else {
         fd.append(key, this.engineerDetails[key]);
+        fd.append("pic", this.imgfile);
       }
     }
     this.engineerService.addEngineer(fd)
       .subscribe((res: any) => {
-        this.dataRows.unshift(res);
-        $('#loaderModel').modal('hide')
-        this.showNotification('success');
         this.resetform();
+        this.closeEngineerFormModal();
+        this.dataRows.unshift(res);
+        this.showNotification();
       }, (err) => {
+        this.loadingButton = false;
 
-        $('#loaderModel').modal('hide')
-        this.showNotification('danger', JSON.stringify(err));
-
-        alert(JSON.stringify(err));
+        this.tostservice.showNotificationFailure(err)
 
       })
 
@@ -117,7 +134,7 @@ export class ServiceEngineerComponent implements OnInit {
 
 
   resetform() {
-
+    this.imgfile=null;
     this.engineerDetails = new EngineerDetails();
   }
 
@@ -127,43 +144,23 @@ export class ServiceEngineerComponent implements OnInit {
 
   }
 
-  showNotification(type, error?) {
-    if (type == "success") {
-      $.notify({
+  showNotification() {
 
-        icon: "add_alert",
-        message: "Manager add successfuly"
+    $.notify({
 
-
-
-      }, {
-          type: 'success',
-          timer: 1000,
-          placement: {
-            from: "top",
-            align: "right"
-          }
-        });
-    }
-    if (type == "danger") {
-      $.notify({
-
-        icon: "error_outline",
-        message: '"Failed to submit form data" <br> <b>"Try Again With diffrent User Name"<b> <br> ' + error
+      icon: "add_alert",
+      message: "Manager add successfuly"
 
 
 
-      }, {
-          type: 'danger',
-          timer: 5000,
-          placement: {
-            from: "top",
-            align: "right"
-          }
-        });
-    } else {
-
-    }
+    }, {
+        type: 'success',
+        timer: 1000,
+        placement: {
+          from: "top",
+          align: "right"
+        }
+      });
 
 
 

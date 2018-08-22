@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CustomHttpService } from '../../providers/custom-http.service';
-import { Observable } from '../../../../node_modules/rxjs';
+import { Observable } from 'rxjs';
 import { UserInfo } from '../../interface/user';
-import { HttpHeaders } from '../../../../node_modules/@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 
 
 

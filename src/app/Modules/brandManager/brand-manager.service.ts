@@ -28,4 +28,15 @@ getBrandIds(){
     return this.customHttp.get("/sa/brand-manager/page/1")
   }
 
+
+  //eddit manager details
+  // editManagerDetails(edit_id){
+  //   const edit_api =`/sa/employee/${edit_id}`
+  //   return this.customHttp.get(edit_api )
+  // }
+
+
+  deleteManager(delete_id){
+  return this.customHttp.delete(`/sa/employee/${delete_id}`)
+  }
 }

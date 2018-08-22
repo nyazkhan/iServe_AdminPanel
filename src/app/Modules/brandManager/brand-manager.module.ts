@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrandManagerComponent } from './brand-manager.component';
 // import { AddBrandManagerComponent } from './addBrandManager/add-brand-manager.component';
-import { FormsModule, ReactiveFormsModule } from '../../../../node_modules/@angular/forms';
-import { RouterModule } from '../../../../node_modules/@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [

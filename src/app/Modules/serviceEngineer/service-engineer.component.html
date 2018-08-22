@@ -28,10 +28,15 @@
                         <td>
                             <b>{{i+1}}</b>
                         </td>
+                        <!-- <td>
+                            <img src="{{row.picUrl}}"> // src="/src/assets/img/avatar.jpg"
+                        </td> -->
                         <td>
-                            <img src="{{row.picUrl}}">
+                            <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}"> &nbsp; {{row.name}}
+
+
+
                         </td>
-                        <td>{{row.name}}</td>
                         <td>{{row.username}}</td>
                         <td>{{row.contactNo}}</td>
                         <td>{{row.specialist}}</td>
@@ -39,7 +44,7 @@
 
                     </tr>
                     <tr class="collapse" attr.id="collapseExample{{i}}">
-                        <td colh5=7 class=" incident-details">
+                        <td colspan=7 class=" incident-details">
                             <div class="row p-2">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -127,10 +132,10 @@
                                 <div class="form-group">
                                     <label>Contact No
                                     </label>
-                                    <input type="number" required pattern=".{10,11}" class="form-control " [(ngModel)]="engineerDetails.contactNo" name="contactNo"
+                                    <input type="number" required pattern=".{10,10}" class="form-control " [(ngModel)]="engineerDetails.contactNo" name="contactNo"
                                         id="contactNo" #contactNo="ngModel">
                                     <h5 [hidden]="contactNo.valid || contactNo.untouched" style="color: red">
-                                        contact No is required
+                                        Invalid Contact No.
                                     </h5>
                                 </div>
 
@@ -138,10 +143,23 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
+                              
+                                    <label>Profile Picture
+                                    </label>
+                                    <input type="file" (change)="onSelectFile($event)" 
+                                     name="pic" id="pic" class="form-control " >
+
+                                    
+                                 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-group ">
                                     <label>username
                                     </label>
-                                    <input type="text" minlength="4" maxlength="20" required [(ngModel)]="engineerDetails.username" name="username" id="username"
+                                    <input type="text" minlength="4" maxlength="20" required 
+                                    [(ngModel)]="engineerDetails.username" name="username" id="username"
                                         class="form-control " #username="ngModel">
 
                                     <h5 [hidden]="username.valid || username.untouched" style="color: red">
@@ -160,6 +178,34 @@
                                         id="password" #password="ngModel">
                                     <h5 [hidden]="password.valid || password.untouched" style="color: red">
                                         password with minimum six characters is required
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group ">
+                                    <label>Email Id
+                                    </label>
+                                    <input type="email" required [(ngModel)]="engineerDetails.email" name="email" id="email" class="form-control " #email="ngModel"
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}">
+
+                                    <h5 [hidden]="email.valid || email.untouched" style="color: red">
+                                        Email Id is required
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Specialization
+                                    </label>
+                                    <input type="text" required class="form-control  " [(ngModel)]="engineerDetails.specialist" name="specialist" id="specialist"
+                                        #specialist="ngModel">
+                                    <h5 [hidden]="specialist.valid || specialist.untouched" style="color: red">
+                                        Specialization is required
                                     </h5>
                                 </div>
                             </div>
@@ -194,8 +240,7 @@
                                     <button *ngIf="pinIstrue" type="button" class="buttonload">
                                         <i class="fa fa-spinner fa-spin"></i>
                                     </button>
-                                    <select class="form-control" required multiple [(ngModel)]="engineerDetails.pincodes" 
-                                    name="pincode" #pincode="ngModel">
+                                    <select class="form-control" required multiple [(ngModel)]="engineerDetails.pincodes" name="pincode" #pincode="ngModel">
                                         <option *ngFor="let pin of pins" [value]="pin.pincode">{{pin.pincode}}</option>
                                     </select>
                                     <h5 [hidden]="pincode.valid || pincode.untouched" style="color: red">
@@ -272,8 +317,7 @@
                                 <div class="form-group">
                                     <label>Enter Address Type
                                     </label>
-                                    <select class="form-control" required [(ngModel)]="engineerDetails.address.addressType"
-                                     name="addressType" #addressType="ngModel">
+                                    <select class="form-control" required [(ngModel)]="engineerDetails.address.addressType" name="addressType" #addressType="ngModel">
                                         <option *ngFor="let addr of addressTypeOptions" [value]="addr">{{addr}}</option>
                                     </select>
                                     <h5 [hidden]="addressType.valid || addressType.untouched" style="color: red">
@@ -285,7 +329,9 @@
                         <div class="modal-footer">
 
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" [disabled]="!engineerForm.valid" class="btn btn-success">Submit</button>
+                            <button *ngIf="!loadingButton" type="submit" [disabled]="!engineerForm.valid" class="btn btn-success">Submit</button>
+                            <button *ngIf="loadingButton" type="button" class="btn btn-primary">
+                                <i class="fa fa-spinner fa-spin"></i>submitting</button>
                         </div>
                         <!-- <div class="text-center">
                                 <button *ngIf="!loadingButton" type="submit" class="btn btn-success" [disabled]="!engineerForm.form.valid  ">Submit</button>
@@ -302,17 +348,3 @@
         </div>
     </div>
     <!-- Service Engineer form end -->
-
-
-
-
-    <!-- loader modal to show loading after form submited -->
-
-    <div class="modal fade" id="loaderModel" tabindex="-1" role="dialog" aria-labelledby="loaderModel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="loadingPage">
-                <i class="fa fa-spinner fa-spin"></i>
-
-            </div>
-        </div>
-    </div>
