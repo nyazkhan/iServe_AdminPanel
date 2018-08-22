@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '../../../../node_modules/@angular/router';
 import { ServiceEngineerService } from './service-engineer.service';
 import { EngineerDetails } from '../../interface/engineer_details';
-
+declare const $: any;
 @Component({
   selector: 'app-service-engineer',
   templateUrl: './service-engineer.component.html',
@@ -14,24 +14,14 @@ export class ServiceEngineerComponent implements OnInit {
   constructor(private router: Router, private engineerService: ServiceEngineerService) { }
 
   dataRows: any;
-  isDataLoad: boolean = false;
+  isDataLoad: boolean = true;
 
-  headerRow: Array<string> = ['S.No.', 'Profile Picture',
-    'Name',
-    'User Name',
-    'Phone No',
-    'specialist',
-    'More details'
-  ]
-
-
+  headerRow: Array<string> = ['S.No.', 'Profile Picture', 'Name', 'User Name', 'Phone No', 'specialist',]
   engineerDetails = new EngineerDetails
   pinIstrue: boolean = true;
   loadingButton: boolean = false;
   prodTypeOptions: Array<any>
-
   addressTypeOptions = ['Home', 'Office', 'Permanent'];
-
   pins: any;
 
 
@@ -53,7 +43,7 @@ export class ServiceEngineerComponent implements OnInit {
       .subscribe((res: any) => {
         this.dataRows = res;
         this.isDataLoad = false;
-console.log(res)
+        console.log(res)
       },
         (err) => {
 
@@ -65,7 +55,6 @@ console.log(res)
     this.engineerService.getPincode()
       .subscribe((res: any) => {
         this.pins = res;
-        console.log(res)
         this.pinIstrue = false;
       },
         (err) => {
@@ -78,7 +67,6 @@ console.log(res)
     this.engineerService.getProductCategory()
       .subscribe((res: any) => {
         this.prodTypeOptions = res;
-        console.log(res)
       },
         (err) => {
           alert(JSON.stringify(err));
@@ -91,6 +79,9 @@ console.log(res)
 
 
   onSubmit() {
+    this.closeEngineerFormModal();
+    $('#loaderModel').modal('show')
+
     this.loadingButton = true;
     const fd = new FormData();
 
@@ -108,10 +99,14 @@ console.log(res)
     }
     this.engineerService.addEngineer(fd)
       .subscribe((res: any) => {
-
+        this.dataRows.unshift(res);
+        $('#loaderModel').modal('hide')
+        this.showNotification('success');
         this.resetform();
       }, (err) => {
 
+        $('#loaderModel').modal('hide')
+        this.showNotification('danger', JSON.stringify(err));
 
         alert(JSON.stringify(err));
 
@@ -126,6 +121,53 @@ console.log(res)
     this.engineerDetails = new EngineerDetails();
   }
 
+  closeEngineerFormModal() {
+    $('#EngineerFormModal').modal('hide')
+
+
+  }
+
+  showNotification(type, error?) {
+    if (type == "success") {
+      $.notify({
+
+        icon: "add_alert",
+        message: "Manager add successfuly"
+
+
+
+      }, {
+          type: 'success',
+          timer: 1000,
+          placement: {
+            from: "top",
+            align: "right"
+          }
+        });
+    }
+    if (type == "danger") {
+      $.notify({
+
+        icon: "error_outline",
+        message: '"Failed to submit form data" <br> <b>"Try Again With diffrent User Name"<b> <br> ' + error
+
+
+
+      }, {
+          type: 'danger',
+          timer: 5000,
+          placement: {
+            from: "top",
+            align: "right"
+          }
+        });
+    } else {
+
+    }
+
+
+
+  }
 
 
 

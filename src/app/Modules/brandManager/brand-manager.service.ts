@@ -19,7 +19,7 @@ export class BrandManagerService {
 getBrandIds(){
   
   // const brandIds_api =`${BASEURL}/sa/product-category`
-  return this.customHttp.get("/sa/product-category")
+  return this.customHttp.get("/sa/brand")
 }
 
   //get manager details
