@@ -9,49 +9,49 @@ export class TostService {
 
 
   showNotificationSuccess(error) {
-    
-      $.notify({
 
-        icon: "add_alert",
-        message: error.message
+    $.notify({
 
-
-
-      }, {
-          type: 'success',
-          timer: 1000,
-          placement: {
-            from: "top",
-            align: "right"
-          }
-        });
-    }
+      icon: "add_alert",
+      message: error.message
 
 
 
-
-
-    showNotificationFailure (err) {
-      $.notify({
-
-        icon: "error_outline",
-        message:  err.msg,
-
-
-
-      }, {
-          type: 'danger',
-          timer: 5000,
-          placement: {
-            from: "top",
-            align: "right"
-          }
-        });
-    } 
+    }, {
+        type: 'success',
+        timer: 1000,
+        placement: {
+          from: "top",
+          align: "right"
+        }
+      });
+  }
 
 
 
-  
+
+
+  showNotificationFailure(err) {
+    $.notify({
+
+      icon: "error_outline",
+      message: err.msg,
+
+
+
+    }, {
+        type: 'danger',
+        timer: 5000,
+        placement: {
+          from: "top",
+          align: "right"
+        }
+      });
+  }
+
+
+
+
 
 
 }

@@ -11,6 +11,10 @@ declare const $: any;
   styleUrls: ['./installation.component.scss']
 })
 export class InstallationComponent implements OnInit {
+  currentIndex: number;
+  currentStatusId: number;
+  assignButtonHide: boolean=false;
+  assignTitle: string;
 
  
  
@@ -20,7 +24,7 @@ export class InstallationComponent implements OnInit {
  
 
 
-
+  loadingHistory:boolean=false;
  currentId: number;
   imgfile: any;
   urlTOShowImg: string;
@@ -40,7 +44,7 @@ export class InstallationComponent implements OnInit {
     },
   ]
   statusHeading:Array<object>;
-  headerRow = ["Incident_No. ", "Date", "Product Name","Description", "Product Category", "Incident_Category", "Priority", "Status"];
+  headerRow = ["Incident_No. ", "Date", "Product Name", "Product Category", "Priority", "Status","Comment",];
 
   // statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed" ,"Rejected"];
   selectedHeadingIndex = 0;
@@ -60,10 +64,11 @@ export class InstallationComponent implements OnInit {
     this.getchart();
     this.getInstallationStatus();
   }
-  getId(id) {
-
-    this.currentId = id;
-  }
+  setId(id,i,statusId ) {
+    this.currentIndex=i;
+        this.currentId = id;
+        this.currentStatusId= statusId;
+      }
   getchart() {
     // this.installationservice.getChartData()
     // .subscribe((res:any)=>{
@@ -239,12 +244,15 @@ this.showLoader = false;
   }
 
 
-  getAssingedId(id) {
-
+  getAssingedId(id,AssignEngName?) {
+    if (AssignEngName) {
+      this.assignTitle= "Change";
+    } else {
+      this.assignTitle= "Assign";
+    }
     this.installationservice.getServiceEngAgainstInstallationId(id)
       .subscribe((res: any) => {
-        this.listServiceEngineer = res;
-
+        this.listServiceEngineer =res.filter( element=> element.name != AssignEngName);
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
       })
@@ -255,12 +263,14 @@ this.showLoader = false;
 
 
   getInstallationsId(id) {
-
+this.loadingHistory=false;
     this.installationservice.getInstallationsHistory(id)
       .subscribe((res: number) => {
+        this.loadingHistory=true;
         this.installationsHistory = res;
         console.log(res)
       }, (err) => {
+        this.loadingHistory= true;
         this.tostservice.showNotificationFailure(err)
 
 
@@ -322,7 +332,7 @@ this.showLoader = false;
   //assign engineer 
 
   assignFormData(data) {
-
+this.assignButtonHide=true;
     const fd = new FormData();
 
     for (const key in this.assingedEngineer)
@@ -330,9 +340,22 @@ this.showLoader = false;
     this.installationservice.assignEngineer(fd, this.currentId)
 
       .subscribe((res: number) => {
+        this.assignButtonHide=false;
+        if(this.filterInstallation[this.currentIndex].statusName!='New'){
+          this.filterInstallation[this.currentIndex]=res;
+          console.log("if condition")
+ 
+         } else{
+           this.getFilterInstallations(this.currentStatusId)
+ 
+         }
         this.closeAssignModal();
+        this.showNotification("Engineer Change successfuly")
+
         this.resetform();
       }, (err) => {
+        this.assignButtonHide=false;
+
         this.tostservice.showNotificationFailure(err)
 
       })
@@ -343,6 +366,25 @@ this.showLoader = false;
     $('#assignModal').modal('hide')
   }
 
+
+  showNotification(msg?) {
+   
+    $.notify({
+
+      icon: "add_alert",
+      message: msg || "Installation Assign successfuly"
+
+
+
+    }, {
+        type: 'success',
+        timer: 1000,
+        placement: {
+          from: "top",
+          align: "right"
+        }
+      });
+  }
 
 
 }

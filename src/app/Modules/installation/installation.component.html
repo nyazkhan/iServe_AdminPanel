@@ -8,20 +8,21 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" (click)="sortBy('status')">Status</a>
-                    <!-- <a class="dropdown-item" (click)="sortBy('date')">Date</a> -->
+                    <a class="dropdown-item" (click)="sortBy('createdAt')">Date</a>
                     <a class="dropdown-item" (click)="sortBy('priority')">Priority</a>
                     <a class="dropdown-item" (click)="sortBy('category')">Category</a>
                 </div>
             </div>
 
         </div>
+        
         <ul class="nav nav-tabs">
                 <li class="nav-item" *ngFor="let status of statusHeading ">
-                        <a class="nav-link active" [class.active]="status.id==selectedHeadingIndex" 
-                        (click)="getInstallations(status.id)">{{status.name}}</a>
-                    </li>
-
-        </ul>
+                    <a class="nav-link active" 
+                    [class.active]="status.id==selectedHeadingIndex" 
+                    (click)="getInstallations(status.id)">{{status.name}}</a>
+                </li>    
+            </ul>
     </div>
 
 
@@ -39,15 +40,13 @@
                     <tbody *ngFor="let row of filterInstallation let i =index">
 
 
-                        <tr (click)="getId(row.id)" data-toggle="collapse" attr.href="#collapseExample{{i}}">
+                        <tr (click)="setId(row.id, i, row.statusId)" data-toggle="collapse" attr.href="#collapseExample{{i}}">
                             <td>{{row.number}}</td>
                             <td>{{row.createdAt | date: 'ddMMM,yyyy'}}</td>
                             <td>{{row.productName |fixedLength }}</td>
-                            <td>{{row.description |fixedLength  }}</td>
                             <td>
                                 {{row.productCategoryName}}
                             </td>
-                            <td>{{row.againstCategoryName}}</td>
                             <td>{{row.priority}}</td>
 
                             <td>
@@ -55,6 +54,7 @@
                                 {{ row.statusName }}
                                 <!-- </span> -->
                             </td>
+                            <td>{{row.description |fixedLength }}</td>
 
 
 
@@ -88,7 +88,8 @@
                                                     <b>Category:</b> {{ row.productCategoryName }}
                                                 </div>
                                                 <div *ngIf="row.productPurchaseDate">
-                                                    <b>Purchase Date:</b> {{ row.productPurchaseDate | date: 'ddMMM,yyyy' }}
+                                                    <b>Purchase Date:</b> {{ row.productPurchaseDate | date: 'ddMMM,yyyy'
+                                                    }}
                                                 </div>
                                                 <div *ngIf="row.productWarrantyEnd">
                                                     <b>Product Warranty Till : </b>{{ row.productWarrantyEnd | date: 'ddMMM,yyyy'
@@ -120,8 +121,9 @@
                                                     <b>Email:</b> {{ row.customerEmail }}
                                                 </div>
                                                 <div *ngIf="row.customerAddress">
-                                                    <b>Address:</b> {{ row.customerAddress }} {{ row.customerCity }}, {{ row.customerState
-                                                    }} {{ row.customerPostalCode }} {{ row.customerCountry }}
+                                                    <b>Address:</b> {{ row.customerAddress }} {{ row.customerCity }}, {{
+                                                    row.customerState }} {{ row.customerPostalCode }} {{ row.customerCountry
+                                                    }}
                                                 </div>
                                             </div>
                                             <div *ngIf="row.customerPicUrl" class="col-sm-3 col-md-3 col-lg-3">
@@ -156,7 +158,7 @@
                                             <div class="collg-12 col-sm-12 ">
                                                 <h4>
                                                     <b>Assigned Engineer</b>&nbsp;
-                                                    <i class=" tiny material-icons" data-toggle="modal" data-target="#assignModal" (click)="getAssingedId(row.id)">create</i>
+                                                    <i *ngIf="row.statusName !='Installed'" class=" tiny material-icons" data-toggle="modal" data-target="#assignModal" (click)="getAssingedId(row.id, row.assignedServiceEngineerName)">create</i>
                                                 </h4>
                                             </div>
 
@@ -182,14 +184,14 @@
 
 
 
-                                    <div *ngIf="!(row.statusName == 'New' || row.statusName == 'Assigned Service Engineer'|| row.statusName == 'Rejected')" class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                                    <div *ngIf="!(row.statusName == 'New' || row.statusName == 'Assigned')" class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                                         <div class="row">
                                             <div class="collg-12 col-sm-12">
                                                 <h4>
                                                     <b>Schedule Details</b>
                                                 </h4>
                                             </div>
-                                         
+
                                             <div class="col-sm-9 col-md-9 col-lg-9">
                                                 <div *ngIf="row.lastScheduleDate">
                                                     <b>Date:</b> {{ row.lastScheduleDate | date: 'ddMMM,yyyy' }}
@@ -204,14 +206,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div *ngIf="row.statusName==='Fixed' " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                                    <div *ngIf="row.statusName==='Installed' " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                                         <div class="row">
                                             <div class="collg-12 col-sm-12">
                                                 <h4>
                                                     <b>Fixed Info</b>
                                                 </h4>
                                             </div>
-                                           
+
                                             <div class="col-sm-9 col-md-9 col-lg-9">
                                                 <div *ngIf="row.fixDate">
                                                     <b>Date:</b>{{row.fixDate | date: 'dd MMM ,yyyy'}}
@@ -227,7 +229,7 @@
 
                                         </div>
                                     </div>
-                                    <div *ngIf="row.statusName==='Not Fixed' " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                                    <div *ngIf="row.statusName==='OnHold' " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                                         <div class="row">
                                             <div class="collg-12 col-sm-12">
                                                 <h4>
@@ -269,11 +271,16 @@
                                                     <!-- {{row.fixedInfo[0].createdAt | date: 'hh:mm a'}} -->
                                                 </div>
                                                 <div class="d-flex">
-                                                    <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                                                    <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                                                    <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                                                    <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                                                    <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
+                                                    <i class="material-icons" style="color:orange;width: 25px;"> star_rate
+                                                    </i>
+                                                    <i class="material-icons" style="color:orange;width: 25px;"> star_rate
+                                                    </i>
+                                                    <i class="material-icons" style="color:orange;width: 25px;"> star_rate
+                                                    </i>
+                                                    <i class="material-icons" style="color:orange;width: 25px;"> star_rate
+                                                    </i>
+                                                    <i class="material-icons" style="color:gray;width: 25px;"> star_rate
+                                                    </i>
                                                 </div>
                                                 <div>
                                                     <b>Comment:</b> Skilled person and polite nature.
@@ -302,7 +309,13 @@
 
                     </tbody>
                     <tfoot>
+                            <tr *ngIf="!(filterInstallation?.length > 0|| showLoader)">
+                                    <td colspan="9">
+                                        <h2 style="text-align: center">Nothing to Show</h2>
+                                    </td>
+                                </tr>
                         <tr>
+                           
                             <td colspan="9" style="font-size: 70px; text-align: center;">
                                 <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
                             </td>
@@ -329,7 +342,7 @@
                 <div class="card-icon">
                     <i class="material-icons">content_copy</i>
                 </div>
-                <h3 class="card-title">ASSIGN</h3>
+                <h3 class="card-title">{{assignTitle}}</h3>
             </div>
             <div class="modal-body">
                 <form #assignForm="ngForm">
@@ -344,7 +357,7 @@
 
                         <div class="col-md-12">
 
-                            <div class="form-group">
+                            <div class="form-group" *ngIf="listServiceEngineer?.length > 0">
                                 <label>Select Service Engineer
                                 </label>
                                 <select class="form-control" required [(ngModel)]="assingedEngineer.serviceEngineerId" name="serviceEng" #serviceEng="ngModel">
@@ -354,6 +367,9 @@
                                     Service Engineer is Required
                                 </h5>
                             </div>
+                            <div *ngIf="!(listServiceEngineer?.length > 0)">
+                                    No service Engineer avalable for this Installation
+                                </div>
 
 
 
@@ -362,7 +378,9 @@
                     <div class="modal-footer">
 
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" (click)="assignFormData(assignForm.value)" [disabled]="!assignForm.valid" class="btn btn-success">Assign</button>
+                        <button  *ngIf="!assignButtonHide" type="button" (click)="assignFormData(assignForm.value)" [disabled]="!assignForm.valid" class="btn btn-success">Assign</button>
+                        <button *ngIf="assignButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin"></i>submitting</button>
+
                     </div>
                 </form>
 
@@ -383,36 +401,40 @@
                 <h3 class="card-title">History</h3>
             </div>
             <div class="modal-body">
-                <div *ngIf="!installationsHistory">
+                <div *ngIf="!loadingHistory" style="    text-align: center;">
                     <!-- loader -->
-                    <p>loadin....</p>
+                    <i class="fa fa-spinner fa-spin" style="font-size:60px; "></i>
                 </div>
-                <div class="card" *ngIf="installationsHistory">
+                <div class="card" *ngIf="loadingHistory">
                     <div *ngIf="installationsHistory.length==0">
-                        <h3> New customer No History Available</h3>
+                        <h3> No Records Found</h3>
                     </div>
                     <div *ngFor="let comment of installationsHistory let i=index ">
 
-                        <div style="text-align: left" class="row" *ngIf="installationsHistory.length!==0">
+                        <div class="card-header card-header-primary">
+                            <b>{{comment.statusName}}</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="row " style="text-align: left">
+                                <div class="col-md-12">
+                                    <p>
+                                        <b>By : </b> {{comment.name }}
+                                        <br> {{comment.comment}}
+                                        <span *ngIf="comment.scheduleDate">
+                                            <br>
+                                            <b>Schedule Date:</b>{{comment.scheduleDate| date: 'dd MMM, yyyy hh : mm a'}}
+                                        </span>
+                                        <br>
+                                        <i class="material-icons">info</i> {{comment.autoComment}}
+                                        <br> {{comment.createdAt | date: 'dd MMM, yyyy hh : mm a'}}
 
-                            <h4>
-                                <b>{{comment.statusName}}</b>
-                            </h4>
-                            <div class="col-md-6">
-                                <img style="width:70px" src="{{comment.picUrl}}">
-                            </div>
-                            <div class="col-md-6">
-                                <h5>
-                                    <b>Name:</b>{{comment.name }}</h5>
-                                <h5>
-                                    <b>Create at:</b>{{comment.createdAt | date: 'dd MMM ,yyyy'}}</h5>
-                                <h5>
-                                    <b>Schedule Date:</b>{{comment.scheduleDate| date: 'dd MMM ,yyyy'}}</h5>
-                                <h5>
-                                    <b>Comment:</b>{{comment.comment}}</h5>
-                                <h5>
-                                    <b>Auto Comment:</b>{{comment.autoComment}}</h5>
+                                    </p>
 
+
+                                </div>
+                                <!-- <div class="col-md-6">
+                                            <img style="width:70px" src="{{comment.picUrl}}">
+                                        </div> -->
                             </div>
 
                         </div>

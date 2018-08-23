@@ -4,10 +4,10 @@
       <i class="material-icons">add_to_photos
       </i>
     </div>
-    <h3 class="card-title">Edit Profile</h3>
+    <h3 class="card-title"><b>Account Setting</b></h3>
   </div>
   <div class="modal-body">
-    <form (ngSubmit)="onSubmit()" #managerForm="ngForm">
+    <!-- <form (ngSubmit)="onSubmit()" #managerForm="ngForm">
 
       <div class="row">
         <div class="col-md-12">
@@ -89,12 +89,43 @@
       <div class="modal-footer">
 
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <!-- <button *ngIf="!submitButtonHide" type="submit" [disabled]="!managerForm.valid" class="btn btn-success">Submit</button> -->
-        <!-- <button *ngIf="submitButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin"></i>submitting</button> -->
 
       </div>
-    </form>
+    </form> -->
+    <div class="row">
+      <div class="col-md-8">
+          <h5 *ngIf="!(name==='null')"><b>Name :   </b> 
+            {{name}}  &nbsp;  <i class=" tiny material-icons" data-toggle="modal" data-target="#assignModal" >create</i>
+          </h5>
+          <h5 *ngIf="!(userName==='null')"><b>User Name :   </b> 
+            {{userName}} 
+          </h5>
+          <h5 *ngIf="!(userType==='null')"><b>User Type :   </b> 
+            {{userType}} 
+          </h5>
+          <h5 *ngIf="!(email==='null')"><b>Email Id:   </b>  
+            {{email}}  &nbsp;  <i class=" tiny material-icons" data-toggle="modal" data-target="#assignModal" >create</i></h5>
+          <h5 *ngIf="!(contact_No==='null')"><b>Phone No:  </b>  
+            {{contact_No}}  &nbsp;  <i class=" tiny material-icons" data-toggle="modal" data-target="#assignModal" >create</i></h5>
+      </div>
+      <div *ngIf="!(pic==='null')" class="col-md-4">
+          <h5><b>Profile Picture:</b>
+            <br>
+            <img style="width: 150px; height: 150px;" src="{{pic}} " alt="">
+            <br>  
+          </h5>
+          <button  type="button"  class="btn btn-rose  btn-md">  <i class=" tiny material-icons"  >create</i> Edit Picture</button>
 
-  </div>
+      </div>
+
+    </div>
+
+
+    
+<button  type="button"  class="btn btn-rose  btn-lg"> Change Password</button>
+  
+
+
+</div>
 
 </div>

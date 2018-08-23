@@ -9,8 +9,8 @@
         <div class="user">
                 <div class="d-flex">
                     <div>
-                    <img *ngIf="picUrl !=='null'" src="/assets/img/avatar.jpg" />
-                    <img *ngIf="picUrl =='null'" src="{{picUrl}}" />
+                    <img *ngIf="!picUrl" src="/assets/img/avatar.jpg" />
+                    <img *ngIf="picUrl" src="{{picUrl}}" />
 
                 </div>
                     <span class="lightColor" style=" padding: .5rem 15px;">{{name}}</span>
@@ -58,9 +58,9 @@
                 </a>
             </li>
           <li class="nav-item active-pro">
-              <a class="nav-link" href="#">
+              <a class="simple-text logo-normal lightColor nav-link" href="#">
                   <i class="material-icons">public</i>
-                  <p>Suvidha</p>
+                   iServe
               </a>
           </li> 
       </ul>

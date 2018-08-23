@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IncidentsService } from './incidents.service';
 import { RejectComplaint, AssingedEngineer } from '../../interface/user';
 import { TostService } from 'src/app/providers/tost.service';
+import { element } from 'protractor';
 declare let $: any;
 
 @Component({
@@ -10,6 +11,12 @@ declare let $: any;
   styleUrls: ['./incidents.component.scss']
 })
 export class IncidentsComponent implements OnInit {
+  loadingHistory: boolean =false;
+  assignTitle: string;
+  currentIndex: number;
+  assignButtonHide: boolean =false;
+  rejectButtonHide: boolean = false;
+  currentStatusId: number;
 
 
   constructor(private incidentService: IncidentsService, private tostservice :TostService) {
@@ -20,7 +27,7 @@ export class IncidentsComponent implements OnInit {
   currentId: number;
   imgfile: any;
   urlTOShowImg: string;
-  complaints: Array<any>;
+  // complaints: Array<any>;
   commentsHistory: any;
   showLoader: boolean = false;
   filtercomplaints = [];
@@ -37,7 +44,7 @@ export class IncidentsComponent implements OnInit {
     },
   ];
   selectedHeadingIndex=0;
-  headerRow = ["Incident_No. ", "Date", "Product Name", "Description", "Product Category", "Incident_Category", "Priority", "Status"];
+  headerRow = ["Incident No. ", "Date", "Product Name", "Description", "Product Category", "Incident Category", "Priority", "Status"];
   down: any;
   isDown: boolean = false;
 
@@ -56,9 +63,10 @@ export class IncidentsComponent implements OnInit {
     this.getchart();
     this.getComplaintStatus();
   }
-  getId(id) {
-
+  setId(id,i,statusId ) {
+this.currentIndex=i;
     this.currentId = id;
+    this.currentStatusId= statusId;
   }
   getchart() {
     // this.incidentService.getChartData()
@@ -101,7 +109,7 @@ export class IncidentsComponent implements OnInit {
     this.showLoader = true;
     this.incidentService.getAllComplaint(this.currentPage)
       .subscribe((res: any) => {
-        this.complaints = res;
+        // this.complaints = res;
         this.filtercomplaints = res;
         this.showLoader = false;
 
@@ -122,6 +130,7 @@ export class IncidentsComponent implements OnInit {
     this.currentPage = 1;
     this.incidentService.getFillterComplaint(i, this.currentPage)
       .subscribe((res: any) => {
+        console.log(res);
         this.filtercomplaints = res;
         this.showLoader = false;
 
@@ -140,24 +149,7 @@ export class IncidentsComponent implements OnInit {
   }
 
 
-  // filtterIncidents(i) {
-  //   console.log(i + "   id ")
-  //   this.incidentService.getFillterComplaint(i, i)
-  //     .subscribe((res: any) => {
-  //       console.log("filter")
-
-  //       console.log(res)
-  //     })
-  //   this.selectedHeadingIndex = i;
-  //   this.filtercomplaints = [];
-
-  //   if (i == 0) {
-  //     this.filtercomplaints = this.complaints;
-  //   } else {
-  //     this.filtercomplaints = this.complaints.filter(element => element.statusName == this.allHeading[i]);
-
-  //   }
-  // }
+  
 
 
 
@@ -236,12 +228,18 @@ export class IncidentsComponent implements OnInit {
   }
 
 
-  getAssingedId(id) {
+  getAssingedId(id , AssignEngName?) {
+if (AssignEngName) {
+  this.assignTitle= "Change";
+} else {
+  this.assignTitle= "Assign";
+}
 
     this.incidentService.getServiceEngAgainstComplaindId(id)
       .subscribe((res: any) => {
-        this.listServiceEngineer = res;
 console.log(res);
+        this.listServiceEngineer = res.filter( element=> element.name != AssignEngName);
+
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
 
@@ -253,12 +251,14 @@ console.log(res);
 
 
   getCommentsId(id) {
-
+    this.loadingHistory=false;
     this.incidentService.getComplaintsHistory(id)
       .subscribe((res: number) => {
         this.commentsHistory = res;
+        this.loadingHistory=true;
         console.log(res)
       }, (err) => {
+        this.loadingHistory=true
         this.tostservice.showNotificationFailure(err)
 
       })
@@ -291,6 +291,7 @@ console.log(res);
 
 
   onSubmit() {
+    this.rejectButtonHide= true;
     // console.log(this.assingedEngineer)
     // console.log(this.comment + "nothing to")
     const fd = new FormData();
@@ -299,10 +300,13 @@ console.log(res);
     fd.append("updateInfo ", "reject");
     this.incidentService.rejectComplaint(fd, this.currentId)
       .subscribe((res: number) => {
+        this.rejectButtonHide=false;
+        this.getFilterComplants(this.currentStatusId)
         this.closeRejectModal();
-        this.showNotification()
+        this.showNotification("Incident Reject successfuly")
         this.resetform();
       }, (err) => {
+        this.rejectButtonHide=true;
         this.tostservice.showNotificationFailure(err)
       })
   }
@@ -321,19 +325,28 @@ console.log(res);
   //assign engineer 
 
   assignFormData(data) {
-    console.log(data);
-
+this.assignButtonHide= true;
     const fd = new FormData();
 
     for (const key in this.assingedEngineer)
       fd.append(key, this.assingedEngineer[key]);
     this.incidentService.assignEngineer(fd, this.currentId)
 
-      .subscribe((res: number) => {
-        this.closeAssignModal();
+      .subscribe((res: any) => {
+        this.assignButtonHide= false;
+        if(this.filtercomplaints[this.currentIndex].statusName!='New'){
+         this.filtercomplaints[this.currentIndex]=res;
+         console.log("if condition")
+
+        } else{
+          this.getFilterComplants(this.currentStatusId)
+
+        }
+         this.closeAssignModal();
         this.showNotification();
         this.resetform();
       }, (err) => {
+        this.assignButtonHide=false;
         this.tostservice.showNotificationFailure(err)
 
       })
@@ -349,12 +362,12 @@ console.log(res);
     $('#rejectModal').modal('hide')
   }
 
-  showNotification() {
+  showNotification(msg?) {
    
       $.notify({
 
         icon: "add_alert",
-        message: "Incident Assign successfuly"
+        message: msg || "Incident Assign successfuly"
 
 
 

@@ -22,15 +22,7 @@
                       <span class="navbar-toggler-icon icon-bar"></span>
                   </button>
                   <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                      <form class="navbar-form">
-                          <div class="input-group no-border">
-                              <input type="text" value="" class="form-control" placeholder="Search...">
-                              <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                                  <i class="material-icons">search</i>
-                                  <div class="ripple-container"></div>
-                              </button>
-                          </div>
-                      </form>
+                      
                       <ul class="navbar-nav">
                           <li class="nav-item">
                               <a class="nav-link" href="#pablo">
@@ -43,7 +35,7 @@
                           <li class="nav-item dropdown">
                               <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   <i class="material-icons">notifications</i>
-                                  <span class="notification">5</span>
+                                  <span class="notification"> {{totalCount}} </span>
                                   <p>
                                       <span class="d-lg-none d-md-block">Some Actions</span>
                                   </p>
@@ -77,26 +69,28 @@
                                 </div>
                             </div> -->
                             <div class="user">
+                                <div style="font-weight: 700; text-align: center ">{{userType}}</div>
                                 <div class="d-flex">
                                     <div>
-                                    <img *ngIf="picUrl" class="userImage" src="/assets/img/avatar.jpg" />
-                                    <img *ngIf="!picUrl" class="userImage" src="/assets/img/avatar.jpg"  />
+                                            <img class="userImage" *ngIf="picUrl" src="{{picUrl}}" />
+                                            <img *ngIf="!picUrl" class="userImage" src="/assets/img/avatar.jpg"  />
                                     </div>
                                     <!-- <i class="material-icons">create</i> -->
 
                                     <div style="padding: 28px;">
                                         <div style="font-weight: 700"><b>{{name}}</b></div>
+                                        <div style="font-weight: 300"><b>{{username}}</b></div>
                                         <div *ngIf=" email !=='null'"> {{email}} </div>
+                                        <div *ngIf=" contactNo !=='null'"> {{contactNo}} </div>
                                     </div>
                                 </div>
                                 <div>
                                     
-                                        <button  (click)= "accountSetting()" class="btn btn-primary btn-sm btn-round">
+                                        <button style="float: left" (click)= "accountSetting()" class="btn btn-primary btn-sm btn-round">
                                                 <i class="material-icons">settings</i> Account
                                               </button>
-                                              &nbsp;
-                                              &nbsp;
-                                              <button (click)="logout()" class="btn btn-primary btn-sm btn-round">
+                                              
+                                              <button style="float: right" (click)="logout()" class="btn btn-primary btn-sm btn-round">
                                                     <i class="material-icons"> power_settings_new</i> Logout
                                                   </button>
                                     </div>
