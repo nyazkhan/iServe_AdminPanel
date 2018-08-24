@@ -137,6 +137,7 @@ this.currentIndex=i;
       },
     (err)=>{
       this.tostservice.showNotificationFailure(err)
+      this.showLoader = false;
 
     })
   }
@@ -209,6 +210,7 @@ this.currentIndex=i;
           this.showLoader = false;
         },(err)=>{
           this.tostservice.showNotificationFailure(err)
+          this.showLoader = true;
 
         })
 
@@ -222,6 +224,7 @@ this.currentIndex=i;
           this.showLoader = false;
         },(err)=>{
           this.tostservice.showNotificationFailure(err)
+          this.showLoader = true;
 
         })
     }
@@ -300,8 +303,9 @@ console.log(res);
     fd.append("updateInfo ", "reject");
     this.incidentService.rejectComplaint(fd, this.currentId)
       .subscribe((res: number) => {
+        console.log(res)
         this.rejectButtonHide=false;
-        this.getFilterComplants(this.currentStatusId)
+        this.filtercomplaints.splice(this.currentIndex ,1)
         this.closeRejectModal();
         this.showNotification("Incident Reject successfuly")
         this.resetform();

@@ -10,3 +10,11 @@ export class ManagerDetails {
     pic:any;
 
     }
+
+    export class EditManagerDetails {
+        name:string;  
+        password: string;
+        contactNo:number;
+          email:string;
+    pic:any;
+    }

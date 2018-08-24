@@ -166,7 +166,7 @@
                             <div class="form-group">
                                 <label for="contactNo">Contact No:</label>
                                 <br>
-                                <input type="number" required minlength="10" maxlength="13" class="form-control" id="contactNo" name="contactNo" [(ngModel)]="managerDetails.contactNo"
+                                <input type="number" required minlength="10" maxlength="10" class="form-control" id="contactNo" name="contactNo" [(ngModel)]="managerDetails.contactNo"
                                     #contactNo="ngModel">
                                 <h5 [hidden]="contactNo.valid || contactNo.untouched" style="color: red">
                                     Contect No. is required

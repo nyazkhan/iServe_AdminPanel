@@ -225,6 +225,7 @@ this.filterInstallation=res;
 this.showLoader = false;
       },(err)=>{
         this.tostservice.showNotificationFailure(err)
+        this.showLoader = false;
 
       })
 
@@ -238,6 +239,7 @@ this.showLoader = false;
           this.showLoader = false;
         },(err)=>{
           this.tostservice.showNotificationFailure(err)
+          this.showLoader = false;
 
         })
     }

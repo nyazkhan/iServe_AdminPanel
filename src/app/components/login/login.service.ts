@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CustomHttpService } from '../../providers/custom-http.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { UserInfo } from '../../interface/user';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -9,6 +9,11 @@ import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class LoginService {
+
+  username:Subject<string> = new Subject();
+  useremail:Subject<string> = new Subject();
+  usercontactno:Subject<string> = new Subject();
+  userpicture:Subject<any> = new Subject();
 
   constructor(private customHttp: CustomHttpService) { }
 
@@ -58,6 +63,30 @@ export class LoginService {
 //delete access token from local storage
   logout(){
 return localStorage.clear()
+}
+
+
+updateUsername(updateName:string){
+        localStorage.setItem("name", updateName);
+  this.username.next(updateName);
+}
+
+
+updateUserEmail(updateEmail:string){
+  localStorage.setItem("email", updateEmail);
+this.useremail.next(updateEmail);
+}
+
+
+updateUserContactNo(updateContactNo:string){
+  localStorage.setItem("contactNo", updateContactNo);
+this.usercontactno.next(updateContactNo);
+}
+
+
+updateUserPicture(updatePicture:string){
+  localStorage.setItem("picUrl", updatePicture);
+this.userpicture.next(updatePicture);
 }
 
 }

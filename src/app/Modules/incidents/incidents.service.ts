@@ -18,7 +18,7 @@ export class IncidentsService {
     
 
   
-
+// get filter complaints
     getFillterComplaint(id:number,pageNo:number){
       const filter_api = `/m/complaint/filter/page/${pageNo}`
       return this.customHttp.post(filter_api,{"statusId":id})
@@ -45,9 +45,8 @@ export class IncidentsService {
   
 
 
-
+// get  list of engineer for perticuler type of  complaints
       getServiceEngAgainstComplaindId(i){
-        // let header = this.getAccessToken();
         const Installation_api = `/m/complaint/${i}/service-engineer`
         return this.customHttp.get(Installation_api)
       }
@@ -93,7 +92,7 @@ export class IncidentsService {
         return this.customHttp.get(status)
       }
 
-
+      // sorting against diffrent value
       getSorting(sort){
         const sort_api =`/m/complaint/sort/${sort}/true`
         return this.customHttp.get(sort_api)
@@ -104,6 +103,20 @@ getFilterSorting(sort,filter){
   const filterSort_api =`/m/complaint/filter-sort/${sort}/true`
   return this.customHttp.post(filterSort_api,{"statusId":filter})
 }
+
+
+// edit brand manager details
+
+editManagerdetails(fd){
+// console.log(JSON.stringify(fd))
+  return this.customHttp.put(`/m`,fd)
+}
+
+changePicture(fd){
+  return this.customHttp.post(`/m/picture`,fd)
+}
+
+
 
     }
 

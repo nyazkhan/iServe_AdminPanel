@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IncidentsService } from '../../Modules/incidents/incidents.service';
 import { Router } from '@angular/router';
 import { element } from 'protractor';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,10 +19,14 @@ export class NavbarComponent implements OnInit {
   contactNo: string;
   totalCount: number =0;
   userType: string;
-  constructor(private incidentService: IncidentsService, private router : Router) { }
+  constructor(private incidentService: IncidentsService, 
+    private router : Router,
+  private loginService: LoginService
+  ) { }
   countStatus = [];
   ngOnInit() {
 
+    
     if (localStorage.getItem("currentUserName") == 'superadmin') {
       this.name = localStorage.getItem("name");
 
@@ -41,7 +46,10 @@ export class NavbarComponent implements OnInit {
 
     }
 
-
+this.subscribeUserContactNoChanges();
+this.subscribeUserEmailChanges();
+this.subscribeUsernameChanges();
+this.subscribeUserPictureChanges();
 
 
 
@@ -70,4 +78,29 @@ export class NavbarComponent implements OnInit {
   accountSetting(){
   this.router.navigate(["/incidents/edit"])
   }
+
+
+  subscribeUsernameChanges(){
+    this.loginService.username.asObservable()
+    .subscribe((updatedName:string)=>this.name=updatedName);
+  }
+
+
+  subscribeUserPictureChanges(){
+    this.loginService.userpicture.asObservable()
+    .subscribe((updatedPicture:string)=>this.picUrl=updatedPicture);
+  }
+
+
+  subscribeUserEmailChanges(){
+    this.loginService.useremail.asObservable()
+    .subscribe((updatedEmail:string)=>this.email=updatedEmail);
+  }
+
+
+  subscribeUserContactNoChanges(){
+    this.loginService.usercontactno.asObservable()
+    .subscribe((updatedContactNo:string)=>this.contactNo=updatedContactNo);
+  }
+
 }
