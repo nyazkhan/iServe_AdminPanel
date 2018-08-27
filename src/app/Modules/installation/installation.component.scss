@@ -86,10 +86,122 @@ tr{
 }
 }
 
-.incident-detail-box{
-transition:0.2s ease-in box-shadow;
-&:hover{
-    background:white;
-    box-shadow:0 10px 10px rgba(0,0,0,0.1);
+// .incident-detail-box{
+//     transition:0.2s ease-in box-shadow;
+//     &:hover{
+//         background:white;
+//         box-shadow:0 10px 10px rgba(0,0,0,0.1);
+//     }
+// }
+.tabel-detail{
+background: #f2f2f2;
+}
+// .detail-box{
+//     background: white;
+//     // margin: 10px;
+//     padding:10px 0;
+//     border-radius: 10px;
+//     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+
+//     // padding: 10px;
+// }
+.margin-right{
+margin-right: 25px;
+}
+.product-image{
+width: 110px!important;
+}
+.border-bottom{
+border-bottom: 1px solid #f2f2f2;
+}
+.font-size{
+font-size: 12px;
+}
+.margin-top{
+margin-top: 10px!important;
+}
+.detail-box{
+
+margin-left: 30px;
+margin-right: 40px;
+}
+.gridrow {
+  padding-bottom: 13px;
+  text-align: center;
+  position: relative;
+  &:before {
+    position: absolute;
+    content: '';
+    width: 50%;
+    border-bottom: 1px solid #f2f2f2;
+    bottom: 0;
+    left: 50%;
+    transform: translatex(-50%);
+
+}
+}
+.warantyRow {
+
+  text-align: center;
+
+}
+.border-right {
+position: relative;
+&:before {
+  position: absolute;
+  content: '';
+  height: 50px;
+  border-right: 1px solid #f2f2f2;
+  right: 0;
+  top: 50%;
+  transform: translatey(-50%);
+}
+}
+.assignDates{
+width: 45%;
+ margin: auto; 
+ margin-top: 20px!important;
+ padding:10px;
+}
+.icon{
+  font-size: 7em;
+  color: #03a9f4;
+}
+
+.timeline{
+padding:5px;
+margin-bottom:3px;
+.history{
+  .status{
+    padding:1px 5px;
+    border-radius:25px;
+    background:yellow;
+    display:-webkit-inline-box;
+  }
+  .comment{
+    border-left: 2px solid #03a9f4;
+    padding:20px 0 20px 5px;
+    margin-left:20px;
+    p{
+      margin:0px;
+    }
+    .date{
+      color: slategray;
+font-weight: 500;
+font-size: 12px;
+    }
+    position:relative;
+  }
+  &:last-child{
+    &:after{
+      position:absolute;
+      content:'';
+      width:15px;
+      height:15px;
+      border-radius:50%;
+      background:#03a9f4;
+      left: 42px;
+    } 
+  }
 }
 }
