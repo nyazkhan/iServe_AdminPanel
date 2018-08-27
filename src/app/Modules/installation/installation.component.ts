@@ -43,7 +43,7 @@ export class InstallationComponent implements OnInit {
 
     },
   ]
-  statusHeading:Array<object>;
+  statusHeading:Array<any>;
   headerRow = ["Incident_No. ", "Date", "Product Name", "Product Category", "Priority", "Status","Comment",];
 
   // statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed" ,"Rejected"];
@@ -254,6 +254,7 @@ this.showLoader = false;
     }
     this.installationservice.getServiceEngAgainstInstallationId(id)
       .subscribe((res: any) => {
+        console.log(res)
         this.listServiceEngineer =res.filter( element=> element.name != AssignEngName);
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
