@@ -238,6 +238,7 @@ if (AssignEngName) {
   this.assignTitle= "Assign";
 }
 
+this.resetform();
     this.incidentService.getServiceEngAgainstComplaindId(id)
       .subscribe((res: any) => {
 console.log(res);
