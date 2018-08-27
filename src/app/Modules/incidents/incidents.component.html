@@ -39,7 +39,7 @@
           <tbody *ngFor="let row of filtercomplaints let i =index">
 
 
-            <tr (click)="getId(row.id)" data-toggle="collapse" attr.href="#collapseExample{{i}}">
+            <tr (click)="setId(row.id, i, row.statusId)"data-toggle="collapse" attr.href="#collapseExample{{i}}">
               <td>{{row.number}}</td>
               <td>{{row.createdAt | date: 'ddMMM,yyyy'}}</td>
               <td>{{row.productName |fixedLength}}</td>
