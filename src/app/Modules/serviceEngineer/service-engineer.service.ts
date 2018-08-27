@@ -56,7 +56,7 @@ export class ServiceEngineerService {
 
 
 deleteEngineer(delete_id){
-  return this.customHttp.delete(`/sa/employee/${delete_id}`)
+  return this.customHttp.delete(`/m/service-engineer/${delete_id}`)
 }
 
 editPincodes(id,fd){

@@ -69,7 +69,7 @@
     </div>
 
     <!-- Chart Cards -->
-    <div (resize)="getAllCharts()" class="row">
+    <div (resize)="getAllManagmentCharts()" class="row">
           <ng-container  *ngIf="role=='superadmin'">
 
                   <div class="col-md-6">
@@ -152,7 +152,7 @@
                           <div id="open_incidences"></div>
                   </div>
                   <div class="card-body">
-                          <h4 class="card-title">Open Incidents Current</h4>
+                          <h4 class="card-title">Open  Current Incidents Against Prodect category </h4>
                   </div>
               </div>
           </div>
@@ -172,10 +172,10 @@
               <div class="col-md-6 col-sm-12">
                 <div class="card card-chart">
                     <div class="card-header card-header-danger">
-                            <div id="open_incidences"></div>
+                            <div id="draw_open_incidences_chart_by_incident_category"></div>
                     </div>
                     <div class="card-body">
-                            <h4 class="card-title">Open Incidents Current</h4>
+                            <h4 class="card-title">Open  Current Incidents Against incidents category</h4>
                     </div>
                 </div>
             </div>

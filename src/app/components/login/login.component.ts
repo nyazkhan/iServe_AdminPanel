@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   userTypes = ["management", "superadmin"];
-  user = new User("nyaz123", "123456", "", );
+  user = new User("Rajesh@123", "Abc@123", "", );
 
   submitted = false;
 

@@ -40,6 +40,7 @@ this.loadScript();
 
 
 
+    // compaints status count of products
     getStatusCount() {
         const I_api = `/m/complaint/graph/product`
 
@@ -48,7 +49,7 @@ this.loadScript();
     }
 
 
-
+// current incident new, fixed, inprogress,
     getCurrentIncident() {
         // const I_api = `/m/status/complaint`
 
@@ -63,12 +64,16 @@ this.loadScript();
     }
 
 
+// state by status of complaints
     getStateByStatus() {
         const I_api = `/m/complaint/graph/state-status`
        
         return this.customHttp.get(I_api)
 
     }
+
+
+//  incidents weekly report
 
     getIncidentWeeklyReport(){
         const I_api = `/m/complaint/graph/incident-weekly-report`
