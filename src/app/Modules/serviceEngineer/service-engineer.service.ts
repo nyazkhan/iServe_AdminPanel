@@ -56,10 +56,11 @@ export class ServiceEngineerService {
 
 
 deleteEngineer(delete_id){
-  return this.customHttp.delete(`/m/service-engineer/${delete_id}`)
+  return this.customHttp.delete(`/sa/service-engineer/${delete_id}`)
 }
 
-editPincodes(id,fd){
-  return this.customHttp.put(`/sa/pincode-detail/${id}`, fd)
+editPincodes(fd){
+  console.log(fd);
+  return this.customHttp.post(`/sa/pincode-service-engineer`, fd)
 }
 }

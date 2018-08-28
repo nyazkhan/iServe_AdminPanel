@@ -24,34 +24,34 @@
                     </th>
                 </thead>
                 <tbody *ngFor="let row of dataRows let i =index">
-                    <tr >
-                        <td data-toggle="collapse" attr.href="#collapseExample{{i}}" >
+                    <tr>
+                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">
                             <b>{{i+1}}</b>
                         </td>
-                        <!-- <td data-toggle="collapse" attr.href="#collapseExample{{i}}" >
+                        <!-- <td data-toggle="collapse"  (click)="getId( row)"attr.href="#collapseExample{{i}}" >
                             <img src="{{row.picUrl}}"> // src="/src/assets/img/avatar.jpg"
                         </td> -->
-                        <td data-toggle="collapse" attr.href="#collapseExample{{i}}" >
-                            <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}"> &nbsp; {{row.name}}
+                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">
+                            <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}">                            &nbsp;
+                            {{row.name}}
 
 
 
                         </td>
-                        <td data-toggle="collapse" attr.href="#collapseExample{{i}}" >{{row.username}}</td>
-                        <td data-toggle="collapse" attr.href="#collapseExample{{i}}" >{{row.contactNo}}</td>
-                        <td data-toggle="collapse" attr.href="#collapseExample{{i}}" >{{row.specialist}}</td>
+                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.username}}</td>
+                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.contactNo}}</td>
+                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.specialist}}</td>
 
                         <td>
-                                <!-- <i (click)="editManager(row.id)" data-toggle="modal" data-target="#EngineerFormModal" style="float: left"class="material-icons">create</i> -->
-                                
-                                <i  (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal"  class="material-icons">delete_forever</i>
-                            </td>
+                            <!-- <i (click)="editManager(row.id)" data-toggle="modal" data-target="#EngineerFormModal" style="float: left"class="material-icons">create</i> -->
+
+                            <i (click)="getId( row)" data-toggle="modal" data-target="#deleteModal" class="material-icons">delete_forever</i>
+                        </td>
                     </tr>
                     <tr class="collapse" attr.id="collapseExample{{i}}">
                         <td colspan=7 class=" incident-details">
-                            <div class="row p-2">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-4">
                                         <h5>
                                             <b>{{row.addressType }} </b> &nbsp;
                                             <i class="fa fa-phone"></i>
@@ -67,24 +67,63 @@
                                             <br> {{row.country}}, , {{row.postalCode}}
                                         </h5>
 
-                                        <h5>
-                                            <b>Assign Pincodes</b>
-                                            <ul *ngFor="let pin of row.assignPincodes">
-                                                <li>{{pin}}</li>
-                                            </ul>
-                                        </h5>
-                                    </div>
-                                    <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-8">
+                                        <b>Assign Pincodes</b>
 
-                                        <ul style="list-style-type:none" *ngFor="let type of row.productTypes let i = index">
-                                            <li>
-                                                {{i+1}} . {{type.productCategoryName}}
-                                            </li>
-                                        </ul>
+                                        <span *ngIf="!editPinShow" (click)="showEditPin()" class="badge badge-pill badge-primary">Edit</span>
+                                        <div class="row" >
+                                            <div class="col-md-6">
+                                                <ul *ngFor="let pin of assignpincode">
+                                                    <li class="badge badge-pill badge-primary">
+                                                        {{pin}}
+                                                        <i *ngIf="editPinShow" (click)="removePincode(pin)" class="material-icons">
+                                                            remove_circle
+                                                        </i>
+                                                    </li>
 
+                                                </ul>
+                                            </div>
+                                            <div  class="col-md-6" *ngIf="editPinShow">
+                                                <ul *ngFor="let pin of editpins">
+                                                    <li class="badge badge-pill badge-primary">{{pin}}
+                                                        <i (click)="addPin(pin)" class="material-icons">
+                                                            add
+                                                        </i>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                           <div *ngIf="editPinShow">
+                                                <button type="button" (click)="canclePinchanges(row)" class="badge badge-pill badge-secondary">Cancle</button>
+                                            <button *ngIf="!changeSuccessfuly" type="submit" (click)="changePincode()" class="badge badge-pill badge-success">Save
+                                                Changes</button>
+                                            <button *ngIf="changeSuccessfuly " type="button" class="badge badge-pill badge-primary">
+                                                <i class="fa fa-spinner fa-spin"></i>submitting</button>
+                                           </div>
+                                                
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="row">
+                                    
+                                        <div class="col-md-6">
+                                                <b>Assign Product Category</b> &nbsp;
+                                                <span (click)="editProductCategory()" class="badge badge-pill badge-primary" >Edit</span>
+                                                <ul style="list-style-type:none" *ngFor="let type of row.productTypes let i = index">
+                                                    <li>
+                                                        {{i+1}} . {{type.productCategoryName}} <i class="material-icons">
+                                                            remove_circle
+                                                        </i>
+                                                    </li>
+                                                </ul>
+        
+                                            </div>
+                                            <div class="col-md-6">
+
+                                            </div>
+                                </div>
+                                
 
                         </td>
                     </tr>
@@ -112,7 +151,7 @@
                         <i class="material-icons">add_to_photos
                         </i>
                     </div>
-                    <h3 class="card-title">ADD MANAGER</h3>
+                    <h3 class="card-title">ADD SERVICE ENGINEER</h3>
                 </div>
                 <div class="modal-body">
                     <form (ngSubmit)="onSubmit()" #engineerForm="ngForm">
@@ -147,14 +186,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                              
-                                    <label>Profile Picture
-                                    </label>
-                                    <input type="file" (change)="onSelectFile($event)" 
-                                     name="pic" id="pic" class="form-control " >
 
-                                    
-                                 
+                                <label>Profile Picture
+                                </label>
+                                <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control ">
+
+
+
                             </div>
                         </div>
                         <div class="row">
@@ -162,8 +200,7 @@
                                 <div class="form-group ">
                                     <label>username
                                     </label>
-                                    <input type="text" minlength="4" maxlength="20" required 
-                                    [(ngModel)]="engineerDetails.username" name="username" id="username"
+                                    <input type="text" minlength="4" maxlength="20" required [(ngModel)]="engineerDetails.username" name="username" id="username"
                                         class="form-control " #username="ngModel">
 
                                     <h5 [hidden]="username.valid || username.untouched" style="color: red">
@@ -354,7 +391,7 @@
     <!-- Service Engineer form end -->
 
     <!-- delete modal for  service engineer -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content   card card-stats">
                 <div class="card-header card-header-success card-header-icon">
@@ -368,15 +405,15 @@
                     <h3>"Are you sure you want to delete this Service Engineer?",
                     </h3>
                     <div class="modal-footer">
-    
+
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
                         <button type="submit" (click)="deleteEngineer()" class="btn btn-success">Delete</button>
-    
+
                     </div>
                 </div>
-    
+
             </div>
-        
+
         </div>
     </div>
     <!-- delete modal end here -->

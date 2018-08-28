@@ -12,8 +12,9 @@ declare const $: any;
 })
 export class ServiceEngineerComponent implements OnInit {
   currentId: number;
-
-
+  assignpincode = [];
+  editPinShow = false;
+  changeSuccessfuly=false;
   constructor(private router: Router, private tostservice: TostService, private engineerService: ServiceEngineerService) { }
 
   dataRows: any;
@@ -27,7 +28,7 @@ export class ServiceEngineerComponent implements OnInit {
   prodTypeOptions: Array<any>
   addressTypeOptions = ['Home', 'Office', 'Permanent'];
   pins: any;
-
+  editpins = [];
 
 
 
@@ -60,6 +61,12 @@ export class ServiceEngineerComponent implements OnInit {
     this.engineerService.getPincode()
       .subscribe((res: any) => {
         this.pins = res;
+        res.forEach(element => {
+
+          this.editpins.push(element.pincode);
+        });
+
+        console.log(this.editpins)
         this.pinIstrue = false;
       },
         (err) => {
@@ -72,6 +79,7 @@ export class ServiceEngineerComponent implements OnInit {
     this.engineerService.getProductCategory()
       .subscribe((res: any) => {
         this.prodTypeOptions = res;
+        console.log(res)
       },
         (err) => {
           this.tostservice.showNotificationFailure(err)
@@ -79,21 +87,28 @@ export class ServiceEngineerComponent implements OnInit {
   }
 
 
-  getId(id){
-    this.currentId=id;
+  getId(row) {
+    this.editPinShow = false;
+
+    this.currentId = row.id;
+
+    this.assignpincode = row.assignPincodes.slice(0);
+
+    this.filterPincode();
+
   }
 
-  editManager(){
-    
+  editManager() {
+
   }
 
-  deleteEngineer(){
-this.engineerService.deleteEngineer(this.currentId)
-.subscribe((res:any)=>{
-  this.tostservice.showNotificationSuccess(res)
-},(err)=>{
-  this.tostservice.showNotificationFailure(err)
-})
+  deleteEngineer() {
+    this.engineerService.deleteEngineer(this.currentId)
+      .subscribe((res: any) => {
+        this.tostservice.showNotificationSuccess(res)
+      }, (err) => {
+        this.tostservice.showNotificationFailure(err)
+      })
   }
 
 
@@ -125,9 +140,9 @@ this.engineerService.deleteEngineer(this.currentId)
           fd.append(key + "." + key1, this.engineerDetails.address[key1])
         }
       }
-      
-     
-      
+
+
+
 
       else {
         fd.append(key, this.engineerDetails[key]);
@@ -151,8 +166,94 @@ this.engineerService.deleteEngineer(this.currentId)
   }
 
 
+  ////////////////pincode Change start here////////////////
+
+  removePincode(pin) {
+    this.assignpincode = this.assignpincode.filter(element => element != pin);
+    this.editpins.push(pin);
+  }
+
+
+  showEditPin() {
+    this.editPinShow = true;
+
+  }
+
+
+  addPin(pin) {
+    this.editpins = this.editpins.filter(element => element != pin)
+    this.assignpincode.push(pin);
+
+  }
+
+  filterPincode() {
+    this.editpins = this.editpins.filter(element => this.assignpincode.indexOf(element) == -1);
+  }
+
+  canclePinchanges(row) {
+    this.assignpincode = row.assignPincodes;
+    console.log(row)
+    this.editpins = [];
+    this.pins.forEach(element => {
+
+      this.editpins.push(element.pincode);
+    });
+    this.filterPincode();
+    this.editPinShow = false;
+
+  }
+
+
+  changePincode() {
+    this.changeSuccessfuly=true;
+    console.log(this.assignpincode)
+
+    this.engineerService.editPincodes({ "pincodes": this.assignpincode, "serviceEngineerId": this.currentId })
+      .subscribe((res: any) => {
+        this.changeSuccessfuly=false;
+        this.editPinShow = false;
+
+        console.log(res);
+        this.tostservice.showNotificationSuccess("change successfuly")
+      }, (err) => {
+        this.changeSuccessfuly=false;
+        this.tostservice.showNotificationFailure(err)
+      })
+  }
+
+//////////////pincode change end here/////////////
+
+
+
+
+//////////product category change start here///////
+
+editProductCategory(){
+
+}
+
+
+
+removeCategory(){}
+
+
+addCategory(){}
+
+cancleChange(){}
+
+
+changeCategory(){}
+
+
+
+
+
+
+/////////product categor ends here////////////
+
+
   resetform() {
-    this.imgfile=null;
+    this.imgfile = null;
     this.engineerDetails = new EngineerDetails();
   }
 

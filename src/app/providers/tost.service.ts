@@ -8,12 +8,12 @@ export class TostService {
   constructor() { }
 
 
-  showNotificationSuccess(error) {
+  showNotificationSuccess(message?) {
 
     $.notify({
 
       icon: "add_alert",
-      message: error.message
+      message: message || "Successfull"
 
 
 
