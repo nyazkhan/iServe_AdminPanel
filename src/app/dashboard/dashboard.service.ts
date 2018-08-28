@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class DashboardService {
 
     constructor(private customHttp: CustomHttpService) {
-this.loadScript();
+        this.loadScript();
     }
 
 
@@ -49,7 +49,15 @@ this.loadScript();
     }
 
 
-// current incident new, fixed, inprogress,
+
+
+
+    getDashbord(){
+        return this.customHttp.get(`/m/dashboard/card/2018-08`);
+    }
+
+
+    // current incident new, fixed, inprogress,
     getCurrentIncident() {
         // const I_api = `/m/status/complaint`
 
@@ -64,18 +72,18 @@ this.loadScript();
     }
 
 
-// state by status of complaints
+    // state by status of complaints
     getStateByStatus() {
         const I_api = `/m/complaint/graph/state-status`
-       
+
         return this.customHttp.get(I_api)
 
     }
 
 
-//  incidents weekly report
+    //  incidents weekly report
 
-    getIncidentWeeklyReport(){
+    getIncidentWeeklyReport() {
         const I_api = `/m/complaint/graph/incident-weekly-report`
 
         return this.customHttp.get(I_api)
@@ -86,24 +94,29 @@ this.loadScript();
 
 
 
-    getCategoryCounts(){
+    getCategoryCounts() {
         const I_api = `/m/complaint/graph/category`
-       
-        return this.customHttp.get(I_api)  
+
+        return this.customHttp.get(I_api)
     }
 
 
-    getCategoryStatus(){
+    getCategoryStatus() {
         const I_api = `/m/complaint/graph/category-status`
-       
-        return this.customHttp.get(I_api)    
+
+        return this.customHttp.get(I_api)
     }
 
 
-getMTTR(){
-    const I_api = `/m/complaint/graph/mttr`
-       
-    return this.customHttp.get(I_api)   
-}
+    getMTTR() {
+        const I_api = `/m/complaint/graph/mttr`
+
+        return this.customHttp.get(I_api)
+    }
+
+
+
+
+
 
 }

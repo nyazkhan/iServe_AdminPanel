@@ -7,13 +7,13 @@
                     <div class="card-icon">
                         <i class="material-icons">style</i>
                     </div>
-                    <p class="card-category">Purchased</p>
-                    <h3 class="card-title">10,708
+                    <p class="card-category">Total Incidents</p>
+                    <h3 class="card-title">{{totalIncidents}}
                     </h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">date_range</i> Last 24 Hours
+                        <i class="material-icons">date_range</i> Last 1 Month
                     </div>
                 </div>
             </div>
@@ -24,12 +24,12 @@
                     <div class="card-icon">
                         <i class="material-icons">attach_money</i>
                     </div>
-                    <p class="card-category">Revenue</p>
-                    <h3 class="card-title">$34,245</h3>
+                    <p class="card-category">Fixed Incidents By iServe</p>
+                    <h3 class="card-title"> {{fixedIncidents}} </h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">date_range</i> Last 24 Hours
+                        <i class="material-icons">date_range</i> Last 1 Months
                     </div>
                 </div>
             </div>
@@ -40,12 +40,12 @@
                     <div class="card-icon">
                         <i class="material-icons">info_outline</i>
                     </div>
-                    <p class="card-category">Incidents</p>
-                    <h3 class="card-title">895</h3>
+                    <p class="card-category">Installation By iServe</p>
+                    <h3 class="card-title">{{installation}}</h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">date_range</i> Last 24 Hours
+                        <i class="material-icons">date_range</i> Last 1 Months
                     </div>
                 </div>
             </div>
@@ -56,12 +56,12 @@
                     <div class="card-icon">
                           <i class="material-icons">offline_pin</i>
                     </div>
-                    <p class="card-category">Incidents Fixed</p>
-                    <h3 class="card-title">751</h3>
+                    <p class="card-category">Product Register On iServe</p>
+                    <h3 class="card-title">{{ProductRegister}}</h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">date_range</i> Last 24 Hours
+                        <i class="material-icons">date_range</i> Last 1 Month
                     </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@
                           <div id="open_incidences"></div>
                   </div>
                   <div class="card-body">
-                          <h4 class="card-title">Open  Current Incidents Against Prodect category </h4>
+                          <h4 class="card-title"> Incidents Against Product category With Status </h4>
                   </div>
               </div>
           </div>
@@ -175,7 +175,7 @@
                             <div id="draw_open_incidences_chart_by_incident_category"></div>
                     </div>
                     <div class="card-body">
-                            <h4 class="card-title">Open  Current Incidents Against incidents category</h4>
+                            <h4 class="card-title">Incidents Against incident category With Status</h4>
                     </div>
                 </div>
             </div>
@@ -209,14 +209,14 @@
                                   <div id="regions_chart"></div>
                           </div>
                           <div class="card-body">
-                                  <h4 class="card-title">Regional Incitents</h4>
+                                  <h4 class="card-title">Regional Incidents</h4>
                           </div>
                       </div>
                   </div>
                   <div class="col-md-6 col-sm-12">
                           <div class="card card-chart">
                               <div class="card-header card-header-primary">
-                                      <div id="incedents_hour"></div>
+                                      <!-- <div id="incedents_hour"></div> -->
                               </div>
                               <div class="card-body">
                                       <h4 class="card-title">Average Incident Life Span (in hours)</h4>

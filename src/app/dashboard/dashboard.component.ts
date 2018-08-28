@@ -34,11 +34,49 @@ export class DashboardComponent implements OnInit {
 
   suffering = [];
   incidentByCategory = [];
+
+  incidentStatus1: any;
+  incidentStatus2: any;
+  incidentStatus3: any;
+  incidentStatus4: any;
+  incidentStatus5: any;
+  incidentStatus6: any;
+  incidentStatus7: any;
+
+
+  productStatus1: any;
+  productStatus2: any;
+  productStatus3: any;
+  productStatus4: any;
+  productStatus5: any;
+  productStatus6: any;
+  productStatus7: any;
+
+
+  totalIncidents: number
+  fixedIncidents: number;
+  installation: number;
+  ProductRegister: number;
+
+
+
+
   constructor(private dashboardservice: DashboardService) {
-    this.role = localStorage.getItem("currentUserName");
   }
 
 
+
+
+  getDashboardDetails() {
+    this.dashboardservice.getDashbord()
+      .subscribe((res: any) => {
+        console.log(res);
+        this.totalIncidents=res.complaintCount;
+        this.fixedIncidents=res.fixedComplaintCount;
+        this.installation=res.installationCount;
+        this.ProductRegister=res.productsRegisteredCount;
+      })
+  }
 
 
 
@@ -48,24 +86,39 @@ export class DashboardComponent implements OnInit {
   getCurrent_Incid_Againgst_Incid_Category() {
     this.dashboardservice.getCategoryStatus()
       .subscribe((res: any) => {
-        console.log(res);
-        this.incidentByCategory.push(['Appliances', 'New', 'Fixed', 'InProgress', { role: 'annotation' }]);
-        res.forEach((element: any) => {
-          var TotalCount = element.count;
-          element.statusInfo.forEach(element => {
-            if (element.name === "New") {
-              this.statusNew = element.count;
+        this.incidentByCategory.push(['Appliances', 'New', 'Assigned Service Engineer', 'Scheduled', 'Rejected', 'Not Fixed', 'Fixed', 'OnHold', { role: 'annotation' }]);
+        res.forEach((element1: any) => {
+
+
+
+          element1.statusInfo.forEach(element => {
+
+            if (element.id == 1) {
+              this.incidentStatus1 = element.count;
             }
-            if (element.name === "Assigned Service Engineer") {
-              this.statusFixed = element.count;
-            } else {
-              this.statusRepair = TotalCount - (this.statusNew + this.statusFixed)
+            if (element.id == 2) {
+              this.incidentStatus2 = element.count;
+            }
+            if (element.id == 3) {
+              this.incidentStatus3 = element.count;
+            }
+            if (element.id == 4) {
+              this.incidentStatus4 = element.count;
+            }
+            if (element.id == 5) {
+              this.incidentStatus5 = element.count;
+            }
+            if (element.id == 1) {
+              this.incidentStatus6 = element.count;
+            }
+            if (element.id == 1) {
+              this.incidentStatus7 = element.count;
             }
 
 
           })
-          this.incidentByCategory.push([element.name, this.statusNew, this.statusFixed, this.statusRepair, ''])
-          console.log(this.incidentByCategory)
+
+          this.incidentByCategory.push([element1.name, parseInt(this.incidentStatus1), parseInt(this.incidentStatus2), parseInt(this.incidentStatus3), parseInt(this.incidentStatus4), parseInt(this.incidentStatus5), parseInt(this.incidentStatus6), parseInt(this.incidentStatus7), ''])
         });
 
         google.charts.setOnLoadCallback(this.draw_open_incidences_chart_by_incident_category(this));
@@ -86,10 +139,11 @@ export class DashboardComponent implements OnInit {
       vAxis: {
         title: 'Incidents Category'
       },
-      legend: { position: 'top', maxLines: 3 },
+      legend: { position: 'top', maxLines: 7 },
       bar: { groupWidth: '75%' },
       isStacked: true,
-      colors: ['#fdcdcd', '#ff5252', '#a70000'],
+
+      colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
       animation: {
         "startup": true,
         duration: 600,
@@ -108,22 +162,39 @@ export class DashboardComponent implements OnInit {
     this.dashboardservice.getCurrentIncident()
       .subscribe((res: any) => {
         console.log(res);
-        this.incidents.push(['Appliances', 'New', 'Fixed', 'InProgress', { role: 'annotation' }]);
-        res.forEach((element: any) => {
-          var TotalCount = element.count;
-          element.statusInfo.forEach(element => {
-            if (element.name === "New") {
-              this.statusNew = element.count;
+        this.incidents.push(['Appliances', 'New', 'Assigned Service Engineer', 'Scheduled', 'Rejected', 'Not Fixed', 'Fixed', 'OnHold', { role: 'annotation' }]);
+        res.forEach((element1: any) => {
+
+
+
+          element1.statusInfo.forEach(element => {
+
+            if (element.id == 1) {
+              this.productStatus1 = element.count;
             }
-            if (element.name === "Assigned Service Engineer") {
-              this.statusFixed = element.count;
-            } else {
-              this.statusRepair = TotalCount - (this.statusNew + this.statusFixed)
+            if (element.id == 2) {
+              this.productStatus2 = element.count;
             }
+            if (element.id == 3) {
+              this.productStatus3 = element.count;
+            }
+            if (element.id == 4) {
+              this.productStatus4 = element.count;
+            }
+            if (element.id == 5) {
+              this.productStatus5 = element.count;
+            }
+            if (element.id == 1) {
+              this.productStatus6 = element.count;
+            }
+            if (element.id == 1) {
+              this.productStatus7 = element.count;
+            }
+            console.log(element.count + " if")
 
 
           })
-          this.incidents.push([element.name, this.statusNew, this.statusFixed, this.statusRepair, ''])
+          this.incidents.push([element1.name, parseInt(this.productStatus1), parseInt(this.productStatus2), parseInt(this.productStatus3), parseInt(this.productStatus4), parseInt(this.productStatus5), parseInt(this.productStatus6), parseInt(this.productStatus7), ''])
           console.log(this.incidents)
         });
 
@@ -139,10 +210,10 @@ export class DashboardComponent implements OnInit {
       chartArea: {
         left: 120,
       },
-      legend: { position: 'top', maxLines: 3 },
+      legend: { position: 'top', maxLines: 7 },
       bar: { groupWidth: '75%' },
       isStacked: true,
-      colors: ['#fdcdcd', '#ff5252', '#a70000'],
+      colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
       animation: {
         "startup": true,
         duration: 600,
@@ -153,7 +224,7 @@ export class DashboardComponent implements OnInit {
     let open_incidences_chart = new google.visualization.BarChart(document.getElementById('open_incidences'));
     open_incidences_chart.draw(data, options);
   }
-// current incident against Product   ending here
+  // current incident against Product   ending here
 
 
   //  incident against Product   starts here
@@ -381,15 +452,21 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(that.meanTiming);
 
     var options = {
-      chartArea: { width: '50%' },
+      chartArea: {
+        left: 120,
+      },
       hAxis: {
         title: 'Mean Time To Repair (in days)',
         minValue: 0
       },
+
       vAxis: {
         title: 'Appliances'
       },
-      'legend': 'top',
+      legend: { position: 'top', maxLines: 7 },
+      bar: { groupWidth: '75%' },
+      isStacked: true,
+
       colors: ['#e63935'],
       animation: {
         "startup": true,
@@ -409,6 +486,8 @@ export class DashboardComponent implements OnInit {
   //  all managent charts load on managment loggin
   getAllManagmentCharts() {
     google.charts.load('current', { packages: ['corechart', 'bar'] });
+
+    this.getDashboardDetails();
     this.getStatusCounts();
     this.getCurrentIncidents();
     this.getIncidentWeeklyReports();
@@ -423,6 +502,7 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
+    this.role = localStorage.getItem("currentUserName");
 
 
 
@@ -460,111 +540,111 @@ export class DashboardComponent implements OnInit {
 
 
 
-//   ceo_customer_sufferers() {
-//     let data = google.visualization.arrayToDataTable([
-//       ['Appliances', '#Sufferers'],
-//       ['Water Purifier', 20],
-//       ['Vacuum Cleaner', 55,],
-//       ['Air Purifier', 32],
-//       ['Security Solutions', 45],
-//       ['Health Conditionerss', 8]
-//     ]);
+  //   ceo_customer_sufferers() {
+  //     let data = google.visualization.arrayToDataTable([
+  //       ['Appliances', '#Sufferers'],
+  //       ['Water Purifier', 20],
+  //       ['Vacuum Cleaner', 55,],
+  //       ['Air Purifier', 32],
+  //       ['Security Solutions', 45],
+  //       ['Health Conditionerss', 8]
+  //     ]);
 
-//     let options = {
-//       chartArea: {
-//         left: 120,
-//       },
-//       backgroundColor: 'transparent',
-//       hAxis: {
-//         title: 'Customers Suffering',
-//         minValue: 0,
-//         textStyle: { color: '#fff' },
-//         titleTextStyle: { color: '#fff' },
-//         baselineColor: '#fff',
-//       },
-//       vAxis: {
-//         title: 'Appliances',
-//         textStyle: { color: '#fff' },
-//         titleTextStyle: { color: '#fff' },
-//       },
-//       'legend': 'top',
-//       legendTextStyle: { color: '#fff' },
-//       colors: ['#fff'],
-//       animation: {
-//         "startup": true,
-//         duration: 600,
-//         easing: 'in-out'
-//       }
-//     };
+  //     let options = {
+  //       chartArea: {
+  //         left: 120,
+  //       },
+  //       backgroundColor: 'transparent',
+  //       hAxis: {
+  //         title: 'Customers Suffering',
+  //         minValue: 0,
+  //         textStyle: { color: '#fff' },
+  //         titleTextStyle: { color: '#fff' },
+  //         baselineColor: '#fff',
+  //       },
+  //       vAxis: {
+  //         title: 'Appliances',
+  //         textStyle: { color: '#fff' },
+  //         titleTextStyle: { color: '#fff' },
+  //       },
+  //       'legend': 'top',
+  //       legendTextStyle: { color: '#fff' },
+  //       colors: ['#fff'],
+  //       animation: {
+  //         "startup": true,
+  //         duration: 600,
+  //         easing: 'in-out'
+  //       }
+  //     };
 
-//     let chart = new google.visualization.BarChart(document.getElementById('ceo_customer_sufferers'));
-//     chart.draw(data, options);
-//   }
-
-
+  //     let chart = new google.visualization.BarChart(document.getElementById('ceo_customer_sufferers'));
+  //     chart.draw(data, options);
+  //   }
 
 
 
-//  incidents_hour() {
-//       let data = google.visualization.arrayToDataTable([
-//           ['Appliances', 'Customer', 'Support Centre', 'Engineer', 'Repair', { role: 'annotation' }],
-//       ['Water Purifier', 0.25, 4, 9, 4, ''],
-//       ['Vacuum Cleaner', 1, 2, 12, 3, ''],
-//       ['Air Purifier', 0.5, 3, 7, 5, ''],
-//       ['Security Solutions', 0.25, 1, 8, 4, ''],
-//       ['Health Conditionerss', 0.3, 1, 5, 1, '']
-//     ]);
-
-//     let options = {
-//         chartArea: {
-//             left: 120,
-//       },
-//       legend: { position: 'top', maxLines: 3 },
-//       bar: { groupWidth: '75%' },
-//       isStacked: true,
-//       colors: ['#c370fd', '#9b3aee', '#8e2baa', '#5a0173'],
-//       animation: {
-//         "startup": true,
-//         duration: 600,
-//         easing: 'in-out'
-//       }
-//     };
-
-//     let chart = new google.visualization.BarChart(document.getElementById('incedents_hour'));
-//     chart.draw(data, options);
-//   }
 
 
+  //  incidents_hour() {
+  //       let data = google.visualization.arrayToDataTable([
+  //           ['Appliances', 'Customer', 'Support Centre', 'Engineer', 'Repair', { role: 'annotation' }],
+  //       ['Water Purifier', 0.25, 4, 9, 4, ''],
+  //       ['Vacuum Cleaner', 1, 2, 12, 3, ''],
+  //       ['Air Purifier', 0.5, 3, 7, 5, ''],
+  //       ['Security Solutions', 0.25, 1, 8, 4, ''],
+  //       ['Health Conditionerss', 0.3, 1, 5, 1, '']
+  //     ]);
 
-//   sufferers_piechart() {
+  //     let options = {
+  //         chartArea: {
+  //             left: 120,
+  //       },
+  //       legend: { position: 'top', maxLines: 3 },
+  //       bar: { groupWidth: '75%' },
+  //       isStacked: true,
+  //       colors: ['#c370fd', '#9b3aee', '#8e2baa', '#5a0173'],
+  //       animation: {
+  //         "startup": true,
+  //         duration: 600,
+  //         easing: 'in-out'
+  //       }
+  //     };
 
-//       var data = google.visualization.arrayToDataTable([
-//       ['Appliance', '#Sufferers'],
-//       ['Ovens', 11],
-//       ['Steam Vacuum Cleaner', 2],
-//       ['Hobs & Cooktops', 2],
-//       ['Kitchen Chimneys', 2],
-//       ['Microwaves', 7],
-//       ['Drawers', 3]
-//     ]);
+  //     let chart = new google.visualization.BarChart(document.getElementById('incedents_hour'));
+  //     chart.draw(data, options);
+  //   }
 
-//     var options = {
-//         'width': 600,
-//         'height': 400,
-//       'legend': 'left',
-//       is3D: true,
-//       colors: ['#ea4b59', '#f0954f', '#ffe902', '#bccf01', '#64c6ef', '#009fe3', '#c066a7'],
-//       animation: {
-//           "startup": true,
-//           duration: 600,
-//           easing: 'in-out'
-//         }
-//       };
 
-//       var chart = new google.visualization.PieChart(document.getElementById('sufferers_piechart'));
 
-//       chart.draw(data, options);
-//     }
+  //   sufferers_piechart() {
+
+  //       var data = google.visualization.arrayToDataTable([
+  //       ['Appliance', '#Sufferers'],
+  //       ['Ovens', 11],
+  //       ['Steam Vacuum Cleaner', 2],
+  //       ['Hobs & Cooktops', 2],
+  //       ['Kitchen Chimneys', 2],
+  //       ['Microwaves', 7],
+  //       ['Drawers', 3]
+  //     ]);
+
+  //     var options = {
+  //         'width': 600,
+  //         'height': 400,
+  //       'legend': 'left',
+  //       is3D: true,
+  //       colors: ['#ea4b59', '#f0954f', '#ffe902', '#bccf01', '#64c6ef', '#009fe3', '#c066a7'],
+  //       animation: {
+  //           "startup": true,
+  //           duration: 600,
+  //           easing: 'in-out'
+  //         }
+  //       };
+
+  //       var chart = new google.visualization.PieChart(document.getElementById('sufferers_piechart'));
+
+  //       chart.draw(data, options);
+  //     }
 
 
 }

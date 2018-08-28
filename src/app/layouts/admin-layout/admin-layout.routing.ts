@@ -12,10 +12,7 @@ export const AdminLayoutRoutes: Routes = [
 
         path: '', component: AdminLayoutComponent,
         children: [
-              { path: 'dashboard', component: DashboardComponent,
-              canActivate: [AuthDashboardGuard]
-
-            },
+              
 
             {
                 path: 'incidents', loadChildren: '../../Modules/incidents/incidents.module#IncidentsModule',
@@ -33,9 +30,12 @@ export const AdminLayoutRoutes: Routes = [
             {
                 path: 'engineer', loadChildren: '../../Modules/serviceEngineer/service-engineer.module#ServiceEngineerModule',
                 canActivate: [AuthGuard]
-            }
+            },
 
-            
+            { path: 'dashboard', component: DashboardComponent,
+              canActivate: [AuthDashboardGuard]
+
+            },
         ]
     }
 ];
