@@ -224,7 +224,7 @@ export class DashboardComponent implements OnInit {
       legend: { position: 'top', maxLines: 7 },
       bar: { groupWidth: '75%' },
       isStacked: true,
-      colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
+      colors: ['#EF9A9A','#EF5350','#E53935','#C62828','#B71C1C'],
       animation: {
         "startup": true,
         duration: 600,
