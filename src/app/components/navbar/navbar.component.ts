@@ -11,7 +11,7 @@ import { LoginService } from '../login/login.service';
 })
 export class NavbarComponent implements OnInit {
 
-  role = localStorage.getItem("roles");
+  role = localStorage.getItem("currentUserName");
   name: string;
   picUrl: string;
   email: string;
@@ -76,7 +76,7 @@ this.subscribeUserPictureChanges();
   }
 
   accountSetting(){
-  this.router.navigate(["/incidents/edit"])
+  this.router.navigate(["/edit"])
   }
 
 

@@ -89,4 +89,27 @@ updateUserPicture(updatePicture:string){
 this.userpicture.next(updatePicture);
 }
 
+
+
+// edit brand manager details
+
+editManagerdetails(fd){
+  // console.log(JSON.stringify(fd))
+    return this.customHttp.put(`/m`,fd)
+  }
+  
+  changePicture(fd){
+    return this.customHttp.post(`/m/picture`,fd)
+  }
+  
+  
+  changeManagerPassword(fd){
+  
+    return this.customHttp.put(`/m/password`,fd)
+  }
+  
+
+
+
+
 }
