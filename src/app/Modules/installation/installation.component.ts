@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RejectInstallation, AssingedEngineer } from '../../interface/user';
 import { InstallationService } from './installation.service';
 import { TostService } from 'src/app/providers/tost.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 declare const $: any;
 
@@ -18,7 +19,10 @@ export class InstallationComponent implements OnInit {
 
  
  
-    constructor(private installationservice: InstallationService , private tostservice :TostService) {
+    constructor(private installationservice: InstallationService ,
+       private tostservice :TostService,
+       private router: Router,
+       private activatedRoute: ActivatedRoute) {
 
   }
  
@@ -44,10 +48,10 @@ export class InstallationComponent implements OnInit {
     },
   ]
   statusHeading:Array<any>;
-  headerRow = ["Incident_No. ", "Date", "Product Name", "Product Category", "Priority", "Status","Comment",];
+  headerRow = ["Installation No. ", "Date", "Product Name", "Product Category", "Priority", "Status","Comment",];
 
   // statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed" ,"Rejected"];
-  selectedHeadingIndex = 0;
+  selectedHeadingId = 0;
   
   down: any;
   isDown: boolean = false;
@@ -60,32 +64,43 @@ export class InstallationComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getInstallations(0);
-    this.getchart();
+    
     this.getInstallationStatus();
+    this.subscribeRouteChanges();
   }
   setId(id,i,statusId ) {
     this.currentIndex=i;
         this.currentId = id;
         this.currentStatusId= statusId;
       }
-  getchart() {
-    // this.installationservice.getChartData()
-    // .subscribe((res:any)=>{
-    //   console.log(res);
-    // })
+ 
+      subscribeRouteChanges() {
+        this.activatedRoute.queryParams
+          .subscribe((e: Params) => {
+            if (e.sId) {
+    
+              const statusId = Number(e.sId);
+              this.getInstallations(statusId);
+            } else {
+              this.router.navigate(['/installation'], { queryParams: { sId: 0 } });
+            }
+    
+          });
+      }
+    
+      onHeadingClick(statusId:number){
+        this.router.navigate(['/installation'], { queryParams: { sId: statusId } });
+    
+      }
 
-  }
 
-
-
-  getInstallations(i?: number) {
-    this.selectedHeadingIndex = i;
+  getInstallations(id: number) {
+    this.selectedHeadingId = id;
     this.currentPage = 1;
-    if (i === 0) {
+    if (id === 0) {
       this.getAllInstallations();
     } else {
-      this.getFilterInstallations(i);
+      this.getFilterInstallations(id);
     }
 
   } 
@@ -156,7 +171,7 @@ export class InstallationComponent implements OnInit {
 
   //       console.log(res)
   //     })
-  //   this.selectedHeadingIndex = i;
+  //   this.selectedHeadingId = i;
   //   this.filterInstallation = [];
 
   //   if (i == 0) {
@@ -174,7 +189,7 @@ export class InstallationComponent implements OnInit {
 
   lodeMore() {
 
-    if (this.selectedHeadingIndex === 0) {
+    if (this.selectedHeadingId === 0) {
       this.showLoader = true;
       this.installationservice.getAllInstallation(this.currentPage + 1)
         .subscribe((res: Array<any>) => {
@@ -194,7 +209,7 @@ export class InstallationComponent implements OnInit {
     }
     else {
       this.showLoader = true;
-      this.installationservice.getFillterInstallation(this.selectedHeadingIndex, this.currentPage + 1)
+      this.installationservice.getFillterInstallation(this.selectedHeadingId, this.currentPage + 1)
         .subscribe((res: Array<any>) => {
 
           if (res.length) {
@@ -217,7 +232,7 @@ export class InstallationComponent implements OnInit {
 
   sortBy(val) {
     this.showLoader = true;
-    if (this.selectedHeadingIndex === 0) {
+    if (this.selectedHeadingId === 0) {
       this.filterInstallation=[];
       this.installationservice.getSorting(val)
       .subscribe((res:any)=>{
@@ -233,7 +248,7 @@ this.showLoader = false;
       this.filterInstallation=[];
 
       this.showLoader = true;
-      this.installationservice.getFilterSorting(val, this.selectedHeadingIndex)
+      this.installationservice.getFilterSorting(val, this.selectedHeadingId)
         .subscribe((res) => {
           this.filterInstallation = res;
           this.showLoader = false;

@@ -17,7 +17,7 @@
     </div>
     <ul class="nav nav-tabs">
       <li class="nav-item" *ngFor="let status of statusHeading ">
-        <a class="nav-link active" [class.active]="status.id==selectedHeadingIndex" (click)="getComplaints(status.id)">{{status.name}}</a>
+        <a class="nav-link active" [class.active]="status.id==selectedHeadingId" (click)="onHeadingClick(status.id)">{{status.name}}</a>
       </li>
 
     </ul>
@@ -45,15 +45,13 @@
               <td>{{row.productName |fixedLength}}</td>
               <td>{{row.description| fixedLength }}</td>
               <td>
-                {{row.productCategoryName}}
+                {{row.productCategoryName | fixedLength}}
               </td>
               <td>{{row.againstCategoryName}}</td>
               <td>{{row.priority}}</td>
 
               <td>
-                <!-- <span class="badge" [ngClass]="row.statusName"> -->
-                {{ row.statusName }}
-                <!-- </span> -->
+                {{ row.statusName | fixedLength }}
               </td>
 
 

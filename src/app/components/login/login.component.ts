@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
       console.log("navigate work")
       this.router.navigate(['/dashboard']);
     } else if (localStorage.getItem("currentUserName") == "superadmin") {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/engineer']);
 
     }
     else {

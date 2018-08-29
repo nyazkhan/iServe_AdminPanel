@@ -1,6 +1,6 @@
 
   <div class="container-fluid">
-    <div class="row">
+    <div *ngIf="role=='management'" class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
@@ -24,7 +24,7 @@
                     <div class="card-icon">
                         <i class="material-icons">attach_money</i>
                     </div>
-                    <p class="card-category">Fixed Incidents By iServe</p>
+                    <p class="card-category">Fixed Incidents</p>
                     <h3 class="card-title"> {{fixedIncidents}} </h3>
                 </div>
                 <div class="card-footer">
@@ -40,7 +40,7 @@
                     <div class="card-icon">
                         <i class="material-icons">info_outline</i>
                     </div>
-                    <p class="card-category">Installation By iServe</p>
+                    <p class="card-category">Installation</p>
                     <h3 class="card-title">{{installation}}</h3>
                 </div>
                 <div class="card-footer">
@@ -56,7 +56,7 @@
                     <div class="card-icon">
                           <i class="material-icons">offline_pin</i>
                     </div>
-                    <p class="card-category">Product Register On iServe</p>
+                    <p class="card-category">Product Register</p>
                     <h3 class="card-title">{{ProductRegister}}</h3>
                 </div>
                 <div class="card-footer">
@@ -216,7 +216,7 @@
                   <div class="col-md-6 col-sm-12">
                           <div class="card card-chart">
                               <div class="card-header card-header-primary">
-                                      <!-- <div id="incedents_hour"></div> -->
+                                      <div id="open_installations"></div>
                               </div>
                               <div class="card-body">
                                       <h4 class="card-title">Average Incident Life Span (in hours)</h4>

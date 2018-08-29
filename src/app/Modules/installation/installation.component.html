@@ -1,7 +1,7 @@
 <div class="card">
         <div class="card-header card-header-primary">
           <div class="d-flex justify-content-between">
-            <h4 class="card-title ">Incidents</h4>
+            <h4 class="card-title ">Installation</h4>
             <div class="dropdown">
               <a class="nav-link  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="material-icons"> filter_list </i>
@@ -18,8 +18,8 @@
           <ul class="nav nav-tabs">
             <li class="nav-item" *ngFor="let status of statusHeading ">
               <a class="nav-link active" 
-              [class.active]='status.id == selectedHeadingIndex' 
-              (click)="getInstallations(status.id)">{{status.name}}</a>
+              [class.active]='status.id == selectedHeadingId' 
+              (click)="onHeadingClick(status.id)">{{status.name}}</a>
             </li>
     
           </ul>

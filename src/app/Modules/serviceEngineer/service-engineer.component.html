@@ -31,14 +31,17 @@
                         <!-- <td data-toggle="collapse"  (click)="getId( row)"attr.href="#collapseExample{{i}}" >
                             <img src="{{row.picUrl}}"> // src="/src/assets/img/avatar.jpg"
                         </td> -->
-                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">
+                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">                       
+                           
                             <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}">                            &nbsp;
+                            <i *ngIf="!row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" class="material-icons">person</i>
                             {{row.name}}
 
 
 
                         </td>
                         <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.username}}</td>
+                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.email}}</td>
                         <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.contactNo}}</td>
                         <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.specialist}}</td>
 
@@ -53,15 +56,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <h5>
-                                            <b>{{row.addressType }} </b> &nbsp;
-                                            <i class="fa fa-phone"></i>
-                                            {{row.addressPhone}}
-                                            <br>
-                                            <br>
-                                            <b>Email Id:</b>{{row.email}}</h5>
-
-                                        <h5>
-                                            <b>Address:</b>
+                                            <b> {{row.addressType }} Address:</b>
                                             {{row.address}} ,
                                             <br> {{row.city}} , {{row.state}} ,
                                             <br> {{row.country}}, , {{row.postalCode}}

@@ -21,7 +21,7 @@ export class ServiceEngineerComponent implements OnInit {
   isDataLoad: boolean = true;
   imgfile: any;
   urlTOShowImg: string;
-  headerRow: Array<string> = ['S.No.', 'Name', 'User Name', 'Phone No', 'Specialization',]
+  headerRow: Array<string> = ['S.No.', 'Name', 'User Name', 'Email','Phone No', 'Specialization',]
   engineerDetails = new EngineerDetails
   pinIstrue: boolean = true;
   loadingButton: boolean = false;

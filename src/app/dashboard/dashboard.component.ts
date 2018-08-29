@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { Observable } from 'rxjs';
 import { TryCatchStmt } from '@angular/compiler';
+import {  Router } from '@angular/router';
 
 declare var google: any;
 declare var require: any;
@@ -53,15 +54,28 @@ export class DashboardComponent implements OnInit {
   productStatus7: any;
 
 
+  installationProduct1: any;
+  installationProduct2: any;
+  installationProduct3: any;
+  installationProduct4: any;
+  installationProduct5: any;
+  installationProduct6: any;
+  installationProduct7: any;
+
+
   totalIncidents: number
   fixedIncidents: number;
   installation: number;
   ProductRegister: number;
 
 
+  installationBycategory=[];
 
 
-  constructor(private dashboardservice: DashboardService) {
+
+  constructor(private dashboardservice: DashboardService,
+    private router: Router,
+   ) {
   }
 
 
@@ -99,19 +113,19 @@ export class DashboardComponent implements OnInit {
             if (element.id == 2) {
               this.incidentStatus2 = element.count;
             }
-            if (element.id == 3) {
+            if (element.id == 4) {
               this.incidentStatus3 = element.count;
             }
-            if (element.id == 4) {
+            if (element.id == 5) {
               this.incidentStatus4 = element.count;
             }
-            if (element.id == 5) {
+            if (element.id == 6) {
               this.incidentStatus5 = element.count;
             }
-            if (element.id == 1) {
+            if (element.id == 7) {
               this.incidentStatus6 = element.count;
             }
-            if (element.id == 1) {
+            if (element.id == 9) {
               this.incidentStatus7 = element.count;
             }
 
@@ -121,13 +135,13 @@ export class DashboardComponent implements OnInit {
           this.incidentByCategory.push([element1.name, parseInt(this.incidentStatus1), parseInt(this.incidentStatus2), parseInt(this.incidentStatus3), parseInt(this.incidentStatus4), parseInt(this.incidentStatus5), parseInt(this.incidentStatus6), parseInt(this.incidentStatus7), ''])
         });
 
-        google.charts.setOnLoadCallback(this.draw_open_incidences_chart_by_incident_category(this));
+        this.draw_open_incidences_chart_by_incident_category();
       }
       )
   }
 
-  draw_open_incidences_chart_by_incident_category(that) {
-    let data = google.visualization.arrayToDataTable(that.incidentByCategory)
+  draw_open_incidences_chart_by_incident_category() {
+    let data = google.visualization.arrayToDataTable(this.incidentByCategory)
     let options = {
       chartArea: {
         left: 120,
@@ -175,37 +189,34 @@ export class DashboardComponent implements OnInit {
             if (element.id == 2) {
               this.productStatus2 = element.count;
             }
-            if (element.id == 3) {
+            if (element.id == 4) {
               this.productStatus3 = element.count;
             }
-            if (element.id == 4) {
+            if (element.id == 5) {
               this.productStatus4 = element.count;
             }
-            if (element.id == 5) {
+            if (element.id == 6) {
               this.productStatus5 = element.count;
             }
-            if (element.id == 1) {
+            if (element.id == 7) {
               this.productStatus6 = element.count;
             }
-            if (element.id == 1) {
+            if (element.id == 9) {
               this.productStatus7 = element.count;
             }
-            console.log(element.count + " if")
 
 
           })
           this.incidents.push([element1.name, parseInt(this.productStatus1), parseInt(this.productStatus2), parseInt(this.productStatus3), parseInt(this.productStatus4), parseInt(this.productStatus5), parseInt(this.productStatus6), parseInt(this.productStatus7), ''])
-          console.log(this.incidents)
         });
 
-        google.charts.setOnLoadCallback(this.draw_open_incidences_chart(this));
-        console.log(this.incidents)
+        this.draw_open_incidences_chart();
       }
       )
   }
 
-  draw_open_incidences_chart(that) {
-    let data = google.visualization.arrayToDataTable(that.incidents)
+  draw_open_incidences_chart() {
+    let data = google.visualization.arrayToDataTable(this.incidents)
     let options = {
       chartArea: {
         left: 120,
@@ -221,12 +232,55 @@ export class DashboardComponent implements OnInit {
       }
     };
 
+
     let open_incidences_chart = new google.visualization.BarChart(document.getElementById('open_incidences'));
+    
+   
+    google.visualization.events.addListener(open_incidences_chart, 'select', ()=>{
+      var selectedItem = open_incidences_chart.getSelection()[0];
+     
+     var stdId :number;
+      console.log(selectedItem)
+ 
+       if (selectedItem) {
+
+        if (selectedItem.column==1) {
+          stdId=1;
+        };
+        if (selectedItem.column==2) {
+          stdId=2;
+        };
+        if (selectedItem.column==3) {
+          stdId=4;
+        };
+        if (selectedItem.column==4) {
+          stdId=5;
+        };
+        if (selectedItem.column==5) {
+          stdId=6;
+        };
+        if (selectedItem.column==6) {
+          stdId=7;
+        };
+        if (selectedItem.column==7) {
+          stdId=9;
+        };
+
+
+ this.routeToIncidents(stdId);
+       }
+ 
+    });    
+
+
     open_incidences_chart.draw(data, options);
   }
   // current incident against Product   ending here
 
+routeToIncidents(id){
+  this.router.navigate(['/incidents'], { queryParams: { sId: id } });
 
+}
   //  incident against Product   starts here
   getStatusCounts() {
 
@@ -238,12 +292,12 @@ export class DashboardComponent implements OnInit {
         res.forEach((element: any) => {
           this.suffering.push([element.name, element.count])
         });
-        google.charts.setOnLoadCallback(this.customer_suffering_report(this));
+        this.customer_suffering_report();
       });
 
   }
 
-  customer_suffering_report(that) {
+  customer_suffering_report() {
 
     let options = {
       chartArea: { width: '50%' },
@@ -262,7 +316,7 @@ export class DashboardComponent implements OnInit {
         easing: 'in-out'
       }
     };
-    let data = google.visualization.arrayToDataTable(that.suffering);
+    let data = google.visualization.arrayToDataTable(this.suffering);
     let chart = new google.visualization.BarChart(document.getElementById('customer_suffering_report'));
     chart.draw(data, options);
     google.visualization.events.addListener(chart, 'select', function () {
@@ -299,16 +353,15 @@ export class DashboardComponent implements OnInit {
         this.weeklyReport.push(['Appliances', 'Carry Forward', 'New', 'Closed'])
         res.forEach(element => {
           this.weeklyReport.push([element.name, element.carryForwardCount, element.count, element.fixCount])
-          console.log(this.weeklyReport)
         });
 
-        google.charts.setOnLoadCallback(this.incident_weekly_report(this));
+        this.incident_weekly_report();
       })
   }
 
 
-  incident_weekly_report(that) {
-    let data = google.visualization.arrayToDataTable(that.weeklyReport);
+  incident_weekly_report() {
+    let data = google.visualization.arrayToDataTable(this.weeklyReport);
 
 
     let options = {
@@ -356,14 +409,14 @@ export class DashboardComponent implements OnInit {
         // this.stateCount.push(['haryana', '4'])
         res.forEach(element => {
           this.stateCount.push([element.state, element.count])
-          google.charts.setOnLoadCallback(this.regions_chart(this));
         });
+        this.regions_chart();
       })
   }
 
-  regions_chart(that) {
+  regions_chart() {
     {
-      let data = google.visualization.arrayToDataTable(that.stateCount);
+      let data = google.visualization.arrayToDataTable(this.stateCount);
 
       let options = {
         region: 'IN',
@@ -393,13 +446,12 @@ export class DashboardComponent implements OnInit {
         res.forEach(element => {
           this.complaintCount.push([element.name, element.count])
         });
-
-        google.charts.setOnLoadCallback(this.Complaint_Category(this));
+        this.Complaint_Category();
 
       })
   }
 
-  Complaint_Category(that) {
+  Complaint_Category() {
 
     let options = {
       chartArea: { width: '50%' },
@@ -418,7 +470,7 @@ export class DashboardComponent implements OnInit {
         easing: 'in-out'
       }
     };
-    let data = google.visualization.arrayToDataTable(that.complaintCount);
+    let data = google.visualization.arrayToDataTable(this.complaintCount);
     let chart = new google.visualization.BarChart(document.getElementById('Complaint_Category'));
     chart.draw(data, options);
   }
@@ -440,20 +492,19 @@ export class DashboardComponent implements OnInit {
         console.log(res)
         this.meanTiming.push(['Appliances', 'Mean time to repair'])
         res.forEach(element => {
-          this.meanTiming.push([element.name, parseInt(element.meanTime)])
-          google.charts.setOnLoadCallback(this.repair_time(this));
+          this.meanTiming.push([element.name, 24])
         });
 
-
+        this.repair_time();
       })
   }
-  repair_time(that) {
+  repair_time() {
 
-    var data = google.visualization.arrayToDataTable(that.meanTiming);
+    var data = google.visualization.arrayToDataTable(this.meanTiming);
 
     var options = {
       chartArea: {
-        left: 120,
+        left: 80,
       },
       hAxis: {
         title: 'Mean Time To Repair (in days)',
@@ -483,10 +534,121 @@ export class DashboardComponent implements OnInit {
   // mean time to repair end here
 
 
+
+///////////////////////
+
+
+getCurrentInstallations() {
+  this.dashboardservice.getCurrentInstallation()
+    .subscribe((res: any) => {
+      console.log(res);
+      this.installationBycategory.push(['Appliances', 'New',  'Scheduled',  'OnHold','Assigned','Installed', { role: 'annotation' }]);
+      res.forEach((element1: any) => {
+
+
+
+        element1.statusInfo.forEach(element => {
+
+          if (element.id == 1) {
+            this.installationProduct1 = element.count;
+          }
+          if (element.id == 4) {
+            this.installationProduct2 = element.count;
+          }
+          if (element.id == 9) {
+            this.installationProduct3 = element.count;
+          }
+          if (element.id == 10) {
+            this.installationProduct4 = element.count;
+          }
+          if (element.id == 11) {
+            this.installationProduct5 = element.count;
+          }
+          
+
+
+        })
+        this.installationBycategory.push([element1.productCategoryName, parseInt(this.installationProduct1), parseInt(this.installationProduct2), parseInt(this.installationProduct3), parseInt(this.installationProduct4), parseInt(this.installationProduct5), ''])
+      });
+
+      this.draw_open_installation_chart();
+    }
+    )
+}
+
+draw_open_installation_chart() {
+  let data = google.visualization.arrayToDataTable(this.installationBycategory)
+  let options = {
+    chartArea: {
+      left: 120,
+    },
+    legend: { position: 'top', maxLines: 7 },
+    bar: { groupWidth: '75%' },
+    isStacked: true,
+    colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
+    animation: {
+      "startup": true,
+      duration: 600,
+      easing: 'in-out'
+    }
+  };
+
+
+  let open_installations_chart = new google.visualization.BarChart(document.getElementById('open_installations'));
+  
+ 
+  google.visualization.events.addListener(open_installations_chart, 'select', ()=>{
+    var selectedItem = open_installations_chart.getSelection()[0];
+   
+    var inStdId :number;
+    
+
+     if (selectedItem) {
+      if (selectedItem.column==1) {
+        inStdId=1;
+      };
+      if (selectedItem.column==2) {
+        inStdId=4;
+      };
+      if (selectedItem.column==3) {
+        inStdId=9;
+      };
+      if (selectedItem.column==4) {
+        inStdId=10;
+      };
+      if (selectedItem.column==5) {
+        inStdId=11;
+      };
+// this.routeToIncidents(selectedItem.column);
+this.router.navigate(['/installation'], { queryParams: { sId:inStdId  } });
+
+       // var topping = data.getValue(selectedItem.row, 0);
+       // alert('The user selected ' + topping);
+     }
+
+  });    
+
+
+  open_installations_chart.draw(data, options);
+}
+
+//////////////////////
+
+
+
+
+
+
   //  all managent charts load on managment loggin
   getAllManagmentCharts() {
     google.charts.load('current', { packages: ['corechart', 'bar'] });
 
+    google.charts.setOnLoadCallback(()=>{
+
+
+
+
+    this.getCurrent_Incid_Againgst_Incid_Category();
     this.getDashboardDetails();
     this.getStatusCounts();
     this.getCurrentIncidents();
@@ -495,7 +657,8 @@ export class DashboardComponent implements OnInit {
     this.getCategoryByStatus();
     this.getCategoryCount();
     this.getMeanTime();
-    this.getCurrent_Incid_Againgst_Incid_Category();
+    this.getCurrentInstallations();
+  })
 
 
   }

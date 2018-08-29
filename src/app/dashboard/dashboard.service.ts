@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class DashboardService {
 
     constructor(private customHttp: CustomHttpService) {
-        this.loadScript();
+        // this.loadScript();
     }
 
 
@@ -70,6 +70,15 @@ export class DashboardService {
         return this.customHttp.get(I_api)
 
     }
+
+
+    getCurrentInstallation(){
+        // const I_api = `/m/installation/graph/product-status`
+        return this.customHttp.get(`/m/installation/graph/product-status`)
+
+    }
+
+
 
 
     // state by status of complaints

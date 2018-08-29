@@ -7,8 +7,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 )
 export class FixedLengthPipe implements PipeTransform {
   transform(value: string): string {
-    if (value.length > 10) {
-      value = value.substring(0, 20) + "...";
+    if (value.length > 15) {
+      value = value.substring(0, 15) + "...";
     }
     return value;
   }

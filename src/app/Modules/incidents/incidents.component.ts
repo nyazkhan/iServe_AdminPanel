@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IncidentsService } from './incidents.service';
 import { RejectComplaint, AssingedEngineer } from '../../interface/user';
 import { TostService } from 'src/app/providers/tost.service';
-import { element } from 'protractor';
+import { Router, ActivatedRoute,  Params } from '@angular/router';
 declare let $: any;
 
 @Component({
@@ -11,15 +11,20 @@ declare let $: any;
   styleUrls: ['./incidents.component.scss']
 })
 export class IncidentsComponent implements OnInit {
-  loadingHistory: boolean =false;
+  loadingHistory: boolean = false;
   assignTitle: string;
   currentIndex: number;
-  assignButtonHide: boolean =false;
+  assignButtonHide: boolean = false;
   rejectButtonHide: boolean = false;
   currentStatusId: number;
 
 
-  constructor(private incidentService: IncidentsService, private tostservice :TostService) {
+  constructor(
+    private incidentService: IncidentsService,
+    private tostservice: TostService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
 
   }
 
@@ -34,7 +39,7 @@ export class IncidentsComponent implements OnInit {
   currentPage = 1;
   comment: string;
   RejectId: number;
-  statusHeading:Array<any>
+  statusHeading: Array<any>
   allHeading = [
     {
       name: 'All',
@@ -43,8 +48,8 @@ export class IncidentsComponent implements OnInit {
 
     },
   ];
-  selectedHeadingIndex=0;
-  headerRow = ["Incident_No. ", "Date", "Product Name", "Product Category", "Incident_Category", "Priority", "Status"];
+  selectedHeadingId = 0;
+  headerRow = ["Incident No. ", "Date", "Product Name"," Product Description", "Product Category", "Incident Category", "Priority", "Status"];
   down: any;
   isDown: boolean = false;
 
@@ -59,32 +64,42 @@ export class IncidentsComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getComplaints(0);
-    this.getchart();
+    // this.getComplaints(0);
     this.getComplaintStatus();
+    this.subscribeRouteChanges();
   }
-  setId(id,i,statusId ) {
-this.currentIndex=i;
+  setId(id, i, statusId) {
+    this.currentIndex = i;
     this.currentId = id;
-    this.currentStatusId= statusId;
-  }
-  getchart() {
-    // this.incidentService.getChartData()
-    // .subscribe((res:any)=>{
-    //   console.log(res);
-    // })
-
+    this.currentStatusId = statusId;
   }
 
+  subscribeRouteChanges() {
+    this.activatedRoute.queryParams
+      .subscribe((e: Params) => {
+        if (e.sId) {
 
+          const statusId = Number(e.sId);
+          this.getComplaints(statusId);
+        } else {
+          this.router.navigate(['/incidents'], { queryParams: { sId: 0 } });
+        }
 
-  getComplaints(i?: number) {
-    this.selectedHeadingIndex = i;
+      });
+  }
+
+  onHeadingClick(statusId:number){
+    this.router.navigate(['/incidents'], { queryParams: { sId: statusId } });
+
+  }
+
+  getComplaints(id: number) {
+    this.selectedHeadingId = id;
     this.currentPage = 1;
-    if (i === 0) {
+    if (id === 0) {
       this.getAllComplaints();
     } else {
-      this.getFilterComplants(i);
+      this.getFilterComplants(id);
     }
 
   }
@@ -94,12 +109,12 @@ this.currentIndex=i;
     this.incidentService.getCompStatus()
       .subscribe((res: any) => {
         res.unshift(this.allHeading[0]);
-        this.statusHeading=res;
+        this.statusHeading = res;
       },
-      (err)=>{
-        this.tostservice.showNotificationFailure(err)
+        (err) => {
+          this.tostservice.showNotificationFailure(err)
 
-      })
+        })
   }
 
 
@@ -135,11 +150,11 @@ this.currentIndex=i;
         this.showLoader = false;
 
       },
-    (err)=>{
-      this.tostservice.showNotificationFailure(err)
-      this.showLoader = false;
+        (err) => {
+          this.tostservice.showNotificationFailure(err)
+          this.showLoader = false;
 
-    })
+        })
   }
 
 
@@ -150,7 +165,7 @@ this.currentIndex=i;
   }
 
 
-  
+
 
 
 
@@ -159,7 +174,7 @@ this.currentIndex=i;
 
   lodeMore() {
 
-    if (this.selectedHeadingIndex === 0) {
+    if (this.selectedHeadingId === 0) {
       this.showLoader = true;
       this.incidentService.getAllComplaint(this.currentPage + 1)
         .subscribe((res: Array<any>) => {
@@ -179,7 +194,7 @@ this.currentIndex=i;
     }
     else {
       this.showLoader = true;
-      this.incidentService.getFillterComplaint(this.selectedHeadingIndex, this.currentPage + 1)
+      this.incidentService.getFillterComplaint(this.selectedHeadingId, this.currentPage + 1)
         .subscribe((res: Array<any>) => {
 
           if (res.length) {
@@ -202,13 +217,13 @@ this.currentIndex=i;
 
   sortBy(val) {
     this.showLoader = true;
-    if (this.selectedHeadingIndex === 0) {
+    if (this.selectedHeadingId === 0) {
       this.filtercomplaints = [];
       this.incidentService.getSorting(val)
         .subscribe((res: any) => {
           this.filtercomplaints = res;
           this.showLoader = false;
-        },(err)=>{
+        }, (err) => {
           this.tostservice.showNotificationFailure(err)
           this.showLoader = true;
 
@@ -218,11 +233,11 @@ this.currentIndex=i;
       this.filtercomplaints = [];
 
       this.showLoader = true;
-      this.incidentService.getFilterSorting(val, this.selectedHeadingIndex)
+      this.incidentService.getFilterSorting(val, this.selectedHeadingId)
         .subscribe((res) => {
           this.filtercomplaints = res;
           this.showLoader = false;
-        },(err)=>{
+        }, (err) => {
           this.tostservice.showNotificationFailure(err)
           this.showLoader = true;
 
@@ -231,18 +246,18 @@ this.currentIndex=i;
   }
 
 
-  getAssingedId(id , AssignEngName?) {
-if (AssignEngName) {
-  this.assignTitle= "Change";
-} else {
-  this.assignTitle= "Assign";
-}
+  getAssingedId(id, AssignEngName?) {
+    if (AssignEngName) {
+      this.assignTitle = "Change";
+    } else {
+      this.assignTitle = "Assign";
+    }
 
-this.resetform();
+    this.resetform();
     this.incidentService.getServiceEngAgainstComplaindId(id)
       .subscribe((res: any) => {
-console.log(res);
-        this.listServiceEngineer = res.filter( element=> element.name != AssignEngName);
+        console.log(res);
+        this.listServiceEngineer = res.filter(element => element.name != AssignEngName);
 
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
@@ -255,14 +270,14 @@ console.log(res);
 
 
   getCommentsId(id) {
-    this.loadingHistory=false;
+    this.loadingHistory = false;
     this.incidentService.getComplaintsHistory(id)
       .subscribe((res: number) => {
         this.commentsHistory = res;
-        this.loadingHistory=true;
+        this.loadingHistory = true;
         console.log(res)
       }, (err) => {
-        this.loadingHistory=true
+        this.loadingHistory = true
         this.tostservice.showNotificationFailure(err)
 
       })
@@ -295,7 +310,7 @@ console.log(res);
 
 
   onSubmit() {
-    this.rejectButtonHide= true;
+    this.rejectButtonHide = true;
     // console.log(this.assingedEngineer)
     // console.log(this.comment + "nothing to")
     const fd = new FormData();
@@ -305,13 +320,13 @@ console.log(res);
     this.incidentService.rejectComplaint(fd, this.currentId)
       .subscribe((res: number) => {
         console.log(res)
-        this.rejectButtonHide=false;
-        this.filtercomplaints.splice(this.currentIndex ,1)
+        this.rejectButtonHide = false;
+        this.filtercomplaints.splice(this.currentIndex, 1)
         this.closeRejectModal();
         this.showNotification("Incident Reject successfuly")
         this.resetform();
       }, (err) => {
-        this.rejectButtonHide=true;
+        this.rejectButtonHide = true;
         this.tostservice.showNotificationFailure(err)
       })
   }
@@ -330,7 +345,7 @@ console.log(res);
   //assign engineer 
 
   assignFormData(data) {
-this.assignButtonHide= true;
+    this.assignButtonHide = true;
     const fd = new FormData();
 
     for (const key in this.assingedEngineer)
@@ -338,20 +353,20 @@ this.assignButtonHide= true;
     this.incidentService.assignEngineer(fd, this.currentId)
 
       .subscribe((res: any) => {
-        this.assignButtonHide= false;
-        if(this.filtercomplaints[this.currentIndex].statusName!='New'){
-         this.filtercomplaints[this.currentIndex]=res;
-         console.log("if condition")
+        this.assignButtonHide = false;
+        if (this.filtercomplaints[this.currentIndex].statusName != 'New') {
+          this.filtercomplaints[this.currentIndex] = res;
+          console.log("if condition")
 
-        } else{
+        } else {
           this.getFilterComplants(this.currentStatusId)
 
         }
-         this.closeAssignModal();
+        this.closeAssignModal();
         this.showNotification();
         this.resetform();
       }, (err) => {
-        this.assignButtonHide=false;
+        this.assignButtonHide = false;
         this.tostservice.showNotificationFailure(err)
 
       })
@@ -368,25 +383,25 @@ this.assignButtonHide= true;
   }
 
   showNotification(msg?) {
-   
-      $.notify({
 
-        icon: "add_alert",
-        message: msg || "Incident Assign successfuly"
+    $.notify({
+
+      icon: "add_alert",
+      message: msg || "Incident Assign successfuly"
 
 
 
-      }, {
-          type: 'success',
-          timer: 1000,
-          placement: {
-            from: "top",
-            align: "right"
-          }
-        });
-    }
-  
+    }, {
+        type: 'success',
+        timer: 1000,
+        placement: {
+          from: "top",
+          align: "right"
+        }
+      });
+  }
 
-  
+
+
 
 }
