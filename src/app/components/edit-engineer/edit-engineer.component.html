@@ -129,11 +129,9 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" (click)="resetForm()">Close</button>
-            <button *ngIf="!(formButtonHide || toBeEdit !=='Profile Picture')" type="submit" (click)="changePicture()" [disabled]="!urlTOShowImg"
-              class="btn btn-rose">Change picture</button>
-            <button *ngIf="!(formButtonHide || toBeEdit=='Profile Picture')" type="submit" (click)="editValue(editForm.value)" [disabled]="!editForm.valid"
-              class="btn btn-rose">Save Changes</button>
-            <button *ngIf="formButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin"></i>submitting</button>
+            <button *ngIf="!(formButtonHide || toBeEdit !=='Profile Picture')" type="submit" (click)="changePicture()" [disabled]="!urlTOShowImg" class="btn btn-rose">Change picture</button>
+            <button *ngIf="!(formButtonHide || toBeEdit=='Profile Picture')" type="submit" (click)="editValue(editForm.value)" [disabled]="!editForm.valid" class="btn btn-rose">Save Changes</button>
+            <button *ngIf="formButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin mainColor"></i>submitting</button>
 
           </div>
 

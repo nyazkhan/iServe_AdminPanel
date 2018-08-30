@@ -17,10 +17,10 @@
             </div>
             
             <ul class="nav nav-tabs">
-                    <li class="nav-item" *ngFor="let status of statusHeading ">
+                    <li class="nav-item" *ngFor="let status of statusHeading " >
                         <a class="nav-link active" 
                         [class.active]="status.id==selectedHeadingIndex" 
-                        (click)="getInstallations(status.id)">{{status.name}}</a>
+                        (click)="getInstallations(status.id)"  >{{status.name}}</a>
                     </li>    
                 </ul>
         </div>
@@ -317,7 +317,7 @@
                             <tr>
                                
                                 <td colspan="9" style="font-size: 70px; text-align: center;">
-                                    <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
+                                    <i *ngIf="showLoader" class="fa fa-spinner fa-spin mainColor"></i>
                                 </td>
                             </tr>
                         </tfoot>
@@ -379,7 +379,7 @@
     
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button  *ngIf="!assignButtonHide" type="button" (click)="assignFormData(assignForm.value)" [disabled]="!assignForm.valid" class="btn btn-success">Assign</button>
-                            <button *ngIf="assignButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin"></i>submitting</button>
+                            <button *ngIf="assignButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin mainColor"></i>submitting</button>
     
                         </div>
                     </form>
@@ -403,7 +403,7 @@
                 <div class="modal-body">
                     <div *ngIf="!loadingHistory" style="    text-align: center;">
                         <!-- loader -->
-                        <i class="fa fa-spinner fa-spin" style="font-size:60px; "></i>
+                        <i class="fa fa-spinner fa-spin mainColor" style="font-size:60px; "></i>
                     </div>
                     <div class="card" *ngIf="loadingHistory">
                         <div *ngIf="installationsHistory.length==0">

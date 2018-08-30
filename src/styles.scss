@@ -2,9 +2,13 @@
 $light:white;
 $primary:#de2768;
 $success: #4caf50;
+$main:#9c27b0;
 
 .lightColor{
     color: $light;
+}
+.mainColor{
+    color: $main;
 }
 .primaryColor{
     color: $primary;

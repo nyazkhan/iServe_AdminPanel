@@ -16,7 +16,7 @@
   
       </div>
       <ul class="nav nav-tabs">
-        <li class="nav-item" *ngFor="let status of statusHeading ">
+        <li class="nav-item" *ngFor="let status of statusHeading " style="cursor: pointer;">
           <a class="nav-link active" [class.active]="status.id==selectedHeadingIndex" (click)="getComplaints(status.id)">{{status.name}}</a>
         </li>
   
@@ -701,7 +701,7 @@
             <tfoot>
               <tr>
                 <td colspan="9" style="font-size: 70px; text-align: center;">
-                  <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
+                  <i *ngIf="showLoader" class="fa fa-spinner fa-spin mainColor"></i>
                 </td>
               </tr>
             </tfoot>
@@ -849,7 +849,9 @@
       <div class="modal-content card card-stats">
         <div class="card-header card-header-danger card-header-icon">
           <div class="card-icon">
-            <i class="material-icons">close</i>
+            <i class="material-icons">
+              phonelink_erase
+            </i>
           </div>
           <h3 class="card-title">Reject</h3>
         </div>

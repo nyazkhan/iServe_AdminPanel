@@ -1,4 +1,6 @@
+<h4>Incidents</h4>
 <div class="card">
+
   <div class="card-header card-header-primary">
     <div class="d-flex justify-content-between">
       <h4 class="card-title ">Incidents</h4>
@@ -16,8 +18,8 @@
 
     </div>
     <ul class="nav nav-tabs">
-      <li class="nav-item" *ngFor="let status of statusHeading ">
-        <a class="nav-link active" [class.active]="status.id==selectedHeadingId" (click)="onHeadingClick(status.id)">{{status.name}}</a>
+      <li class="nav-item" *ngFor="let status of statusHeading " style="cursor: pointer;">
+        <a class="nav-link active" [class.active]="status.id==selectedHeadingIndex" (click)="getComplaints(status.id)">{{status.name}}</a>
       </li>
 
     </ul>
@@ -61,17 +63,19 @@
             <tr class="collapse tabel-detail col-md-8 col-lg-8" attr.id="collapseExample{{i}}">
               <td colspan=8 class=" incident-details">
                 <div class="row p-2">
-                  <div *ngIf="row.description" class="col-lg-12">
+                  <!-- <div *ngIf="row.description" class="col-lg-12">
 
                     {{row.description}}
 
                   </div>
-                  <div class="col-lg-12">
-                    Customer available : {{row.isCustomerAvailable}}
-                  </div>
-                  <div class="col-lg-12">
-                    Varification: {{row.isProductVerified}}
-                  </div>
+                   -->
+                   <div class="card card-nav-tabs description" style= "margin:10px; width:94% ; margin: auto;">
+                      
+                      <div class="card-body"  style="padding-bottom: 0px;">
+                        <p> {{row.description}}</p>
+                        
+                      </div>
+                    </div>
                   <!-- <div class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                                         <div class="row">
                                             <div class="collg-12 col-sm-12">
@@ -125,14 +129,14 @@
                           </div>
 
                           <div *ngIf="row.productCategoryName">
-                            <b>Category:</b> {{ row.productCategoryName }}
+                            <b>Category : </b> {{ row.productCategoryName }}
                           </div>
-                          <div *ngIf="row.productCategoryName">
+                          <!-- <div *ngIf="row.productCategoryName">
                             <b>Assign CN</b> {{ row.productCategoryName }}
-                          </div>
+                          </div> -->
                           <div *ngIf="row.productWarrantyEnd">
 
-                            Warranty: {{ row.productWarrantyEnd | date: 'dd MMM, yyyy'}}
+                           <b>Warranty : </b>{{ row.productWarrantyEnd | date: 'dd MMM, yyyy'}}
 
                           </div>
                         </div>
@@ -260,7 +264,7 @@
                   </div>
 
                   <!-- <assigned engineer-->
-                  <div class="card card-nav-tabs" *ngIf="!(row.statusName=='New'|| !row.assignedServiceEngineerName)" style="width: 45%; ">
+                  <div class="card card-nav-tabs detail-box" *ngIf="!(row.statusName=='New'|| !row.assignedServiceEngineerName)" style="width: 45%; ">
                     <div>
                       <div class="card-header card-header-info float-right" style="width:150px;">
                         Assigned Engineer
@@ -287,7 +291,16 @@
                           </div>
                           <!-- <span class"badge badge-pill badge-success"  data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id)">Edit</span> -->
                           <div *ngIf="!(row.statusName =='Fixed' || row.statusName =='Rejected')">
-                            <span class="badge badge-pill badge-primary" data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id)">Edit</span>
+                              <button class="btn btn-social btn-link btn-linkedin btn-primary"  data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id ,'AssignEngName')" style="padding:0;top: -12px;
+                              position: absolute;
+                              padding: 0;
+                              right: 115px;
+                          ">
+                                  <span><i class="material-icons">
+                                      sync
+                                      </i></span> 
+                                     
+                                 </button>
                           </div>
                         </div>
 
@@ -328,7 +341,7 @@
                   </div>
 
                   <!-- <fixed details case-->
-                  <div class="card card-nav-tabs " *ngIf="row.statusName==='Fixed'" style="width: 45%; ">
+                  <div class="card card-nav-tabs detail-box " *ngIf="row.statusName==='Fixed'" style="width: 45%; ">
                     <div>
                       <div class="card-header card-header-info float-right" style="width:150px;">
                         Fixed Details
@@ -428,12 +441,14 @@
                   </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                  <button class="btn btn-sm btn-outline-success" *ngIf="row.statusName=='New' " type="submit" data-toggle="modal" data-target="#assignModal"
+                  <button class="btn btn-sm btn-outline-success margin-right" *ngIf="row.statusName=='New' " type="submit" data-toggle="modal" data-target="#assignModal"
                     (click)="getAssingedId(row.id)">
                     <i class="material-icons"> assignment_turned_in </i> Assign</button>
-                  <button class="btn btn-sm btn-outline-primary" type="submit" data-toggle="modal" (click)=" getCommentsId(row.id)" data-target="#commentModal">
-                    <i class="material-icons"> chat </i> History</button>
-                  <button *ngIf="row.statusName!=='Rejected' " class="btn btn-sm btn-outline-danger" type="submit" data-toggle="modal" (click)="getRejectId(row.id)"
+                  <button class="btn btn-sm btn-outline-primary margin-right" type="submit" data-toggle="modal" (click)=" getCommentsId(row.id)" data-target="#commentModal">
+                    <i class="material-icons">
+                      history
+                      </i> History</button>
+                  <button *ngIf="row.statusName!=='Rejected' " class="btn btn-sm btn-outline-danger " type="submit" data-toggle="modal" (click)="getRejectId(row.id)"
                     data-target="#rejectModal">
                     <i class="material-icons"> clear </i> reject</button>
                 </div>
@@ -446,11 +461,17 @@
           </div>
           <tfoot>
               <tr *ngIf="!(filtercomplaints?.length > 0|| showLoader)" >
-                  <td colspan="9"> <h2 style="text-align: center">Nothing to Show</h2></td>
+               
+                  <td colspan="9">
+                    <div class="text-center">
+                    <img src="/assets/img/not-found.svg">
+                    <h3>No content found</h3>
+                  </div>
+                </td>
                </tr>
             <tr>
               <td colspan="9" style="font-size: 70px; text-align: center;">
-                <i *ngIf="showLoader" class="fa fa-spinner fa-spin"></i>
+                <i *ngIf="showLoader" class="fa fa-spinner fa-spin mainColor"></i>
               </td>
             </tr>
           </tfoot>
@@ -515,7 +536,7 @@
 
               <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button *ngIf="!assignButtonHide && (listServiceEngineer?.length > 0)" type="button" (click)="assignFormData(assignForm.value)" [disabled]="!assignForm.valid" class="btn btn-success">Assign</button>
-              <button *ngIf="assignButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin"></i>submitting</button>
+              <button *ngIf="assignButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin mainColor"></i>submitting</button>
          </div>
         </form>
 
@@ -531,39 +552,50 @@
     <div class="modal-content card card-stats">
       <div class="card-header card-header-primary card-header-icon">
         <div class="card-icon">
-          <i class="material-icons">chat</i>
+          <i class="material-icons">
+            history
+            </i>
         </div>
         <h3 class="card-title">History</h3>
       </div>
       <div class="modal-body">
         <div *ngIf="!loadingHistory">
           <!-- loader -->
-          <i  class="fa fa-spinner fa-spin" style="font-size:60px; "></i>
+          <i  class="fa fa-spinner fa-spin mainColor" style="font-size:60px; "></i>
         </div>
         <div *ngIf="loadingHistory">
           <div *ngIf="commentsHistory.length==0">
-              <h3> No Records Found</h3>
+            <div class="text-center">
+              <img src="/assets/img/not-found.svg">
+              <p>No Records Found</p>
+            </div>
             </div>
        
           <div class="timeline" *ngFor="let comment of commentsHistory let i=index ">
             <div class="history" *ngIf="commentsHistory.length!==0">
-              <div class="badge badge-pill " [style.background]="comment.statusColor">{{comment.statusName}}</div>
-              <div class="comment">
-                <div> <b>{{comment.name }}</b></div>
-                <b>{{comment.comment}}</b>
-                <div  *ngIf="comment.scheduleDate" class="date">
-                    {{comment.scheduleDate | date: 'dd MMM, yyyy  hh : mm a'}}
+              <div class="badge badge-pill status-badge " [style.background]="comment.statusColor">{{comment.statusName}}</div>
+             
+              <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                <div class="row">
+                  <div class="comment-name col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                    <b>{{comment.name }}</b><br>
+                    <b style="color: gray;">{{comment.comment}}</b>
                   </div>
-                <div>
-                  {{comment.autoComment}}
+                  <div class="comment col-md- 8 col-lg-8 col-sm-8 col-xs-8" [style.border-left-color]="comment.statusColor" >
+                    <div  *ngIf="comment.scheduleDate" class="date">
+                      {{comment.scheduleDate | date: 'dd MMM, yyyy  hh : mm a'}}
+                    </div>
+                  <div>
+                    {{comment.autoComment}}
+                  </div>
+                
+                  <div class="date">
+                      {{comment.createdAt | date: 'dd MMM, yyyy  hh : mm a'}}
+                    </div>
+                  </div>
                 </div>
-                <!-- <p padding-top *ngIf="comment.fileUrl">
-                    <a (click)='openImage(h)'>View Attachment</a>
-                  </p> -->
-                <div class="date">
-                    {{comment.createdAt | date: 'dd MMM, yyyy  hh : mm a'}}
-                  </div>
               </div>
+             
             </div>
             <!-- <div class="emptyData" *ngIf="!history || !history.length">
                 <img src="/assets/imgs/notfound.png">
@@ -577,6 +609,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
+
   </div>
 </div>
 <!-- End of chat modal -->
@@ -587,7 +620,9 @@
     <div class="modal-content card card-stats">
       <div class="card-header card-header-danger card-header-icon">
         <div class="card-icon">
-          <i class="material-icons">close</i>
+          <i class="material-icons">
+            phonelink_erase
+          </i>
         </div>
         <h3 class="card-title">Reject</h3>
       </div>
@@ -617,7 +652,7 @@
           <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button *ngIf="!rejectButtonHide" type="submit" [disabled]="!rejectForm.valid" class="btn btn-danger">Reject</button>
-              <button *ngIf="rejectButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin"></i>submitting</button>
+              <button *ngIf="rejectButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin mainColor"></i>submitting</button>
 
           </div>
 
