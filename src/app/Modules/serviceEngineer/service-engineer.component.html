@@ -92,7 +92,7 @@
                 <tfoot>
                     <tr>
                         <td colspan="9" style="font-size: 70px; text-align: center;">
-                            <i *ngIf="isDataLoad" class="fa fa-spinner fa-spin"></i>
+                            <i *ngIf="isDataLoad" class="fa fa-spinner fa-spin mainColor"></i>
                         </td>
                     </tr>
                 </tfoot>
@@ -222,7 +222,7 @@
                                     <label>Product Type Id
                                     </label>
                                     <button *ngIf="pinIstrue" type="button" class="buttonload">
-                                        <i class="fa fa-spinner fa-spin"></i>
+                                        <i class="fa fa-spinner fa-spin mainColor"></i>
                                     </button>
                                     <select class="form-control" id="prodTypeOptions" required multiple [(ngModel)]="engineerDetails.productTypeIds" name="prodType"
                                         #prodType="ngModel">
@@ -242,7 +242,7 @@
                                     <label>Pin Code
                                     </label>
                                     <button *ngIf="pinIstrue" type="button" class="buttonload">
-                                        <i class="fa fa-spinner fa-spin"></i>
+                                        <i class="fa fa-spinner fa-spin mainColor"></i>
                                     </button>
                                     <select class="form-control" required multiple [(ngModel)]="engineerDetails.pincodes" name="pincode" #pincode="ngModel">
                                         <option *ngFor="let pin of pins" [value]="pin.pincode">{{pin.pincode}}</option>
@@ -335,7 +335,7 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button *ngIf="!loadingButton" type="submit" [disabled]="!engineerForm.valid" class="btn btn-success">Submit</button>
                             <button *ngIf="loadingButton" type="button" class="btn btn-primary">
-                                <i class="fa fa-spinner fa-spin"></i>submitting</button>
+                                <i class="fa fa-spinner fa-spin mainColor mainColor"></i>submitting</button>
                         </div>
                         <!-- <div class="text-center">
                                 <button *ngIf="!loadingButton" type="submit" class="btn btn-success" [disabled]="!engineerForm.form.valid  ">Submit</button>

@@ -172,16 +172,28 @@ tr{
     padding:5px;
     margin-bottom:3px;
     .history{
+       margin-top: -16px;
+
       .status{
         padding:1px 5px;
         border-radius:25px;
         background:yellow;
         display:-webkit-inline-box;
       }
+      .status-badge{
+          margin-left: 110px;
+      }
+      .comment-name{
+          text-align: right;
+          padding-right: 24px;
+        //   padding: 20px 0 20px 5px;
+        padding-top: 20px;
+        padding-bottom: 11px;
+      }
       .comment{
         border-left: 2px solid #03a9f4;
         padding:20px 0 20px 5px;
-        margin-left:20px;
+        margin-left:-16px;
         p{
           margin:0px;
         }
@@ -192,7 +204,9 @@ tr{
         }
         position:relative;
       }
-      &:last-child{
+     
+    }
+    &:last-child{
         &:after{
           position:absolute;
           content:'';
@@ -200,8 +214,16 @@ tr{
           height:15px;
           border-radius:50%;
           background:#03a9f4;
-          left: 42px;
+          left: 154px;
         } 
       }
-    }
   }
+  .text-center{
+    text-align: center;
+    img{
+        width: 250px;
+    }
+}
+.margin-right{
+    margin-right: 10px;
+}
