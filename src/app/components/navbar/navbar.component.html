@@ -3,10 +3,10 @@
               <div class="container-fluid">
                   <div class="navbar-wrapper">
                       <a class="navbar-brand" href="#">
-                          <span *ngIf="role=='CEO'">
-                            CXO Panel
+                          <span *ngIf="role=='superadmin'">
+                            Super Admin Panel
                         </span>
-                        <span *ngIf="role=='Manager'">
+                        <span *ngIf="role=='management'">
                                 Manager Panel
                             </span>
                       </a>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div>
                                     
-                                        <button style="float: left" (click)= "accountSetting()" class="btn btn-primary btn-sm btn-round">
+                                        <button *ngIf="role=='management' " style="float: left" (click)= "accountSetting()" class="btn btn-primary btn-sm btn-round">
                                                 <i class="material-icons">settings</i> Account
                                               </button>
                                               

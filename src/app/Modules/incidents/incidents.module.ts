@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PipeModule } from '../../providers/pipe.module';
-import { EditEngineerComponent } from './edit-engineer/edit-engineer.component';
 
 @NgModule({
   imports: [
@@ -22,14 +21,12 @@ import { EditEngineerComponent } from './edit-engineer/edit-engineer.component';
       {path:'',component:IncidentsComponent},
       // children: [
           
-      {path:"edit",component: EditEngineerComponent},
       // ]
     // },
     ]) 
   ],
   declarations: [
     IncidentsComponent,
-    EditEngineerComponent
   ]
 })
 export class IncidentsModule { }

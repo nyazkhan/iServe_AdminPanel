@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { EditManagerDetails } from 'src/app/interface/manager_details';
-import { IncidentsService } from '../incidents.service';
-import { TostService } from '../../../providers/tost.service';
-import { LoginService } from '../../../components/login/login.service';
+import { TostService } from '../../providers/tost.service';
+import { LoginService } from '../login/login.service';
+
 declare const $: any;
+
 @Component({
   selector: 'app-edit-engineer',
   templateUrl: './edit-engineer.component.html',
@@ -22,7 +22,21 @@ export class EditEngineerComponent implements OnInit {
 
   showForm = false;
 
-  constructor(private incidentservice: IncidentsService, private tostservice: TostService,private loginService:LoginService) { }
+
+
+  changePassword: any = {
+    newPassword: '',
+    oldPassword: ''
+  };
+
+  passwordFormShow = false;
+
+
+
+
+  constructor( 
+    private tostservice: TostService, 
+    private loginService: LoginService) { }
 
   ngOnInit() {
 
@@ -39,7 +53,7 @@ export class EditEngineerComponent implements OnInit {
     this.editManagerDetails.userType = localStorage.getItem("roles");
   }
   setManagerDetails(data) {
-    
+
     if (this.toBeEdit == 'Name') {
 
       // localStorage.setItem("name", data.name)
@@ -47,7 +61,8 @@ export class EditEngineerComponent implements OnInit {
     }
     if (this.toBeEdit == 'Email') {
 
-      this.loginService.updateUserEmail(data.email);    }
+      this.loginService.updateUserEmail(data.email);
+    }
     if (this.toBeEdit == 'Contact No') {
       this.loginService.updateUserContactNo(data.contactNo);
     }
@@ -76,14 +91,16 @@ export class EditEngineerComponent implements OnInit {
     this.formButtonHide = true;
     console.log(data);
 
-    if(data.contactNo){data.contactNo=data.contactNo.toString();}
+    if (data.contactNo) { data.contactNo = data.contactNo.toString(); }
 
-    this.incidentservice.editManagerdetails(data)
+    this.loginService.editManagerdetails(data)
       .subscribe((res: any) => {
         console.log(res)
         this.setManagerDetails(data);
         this.closeFormModal()
         this.resetForm();
+        this.tostservice.showNotificationSuccess("change successfuly");
+
         this.formButtonHide = false;
       }, (err) => {
         this.tostservice.showNotificationFailure(err);
@@ -117,27 +134,56 @@ export class EditEngineerComponent implements OnInit {
 
   }
 
-  changePicture(){
+
+  PasswordForm() {
+this.passwordFormShow= true;
+this.loginService.changeManagerPassword({"oldPassword":this.changePassword.oldPassword,"newPassword":this.changePassword.newPassword})
+.subscribe((res:any)=>{
+  this.closePasswordFormModal();
+  this.tostservice.showNotificationSuccess("Password Successfuly Change")
+this.passwordFormShow=false;
+this.changePassword.oldPassword='';
+this.changePassword.newPassword='';
+
+},(err)=>{
+this.tostservice.showNotificationFailure(err);
+this.passwordFormShow=false;
+})
+
+  }
+
+
+
+
+  changePicture() {
     this.formButtonHide = true;
-const fd = new FormData();
-fd.append("picture", this.imgfile)
-    this.incidentservice.changePicture(fd)
-    .subscribe((res:any)=>{
+    const fd = new FormData();
+    fd.append("picture", this.imgfile)
+    this.loginService.changePicture(fd)
+      .subscribe((res: any) => {
         this.loginService.updateUserPicture(res.picUrl);
         this.editManagerDetails.pic = localStorage.getItem("picUrl");
-      this.setManagerDetails(this.imgfile);
-      this.closeFormModal()
-      this.resetForm();
-      this.formButtonHide = false;
-    },(err)=>{
-      this.tostservice.showNotificationFailure(err);
-      this.formButtonHide = false;
+        this.setManagerDetails(this.imgfile);
+        this.closeFormModal()
+        this.resetForm();
+        this.tostservice.showNotificationSuccess("Profile Picture Change Successfuly");
 
-    })
+        this.formButtonHide = false;
+      }, (err) => {
+        this.tostservice.showNotificationFailure(err);
+        this.formButtonHide = false;
+
+      })
   }
 
   closeFormModal() {
     this.showForm = false;
     $('#editFormModel').modal('hide')
+  }
+
+
+  closePasswordFormModal() {
+    this.passwordFormShow = false;
+    $('#changePasswordModal').modal('hide')
   }
 }

@@ -19,6 +19,12 @@ export class IncidentsService {
 
   
 // get filter complaints
+    // getFillterComplaint(id:number,pageNo:number){
+    //   const filter_api = `/m/complaint/filter/page/${pageNo}`
+    //   return this.customHttp.post(filter_api,{"categoryId":3})
+    // }
+
+    // get filter complaints
     getFillterComplaint(id:number,pageNo:number){
       const filter_api = `/m/complaint/filter/page/${pageNo}`
       return this.customHttp.post(filter_api,{"statusId":id})
@@ -104,17 +110,6 @@ getFilterSorting(sort,filter){
   return this.customHttp.post(filterSort_api,{"statusId":filter})
 }
 
-
-// edit brand manager details
-
-editManagerdetails(fd){
-// console.log(JSON.stringify(fd))
-  return this.customHttp.put(`/m`,fd)
-}
-
-changePicture(fd){
-  return this.customHttp.post(`/m/picture`,fd)
-}
 
 
 
