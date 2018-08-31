@@ -12,9 +12,9 @@
                     </h3>
                 </div>
                 <div class="card-footer">
-                    <div class="stats">
+                    <!-- <div class="stats">
                         <i class="material-icons">date_range</i> Last 1 Month
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -28,9 +28,9 @@
                     <h3 class="card-title"> {{fixedIncidents}} </h3>
                 </div>
                 <div class="card-footer">
-                    <div class="stats">
+                    <!-- <div class="stats">
                         <i class="material-icons">date_range</i> Last 1 Months
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -44,9 +44,9 @@
                     <h3 class="card-title">{{installation}}</h3>
                 </div>
                 <div class="card-footer">
-                    <div class="stats">
+                    <!-- <div class="stats">
                         <i class="material-icons">date_range</i> Last 1 Months
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -60,9 +60,9 @@
                     <h3 class="card-title">{{ProductRegister}}</h3>
                 </div>
                 <div class="card-footer">
-                    <div class="stats">
+                    <!-- <div class="stats">
                         <i class="material-icons">date_range</i> Last 1 Month
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -156,32 +156,32 @@
                   </div>
               </div>
           </div>
+          
+          
+          
           <div class="col-md-6 col-sm-12">
-                  <div class="card card-chart">
-                      <div class="card-header card-header-warning">
-                              <div id="customer_suffering_report"></div>
-                      </div>
-                      <div class="card-body">
-                              <h4 class="card-title">Incidents against Product Category</h4>
-                      </div>
-                  </div>
-              </div>
-
-
-
-              <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
-                    <div class="card-header card-header-info">
-                            <div id="draw_open_incidences_chart_by_incident_category"></div>
+              <div class="card card-chart">
+                  <div class="card-header card-header-danger">
+                      <div id="draw_open_incidences_chart_by_incident_category"></div>
                     </div>
                     <div class="card-body">
-                            <h4 class="card-title">Incidents Against incident category With Status</h4>
+                        <h4 class="card-title">Incidents Against incident category With Status</h4>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12">
                     <div class="card card-chart">
-                        <div class="card-header card-header-success" style="background:#008b00; ">
+                        <div class="card-header card-header-warning">
+                                <div id="customer_suffering_report"></div>
+                        </div>
+                        <div class="card-body">
+                                <h4 class="card-title">Incidents against Product Category</h4>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-md-6 col-sm-12">
+                    <div class="card card-chart">
+                        <div class="card-header card-header-warning">
                                 <div id="Complaint_Category"></div>
                         </div>
                         <div class="card-body">
@@ -202,7 +202,18 @@
                               <h4 class="card-title">Incident Weekly Report</h4>
                       </div>
                   </div>
-              </div>
+                </div>
+                
+                    <div class="col-md-6 col-sm-12">
+                            <div class="card card-chart">
+                                <div class="card-header card-header-success">
+                                        <div id="repair_time"></div>
+                                </div>
+                                <div class="card-body">
+                                        <h4 class="card-title">Mean Time To Repair (in days)</h4>
+                                </div>
+                            </div>
+                        </div>
               <div class="col-md-6 col-sm-12">
                       <div class="card card-chart">
                           <div class="card-header card-header-info">
@@ -212,27 +223,39 @@
                                   <h4 class="card-title">Regional Incidents</h4>
                           </div>
                       </div>
-                  </div>
-                  <div class="col-md-6 col-sm-12">
-                          <div class="card card-chart">
-                              <div class="card-header card-header-primary">
-                                      <div id="open_installations"></div>
-                              </div>
-                              <div class="card-body">
-                                      <h4 class="card-title">Average Incident Life Span (in hours)</h4>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-6 col-sm-12">
+                    </div>
+                          <div class="col-md-6 col-sm-12">
                               <div class="card card-chart">
-                                  <div class="card-header card-header-danger" style="background: #AEEA00">
-                                          <div id="repair_time"></div>
+                                  <div class="card-header card-header-info">
+                                          <div id="installation_regions_chart"></div>
                                   </div>
                                   <div class="card-body">
-                                          <h4 class="card-title">Mean Time To Repair (in days)</h4>
+                                          <h4 class="card-title">Regional Installation</h4>
                                   </div>
                               </div>
                           </div>
+                          <div class="col-md-6 col-sm-12">
+                            <div class="card card-chart">
+                                <div class="card-header card-header-primary">
+                                        <div id="open_installations"></div>
+                                </div>
+                                <div class="card-body">
+                                        <h4 class="card-title">Installation Status v/s product category</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="card card-chart">
+                                <div class="card-header card-header-primary">
+                                        <div id="installation_against_Product_Category"></div>
+                                </div>
+                                <div class="card-body">
+                                        <h4 class="card-title">Installation v/s product category</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        
 
 </ng-container>
 
@@ -241,7 +264,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="cookingSufferers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="cookingSufferers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -259,5 +282,5 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- end of modal -->

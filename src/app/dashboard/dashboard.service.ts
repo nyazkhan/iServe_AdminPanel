@@ -49,6 +49,12 @@ export class DashboardService {
     }
 
 
+    getInstallationStatusCount(){
+        const I_api = `/m/installation/graph/product`
+
+        return this.customHttp.get(I_api)  
+    }
+
 
 
 
@@ -84,6 +90,14 @@ export class DashboardService {
     // state by status of complaints
     getStateByStatus() {
         const I_api = `/m/complaint/graph/state-status`
+
+        return this.customHttp.get(I_api)
+
+    }
+
+    // state by status of installation
+    getInstallationStateByStatus() {
+        const I_api = `/m/installation/graph/state-status`
 
         return this.customHttp.get(I_api)
 

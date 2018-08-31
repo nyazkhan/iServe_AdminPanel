@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IncidentsService } from './incidents.service';
 import { RejectComplaint, AssingedEngineer } from '../../interface/user';
 import { TostService } from 'src/app/providers/tost.service';
-import { Router, ActivatedRoute,  Params } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 declare let $: any;
 
 @Component({
@@ -18,6 +18,15 @@ export class IncidentsComponent implements OnInit {
   assignButtonHide: boolean = false;
   rejectButtonHide: boolean = false;
   currentStatusId: number;
+
+  statusId:number;
+  ProductCategoryId:number;
+  incidentCategoryId:number;
+  stateId:any;
+
+  sortActive: string
+  filterBy = {};
+  filterbysort = {}
 
 
   constructor(
@@ -80,27 +89,32 @@ export class IncidentsComponent implements OnInit {
       .subscribe((e: Params) => {
         if (e.sId) {
 
-          const statusId = Number(e.sId);
-          this.getComplaints(statusId);
+          this.statusId = Number(e.sId) || Number(0);
+          this.ProductCategoryId = Number(e.pcId) || Number(0);
+          this.incidentCategoryId = Number(e.icId) || Number(0);
+          this.stateId = e.stId || 0;
+
+          this.getComplaints(this.statusId);
         } else {
-          this.router.navigate(['/incidents'], { queryParams: { sId: 0 } });
+          this.router.navigate(['/incidents'], { queryParams: { sId: 0, pcId: 0, icId: 0, stId: 0 } });
         }
 
       });
   }
 
-  onHeadingClick(statusId:number){
-    this.router.navigate(['/incidents'], { queryParams: { sId: statusId } });
+  onHeadingClick(statusId: number) {
+    this.router.navigate(['/incidents'], { queryParams: { sId: statusId, pcId: 0, icId: 0, stId: 0 } });
+    this.sortActive = "";
 
   }
 
-  getComplaints(id: number) {
-    this.selectedHeadingId = id;
+  getComplaints(sId,) {
+    this.selectedHeadingId = sId;
     this.currentPage = 1;
-    if (id === 0) {
+    if (this.statusId== 0 && this.ProductCategoryId == 0 && this.incidentCategoryId == 0 && this.stateId == 0||"") {
       this.getAllComplaints();
     } else {
-      this.getFilterComplants(id);
+      this.getFilterComplants(sId);
     }
 
   }
@@ -140,11 +154,30 @@ export class IncidentsComponent implements OnInit {
 
 
   //get filter complaints
-  getFilterComplants(i) {
+  getFilterComplants(sId: number, ) {
     this.filtercomplaints = [];
     this.showLoader = true;
     this.currentPage = 1;
-    this.incidentService.getFillterComplaint(i, this.currentPage)
+    if (this.ProductCategoryId != 0 || this.statusId != 0 || this.stateId != 0 || this.incidentCategoryId != 0) {
+      if (this.statusId||sId) {
+        this.filterBy['statusId'] = this.statusId||sId;
+      }
+      if (this.ProductCategoryId) {
+        this.filterBy["categoryId"] = this.ProductCategoryId;
+      }
+      if (this.stateId != "0" && this.stateId != "") {
+        this.filterBy['location'] = this.stateId;
+      }
+      if (this.incidentCategoryId) {
+        this.filterBy['complaintCategoryId'] = this.incidentCategoryId;
+      }
+    } else {
+      this.getAllComplaints();
+    }
+
+
+
+    this.incidentService.getFillterComplaint(this.filterBy, this.currentPage)
       .subscribe((res: any) => {
         console.log(res);
         this.filtercomplaints = res;
@@ -216,9 +249,13 @@ export class IncidentsComponent implements OnInit {
   }
 
 
+
   sortBy(val) {
+    this.currentRouteParams();
+
+    this.sortActive = val;
     this.showLoader = true;
-    if (this.selectedHeadingId === 0) {
+    if (this.statusId== 0 && this.ProductCategoryId == 0 && this.incidentCategoryId == 0 && this.stateId == 0||"") {
       this.filtercomplaints = [];
       this.incidentService.getSorting(val)
         .subscribe((res: any) => {
@@ -234,7 +271,7 @@ export class IncidentsComponent implements OnInit {
       this.filtercomplaints = [];
 
       this.showLoader = true;
-      this.incidentService.getFilterSorting(val, this.selectedHeadingId)
+      this.incidentService.getFilterSorting(val, this.filterbysort)
         .subscribe((res) => {
           this.filtercomplaints = res;
           this.showLoader = false;
@@ -245,6 +282,45 @@ export class IncidentsComponent implements OnInit {
         })
     }
   }
+
+
+  currentRouteParams() {
+    let query = this.activatedRoute.snapshot.queryParams
+    for (let key in query) {
+      if (key == "sId" && query[key] != "0") {
+        this.filterbysort['statusId'] = query[key];
+      }
+      if (key == "pcId" && query[key] != "0") {
+        this.filterbysort['categoryId'] = query[key];
+      }
+      if (key == "stId" && query[key] != "0" || "") {
+        this.filterbysort['location'] = query[key];
+      }
+      if (key == "icId" && query[key] != "0") {
+        this.filterbysort['complaintCategoryId'] = query[key];
+      }
+
+      console.log(query[key])
+      console.log(this.filterbysort)
+    }
+
+  
+  }
+
+
+  clearSortBy(i) {
+    console.log(i)
+    
+      this.getFilterComplants(i)
+
+    this.sortActive = "";
+  }
+
+
+
+
+
+
 
 
   getAssingedId(id, AssignEngName?) {
@@ -284,10 +360,7 @@ export class IncidentsComponent implements OnInit {
       })
   }
 
-  // sortComments(res) {
-  //   this.commentsHistory = res.sort((a, b) => parseFloat(a.statusId) - parseFloat(b.statusId));
-  //   console.log(this.commentsHistory.length)
-  // }
+ 
 
   getRejectId(id) {
     this.resetform();
@@ -296,7 +369,7 @@ export class IncidentsComponent implements OnInit {
 
   onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+      const reader = new FileReader();
       this.imgfile = event.target.files[0];
       reader.readAsDataURL(event.target.files[0]); // read file as data url
 
@@ -345,7 +418,7 @@ export class IncidentsComponent implements OnInit {
 
   //assign engineer 
 
-  assignFormData(data) {
+  assignFormData() {
     this.assignButtonHide = true;
     const fd = new FormData();
 
@@ -401,7 +474,6 @@ export class IncidentsComponent implements OnInit {
         }
       });
   }
-
 
 
 

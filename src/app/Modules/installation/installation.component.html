@@ -8,10 +8,11 @@
                 <i class="material-icons"> filter_list </i>
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" (click)="sortBy('status')">Status</a>
-                <a class="dropdown-item" (click)="sortBy('createdAt')">Date</a>
-                <a class="dropdown-item" (click)="sortBy('priority')">Priority</a>
-                <a class="dropdown-item" (click)="sortBy('category')">Category</a>
+                <a  *ngIf="selectedHeadingId==0" class="dropdown-item" [class.active]="sortActive=='status' "  (click)="sortBy('status')">Status</a>
+                <a class="dropdown-item" [class.active]="sortActive=='createdAt' " (click)="sortBy('createdAt')">Date</a>
+                <a class="dropdown-item" [class.active]="sortActive=='priority' " (click)="sortBy('priority')">Priority</a>
+                <a class="dropdown-item" [class.active]="sortActive=='category' " (click)="sortBy('category')">Category</a>
+                <a class="dropdown-item" (click)="clearSortBy(selectedHeadingId)">Clear Sorting</a>
               </div>
             </div>
       

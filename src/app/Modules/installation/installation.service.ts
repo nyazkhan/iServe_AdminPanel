@@ -60,9 +60,9 @@ export class InstallationService {
 
   
 
-    getFillterInstallation(id:number,pageNo:number){
+    getFillterInstallation(fd,pageNo:number){
       const filter_api = `/m/installation/filter/page/${pageNo}`
-      return this.customHttp.post(filter_api,{"statusId":id})
+      return this.customHttp.post(filter_api,fd)
     }
 
 
@@ -140,7 +140,7 @@ export class InstallationService {
       // sorting by status, priority, category filter by status id
 getFilterSorting(sort,filter){
   const filterSort_api =`/m/installation/filter-sort/${sort}/true`
-  return this.customHttp.post(filterSort_api,{"statusId":filter})
+  return this.customHttp.post(filterSort_api,filter)
 }
 
     }

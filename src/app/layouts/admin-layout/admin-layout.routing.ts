@@ -6,7 +6,7 @@ import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { Auth1Guard } from '../../providers/auth1.guard';
 import { AuthGuard } from '../../providers/auth.guard';
 import { AuthDashboardGuard } from '../../providers/authDashboard.guard';
-import { EditEngineerComponent } from '../../components/edit-engineer/edit-engineer.component';
+import { EditUserDetailsComponent } from '../../components/edit-user-details/edit-user-details.component';
 
 export const AdminLayoutRoutes: Routes = [
     {
@@ -14,7 +14,7 @@ export const AdminLayoutRoutes: Routes = [
         path: '', component: AdminLayoutComponent,
         children: [
               
-            {path:"edit",component: EditEngineerComponent},
+            {path:"edit",component: EditUserDetailsComponent},
 
             {
                 path: 'incidents', loadChildren: '../../Modules/incidents/incidents.module#IncidentsModule',
