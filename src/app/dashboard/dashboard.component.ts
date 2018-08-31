@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
   complaintCount = [];
   meanTiming = [];
   stateCount = [];
+  installationStateCount=[];
 
   suffering = [];
   incidentByCategory = [];
@@ -43,7 +44,7 @@ export class DashboardComponent implements OnInit {
   incidentStatus5: any;
   incidentStatus6: any;
   incidentStatus7: any;
-
+  incidentCategoryId=[];
 
   productStatus1: any;
   productStatus2: any;
@@ -52,7 +53,11 @@ export class DashboardComponent implements OnInit {
   productStatus5: any;
   productStatus6: any;
   productStatus7: any;
+  productCategoryId=[];
 
+incidentProductCat=[];
+installationProdCat=[]
+incidentCatIncident=[];
 
   installationProduct1: any;
   installationProduct2: any;
@@ -62,7 +67,10 @@ export class DashboardComponent implements OnInit {
   installationProduct6: any;
   installationProduct7: any;
 
+  InstallproductCategoryId=[];
+  installationCategoryId=[];
 
+installationProdCategory=[]
   totalIncidents: number
   fixedIncidents: number;
   installation: number;
@@ -79,7 +87,17 @@ export class DashboardComponent implements OnInit {
   }
 
 
+  routeToIncidents(id:number,pcid?: number,icid?:number,stid?){
+    console.log(stid + "   state name")
+    this.router.navigate(['/incidents'], { queryParams: { sId: id , pcId:pcid, icId:icid, stId: stid } });
+  
+  }
 
+
+  routeToInstallation(id:number,pcid?: number,stid?){
+    this.router.navigate(['/installation'], { queryParams: { sId: id , pcId:pcid,  stId: stid } });
+
+  }
 
   getDashboardDetails() {
     this.dashboardservice.getDashbord()
@@ -102,7 +120,7 @@ export class DashboardComponent implements OnInit {
       .subscribe((res: any) => {
         this.incidentByCategory.push(['Appliances', 'New', 'Assigned Service Engineer', 'Scheduled', 'Rejected', 'Not Fixed', 'Fixed', 'OnHold', { role: 'annotation' }]);
         res.forEach((element1: any) => {
-
+          this.incidentCategoryId.push(element1.id);
 
 
           element1.statusInfo.forEach(element => {
@@ -166,6 +184,42 @@ export class DashboardComponent implements OnInit {
     };
 
     let chart = new google.visualization.BarChart(document.getElementById('draw_open_incidences_chart_by_incident_category'));
+   
+    google.visualization.events.addListener(chart, 'select', ()=>{
+      var selectedItem = chart.getSelection()[0];
+     
+     var stdId :number;
+ 
+       if (selectedItem) {
+
+        if (selectedItem.column==1) {
+          stdId=1;
+        };
+        if (selectedItem.column==2) {
+          stdId=2;
+        };
+        if (selectedItem.column==3) {
+          stdId=4;
+        };
+        if (selectedItem.column==4) {
+          stdId=5;
+        };
+        if (selectedItem.column==5) {
+          stdId=6;
+        };
+        if (selectedItem.column==6) {
+          stdId=7;
+        };
+        if (selectedItem.column==7) {
+          stdId=9;
+        };
+this.incidentCategoryId[selectedItem.row]
+
+ this.routeToIncidents(stdId,0,this.incidentCategoryId[selectedItem.row],);
+       }
+ 
+    });    
+
     chart.draw(data, options);
   }
   // current incident against category   ending here
@@ -179,7 +233,7 @@ export class DashboardComponent implements OnInit {
         this.incidents.push(['Appliances', 'New', 'Assigned Service Engineer', 'Scheduled', 'Rejected', 'Not Fixed', 'Fixed', 'OnHold', { role: 'annotation' }]);
         res.forEach((element1: any) => {
 
-
+this.productCategoryId.push(element1.id)
 
           element1.statusInfo.forEach(element => {
 
@@ -240,7 +294,6 @@ export class DashboardComponent implements OnInit {
       var selectedItem = open_incidences_chart.getSelection()[0];
      
      var stdId :number;
-      console.log(selectedItem)
  
        if (selectedItem) {
 
@@ -265,9 +318,9 @@ export class DashboardComponent implements OnInit {
         if (selectedItem.column==7) {
           stdId=9;
         };
+this.productCategoryId[selectedItem.row]
 
-
- this.routeToIncidents(stdId);
+ this.routeToIncidents(stdId,this.productCategoryId[selectedItem.row],0,);
        }
  
     });    
@@ -277,10 +330,10 @@ export class DashboardComponent implements OnInit {
   }
   // current incident against Product   ending here
 
-routeToIncidents(id){
-  this.router.navigate(['/incidents'], { queryParams: { sId: id } });
 
-}
+
+
+
   //  incident against Product   starts here
   getStatusCounts() {
 
@@ -290,8 +343,13 @@ routeToIncidents(id){
         console.log(res);
         this.suffering.push(['Appliances', '#Incidents'])
         res.forEach((element: any) => {
+          this.incidentProductCat.push(element.id)
           this.suffering.push([element.name, element.count])
+
+
+
         });
+
         this.customer_suffering_report();
       });
 
@@ -318,17 +376,29 @@ routeToIncidents(id){
     };
     let data = google.visualization.arrayToDataTable(this.suffering);
     let chart = new google.visualization.BarChart(document.getElementById('customer_suffering_report'));
-    chart.draw(data, options);
-    google.visualization.events.addListener(chart, 'select', function () {
-      var selection = chart.getSelection();
-      if (selection.length) {
-        var title = data.getValue(selection[0].row, 0);
-        var value = data.getValue(selection[0].row, selection[0].column);
-      }
-      if (title == 'Vacuum Cleaner')
-        $('#Vacuum CleanerSufferers').modal();
+   
+    google.visualization.events.addListener(chart, 'select', ()=>{
+      var selectedItem = chart.getSelection()[0];
+     
+ 
+       if (selectedItem) {
 
-    });
+
+ this.routeToIncidents(0,this.incidentProductCat[selectedItem.row],0,);
+       }
+      });
+   
+    chart.draw(data, options);
+    // google.visualization.events.addListener(chart, 'select', function () {
+    //   var selection = chart.getSelection();
+    //   if (selection.length) {
+    //     var title = data.getValue(selection[0].row, 0);
+    //     var value = data.getValue(selection[0].row, selection[0].column);
+    //   }
+    //   if (title == 'Vacuum Cleaner')
+    //     $('#Vacuum CleanerSufferers').modal();
+
+    // });
 
 
 
@@ -377,7 +447,7 @@ routeToIncidents(id){
       bar: { groupWidth: '75%' },
       'legend': 'top',
       bars: 'vertical',
-      colors: ['#cddc3a', '#8ac34a', '#3a8a3d'],
+      colors: ['#006600', '#00cc00','#00ff00', ],
       animation: {
         "startup": true,
         duration: 600,
@@ -404,9 +474,8 @@ routeToIncidents(id){
     this.dashboardservice.getStateByStatus()
       .subscribe((res: any) => {
         console.log(res)
-        this.stateCount.push(['Province', 'Weekly Open Incidents'])
-        // this.stateCount.push(['punjab', '56'])
-        // this.stateCount.push(['haryana', '4'])
+        this.stateCount.push(['State', 'Total Incidents'])
+        
         res.forEach(element => {
           this.stateCount.push([element.state, element.count])
         });
@@ -430,7 +499,18 @@ routeToIncidents(id){
       };
 
       let chart = new google.visualization.GeoChart(document.getElementById('regions_chart'));
+      google.visualization.events.addListener(chart, 'select', ()=>{
+        var selectedItem = chart.getSelection()[0];
+        console.log(selectedItem)
 
+   
+         if (selectedItem) {
+  
+  
+   this.routeToIncidents(0,0,0,this.stateCount[selectedItem.row + 1 ][0]);
+         }
+        });
+  
       chart.draw(data, options);
     }
   }
@@ -444,6 +524,7 @@ routeToIncidents(id){
         console.log(res)
         this.complaintCount.push(['Incident_type', '#Incidents'])
         res.forEach(element => {
+          this.incidentCatIncident.push(element.id);
           this.complaintCount.push([element.name, element.count])
         });
         this.Complaint_Category();
@@ -472,6 +553,18 @@ routeToIncidents(id){
     };
     let data = google.visualization.arrayToDataTable(this.complaintCount);
     let chart = new google.visualization.BarChart(document.getElementById('Complaint_Category'));
+   
+    google.visualization.events.addListener(chart, 'select', ()=>{
+      var selectedItem = chart.getSelection()[0];
+     
+       if (selectedItem) {
+
+
+ this.routeToIncidents(0,0,this.incidentCatIncident[selectedItem.row],);
+       }
+      });
+  
+   
     chart.draw(data, options);
   }
   // incidents against incidents ends here 
@@ -492,7 +585,7 @@ routeToIncidents(id){
         console.log(res)
         this.meanTiming.push(['Appliances', 'Mean time to repair'])
         res.forEach(element => {
-          this.meanTiming.push([element.name, 24])
+          this.meanTiming.push([element.name, parseInt(element.meanTime)])
         });
 
         this.repair_time();
@@ -545,7 +638,7 @@ getCurrentInstallations() {
       this.installationBycategory.push(['Appliances', 'New',  'Scheduled',  'OnHold','Assigned','Installed', { role: 'annotation' }]);
       res.forEach((element1: any) => {
 
-
+        this.InstallproductCategoryId.push(element1.productCategoryId)
 
         element1.statusInfo.forEach(element => {
 
@@ -620,7 +713,7 @@ draw_open_installation_chart() {
         inStdId=11;
       };
 // this.routeToIncidents(selectedItem.column);
-this.router.navigate(['/installation'], { queryParams: { sId:inStdId  } });
+this.router.navigate(['/installation'], { queryParams: { sId:inStdId ,pcId:this.InstallproductCategoryId[selectedItem.row] } });
 
        // var topping = data.getValue(selectedItem.row, 0);
        // alert('The user selected ' + topping);
@@ -631,6 +724,136 @@ this.router.navigate(['/installation'], { queryParams: { sId:inStdId  } });
 
   open_installations_chart.draw(data, options);
 }
+
+
+
+
+  //  installation against Product   starts here
+  getInstallationStatusCounts() {
+
+    this.dashboardservice.getInstallationStatusCount()
+      .subscribe((res: any[]) => {
+        // this.statusCount = res;
+        console.log(res);
+        this.installationProdCategory.push(['Appliances', '#Installation'])
+        res.forEach((element: any) => {
+          this.installationProdCat.push(element.productCategoryId)
+          console.log(element.productCategoryId)
+          this.installationProdCategory.push([element.productCategoryName, element.count])
+
+
+
+        });
+
+        this.installation_against_Product_Category();
+      });
+
+  }
+
+  installation_against_Product_Category() {
+
+    let options = {
+      chartArea: { width: '50%' },
+      hAxis: {
+        title: 'Installation against Product Category',
+        minValue: 0
+      },
+      vAxis: {
+        title: 'Product Category'
+      },
+      'legend': 'top',
+      colors: ['#ff9800'],
+      animation: {
+        "startup": true,
+        duration: 600,
+        easing: 'in-out'
+      }
+    };
+    let data = google.visualization.arrayToDataTable(this.installationProdCategory);
+    let chart = new google.visualization.BarChart(document.getElementById('installation_against_Product_Category'));
+   
+    google.visualization.events.addListener(chart, 'select', ()=>{
+      var selectedItem = chart.getSelection()[0];
+     
+ 
+       if (selectedItem) {
+
+console.log(this.installationProdCat[selectedItem.row])
+ this.routeToInstallation(0,this.installationProdCat[selectedItem.row],0);
+       }
+      });
+   
+    chart.draw(data, options);
+    // google.visualization.events.addListener(chart, 'select', function () {
+    //   var selection = chart.getSelection();
+    //   if (selection.length) {
+    //     var title = data.getValue(selection[0].row, 0);
+    //     var value = data.getValue(selection[0].row, selection[0].column);
+    //   }
+    //   if (title == 'Vacuum Cleaner')
+    //     $('#Vacuum CleanerSufferers').modal();
+
+    // });
+
+
+
+
+
+  }
+  //  installation against Product   Ending here
+
+
+
+  // incidents status by state starts here
+  getInstallationStatusByState() {
+    this.dashboardservice.getInstallationStateByStatus()
+      .subscribe((res: any) => {
+        this.installationStateCount.push(['provinces', 'Total Installation'])
+        
+        res.forEach(element => {
+          this.installationStateCount.push([element.state, element.count])
+        });
+        this.installation_regions_chart();
+      })
+  }
+
+  installation_regions_chart() {
+    {
+      let data = google.visualization.arrayToDataTable(this.installationStateCount);
+
+      let options = {
+        region: 'IN',
+        resolution: 'provinces',
+        colorAxis: { colors: ['#01bcd7'] },
+        animation: {
+          "startup": true,
+          duration: 600,
+          easing: 'in-out'
+        }
+      };
+
+      let chart = new google.visualization.GeoChart(document.getElementById('installation_regions_chart'));
+      google.visualization.events.addListener(chart, 'select', ()=>{
+        var selectedItem = chart.getSelection()[0];
+        console.log(selectedItem)
+
+   
+         if (selectedItem) {
+  
+  
+   this.routeToInstallation(0,0,this.installationStateCount[selectedItem.row + 1 ][0]);
+         }
+        });
+  
+      chart.draw(data, options);
+    }
+  }
+
+  // incidents status by state ends here
+
+
+
+
 
 //////////////////////
 
@@ -657,7 +880,12 @@ this.router.navigate(['/installation'], { queryParams: { sId:inStdId  } });
     this.getCategoryByStatus();
     this.getCategoryCount();
     this.getMeanTime();
+
+
+    // installations charts
     this.getCurrentInstallations();
+    this.getInstallationStatusCounts();
+    this.getInstallationStatusByState()
   })
 
 
