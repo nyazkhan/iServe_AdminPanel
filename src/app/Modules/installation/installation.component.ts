@@ -18,7 +18,15 @@ export class InstallationComponent implements OnInit {
   assignTitle: string;
 
  
- 
+  statusId:number;
+  ProductCategoryId:number;
+  stateId:any;
+
+  
+  sortActive: string
+  filterBy = {};
+  filterbysort = {}
+
     constructor(private installationservice: InstallationService ,
        private tostservice :TostService,
        private router: Router,
@@ -79,28 +87,32 @@ export class InstallationComponent implements OnInit {
           .subscribe((e: Params) => {
             if (e.sId) {
     
-              const statusId = Number(e.sId);
-              this.getInstallations(statusId);
+               this.statusId = Number(e.sId) || Number(0);
+          this.ProductCategoryId = Number(e.pcId) || Number(0);
+          this.stateId = e.stId || 0;
+
+              this.getInstallations(this.statusId);
             } else {
-              this.router.navigate(['/installation'], { queryParams: { sId: 0 } });
+              this.router.navigate(['/installation'], { queryParams: { sId: 0, pcId: 0, stId: 0 } });
             }
     
           });
       }
     
       onHeadingClick(statusId:number){
-        this.router.navigate(['/installation'], { queryParams: { sId: statusId } });
-    
+        this.router.navigate(['/installation'], { queryParams: { sId: statusId, pcId: 0,  stId: 0 } });
+        this.sortActive = "";
+
       }
 
 
-  getInstallations(id: number) {
-    this.selectedHeadingId = id;
+  getInstallations(sId: number) {
+    this.selectedHeadingId = sId;
     this.currentPage = 1;
-    if (id === 0) {
+    if (this.statusId== 0 && this.ProductCategoryId == 0  && this.stateId == 0||"") {
       this.getAllInstallations();
     } else {
-      this.getFilterInstallations(id);
+      this.getFilterInstallations(sId);
     }
 
   } 
@@ -126,7 +138,7 @@ export class InstallationComponent implements OnInit {
     this.showLoader = true;
     this.installationservice.getAllInstallation(this.currentPage)
       .subscribe((res: any) => {
-        this.Installations = res;
+        // this.Installations = res;
         this.filterInstallation = res;
         this.showLoader = false;
 
@@ -141,16 +153,32 @@ export class InstallationComponent implements OnInit {
 
 
   //get filter Installations
-  getFilterInstallations(i) {
+  getFilterInstallations(sId:number) {
     this.filterInstallation=[];
     this.showLoader = true;
     this.currentPage = 1;
-    this.installationservice.getFillterInstallation(i, this.currentPage)
+
+    if (this.ProductCategoryId != 0 || this.statusId != 0 || this.stateId != 0 ) {
+      if (this.statusId||sId) {
+        this.filterBy['statusId'] = this.statusId||sId;
+      }
+      if (this.ProductCategoryId) {
+        this.filterBy["categoryId"] = this.ProductCategoryId;
+      }
+      if (this.stateId != "0" && this.stateId != "") {
+        this.filterBy['location'] = this.stateId;
+      }
+      
+    } else {
+      this.getAllInstallations();
+    }
+    this.installationservice.getFillterInstallation(this.filterBy, this.currentPage)
       .subscribe((res: any) => {
         this.filterInstallation = res;
         this.showLoader = false;
       },(err)=>{
         this.tostservice.showNotificationFailure(err)
+        this.showLoader = false;
 
       })
   }
@@ -161,26 +189,6 @@ export class InstallationComponent implements OnInit {
     console.log('scrolled!!');
     // this.lodeMore();
   }
-
-
-  // filtterIncidents(i) {
-  //   console.log(i + "   id ")
-  //   this.installationservice.getFillterComplaint(i, i)
-  //     .subscribe((res: any) => {
-  //       console.log("filter")
-
-  //       console.log(res)
-  //     })
-  //   this.selectedHeadingId = i;
-  //   this.filterInstallation = [];
-
-  //   if (i == 0) {
-  //     this.filterInstallation = this.Installations;
-  //   } else {
-  //     this.filterInstallation = this.Installations.filter(element => element.statusName == this.statusHeading[i]);
-
-  //   }
-  // }
 
 
 
@@ -231,8 +239,11 @@ export class InstallationComponent implements OnInit {
 
 
   sortBy(val) {
+    this.currentRouteParams();
+    this.sortActive = val;
+
     this.showLoader = true;
-    if (this.selectedHeadingId === 0) {
+    if (this.statusId== 0 && this.ProductCategoryId == 0 &&  this.stateId == 0||"") {
       this.filterInstallation=[];
       this.installationservice.getSorting(val)
       .subscribe((res:any)=>{
@@ -240,7 +251,7 @@ this.filterInstallation=res;
 this.showLoader = false;
       },(err)=>{
         this.tostservice.showNotificationFailure(err)
-        this.showLoader = false;
+        this.showLoader = true;
 
       })
 
@@ -248,7 +259,7 @@ this.showLoader = false;
       this.filterInstallation=[];
 
       this.showLoader = true;
-      this.installationservice.getFilterSorting(val, this.selectedHeadingId)
+      this.installationservice.getFilterSorting(val, this.filterbysort)
         .subscribe((res) => {
           this.filterInstallation = res;
           this.showLoader = false;
@@ -259,6 +270,37 @@ this.showLoader = false;
         })
     }
   }
+
+
+  currentRouteParams() {
+    let query = this.activatedRoute.snapshot.queryParams
+    for (let key in query) {
+      if (key == "sId" && query[key] != "0") {
+        this.filterbysort['statusId'] = query[key];
+      }
+      if (key == "pcId" && query[key] != "0") {
+        this.filterbysort['categoryId'] = query[key];
+      }
+      if (key == "stId" && query[key] != "0" || "") {
+        this.filterbysort['location'] = query[key];
+      }
+      
+
+      console.log(query[key])
+      console.log(this.filterbysort)
+    }
+  }
+
+
+  clearSortBy(i) {
+    console.log(i)
+    
+      this.getFilterInstallations(i)
+
+    this.sortActive = "";
+  }
+
+
 
 
   getAssingedId(id,AssignEngName?) {
@@ -295,10 +337,7 @@ this.loadingHistory=false;
       })
   }
 
-  // sortComments(res) {
-  //   this.installationsHistory = res.sort((a, b) => parseFloat(a.statusId) - parseFloat(b.statusId));
-  //   console.log(this.installationsHistory.length)
-  // }
+  
 
   getRejectId(id) {
     this.resetform();
@@ -349,7 +388,7 @@ this.loadingHistory=false;
 
   //assign engineer 
 
-  assignFormData(data) {
+  assignFormData() {
 this.assignButtonHide=true;
     const fd = new FormData();
 
