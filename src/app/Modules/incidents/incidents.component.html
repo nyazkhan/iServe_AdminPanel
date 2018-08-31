@@ -20,8 +20,8 @@
 
     </div>
     <ul class="nav nav-tabs">
-      <li class="nav-item" *ngFor="let status of statusHeading " style="cursor: pointer;">
-        <a class="nav-link active" [class.active]="status.id==selectedHeadingIndex" (click)="getComplaints(status.id)">{{status.name}}</a>
+      <li class="nav-item" *ngFor="let status of statusHeading ">
+        <a class="nav-link active" [class.active]="status.id==selectedHeadingId" (click)="onHeadingClick(status.id)">{{status.name}}</a>
       </li>
 
     </ul>
