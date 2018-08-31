@@ -6,10 +6,10 @@ declare const $: any;
 
 @Component({
   selector: 'app-edit-engineer',
-  templateUrl: './edit-engineer.component.html',
-  styleUrls: ['./edit-engineer.component.scss']
+  templateUrl: './edit-user-details.component.html',
+  styleUrls: ['./edit-user-details.component.scss']
 })
-export class EditEngineerComponent implements OnInit {
+export class EditUserDetailsComponent implements OnInit {
 
   editManagerDetails: any = {};
 
