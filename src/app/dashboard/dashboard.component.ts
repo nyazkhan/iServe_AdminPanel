@@ -156,8 +156,15 @@ export class DashboardComponent implements OnInit {
       legend: { position: 'top', maxLines: 7 },
       bar: { groupWidth: '75%' },
       isStacked: true,
+ // colors: ['#B2EBF2','#80DEEA', '#26C6DA','#0097A7','#006064','#01579B'],
+      // colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
+      // colors: ['#00B8D4','#18FFFF', '#0277BD','#0097A7','#006064','#303F9F'], //3RD chart with blue and shades
+      colors: ['#F8BBD0','#F06292', '#E91E63','#C2185B','#F50057','#880E4F'],
 
-      colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
+     
+     
+
+      
       animation: {
         "startup": true,
         duration: 600,
@@ -225,6 +232,8 @@ export class DashboardComponent implements OnInit {
       bar: { groupWidth: '75%' },
       isStacked: true,
       colors: ['#EF9A9A','#EF5350','#E53935','#C62828','#B71C1C'],
+      // colors: ['#BBDEFB','#64B5F6','#2196F3','#1565C0','#0D47A1'],//1st chart colors red $ shades
+    
       animation: {
         "startup": true,
         duration: 600,
@@ -463,7 +472,7 @@ routeToIncidents(id){
         title: 'Incident Category'
       },
       'legend': 'top',
-      colors: ['#ff9800'],
+      colors: ['#90ee02'],
       animation: {
         "startup": true,
         duration: 600,
@@ -518,7 +527,7 @@ routeToIncidents(id){
       bar: { groupWidth: '75%' },
       isStacked: true,
 
-      colors: ['#e63935'],
+      colors: ['#EEFF41'],
       animation: {
         "startup": true,
         duration: 600,
@@ -585,7 +594,10 @@ draw_open_installation_chart() {
     legend: { position: 'top', maxLines: 7 },
     bar: { groupWidth: '75%' },
     isStacked: true,
-    colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
+    // colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
+    //Average Incident Life Span (in hours)
+    colors: ['#B39DDB', '#7E57C2', '#BA68C8', '#9C27B0', '#6A1B9A', '#6200EA', '#EDE7F6'],
+
     animation: {
       "startup": true,
       duration: 600,
