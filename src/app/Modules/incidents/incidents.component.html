@@ -168,7 +168,9 @@
                             <b>{{ row.customerName }}</b>
                           </div>
                           <div *ngIf="row.customerPhone">
-                            {{ row.customerPhone }}
+                            <i class="material-icons">
+                              local_phone
+                              </i>{{ row.customerPhone }}
                           </div>
 
                           <div *ngIf=" row.customerEmail ">
@@ -465,7 +467,7 @@
                   <td colspan="9">
                     <div class="text-center">
                     <img src="/assets/img/not-found.svg">
-                    <h3>No content found</h3>
+                    <h3 class="noContent-text">No content found</h3>
                   </div>
                 </td>
                </tr>
@@ -582,9 +584,9 @@
                     <b style="color: gray;">{{comment.comment}}</b>
                   </div>
                   <div class="comment col-md- 8 col-lg-8 col-sm-8 col-xs-8" [style.border-left-color]="comment.statusColor" >
-                    <div  *ngIf="comment.scheduleDate" class="date">
+                    <!-- <div  *ngIf="comment.scheduleDate" class="date">
                       {{comment.scheduleDate | date: 'dd MMM, yyyy  hh : mm a'}}
-                    </div>
+                    </div> -->
                   <div>
                     {{comment.autoComment}}
                   </div>
