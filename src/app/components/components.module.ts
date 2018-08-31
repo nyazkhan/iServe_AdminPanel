@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { EditEngineerComponent } from './edit-engineer/edit-engineer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditUserDetailsComponent } from './edit-user-details/edit-user-details.component';
 
 @NgModule({
   imports: [
@@ -20,13 +20,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    EditEngineerComponent
+    EditUserDetailsComponent
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    // EditEngineerComponent
   ]
 })
 export class ComponentsModule { }

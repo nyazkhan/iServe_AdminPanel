@@ -68,9 +68,7 @@ this.subscribeUserPictureChanges();
         this.countStatus = res;
         this.countStatus.forEach(element=>{
          this.totalCount= this.totalCount +    element.count;
-         console.log(this.totalCount)
         })
-        console.log(this.countStatus);
 
       })
   }
