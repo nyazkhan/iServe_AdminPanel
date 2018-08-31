@@ -25,9 +25,9 @@ export class IncidentsService {
     // }
 
     // get filter complaints
-    getFillterComplaint(id:number,pageNo:number){
+    getFillterComplaint(fd,pageNo:number){
       const filter_api = `/m/complaint/filter/page/${pageNo}`
-      return this.customHttp.post(filter_api,{"statusId":id})
+      return this.customHttp.post(filter_api,fd)
     }
 
 
@@ -107,7 +107,7 @@ export class IncidentsService {
       // sorting by status, priority, category filter by status id
 getFilterSorting(sort,filter){
   const filterSort_api =`/m/complaint/filter-sort/${sort}/true`
-  return this.customHttp.post(filterSort_api,{"statusId":filter})
+  return this.customHttp.post(filterSort_api,filter)
 }
 
 
