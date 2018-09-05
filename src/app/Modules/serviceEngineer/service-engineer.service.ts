@@ -36,11 +36,11 @@ export class ServiceEngineerService {
 
 
 
-  //get brand id
-  getBrandIds(){
-        // const brandIds_api =`/sa/product-category`
-    return this.customHttp.get("/sa/product-category")
-  }
+  // //get brand id
+  // getBrandIds(){
+  //       // const brandIds_api =`/sa/product-category`
+  //   return this.customHttp.get("/sa/product-category")
+  // }
 
 
 

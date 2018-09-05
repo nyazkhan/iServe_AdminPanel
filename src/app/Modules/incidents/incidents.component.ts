@@ -227,7 +227,7 @@ export class IncidentsComponent implements OnInit {
     }
     else {
       this.showLoader = true;
-      this.incidentService.getFillterComplaint(this.selectedHeadingId, this.currentPage + 1)
+      this.incidentService.getFillterComplaint({"statusId":this.statusId}, this.currentPage + 1)
         .subscribe((res: Array<any>) => {
 
           if (res.length) {

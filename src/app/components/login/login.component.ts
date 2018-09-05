@@ -13,22 +13,83 @@ import { User } from '../../interface/user';
 })
 export class LoginComponent implements OnInit {
 
+
+
+
+  userTypes = ["management", "superadmin"];
+  user = new User("Rajesh@123", "Abc@123", "", );
+
+  submitted = false;
+  forgetUserName:string;
+  forgetPassword:string;
+  otp:string;
+  submitButton: boolean = false;
+
+login=true;
+userFrom=false;
+otpForm=false;
+
+userFormButton=false;
+otpFormButton=false;
+
   constructor(private router: Router, private tostservice: TostService, private loginservice: LoginService,) {
     if (this.loginservice.isLoggedIn()) {
 
       this.navigateTo();
     }
   }
-  submitButton: boolean = false;
 
   ngOnInit() {
   }
 
-  userTypes = ["management", "superadmin"];
-  user = new User("Rajesh@123", "Abc@123", "", );
 
-  submitted = false;
+  forgetPwdCick(){
 
+this.login=false;
+this.userFrom=true;
+
+  }
+
+  getOtpClick(){
+this.userFormButton=true;
+this.loginservice.getOtp(this.forgetUserName)
+.subscribe((res:any)=>{
+  this.userFrom=false;
+  this.userFormButton=false;
+
+  this.otpForm=true;
+
+this.tostservice.showNotificationSuccess("Otp sent to register Phone No")
+},(err)=>{
+  this.tostservice.showNotificationFailure(err)
+  this.userFrom=true;
+  this.userFormButton=false;
+})
+
+
+
+
+  }
+
+
+  passwordChangeClick(){
+this.otpFormButton=true;
+this.loginservice.forgetPwdChange({"otp":this.otp, "username":this.forgetUserName, "password":this.forgetPassword})
+.subscribe((res:any)=>{
+  this.otpForm=false;
+  this.otpFormButton=false;
+
+  this.login=true;
+
+  this.tostservice.showNotificationSuccess("Password Change Successfuly")
+},(err)=>{
+  this.otpFormButton=false;
+
+  this.otpForm=true;
+
+  this.tostservice.showNotificationFailure(err)
+})
+  }
   onSubmit() {
     console.log(this.user);
     this.submitButton = true;
