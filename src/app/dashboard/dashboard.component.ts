@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
-import { Observable } from 'rxjs';
-import { TryCatchStmt } from '@angular/compiler';
 import {  Router } from '@angular/router';
 
 declare var google: any;
-declare var require: any;
-declare var $: any;
+// declare var require: any;
+// declare var $: any;
 
 
 @Component({
@@ -37,14 +35,17 @@ export class DashboardComponent implements OnInit {
   suffering = [];
   incidentByCategory = [];
 
-  incidentStatus1: any;
-  incidentStatus2: any;
-  incidentStatus3: any;
-  incidentStatus4: any;
-  incidentStatus5: any;
-  incidentStatus6: any;
-  incidentStatus7: any;
-  incidentCategoryId=[];
+  subProductStatus1: any;
+  subProductStatus2: any;
+  subProductStatus3: any;
+  subProductStatus4: any;
+  subProductStatus5: any;
+  subProductStatus6: any;
+  subProductStatus7: any;
+  subCatStatus=[];
+  subProductStatusId=[]
+
+
 
   productStatus1: any;
   productStatus2: any;
@@ -77,8 +78,11 @@ installationProdCategory=[]
   ProductRegister: number;
 
 
+
+
   installationBycategory=[];
 
+  showChart=false;
 
 
   constructor(private dashboardservice: DashboardService,
@@ -86,6 +90,10 @@ installationProdCategory=[]
    ) {
   }
 
+
+  showSubCat(){
+    this.showChart=!this.showChart;
+  }
 
   routeToIncidents(id:number,pcid?: number,icid?:number,stid?){
     console.log(stid + "   state name")
@@ -114,68 +122,69 @@ installationProdCategory=[]
 
 
 
-  // current incident against category   starts here
-  getCurrent_Incid_Againgst_Incid_Category() {
-    this.dashboardservice.getCategoryStatus()
-      .subscribe((res: any) => {
-        this.incidentByCategory.push(['Appliances', 'New', 'Assigned Service Engineer', 'Scheduled', 'Rejected', 'Not Fixed', 'Fixed', 'OnHold', { role: 'annotation' }]);
-        res.forEach((element1: any) => {
-          this.incidentCategoryId.push(element1.id);
 
+
+
+  get_Sub_Cat_vs_Status(id) {
+this.subCatStatus=[];
+this.subProductStatusId=[];
+
+
+
+
+    this.showChart=true;
+    this.dashboardservice.getSubCatCount(id)
+      .subscribe((res: any) => {
+        console.log(res);
+        this.subCatStatus.push(['Appliances', 'New', 'Assigned Service Engineer', 'Scheduled', 'Rejected', 'Not Fixed', 'Fixed', 'OnHold', { role: 'annotation' }]);
+        res.forEach((element1: any) => {
+
+this.subProductStatusId.push(element1.productCategoryId)
 
           element1.statusInfo.forEach(element => {
 
             if (element.id == 1) {
-              this.incidentStatus1 = element.count;
+              this.subProductStatus1 = element.count;
             }
             if (element.id == 2) {
-              this.incidentStatus2 = element.count;
+              this.subProductStatus2 = element.count;
             }
             if (element.id == 4) {
-              this.incidentStatus3 = element.count;
+              this.subProductStatus3 = element.count;
             }
             if (element.id == 5) {
-              this.incidentStatus4 = element.count;
+              this.subProductStatus4 = element.count;
             }
             if (element.id == 6) {
-              this.incidentStatus5 = element.count;
+              this.subProductStatus5 = element.count;
             }
             if (element.id == 7) {
-              this.incidentStatus6 = element.count;
+              this.subProductStatus6 = element.count;
             }
             if (element.id == 9) {
-              this.incidentStatus7 = element.count;
+              this.subProductStatus7 = element.count;
             }
 
 
           })
-
-          this.incidentByCategory.push([element1.name, parseInt(this.incidentStatus1), parseInt(this.incidentStatus2), parseInt(this.incidentStatus3), parseInt(this.incidentStatus4), parseInt(this.incidentStatus5), parseInt(this.incidentStatus6), parseInt(this.incidentStatus7), ''])
+          this.subCatStatus.push([element1.name, parseInt(this.subProductStatus1), parseInt(this.subProductStatus2), parseInt(this.subProductStatus3), parseInt(this.subProductStatus4), parseInt(this.subProductStatus5), parseInt(this.subProductStatus6), parseInt(this.subProductStatus7), ''])
         });
 
-        this.draw_open_incidences_chart_by_incident_category();
+        this.draw_open__incidences_chart();
       }
       )
   }
 
-  draw_open_incidences_chart_by_incident_category() {
-    let data = google.visualization.arrayToDataTable(this.incidentByCategory)
+  draw_open__incidences_chart() {
+    let data = google.visualization.arrayToDataTable(this.subCatStatus)
     let options = {
       chartArea: {
         left: 120,
       },
-      hAxis: {
-        title: ' Current Incidents against Incidents Category',
-        minValue: 0
-      },
-      vAxis: {
-        title: 'Incidents Category'
-      },
       legend: { position: 'top', maxLines: 7 },
       bar: { groupWidth: '75%' },
       isStacked: true,
-
-      colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
+      colors: ['#ffd600', '#29b6f6', '#6600cc', '#e45e23', '#ff1a1a', '#41c300', '#ff0066'],
       animation: {
         "startup": true,
         duration: 600,
@@ -183,12 +192,14 @@ installationProdCategory=[]
       }
     };
 
-    let chart = new google.visualization.BarChart(document.getElementById('draw_open_incidences_chart_by_incident_category'));
+
+    let chart = new google.visualization.BarChart(document.getElementById('sub_Cat_vs_Status'));
+    
    
     google.visualization.events.addListener(chart, 'select', ()=>{
-      var selectedItem = chart.getSelection()[0];
+      let selectedItem = chart.getSelection()[0];
      
-     var stdId :number;
+     let stdId :number;
  
        if (selectedItem) {
 
@@ -213,16 +224,25 @@ installationProdCategory=[]
         if (selectedItem.column==7) {
           stdId=9;
         };
-this.incidentCategoryId[selectedItem.row]
+this.subProductStatusId[selectedItem.row]
 
- this.routeToIncidents(stdId,0,this.incidentCategoryId[selectedItem.row],);
+ this.routeToIncidents(stdId,this.subProductStatusId[selectedItem.row],0,);
        }
  
     });    
 
+
     chart.draw(data, options);
   }
-  // current incident against category   ending here
+
+
+
+
+
+
+
+
+
 
 
   // current incident against Product   starts here
@@ -233,7 +253,7 @@ this.incidentCategoryId[selectedItem.row]
         this.incidents.push(['Appliances', 'New', 'Assigned Service Engineer', 'Scheduled', 'Rejected', 'Not Fixed', 'Fixed', 'OnHold', { role: 'annotation' }]);
         res.forEach((element1: any) => {
 
-this.productCategoryId.push(element1.id)
+this.productCategoryId.push(element1.productId)
 
           element1.statusInfo.forEach(element => {
 
@@ -278,7 +298,7 @@ this.productCategoryId.push(element1.id)
       legend: { position: 'top', maxLines: 7 },
       bar: { groupWidth: '75%' },
       isStacked: true,
-      colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
+      colors: ['#ffd600', '#29b6f6', '#6600cc', '#e45e23', '#ff1a1a', '#41c300', '#ff0066'],
       animation: {
         "startup": true,
         duration: 600,
@@ -343,7 +363,7 @@ this.productCategoryId[selectedItem.row]
         console.log(res);
         this.suffering.push(['Appliances', '#Incidents'])
         res.forEach((element: any) => {
-          this.incidentProductCat.push(element.id)
+          this.incidentProductCat.push(element.productId)
           this.suffering.push([element.name, element.count])
 
 
@@ -383,8 +403,8 @@ this.productCategoryId[selectedItem.row]
  
        if (selectedItem) {
 
-
- this.routeToIncidents(0,this.incidentProductCat[selectedItem.row],0,);
+this.get_Sub_Cat_vs_Status(this.incidentProductCat[selectedItem.row])
+//  this.routeToIncidents(0,this.incidentProductCat[selectedItem.row],0,);
        }
       });
    
@@ -436,18 +456,24 @@ this.productCategoryId[selectedItem.row]
 
     let options = {
       chartArea: {
-        left: 120,
+        left: 100,
+        height:100,
       },
+
+    
+
       hAxis: {
         title: 'Incidents',
       },
       vAxis: {
         title: 'Appliances'
       },
+     
+      
       bar: { groupWidth: '75%' },
       'legend': 'top',
       bars: 'vertical',
-      colors: ['#006600', '#00cc00','#00ff00', ],
+      colors: ['#006600', '#00cc00','#92c409', ],
       animation: {
         "startup": true,
         duration: 600,
@@ -462,10 +488,6 @@ this.productCategoryId[selectedItem.row]
   //  incidents weekly report ends here
 
 
-
-  setModalChart() {
-    console.log('hello');
-  }
 
 
 
@@ -507,7 +529,7 @@ this.productCategoryId[selectedItem.row]
          if (selectedItem) {
   
   
-   this.routeToIncidents(0,0,0,this.stateCount[selectedItem.row + 1 ][0]);
+  //  this.routeToIncidents(0,0,0,this.stateCount[selectedItem.row + 1 ][0]);
          }
         });
   
@@ -635,10 +657,10 @@ getCurrentInstallations() {
   this.dashboardservice.getCurrentInstallation()
     .subscribe((res: any) => {
       console.log(res);
-      this.installationBycategory.push(['Appliances', 'New',  'Scheduled',  'OnHold','Assigned','Installed', { role: 'annotation' }]);
+      this.installationBycategory.push(['Appliances', 'New', 'Assigned', 'Scheduled',  'OnHold','Installed', { role: 'annotation' }]);
       res.forEach((element1: any) => {
 
-        this.InstallproductCategoryId.push(element1.productCategoryId)
+        this.InstallproductCategoryId.push(element1.productId)
 
         element1.statusInfo.forEach(element => {
 
@@ -661,7 +683,7 @@ getCurrentInstallations() {
 
 
         })
-        this.installationBycategory.push([element1.productCategoryName, parseInt(this.installationProduct1), parseInt(this.installationProduct2), parseInt(this.installationProduct3), parseInt(this.installationProduct4), parseInt(this.installationProduct5), ''])
+        this.installationBycategory.push([element1.productCategory, parseInt(this.installationProduct1), parseInt(this.installationProduct4), parseInt(this.installationProduct2), parseInt(this.installationProduct3), parseInt(this.installationProduct5), ''])
       });
 
       this.draw_open_installation_chart();
@@ -678,7 +700,7 @@ draw_open_installation_chart() {
     legend: { position: 'top', maxLines: 7 },
     bar: { groupWidth: '75%' },
     isStacked: true,
-    colors: ['#ffd600', '#29b6f6', '#6600cc', '#000000', '#ff1a1a', '#41c300', '#ff0066'],
+    colors: ['#ffd600','#29b6f6', '#6600cc', '#ff0066',  '#41c300',],
     animation: {
       "startup": true,
       duration: 600,
@@ -737,9 +759,9 @@ this.router.navigate(['/installation'], { queryParams: { sId:inStdId ,pcId:this.
         console.log(res);
         this.installationProdCategory.push(['Appliances', '#Installation'])
         res.forEach((element: any) => {
-          this.installationProdCat.push(element.productCategoryId)
+          this.installationProdCat.push(element.productId)
           console.log(element.productCategoryId)
-          this.installationProdCategory.push([element.productCategoryName, element.count])
+          this.installationProdCategory.push([element.productCategory, element.count])
 
 
 
@@ -870,22 +892,22 @@ console.log(this.installationProdCat[selectedItem.row])
 
 
 
-
-    this.getCurrent_Incid_Againgst_Incid_Category();
-    this.getDashboardDetails();
-    this.getStatusCounts();
-    this.getCurrentIncidents();
+// this.get_Sub_Cat_vs_Status();
+    // this.getCurrent_Incid_Againgst_Incid_Category();
+    // this.getDashboardDetails();
+    // this.getStatusCounts();
+    // this.getCurrentIncidents();
     this.getIncidentWeeklyReports();
     this.getStatusByState();
-    this.getCategoryByStatus();
-    this.getCategoryCount();
-    this.getMeanTime();
+    // this.getCategoryByStatus();
+    // this.getCategoryCount();
+    // this.getMeanTime();
 
 
     // installations charts
-    this.getCurrentInstallations();
-    this.getInstallationStatusCounts();
-    this.getInstallationStatusByState()
+    // this.getCurrentInstallations();
+    // this.getInstallationStatusCounts();
+    // this.getInstallationStatusByState()
   })
 
 
@@ -931,112 +953,6 @@ console.log(this.installationProdCat[selectedItem.row])
 
 
 
-  //   ceo_customer_sufferers() {
-  //     let data = google.visualization.arrayToDataTable([
-  //       ['Appliances', '#Sufferers'],
-  //       ['Water Purifier', 20],
-  //       ['Vacuum Cleaner', 55,],
-  //       ['Air Purifier', 32],
-  //       ['Security Solutions', 45],
-  //       ['Health Conditionerss', 8]
-  //     ]);
-
-  //     let options = {
-  //       chartArea: {
-  //         left: 120,
-  //       },
-  //       backgroundColor: 'transparent',
-  //       hAxis: {
-  //         title: 'Customers Suffering',
-  //         minValue: 0,
-  //         textStyle: { color: '#fff' },
-  //         titleTextStyle: { color: '#fff' },
-  //         baselineColor: '#fff',
-  //       },
-  //       vAxis: {
-  //         title: 'Appliances',
-  //         textStyle: { color: '#fff' },
-  //         titleTextStyle: { color: '#fff' },
-  //       },
-  //       'legend': 'top',
-  //       legendTextStyle: { color: '#fff' },
-  //       colors: ['#fff'],
-  //       animation: {
-  //         "startup": true,
-  //         duration: 600,
-  //         easing: 'in-out'
-  //       }
-  //     };
-
-  //     let chart = new google.visualization.BarChart(document.getElementById('ceo_customer_sufferers'));
-  //     chart.draw(data, options);
-  //   }
-
-
-
-
-
-  //  incidents_hour() {
-  //       let data = google.visualization.arrayToDataTable([
-  //           ['Appliances', 'Customer', 'Support Centre', 'Engineer', 'Repair', { role: 'annotation' }],
-  //       ['Water Purifier', 0.25, 4, 9, 4, ''],
-  //       ['Vacuum Cleaner', 1, 2, 12, 3, ''],
-  //       ['Air Purifier', 0.5, 3, 7, 5, ''],
-  //       ['Security Solutions', 0.25, 1, 8, 4, ''],
-  //       ['Health Conditionerss', 0.3, 1, 5, 1, '']
-  //     ]);
-
-  //     let options = {
-  //         chartArea: {
-  //             left: 120,
-  //       },
-  //       legend: { position: 'top', maxLines: 3 },
-  //       bar: { groupWidth: '75%' },
-  //       isStacked: true,
-  //       colors: ['#c370fd', '#9b3aee', '#8e2baa', '#5a0173'],
-  //       animation: {
-  //         "startup": true,
-  //         duration: 600,
-  //         easing: 'in-out'
-  //       }
-  //     };
-
-  //     let chart = new google.visualization.BarChart(document.getElementById('incedents_hour'));
-  //     chart.draw(data, options);
-  //   }
-
-
-
-  //   sufferers_piechart() {
-
-  //       var data = google.visualization.arrayToDataTable([
-  //       ['Appliance', '#Sufferers'],
-  //       ['Ovens', 11],
-  //       ['Steam Vacuum Cleaner', 2],
-  //       ['Hobs & Cooktops', 2],
-  //       ['Kitchen Chimneys', 2],
-  //       ['Microwaves', 7],
-  //       ['Drawers', 3]
-  //     ]);
-
-  //     var options = {
-  //         'width': 600,
-  //         'height': 400,
-  //       'legend': 'left',
-  //       is3D: true,
-  //       colors: ['#ea4b59', '#f0954f', '#ffe902', '#bccf01', '#64c6ef', '#009fe3', '#c066a7'],
-  //       animation: {
-  //           "startup": true,
-  //           duration: 600,
-  //           easing: 'in-out'
-  //         }
-  //       };
-
-  //       var chart = new google.visualization.PieChart(document.getElementById('sufferers_piechart'));
-
-  //       chart.draw(data, options);
-  //     }
-
-
+ 
 }
 

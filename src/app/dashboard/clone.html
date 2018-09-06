@@ -1,6 +1,6 @@
 
-  <div class="container-fluid">
-    <div *ngIf="role=='management'" class="row">
+  <!-- <div class="container-fluid"> -->
+    <!-- <div *ngIf="role=='management'" class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header card-header-warning card-header-icon">
@@ -12,9 +12,9 @@
                     </h3>
                 </div>
                 <div class="card-footer">
-                    <!-- <div class="stats">
+                     <div class="stats">
                         <i class="material-icons">date_range</i> Last 1 Month
-                    </div> -->
+                    </div> 
                 </div>
             </div>
         </div>
@@ -28,9 +28,9 @@
                     <h3 class="card-title"> {{fixedIncidents}} </h3>
                 </div>
                 <div class="card-footer">
-                    <!-- <div class="stats">
+                     <div class="stats">
                         <i class="material-icons">date_range</i> Last 1 Months
-                    </div> -->
+                    </div> 
                 </div>
             </div>
         </div>
@@ -44,9 +44,9 @@
                     <h3 class="card-title">{{installation}}</h3>
                 </div>
                 <div class="card-footer">
-                    <!-- <div class="stats">
+                    <div class="stats">
                         <i class="material-icons">date_range</i> Last 1 Months
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,16 +60,19 @@
                     <h3 class="card-title">{{ProductRegister}}</h3>
                 </div>
                 <div class="card-footer">
-                    <!-- <div class="stats">
+                    <div class="stats">
                         <i class="material-icons">date_range</i> Last 1 Month
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Chart Cards -->
-    <div (resize)="getAllManagmentCharts()" class="row">
+
+
+
+    <!-- <div (resize)="getAllManagmentCharts()" class="row">
           <ng-container  *ngIf="role=='superadmin'">
 
                   <div class="col-md-6">
@@ -156,7 +159,7 @@
                   </div>
               </div>
           </div>
-          <!-- <div class="col-md-6 col-sm-12">
+          <div class="col-md-6 col-sm-12">
                 <div class="card card-chart">
                     <div class="card-header card-header-primary">
                             <div id="open_installations"></div>
@@ -165,7 +168,7 @@
                             <h4 class="card-title">Installations VS productCategories By Status</h4>
                     </div>
                 </div>
-            </div> -->
+            </div>
             <div  class="col-md-6 col-sm-12">
                 <div class="card card-chart">
                     <div class="card-header card-header-warning">
@@ -174,7 +177,6 @@
                     <div class="card-body">
                         <h4  class="card-title">Incidents VS productCategories</h4>
                     </div>
-                    <!-- <h3 (click)="showSubCat()">back</h3>     -->
                 </div>
             </div>
             <div *ngIf="showChart" class="col-md-6 col-sm-12">
@@ -190,7 +192,7 @@
               </div>
 
               
-          <!-- <div class="col-md-6 col-sm-12">
+          <div class="col-md-6 col-sm-12">
                 <div class="card card-chart">
                     <div class="card-header card-header-primary">
                             <div id="installation_against_Product_Category"></div>
@@ -200,18 +202,8 @@
                     </div>
                 </div>
             </div>
-           -->
-            <!-- <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
-                    <div class="card-header card-header-warning">
-                                <div id="Complaint_Category"></div>
-                        </div>
-                        <div class="card-body">
-                                <h4 class="card-title">Incidents against Incident Category</h4>
-                        </div>
-                    </div>
-                </div> -->
-
+          
+            
 
 
 
@@ -246,7 +238,7 @@
                           </div>
                       </div>
                     </div>
-                          <!-- <div class="col-md-6 col-sm-12">
+                          <div class="col-md-6 col-sm-12">
                               <div class="card card-chart">
                                   <div class="card-header card-header-info">
                                           <div id="installation_regions_chart"></div>
@@ -255,7 +247,7 @@
                                           <h4 class="card-title">Installations By State</h4>
                                   </div>
                               </div>
-                          </div> -->
+                          </div>
                           
                         
 
@@ -263,9 +255,16 @@
 
 </ng-container>
 
-    </div>
+    </div> -->
+   
+   
+   
+   
+   
     <!-- end of chart cards -->
-</div>
+
+    
+<!-- </div> -->
 
 <!-- Modal -->
 <!-- <div class="modal fade" id="cookingSufferers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

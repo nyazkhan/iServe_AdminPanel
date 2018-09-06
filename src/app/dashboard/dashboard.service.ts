@@ -43,10 +43,18 @@ export class DashboardService {
     // compaints status count of products
     getStatusCount() {
         const I_api = `/m/complaint/graph/product`
-
+// this.getsubCatCount()
         return this.customHttp.get(I_api)
 
     }
+ // compaints status count of products
+ getSubCatCount(id) {
+    //  console.log("hell0o")
+    const I_api = `/m/complaint/graph/product-status/${id}`
+
+    return this.customHttp.get(I_api)
+
+}
 
 
     getInstallationStatusCount(){
@@ -59,7 +67,7 @@ export class DashboardService {
 
 
     getDashbord(){
-        return this.customHttp.get(`/m/dashboard/card/2018-08`);
+        return this.customHttp.get(`/m/dashboard/card/2018-09`);
     }
 
 
