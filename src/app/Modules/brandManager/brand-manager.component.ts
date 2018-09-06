@@ -27,7 +27,7 @@ export class BrandManagerComponent implements OnInit {
   submitButtonHide:boolean= false;
   managerDetails = new ManagerDetails;
 
-  headerRow: Array<string> = ['S.No.','Name','User Name','Email','Phone No',""]
+  headerRow: Array<string> = ['S.No.','Name','User Name','Email','Phone No',"Action"]
   ngOnInit() {
 
     this.getManagers();

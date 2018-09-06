@@ -4,7 +4,10 @@
             <h4 class="card-title ">Brand Manager</h4>
             <div class="dropdown">
                 <a class="nav-link ">
-                    <i class="material-icons" (click)="managerForm.reset()" data-toggle="modal" data-target="#ManagerFormModal"> add_to_photos</i>
+                    <!-- <i class="material-icons" (click)="managerForm.reset()" data-toggle="modal" data-target="#ManagerFormModal"> add_to_photos</i> -->
+                    <button class="btn btn-primary "  (click)="managerForm.reset()" data-toggle="modal" data-target="#ManagerFormModal" ><i class="material-icons" style="font-size: 30px;">
+                        person_add
+                        </i></button>
                 </a>
 
             </div>
@@ -34,7 +37,7 @@
 
                         <td>
                             <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}">                            &nbsp;
-                            <i *ngIf="!row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" class="material-icons">person</i>
+                            <i *ngIf="!row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" class="material-icons mainColor">person</i>
 
                             {{row.name}}
                         </td>
@@ -47,9 +50,12 @@
                         <td>
                             <b>{{row.contactNo}}</b>
                         </td>
-                        <td>
+                        <td class="change-icon">
+                            
+                            <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteIcon">delete</i>
+                            
+                            <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteChange-icon">delete_forever</i>
 
-                            <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons">delete_outline</i>
                         </td>
 
 
@@ -80,8 +86,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content   card card-stats">
             <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">add_to_photos
+                <div class="card-icon"> 
+                    <i class="material-icons">person_add
                     </i>
                 </div>
                 <h3 class="card-title">ADD MANAGER</h3>
