@@ -294,22 +294,7 @@
                           </div>
                           <!-- <span class"badge badge-pill badge-success"  data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id)">Edit</span> -->
                           <div *ngIf="!(row.statusName =='Fixed' || row.statusName =='Rejected')">
-                              <!-- <button class="btn btn-social btn-link btn-linkedin btn-primary"  data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id ,'AssignEngName')" style="padding:0;top: -12px;
-                              position: absolute;
-                              padding: 0;
-                              right: 115px;
-                          ">
-                                  <span><i class="material-icons">
-                                      sync
-                                      </i></span> 
-                                     
-                                 </button> -->
-                                 <button  class="btn btn-sm btn-outline-primary " data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id ,'AssignEngName')"
-                   >
-                   <i class="material-icons">
-                    sync
-                    </i>Change Engineer</button>
-
+                            <span class="badge badge-pill badge-primary" data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id,row.assignedServiceEngineerName)">Edit</span>
                           </div>
                         </div>
 

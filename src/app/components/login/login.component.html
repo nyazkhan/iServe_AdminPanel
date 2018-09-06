@@ -1,67 +1,188 @@
-
 <div class="wrapper wrapper-full-page">
-  <div class="page-header login-page header-filter bg-image" filter-color="black">
-    <div class="bg-color">
-     <div class="container">
-       <div class="navbar-wrapper" class="lightColor"><h3>iServe</h3></div>
-        <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto animated bounceInDown">
-            <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="form">
-                <div class="card card-login ">
-                    <div class="card-header card-header-rose text-center">
-                      <h4 class="card-title">Login</h4>
-                    </div> 
-                <div class="card-body ">
-                    <span class="bmd-form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                            <i class="material-icons">face</i>
-                          </span>
-                        </div>
-                        <input type="text" required class="form-control" id="userName" name="userName" [(ngModel)]="user.name"  #userName="ngModel">
-                      </div> 
-                  </span> 
-                  <span class="bmd-form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                              <i class="material-icons">lock_outline</i>
-                          </span>
-                        </div>
-                        <input type="password" class="form-control" placeholder="Password"  [(ngModel)]="user.password" id="pwd" name="password" #password="ngModel">
-                        <span><i class="material-icons" style="padding-top:18px;">visibility</i></span>
-                      </div> 
-                  </span> 
-                  <span class="bmd-form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                              <i class="material-icons">
-                                  supervised_user_circle
-                                  </i>
-                          </span>
-                        </div>
-                       
-                       
-                        <select required class="form-control selectpicker" data-style="btn btn-link"  [(ngModel)]="user.userType" name="userType" #userType="ngModel">
-                          <option *ngFor="let type of userTypes" [value]="type"> {{type}} </option>
-                           
-                        </select>
-                         
-                      </div> 
-                  </span>
+    <div class="page-header login-page header-filter bg-image" filter-color="black">
+        <div class="bg-color">
+            <div class="container">
+                <div class="navbar-wrapper" class="lightColor">
+                    <h3>iServe</h3>
                 </div>
-                <div class="card-footer justify-content-center">
-                    <button  *ngIf="!submitButton" type="submit" [disabled]="!loginForm.form.valid" class="btn btn-rose btn-link btn-lg">Login</button>
-                    <button *ngIf="submitButton" type="button"  class="btn btn-rose btn-link btn-lg">Submitting <i class="fa fa-spinner fa-spin mainColor" style="margin-left:8px;"></i></button>
-                 </div>
-              </div>  
-              
-            </form>
-        </div>  
-      </div> 
+                <div *ngIf="login" class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto animated bounceInDown">
+                    <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="form">
+                        <div class="card card-login ">
+                            <div class="card-header card-header-rose text-center">
+                                <h4 class="card-title">Login</h4>
+                            </div>
+                            <div class="card-body ">
+                                <span class="bmd-form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">face</i>
+                                            </span>
+                                        </div>
+                                        <input type="text" required class="form-control" id="userName" name="userName" [(ngModel)]="user.name" #userName="ngModel">
+                                    </div>
+                                </span>
+                                <span class="bmd-form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">lock_outline</i>
+                                            </span>
+                                        </div>
+                                        <input type="password" class="form-control" placeholder="Password" [(ngModel)]="user.password" id="pwd" name="password" #password="ngModel">
+                                        <span><i class="material-icons" style="padding-top:18px;">visibility</i></span>
+                                    </div>
+                                </span>
+                                <span class="bmd-form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">
+                                                    supervised_user_circle
+                                                </i>
+                                            </span>
+                                        </div>
+
+
+                                        <select required class="form-control selectpicker" data-style="btn btn-link" [(ngModel)]="user.userType" name="userType"
+                                            #userType="ngModel">
+                                            <option *ngFor="let type of userTypes" [value]="type"> {{type}} </option>
+
+                                        </select>
+
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="card-footer justify-content-center">
+                                <button *ngIf="!submitButton" type="submit" [disabled]="!loginForm.form.valid" class="btn btn-rose btn-link btn-lg">Login</button>
+                                <button *ngIf="submitButton" type="button" class="btn btn-rose btn-link btn-lg">Submitting
+                                    <i class="fa fa-spinner fa-spin" style="margin-left:8px;"></i></button>
+                            </div>
+                            <span>
+                                <button style="float: right" type="button" class="btn btn-rose btn-link btn-sm"><a (click)="forgetPwdCick()">Forget
+                                        Password</a></button>
+
+                            </span>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div *ngIf="userFrom" class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto animated bounceInDown">
+
+                    <form #userForm="ngForm" class="form">
+                        <div class="card card-login ">
+                            <div class="card-header card-header-rose text-center">
+                                <h4 class="card-title">Enter User Name</h4>
+                            </div>
+                            <div class="card-body ">
+                                <span class="bmd-form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">face</i>
+                                            </span>
+                                        </div>
+                                        <input type="text" required placeholder="User Name" class="form-control" id="forgetUserName" name="forgetUserName" [(ngModel)]="forgetUserName"
+                                            #userName="ngModel">
+
+
+                                    </div>
+                                </span>
+
+
+
+
+
+                            </div>
+                            <div class="card-footer justify-content-center">
+                                <button *ngIf="!userFormButton" type="button" [disabled]="!userForm.form.valid" (click)="getOtpClick()" class="btn btn-rose btn-link btn-lg">Get
+                                    Otp </button>
+
+                                <button *ngIf="userFormButton" type="button" class="btn btn-rose btn-link btn-md">Submitting
+                                    <i class="fa fa-spinner fa-spin" style="margin-left:8px;"></i></button>
+                            </div>
+                            <span>
+                                <button style="float: right" type="button" class="btn btn-rose btn-link btn-sm"><a href="/login">Login
+                                        Page</a></button>
+
+                            </span>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div *ngIf="otpForm" class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto animated bounceInDown">
+
+                    <form #otpForm="ngForm" class="form">
+                        <div class="card card-login ">
+                            <div class="card-header card-header-rose text-center">
+                                <h4 class="card-title">Enter New Password</h4>
+                            </div>
+                            <div class="card-body ">
+                                <span class="bmd-form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">face</i>
+                                            </span>
+                                        </div>
+                                        <input type="text" required placeholder="User Name" class="form-control" id="forgetName" name="forgetName" [(ngModel)]="forgetUserName"
+                                            #forgetName="ngModel">
+
+
+                                    </div>
+                                </span>
+
+                                <span class="bmd-form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">lock_outline</i>
+                                            </span>
+                                        </div>
+                                        <input type="password" class="form-control" placeholder="Enter New Password" [(ngModel)]="forgetPassword" id="Password" name="Password"
+                                            #Password="ngModel">
+                                        <span><i class="material-icons" style="padding-top:18px;">visibility</i></span>
+                                    </div>
+                                </span>
+                                <span class="bmd-form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="material-icons">lock_outline</i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="O T P" [(ngModel)]="otp" id="otp1" name="otp1" #otp1="ngModel">
+                                    </div>
+                                </span>
+                            </div>
+
+                            <div class="card-footer justify-content-center">
+                                <button *ngIf="!otpFormButton" type="button" [disabled]="!otpForm.form.valid" (click)="passwordChangeClick()" class="btn btn-rose btn-link btn-lg">Change
+                                    Password </button>
+
+                                <button *ngIf="otpFormButton" type="button" class="btn btn-rose btn-link btn-md">Submitting
+                                    <i class="fa fa-spinner fa-spin" style="margin-left:8px;"></i></button>
+                            </div>
+                            <span>
+                                <button style="float: right" type="button" class="btn btn-rose btn-link btn-sm"><a href="/login">Login
+                                        Page</a></button>
+
+                            </span>
+
+
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 <footer class="footer ">
     <div class="container-fluid">
@@ -86,7 +207,8 @@
         </nav>
         <div class="copyright pull-right">
             &copy; 2018, developed by
-            <a href="https://www.nxtlifetechnologies.com" target="_blank" class="secondaryColor" >NxtLife Technologies</a> for a better experience.
+            <a href="https://www.nxtlifetechnologies.com" target="_blank" class="secondaryColor">NxtLife Technologies</a>
+            for a better experience.
         </div>
     </div>
 </footer>
