@@ -1,4 +1,4 @@
-<h4>Incidents</h4>
+<h4 class="heading">Incidents</h4>
 <div class="card">
 
   <div class="card-header card-header-primary">
@@ -20,7 +20,7 @@
 
     </div>
     <ul class="nav nav-tabs">
-      <li class="nav-item" *ngFor="let status of statusHeading ">
+      <li class="nav-item hover-cursor" *ngFor="let status of statusHeading ">
         <a class="nav-link active" [class.active]="status.id==selectedHeadingId" (click)="onHeadingClick(status.id)">{{status.name}}</a>
       </li>
 
@@ -64,16 +64,17 @@
 
             <tr class="collapse tabel-detail col-md-8 col-lg-8" attr.id="collapseExample{{i}}">
               <td colspan=8 class=" incident-details">
-                <div class="row p-2">
+                <div class="row p-2 auto-cursor">
                   <!-- <div *ngIf="row.description" class="col-lg-12">
 
                     {{row.description}}
 
                   </div>
                    -->
-                   <div class="card card-nav-tabs description" style= "margin:10px; width:94% ; margin: auto;">
+                   <div class="card card-nav-tabs description" *ngIf="row.description" style= "margin:10px; width:94% ; margin: auto;">
                       
                       <div class="card-body"  style="padding-bottom: 0px;">
+                        <div class="description-heading">Product Description</div>
                         <p> {{row.description}}</p>
                         
                       </div>
@@ -167,16 +168,14 @@
                         <div class="col-md- 6 col-lg-6  col-sm-6">
                           <!-- <div>product details</div> -->
                           <div *ngIf=" row.customerName ">
-                            <b>{{ row.customerName }}</b>
+                            <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{ row.customerName }}</b>
                           </div>
                           <div *ngIf="row.customerPhone">
-                            <i class="material-icons">
-                              local_phone
-                              </i>{{ row.customerPhone }}
+                            <i class="fa fa-phone details-icon" aria-hidden="true"></i>  {{ row.customerPhone }}
                           </div>
 
                           <div *ngIf=" row.customerEmail ">
-                            {{ row.customerEmail }}
+                            <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{ row.customerEmail }}
                           </div>
                           <div *ngIf="row.customerAddress" class="font-size">
                             <b>Address:</b> {{ row.customerAddress }} {{ row.customerCity }}, {{ row.customerState }} {{
@@ -207,15 +206,15 @@
                         </div>
                         <div class="col-md- 6 col-lg-6  col-sm-6">
                           <!-- <div>product details</div> -->
-                          <div *ngIf=" row.customerName ">
-                            <b>{{ row.dealerName }}</b>
+                          <div *ngIf=" row.dealerName ">
+                            <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{ row.dealerName }}</b>
                           </div>
                           <div *ngIf="row.dealerContact">
-                            {{ row.dealerContact }}
+                            <i class="fa fa-phone details-icon" aria-hidden="true"></i> {{ row.dealerContact }}
                           </div>
 
-                          <div *ngIf="row.customerEmail ">
-                            {{ row.customerEmail}}
+                          <div *ngIf="row.dealerEmail ">
+                            <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{ row.customerEmail}}
                           </div>
                           <div *ngIf="row.dealerAddress">
                             <b>Address:</b> {{ row.dealerAddress }}
@@ -284,18 +283,18 @@
                         <div class="col-md- 6 col-lg-6  col-sm-6">
                           <!-- <div>product details</div> -->
                           <div *ngIf=" row.assignedServiceEngineerName  ">
-                            <b>{{row.assignedServiceEngineerName}}</b>
+                            <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{row.assignedServiceEngineerName}}</b>
                           </div>
                           <div *ngIf="row.customerPhone">
-                            {{ row.assignedServiceEngineerContactNo }}
+                            <i class="fa fa-phone details-icon" aria-hidden="true"></i> {{ row.assignedServiceEngineerContactNo }}
                           </div>
 
                           <div *ngIf="row.assignedServiceEngineerEmail ">
-                            {{ row.assignedServiceEngineerEmail }}
+                            <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{ row.assignedServiceEngineerEmail }}
                           </div>
                           <!-- <span class"badge badge-pill badge-success"  data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id)">Edit</span> -->
                           <div *ngIf="!(row.statusName =='Fixed' || row.statusName =='Rejected')">
-                              <button class="btn btn-social btn-link btn-linkedin btn-primary"  data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id ,'AssignEngName')" style="padding:0;top: -12px;
+                              <!-- <button class="btn btn-social btn-link btn-linkedin btn-primary"  data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id ,'AssignEngName')" style="padding:0;top: -12px;
                               position: absolute;
                               padding: 0;
                               right: 115px;
@@ -304,7 +303,13 @@
                                       sync
                                       </i></span> 
                                      
-                                 </button>
+                                 </button> -->
+                                 <button  class="btn btn-sm btn-outline-primary " data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id ,'AssignEngName')"
+                   >
+                   <i class="material-icons">
+                    sync
+                    </i>Change Engineer</button>
+
                           </div>
                         </div>
 
@@ -483,9 +488,9 @@
       </div>
     </div>
   </div>
-  <div class="card-footer moreButton">
+  <div class="card-footer moreButton" >
 
-    <button type="button" (click)="lodeMore()" class="btn btn-defalte">More</button>
+    <button type="button" (click)="lodeMore()" class="btn btn-defalte" style="margin:auto;">More</button>
 
   </div>
 </div>
@@ -563,7 +568,7 @@
         <h3 class="card-title">History</h3>
       </div>
       <div class="modal-body">
-        <div *ngIf="!loadingHistory">
+        <div *ngIf="!loadingHistory" class="text-center">
           <!-- loader -->
           <i  class="fa fa-spinner fa-spin mainColor" style="font-size:60px; "></i>
         </div>
@@ -571,7 +576,7 @@
           <div *ngIf="commentsHistory.length==0">
             <div class="text-center">
               <img src="/assets/img/not-found.svg">
-              <p>No Records Found</p>
+              <p class="noContent-text">No Records Found</p>
             </div>
             </div>
        

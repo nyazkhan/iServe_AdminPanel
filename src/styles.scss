@@ -46,4 +46,27 @@ $main:#9c27b0;
     color: #4620ae;
     font-size: 18px;
   }
+
+    .heading{
+        margin-left: 20px;
+        font-weight: 400;
+        font-size: 25px;
+    }
+    .hover-cursor{
+        cursor: pointer;
+    }
+    .auto-cursor{
+        cursor: auto !important;
+    }
+    .text-center{
+        text-align: center;
+    }
+    .description-heading{
+        color: black;
+    font-weight: 400;
+    }
+    .details-icon{
+        margin-right: 6px;
+        color: $main;
+    }
  
