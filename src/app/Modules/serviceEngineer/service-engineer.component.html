@@ -4,10 +4,14 @@
       <h4 class="card-title ">Service Engineer</h4>
       <div class="dropdown">
         <a class="nav-link ">
-          <i class="material-icons" data-toggle="modal" data-target="#EngineerFormModal"> add_to_photos</i>
+          <!-- <i class="material-icons" data-toggle="modal" data-target="#EngineerFormModal"> add_to_photos</i> -->
+          <button class="btn btn-primary " data-toggle="modal" data-target="#EngineerFormModal"><i class="material-icons"   style="font-size: 30px;">
+            person_add
+            </i></button>
         </a>
 
       </div>
+      
 
     </div>
 
@@ -35,7 +39,7 @@
 
               <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}">
               &nbsp;
-              <i *ngIf="!row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" class="material-icons">person</i>
+              <i *ngIf="!row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" class="material-icons mainColor">person</i>
               {{row.name}}
 
 
@@ -46,16 +50,25 @@
             <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.contactNo}}</td>
             <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.specialist}}</td>
 
-            <td>
-              <!-- <i (click)="editManager(row.id)" data-toggle="modal" data-target="#EngineerFormModal" style="float: left"class="material-icons">create</i> -->
+            <!-- <td>
+             
 
-              <i (click)="getId( row)" data-toggle="modal" data-target="#deleteModal" class="material-icons">delete_forever</i>
-            </td>
+              <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons">delete_forever</i>
+             
+              
+            </td> -->
+            <td class="change-icon">
+                            
+              <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteIcon">delete</i>
+              
+              <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteChange-icon">delete_forever</i>
+
+          </td>
           </tr>
           <tr class="collapse" attr.id="collapseExample{{i}}">
             <td colspan=7 class=" incident-details">
-              <div class="row">
-                <div class="col-md-4">
+              <!-- <div class="row"> -->
+                <!-- <div class="col-md-4">
                   <h5>
                     <b> {{row.addressType }} Address:</b>
                     {{row.address}} ,
@@ -63,7 +76,25 @@
                     <br> {{row.country}}, , {{row.postalCode}}
                   </h5>
 
-                </div>
+                </div> -->
+                <div class="card card-nav-tabs detail-box " style="width: 70%; margin: auto; margin-top: 45px; ">
+                    <div>
+                        <div class="card-header card-header-info float-right" style="width:150px;">
+                         Address
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                           <div><i class="fa fa-home details-icon" aria-hidden="true" style="font-size: 24px;"></i><b>{{row.addressType }} Address</b></div>
+                            
+                               
+                               <div style="margin-left: 28px;">{{row.address}} </div>
+                                <div style="margin-left: 28px;"> {{row.city}} , {{row.state}}</div>
+                                <div style="margin-left: 28px;"> {{row.country}}, , {{row.postalCode}}</div>
+                          
+            
+                        </div>
+                      </div>
+                  </div>
+                
                 <div class="col-md-8">
                   <b>Assign Pincodes</b>
 
@@ -100,7 +131,50 @@
 
                   </div>
                 </div>
-              </div>
+             
+              <!-- <div class="card card-nav-tabs detail-box " style="width: 75%; ">
+                  <div>
+                      <div class="card-header card-header-info float-right" style="width:150px;">
+                     Assign Pincodes
+                      </div>
+                      
+                      <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                          <span *ngIf="!editPinShow" (click)="showEditPin()" class="badge badge-pill badge-primary">Edit</span>
+                          <div class="row">
+                              <div class="col-md-6 assignPin" *ngFor="let pin of assignpincode">
+                               
+                                  <span class="badge badge-pill badge-primary editPin ">
+                                    {{pin}}</span>
+                                    <span class="removePin" ><i *ngIf="editPinShow" (click)="removePincode(pin)" class="material-icons successColor">
+                                      remove_circle
+                                    </i></span>
+                                  
+          
+                                
+                              </div>
+                              <div class="col-md-6 " *ngIf="editPinShow">
+                                <div class="assignPin" *ngFor="let pin of editpins">
+                                  <span class="badge badge-pill badge-primary">{{pin}}
+                                    <i (click)="addPin(pin)" class="material-icons">
+                                      add
+                                    </i>
+                                  </span>
+                                </div>
+                              </div>
+          
+                              <div *ngIf="editPinShow">
+                                <button type="button" (click)="canclePinchanges(row)" class="badge badge-pill badge-secondary">Cancle</button>
+                                <button *ngIf="!changeSuccessfuly" type="submit" (click)="changePincode()" class="badge badge-pill badge-success">Save
+                                  Changes</button>
+                                <button *ngIf="changeSuccessfuly " type="button" class="badge badge-pill badge-primary">
+                                  <i class="fa fa-spinner fa-spin"></i>submitting</button>
+                              </div>
+          
+                            </div>
+                      </div>
+                      </div>
+                    </div>
+                 -->
               <div class="row">
 
                 <div class="col-md-6">
@@ -145,7 +219,7 @@
       <div class="modal-content   card ">
         <div class="card-header card-header-success card-header-icon">
           <div class="card-icon">
-            <i class="material-icons">add_to_photos
+            <i class="material-icons"> person_add
             </i>
           </div>
           <h3 class="card-title">ADD SERVICE ENGINEER</h3>
@@ -210,6 +284,7 @@
                   <label>Profile Picture
                   </label>
                   <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control ">
+                  <!-- <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control "> -->
                 </div>
               </div>
               <div class="col-md-4">
