@@ -13,22 +13,24 @@
 
     </div>
 
+  </div>
 
 
-    <div class="card-body">
-        <div class="table-responsive" id="coll">
-            <table class="table table-hover">
-                <thead class=" text-primary">
-                    <th *ngFor="let head of headerRow">
-                        {{head}}
-                    </th>
-                </thead>
-                <tbody *ngFor="let row of dataRows let i =index">
-                    <tr>
-                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">
-                            <b>{{i+1}}</b>
-                        </td>
-                        <!-- <td data-toggle="collapse"  (click)="getId( row)"attr.href="#collapseExample{{i}}" >
+
+  <div class="card-body">
+    <div class="table-responsive" id="coll">
+      <table class="table table-hover">
+        <thead class=" text-primary">
+          <th *ngFor="let head of headerRow">
+            {{head}}
+          </th>
+        </thead>
+        <tbody *ngFor="let row of dataRows let i =index">
+          <tr>
+            <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">
+              <b>{{i+1}}</b>
+            </td>
+            <!-- <td data-toggle="collapse"  (click)="getId( row)"attr.href="#collapseExample{{i}}" >
                             <img src="{{row.picUrl}}"> // src="/src/assets/img/avatar.jpg"
                         </td> -->
                         <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">
@@ -121,344 +123,282 @@
                             </div>
 
 
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="9" style="font-size: 70px; text-align: center;">
-                            <i *ngIf="isDataLoad" class="fa fa-spinner fa-spin"></i>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+                <!-- </div> -->
+                <div class="col-md-6">
+
+                </div>
+              <!-- </div> -->
+
+
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="9" style="font-size: 70px; text-align: center;">
+              <i *ngIf="isDataLoad" class="fa fa-spinner fa-spin mainColor"></i>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
+  </div>
 
 
 
-    <!-- Service engineer form -->
+  <!-- Service engineer form -->
 
-    <div class="modal fade" id="EngineerFormModal" tabindex="-1" role="dialog" aria-labelledby="EngineerFormModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content   card ">
-                <div class="card-header card-header-success card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">add_to_photos
-                        </i>
-                    </div>
-                    <h3 class="card-title">ADD SERVICE ENGINEER</h3>
+  <div class="modal fade bd-example-modal-lg" id="EngineerFormModal" tabindex="-1" role="dialog" aria-labelledby="EngineerFormModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content   card ">
+        <div class="card-header card-header-success card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons"> person_add
+            </i>
+          </div>
+          <h3 class="card-title">ADD SERVICE ENGINEER</h3>
+        </div>
+        <div class="modal-body">
+                        
+          <!-- <new-code> -->
+          <form (ngSubmit)="onSubmit()" #engineerForm="ngForm">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating" for="name"> Name <span style="color: red;">*</span>
+
+                  </label>
+                  <input type="text" required minlength="4" class="form-control " [(ngModel)]="engineerDetails.name"
+                    name="name" id="name" #name="ngModel" placeholder="Name">
+                  <small [hidden]="name.valid || name.untouched" style="color: red">
+                    Name is required
+                  </small>
                 </div>
-                <div class="modal-body">
-                    <form (ngSubmit)="onSubmit()" #engineerForm="ngForm">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label> Name
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Username <span style="color: red;">*</span>
+                  </label>
+                  <input type="text" minlength="4" maxlength="20" required [(ngModel)]="engineerDetails.username" name="username"
+                    id="username" class="form-control " #username="ngModel" placeholder="Username">
 
-                                    </label>
-                                    <input type="text" required minlength="4" class="form-control " [(ngModel)]="engineerDetails.name" name="name" id="name"
-                                        #name="ngModel">
-                                    <h4 [hidden]="name.valid || name.untouched" style="color: red">
-                                        name is required
-                                    </h4>
-                                </div>
-                            </div>
-                            <!-- </div>
-                        <div class="row"> -->
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Contact No
-                                    </label>
-                                    <input type="number" required pattern=".{10,10}" class="form-control " [(ngModel)]="engineerDetails.contactNo" name="contactNo"
-                                        id="contactNo" #contactNo="ngModel">
-                                    <h5 [hidden]="contactNo.valid || contactNo.untouched" style="color: red">
-                                        Invalid Contact No.
-                                    </h5>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-
-                                <label>Profile Picture
-                                </label>
-                                <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control ">
-
-
-
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label>Email Id
-                                    </label>
-                                    <input type="email" required [(ngModel)]="engineerDetails.email" name="email" id="email" class="form-control " #email="ngModel"
-                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}">
-
-                                    <h5 [hidden]="email.valid || email.untouched" style="color: red">
-                                        Email Id is required
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group ">
-                                    <label>username
-                                    </label>
-                                    <input type="text" minlength="4" maxlength="20" required [(ngModel)]="engineerDetails.username" name="username" id="username"
-                                        class="form-control " #username="ngModel">
-
-                                    <h5 [hidden]="username.valid || username.untouched" style="color: red">
-                                        name with minimum six characters is required
-                                    </h5>
-                                </div>
-                            </div>
-                            <!-- </div>
-                        <div class="row"> -->
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>password
-                                    </label>
-                                    <input type="password" required minlength="6" class="form-control  " [(ngModel)]="engineerDetails.password" name="password"
-                                        id="password" #password="ngModel">
-                                    <h5 [hidden]="password.valid || password.untouched" style="color: red">
-                                        password with minimum six characters is required
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Specialization
-                                    </label>
-                                    <input type="text" required class="form-control  " [(ngModel)]="engineerDetails.specialist" name="specialist" id="specialist"
-                                        #specialist="ngModel">
-                                    <h5 [hidden]="specialist.valid || specialist.untouched" style="color: red">
-                                        Specialization is required
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Pin Code
-                                    </label>
-                                    <button *ngIf="pinIstrue" type="button" class="buttonload">
-                                        <i class="fa fa-spinner fa-spin"></i>
-                                    </button>
-                                    <select class="form-control" required multiple [(ngModel)]="engineerDetails.pincodes" name="pincode" #pincode="ngModel">
-                                        <option *ngFor="let pin of pins" [value]="pin.pincode">{{pin.pincode}}</option>
-                                    </select>
-                                    <h5 [hidden]="pincode.valid || pincode.untouched" style="color: red">
-                                        pincode is required
-                                    </h5>
-
-                                </div>
-                            </div>
-                        </div>
-
-<!-- 
-                         <div class="row">
-                            <div class="col-md-12">
-                                    <label>Product category Id {{catarray}}
-                                    </label>
-                                    <button *ngIf="pinIstrue" type="button" class="buttonload">
-                                        <i class="fa fa-spinner fa-spin"></i>
-                                    </button>
-                                    <select class="form-control" id="productCategory"  required multiple [(ngModel)]="catarray" name="prodType"
-                                        #prodType="ngModel">
-                                        <option *ngFor="let product of productCategory let i = index" [value]="i">{{product.name}}</option>
-                                    </select>
-                                    
-
-                            </div>
-                            <div>
-                                <label>Product Sub-Category</label>
-                                <select class="form-control" id="productSubCategory"  required multiple [(ngModel)]="subCatArray" name="subCat"
-                                #subCat="ngModel">
-                                <option *ngFor="let product of productCategory[catarray.length].childCategory let i = index" [value]="i">{{product.name}}</option>
-                            </select>
-                            </div>
-                        </div>  
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-
-                                    <label for="product Category"> Product category</label>
-                                    <input type="checkbox" name="catSelect" id="catSelect" >
-                                </div>
-
-                            </div>
-                        </div> -->
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Enter Address Type
-                                    </label>
-                                    <select class="form-control" required [(ngModel)]="engineerDetails.address.addressType" name="addressType" #addressType="ngModel">
-                                        <option *ngFor="let addr of addressTypeOptions" [value]="addr">{{addr}}</option>
-                                    </select>
-                                    <h5 [hidden]="addressType.valid || addressType.untouched" style="color: red">
-                                        Address type is required
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>street / house no
-                                    </label>
-                                    <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.address" name="addres" #addres="ngModel">
-                                    <h5 [hidden]="addres.valid || addres.untouched" style="color: red">
-                                        Address is required
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Enter City
-                                    </label>
-                                    <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.city" name="city" id="city" #city="ngModel">
-                                    <h5 [hidden]="city.valid || city.untouched" style="color: red">
-                                        city Name is required
-                                    </h5>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Enter State
-                                    </label>
-                                    <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.state" name="state" id="state" #state="ngModel">
-                                    <h5 [hidden]="state.valid || state.untouched" style="color: red">
-                                        state Name is required
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Postel Code
-                                    </label>
-                                    <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.postalCode" name="postalcode" id="postalcode"
-                                        #postalcode="ngModel">
-                                    <h5 [hidden]="postalcode.valid || postalcode.untouched" style="color: red">
-                                        postal code is required
-                                    </h5>
-                                </div>
-                            </div>
-                            <!-- </div>
-                        <div class="row"> -->
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Enter country
-                                    </label>
-                                    <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.country" name="country" id="country"
-                                        #country="ngModel">
-                                    <h5 [hidden]="country.valid || country.untouched" style="color: red">
-                                        country Name is required
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-
-                            <button type="button" (click)="engineerForm.reset()" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button *ngIf="!loadingButton" type="submit" [disabled]="!engineerForm.valid" class="btn btn-success">Submit</button>
-                            <button *ngIf="loadingButton" type="button" class="btn btn-primary">
-                                <i class="fa fa-spinner fa-spin"></i>submitting</button>
-                        </div>
-                        <!-- <div class="text-center">
-                                <button *ngIf="!loadingButton" type="submit" class="btn btn-success" [disabled]="!engineerForm.form.valid  ">Submit</button>
-                                <button *ngIf="loadingButton" type="button" class="btn btn-primary">
-                                    <i class="fa fa-spinner fa-spin"></i>submitting</button>
-                    
-                            </div> -->
-                        <br>
-
-                    </form>
+                  <small [hidden]="username.valid || username.untouched" style="color: red">
+                    Username should consist of minimum 6 characters
+                  </small>
                 </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Contact No <span style="color: red;">*</span>
+                  </label>
+                  <input type="number" placeholder="Contact" required pattern=".{10,11}" class="form-control "
+                    [(ngModel)]="engineerDetails.contactNo" name="contactNo" id="contactNo" #contactNo="ngModel">
+                  <small [hidden]="contactNo.valid || contactNo.untouched" style="color: red">
+                    Contact No is required
+                  </small>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Email Id<span style="color: red;">*</span>
+                  </label>
+                  <input type="email" required [(ngModel)]="engineerDetails.email" name="email" id="email" class="form-control "
+                    #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}">
+
+                  <small [hidden]="email.valid || email.untouched" style="color: red">
+                    Email Id is required
+                  </small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <!-- <div class="form-group"> -->
+                  <label>Profile Picture
+                  </label>
+                  <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control ">
+                  <!-- <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control "> -->
+                <!-- </div> -->
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Specialization<span style="color: red;">*</span>
+                  </label>
+                  <input type="text" required class="form-control  " [(ngModel)]="engineerDetails.specialist" name="specialist"
+                    id="specialist" #specialist="ngModel">
+                  <small [hidden]="specialist.valid || specialist.untouched" style="color: red">
+                    Specialization is required
+                  </small>
+                </div>
+              </div>
 
             </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Password <span style="color: red;">*</span></label>
+                  <input type="password" required minlength="6" class="form-control  " [(ngModel)]="engineerDetails.password"
+                    name="password" id="password" #password="ngModel" placeholder="Password">
+                  <small [hidden]="password.valid || password.untouched" style="color: red">
+                    Password should consist of minimum 6 characters
+                  </small>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> Select Product Types <span style="color: red;">*</span>
+                  </label>
+                  <button *ngIf="pinIstrue" type="button" class="buttonload">
+                    <i class="fa fa-spinner fa-spin"></i>
+                  </button>
+                  <select class="form-control selectHieght" id="prodTypeOptions" required multiple [(ngModel)]="engineerDetails.productTypeIds"
+                    name="prodType" #prodType="ngModel">
+                    <option *ngFor="let product of productCategory" [value]="product.id">{{product.name}}</option>
+                  </select>
+                  <small [hidden]="prodType.valid || prodType.untouched" style="color: red">
+                    Product Type options is required
+                  </small>
+
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label> Select Pin Codes <span style="color: red;">*</span>
+                  </label>
+                  <button *ngIf="pinIstrue" type="button" class="buttonload">
+                    <i class="fa fa-spinner fa-spin"></i>
+                  </button>
+                  <select class="form-control selectHieght" required multiple [(ngModel)]="engineerDetails.pincodes"
+                    name="pincode" #pincode="ngModel">
+                    <option *ngFor="let pin of pins" [value]="pin.pincode">{{pin.pincode}}</option>
+                  </select>
+                  <small [hidden]="pincode.valid || pincode.untouched" style="color: red">
+                    Pincode is required
+                  </small>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>Address Line <span style="color: red;">*</span>
+                  </label>
+                  <input type="text" required class="form-control " placeholder="Address Line" [(ngModel)]="engineerDetails.address.address"
+                    name="addres" #addres="ngModel">
+                  <small [hidden]="addres.valid || addres.untouched" style="color: red;">
+                    Address Line is required
+                  </small>
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label> City <span style="color: red;">*</span>
+                  </label>
+                  <input type="text" required class="form-control " placeholder="City" [(ngModel)]="engineerDetails.address.city"
+                    name="city" id="city" #city="ngModel">
+                  <small [hidden]="city.valid || city.untouched" style="color: red">
+                    City is required
+                  </small>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label> State <span style="color: red;">*</span>
+                  </label>
+                  <input type="text" required class="form-control " placeholder="State" [(ngModel)]="engineerDetails.address.state"
+                    name="state" id="state" #state="ngModel">
+                  <small [hidden]="state.valid || state.untouched" style="color: red">
+                    State Name is required
+                  </small>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Country <span style="color: red;">*</span>
+                  </label>
+                  <input type="text" required class="form-control " placeholder="Country" [(ngModel)]="engineerDetails.address.country"
+                    name="country" id="country" #country="ngModel">
+                  <small [hidden]="country.valid || country.untouched" style="color: red">
+                    Country Name is required
+                  </small>
+                </div>
+              </div>
+
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Postel Code <span style="color: red;">*</span>
+                  </label>
+                  <input type="text" required class="form-control " placeholder="Postal Code" [(ngModel)]="engineerDetails.address.postalCode"
+                    name="postalcode" id="postalcode" #postalcode="ngModel">
+                  <small [hidden]="postalcode.valid || postalcode.untouched" style="color: red">
+                    Postal code is required
+                  </small>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Select Address Type <span style="color: red;">*</span>
+                  </label>
+                  <select class="form-control" required [(ngModel)]="engineerDetails.address.addressType" name="addressType"
+                    #addressType="ngModel" style="height: px;">
+                    <option *ngFor="let addr of addressTypeOptions" [value]="addr">{{addr}}</option>
+                  </select>
+                  <small [hidden]="addressType.valid || addressType.untouched" style="color: red">
+                    Address type is required
+                  </small>
+                </div>
+
+              </div>
+            </div>
+          </form>
+
+          <!--footer-->
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" [disabled]="!engineerForm.valid" class="btn btn-success">Submit</button>
+          </div>
+
         </div>
+      </div>
     </div>
     <!-- Service Engineer form end -->
 
     <!-- delete modal for  service engineer -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content   card card-stats">
-                <div class="card-header card-header-success card-header-icon">
-                    <div class="card-icon">
-                        <i class="material-icons">delete_outline
-                        </i>
-                    </div>
-                    <h3 class="card-title">Delete</h3>
-                </div>
-                <div class="modal-body">
-                    <h3>"Are you sure you want to delete this Service Engineer?",
-                    </h3>
-                    <div class="modal-footer">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content   card card-stats">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">delete_outline
+              </i>
+            </div>
+            <h3 class="card-title">Delete</h3>
+          </div>
+          <div class="modal-body">
+            <h3>"Are you sure you want to delete this Service Engineer?",
+            </h3>
+            <div class="modal-footer">
 
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
-                        <button type="submit" (click)="deleteEngineer()" class="btn btn-success">Delete</button>
-
-                    </div>
-                </div>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
+              <button type="submit" (click)="deleteEngineer()" class="btn btn-success">Delete</button>
 
             </div>
+          </div>
 
         </div>
+
+      </div>
     </div>
     <!-- delete modal end here -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Product Type Id
-                                    </label>
-                                    <button *ngIf="pinIstrue" type="button" class="buttonload">
-                                        <i class="fa fa-spinner fa-spin"></i>
-                                    </button>
-                                    <select class="form-control" id="productCategory" required multiple [(ngModel)]="engineerDetails.productTypeIds" name="prodType"
-                                        #prodType="ngModel">
-                                        <option *ngFor="let product of productCategory" [value]="product.id">{{product.name}}</option>
-                                    </select>
-                                    <h5 [hidden]="prodType.valid || prodType.untouched" style="color: red">
-                                        productCategory is required
-                                    </h5>
-
-                                </div>
-                            </div>
-                        </div>  -->

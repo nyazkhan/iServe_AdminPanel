@@ -4,7 +4,10 @@
             <h4 class="card-title ">Brand Manager</h4>
             <div class="dropdown">
                 <a class="nav-link ">
-                    <i class="material-icons" (click)="managerForm.reset()" data-toggle="modal" data-target="#ManagerFormModal"> add_to_photos</i>
+                    <!-- <i class="material-icons" (click)="managerForm.reset()" data-toggle="modal" data-target="#ManagerFormModal"> add_to_photos</i> -->
+                    <button class="btn btn-primary "  (click)="managerForm.reset()" data-toggle="modal" data-target="#ManagerFormModal" ><i class="material-icons" style="font-size: 30px;">
+                        person_add
+                        </i></button>
                 </a>
 
             </div>
@@ -34,7 +37,7 @@
 
                         <td>
                             <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}">                            &nbsp;
-                            <i *ngIf="!row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" class="material-icons">person</i>
+                            <i *ngIf="!row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" class="material-icons mainColor">person</i>
 
                             {{row.name}}
                         </td>
@@ -47,9 +50,12 @@
                         <td>
                             <b>{{row.contactNo}}</b>
                         </td>
-                        <td>
+                        <td class="change-icon">
+                            
+                            <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteIcon">delete</i>
+                            
+                            <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteChange-icon">delete_forever</i>
 
-                            <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons">delete_outline</i>
                         </td>
 
 
@@ -62,7 +68,7 @@
                 <tfoot>
                     <tr>
                         <td colspan="9" style="font-size: 70px; text-align: center;">
-                            <i *ngIf="isDataLoad" class="fa fa-spinner fa-spin"></i>
+                            <i *ngIf="isDataLoad" class="fa fa-spinner fa-spin mainColor"></i>
                         </td>
                     </tr>
                 </tfoot>
@@ -80,13 +86,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content   card card-stats">
             <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">add_to_photos
+                <div class="card-icon"> 
+                    <i class="material-icons">person_add
                     </i>
                 </div>
                 <h3 class="card-title">ADD MANAGER</h3>
             </div>
-            <div class="modal-body">
+            <!-- <div class="modal-body">
                 <form (ngSubmit)="onSubmit()" #managerForm="ngForm">
 
                     <div class="row">
@@ -100,16 +106,7 @@
                             </h5>
                         </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="nickName">nick Name:</label>
-                                <br>
-                                <input type="text" class="form-control" id="nickName" name="nickName" 
-                                [(ngModel)]="managerDetails.nickName" #nickName="ngModel"> </div>
-                               
-                            </div>
-                    </div> -->
+                    
                     <div class="row">
                         <div class="col-md-12">
 
@@ -197,16 +194,108 @@
 
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="managerForm.reset()" >Close</button>
                         <button *ngIf="!submitButtonHide" type="submit" [disabled]="!managerForm.valid" class="btn btn-success">Submit</button>
-                        <button *ngIf="submitButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin"></i>submitting</button>
+                        <button *ngIf="submitButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin mainColor"></i>submitting</button>
 
                     </div>
                 </form>
 
-            </div>
+            </div> -->
+            <!-- <new code> -->
+                    <div class="modal-body">
+                            <form (ngSubmit)="onSubmit()" #managerForm="ngForm">
+            
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="name"> Name:</label>
+                                            <br>
+                                            <input type="text" placeholder="Name" required class="form-control" id="name" name="name" [(ngModel)]="managerDetails.name" #name="ngModel">
+                                             <small [hidden]="name.valid || name.untouched" style="color: red">
+                                                Name is required
+                                             </small>
+                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <label>Profile Picture</label>
+                                            <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control ">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                        <label>Email Id </label>
+                                             <input type="email" required [(ngModel)]="managerDetails.email" name="email" id="email" class="form-control " #email="ngModel"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}">
+                                     <small [hidden]="email.valid || email.untouched" style="color: red">
+                                    Email Id is required
+                                    </small>
+                                </div>
+                                </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="userName">User Name:</label>
+                                            <br>
+                                            <input type="text" placeholder="User Name"  required minlength="4" maxlength="20" class="form-control" id="userName" name="userName" [(ngModel)]="managerDetails.username" #userName="ngModel">
+                                            <small [hidden]="userName.valid || userName.untouched" style="color: red">
+                                                User Name is required at
+                                            </small>
+                                         </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="password">Password:</label>
+                                            <br>
+                                            <input type="password" placeholder="Password" required class="form-control" id="password" name="password" [(ngModel)]="managerDetails.password" #password="ngModel">
+                                            <small [hidden]="password.valid || password.untouched" style="color: red">
+                                                password is required with minimum length 6
+                                            </small>
+                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="contactNo">Contact No:</label>
+                                            
+                                            <input type="number" placeholder="Contact" required minlength="10" maxlength="13" class="form-control" id="contactNo" name="contactNo" [(ngModel)]="managerDetails.contactNo"
+                                                #contactNo="ngModel">
+                                                <small [hidden]="contactNo.valid || contactNo.untouched" style="color: red">
+                                                    Contect No. is required
+                                                </small>
 
-        </div>
+                                                
+                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlSelect1" >Brand Id</label>
+                                                <select class="form-control  selectpicker" name="brnad" [(ngModel)]="managerDetails.brandId" #brand="ngModel" id="exampleFormControlSelect1">
+                                                        <option *ngFor="let brand of brands" [value]="brand.id"> {{brand.name}} </option>
+                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                </div>
+                                
+                                <div class="modal-footer">
+            
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" [disabled]="!managerForm.valid" class="btn btn-success">Submit</button>
+                                </div>
+                            </form>
+            
+                        </div>
+            
+                    </div>
+                </div>
+            </div>  
+
+        <!-- </div>
     </div>
-</div>
+</div> -->
 <!-- brand manager form end -->
 
 

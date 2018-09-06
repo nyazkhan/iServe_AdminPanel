@@ -11,6 +11,7 @@ declare let $: any;
   styleUrls: ['./incidents.component.scss']
 })
 export class IncidentsComponent implements OnInit {
+  selectedHeadingId;
   loadingHistory: boolean = false;
   assignTitle: string;
   currentIndex: number;
@@ -57,8 +58,8 @@ export class IncidentsComponent implements OnInit {
 
     },
   ];
-  selectedHeadingId = 0;
-  headerRow = ["Incident No. ", "Date", "Product Name", " Product Description", "Product Category", "Incident Category", "Priority", "Status"];
+  selectedHeadingIndex=0;
+  headerRow = ["Incident_No. ", "Date", "Product Name", "Description", "Product Category", "Incident_Category", "Priority", "Status"];
   down: any;
   isDown: boolean = false;
 

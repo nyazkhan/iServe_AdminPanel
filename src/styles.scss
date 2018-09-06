@@ -2,9 +2,15 @@
 $light:white;
 $primary:#de2768;
 $success: #4caf50;
-
+$main:#9c27b0;
+.successColor{
+    color: $success;
+}
 .lightColor{
     color: $light;
+}
+.mainColor{
+    color: $main;
 }
 .primaryColor{
     color: $primary;
@@ -37,3 +43,43 @@ $success: #4caf50;
 ::-webkit-scrollbar-thumb:hover {
     background: #555; 
 }
+.noContent-text{
+    font-weight: 500;
+    color: #4620ae;
+    font-size: 18px;
+  }
+
+    .heading{
+        margin-left: 20px;
+        font-weight: 400;
+        font-size: 25px;
+    }
+    .hover-cursor{
+        cursor: pointer;
+    }
+    .auto-cursor{
+        cursor: auto !important;
+    }
+    .text-center{
+        text-align: center;
+    }
+    .description-heading{
+        color: black;
+    font-weight: 400;
+    }
+    .details-icon{
+        margin-right: 6px;
+        color: $main;
+    }
+    .text-captalize{
+        text-transform: capitalize;
+    }
+    .change-icon > .deleteIcon + .deleteChange-icon,
+.change-icon:hover > .deleteIcon{
+  display: none;
+}
+.change-icon:hover > .deleteIcon + .deleteChange-icon {
+  display: inherit;
+}
+
+ 

@@ -111,3 +111,18 @@ transition:0.2s ease-in box-shadow;
 ul#menu li {
     display:inline;
 }
+.assignPin{
+    display: flex;
+    position: relative;
+    .editPin{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .removePin{
+        left: 37px;
+    position: absolute;
+    top: -12px;
+    
+    }
+
+}

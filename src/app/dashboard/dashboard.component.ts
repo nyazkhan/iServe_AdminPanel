@@ -606,7 +606,7 @@ export class DashboardComponent implements OnInit {
         title: 'Incident Category'
       },
       'legend': 'top',
-      colors: ['#ff9800'],
+      colors: ['#90ee02'],
       animation: {
         "startup": true,
         duration: 600,
