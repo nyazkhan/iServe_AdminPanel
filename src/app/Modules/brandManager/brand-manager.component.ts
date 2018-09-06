@@ -27,7 +27,7 @@ export class BrandManagerComponent implements OnInit {
   submitButtonHide:boolean= false;
   managerDetails = new ManagerDetails;
 
-  headerRow: Array<string> = ['S.No.','Name','User Name',,'Email','Phone No',""]
+  headerRow: Array<string> = ['S.No.','Name','User Name','Email','Phone No',""]
   ngOnInit() {
 
     this.getManagers();
@@ -94,6 +94,8 @@ export class BrandManagerComponent implements OnInit {
         this.dataRows.unshift(res)
         this.showNotification();
       }, (err) => {
+        this.loadingButton = false;
+
         this.tostservice.showNotificationFailure(err)        
       })
 

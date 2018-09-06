@@ -110,6 +110,13 @@ editManagerdetails(fd){
   
 
 
+  getOtp(username){
+    return this.customHttp.get(`/generate-otp/${username}`)
+  }
 
+
+  forgetPwdChange(fd){
+    return this.customHttp.put(`/forgot-password`,fd)
+  }
 
 }
