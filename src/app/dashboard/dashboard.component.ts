@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { TostService } from '../providers/tost.service';
 
 declare var google: any;
 // declare var require: any;
@@ -28,9 +29,8 @@ export class DashboardComponent implements OnInit {
   statusRepair: number
   weeklyReport = [];
   complaintCount = [];
-  meanTiming = [];
   stateCount = [];
-  installationStateCount=[];
+  installationStateCount = [];
 
   suffering = [];
   incidentByCategory = [];
@@ -42,8 +42,8 @@ export class DashboardComponent implements OnInit {
   subProductStatus5: any;
   subProductStatus6: any;
   subProductStatus7: any;
-  subCatStatus=[];
-  subProductStatusId=[]
+  subCatStatus = [];
+  subProductStatusId = []
 
 
 
@@ -54,11 +54,11 @@ export class DashboardComponent implements OnInit {
   productStatus5: any;
   productStatus6: any;
   productStatus7: any;
-  productCategoryId=[];
+  productCategoryId = [];
 
-incidentProductCat=[];
-installationProdCat=[]
-incidentCatIncident=[];
+  incidentProductCat = [];
+  installationProdCat = []
+  incidentCatIncident = [];
 
   installationProduct1: any;
   installationProduct2: any;
@@ -68,10 +68,10 @@ incidentCatIncident=[];
   installationProduct6: any;
   installationProduct7: any;
 
-  InstallproductCategoryId=[];
-  installationCategoryId=[];
+  InstallproductCategoryId = [];
+  installationCategoryId = [];
 
-installationProdCategory=[]
+  installationProdCategory = []
   totalIncidents: number
   fixedIncidents: number;
   installation: number;
@@ -80,45 +80,83 @@ installationProdCategory=[]
 
 
 
-  installationBycategory=[];
+  installationBycategory = [];
 
-  showChart=false;
+  showChart = false;
+
+
+
+  mttrTillDate = [];
+  dashboardStatus=[];
 
 
   constructor(private dashboardservice: DashboardService,
     private router: Router,
-   ) {
+    private tostservice: TostService,
+  ) {
   }
 
 
-  showSubCat(){
-    this.showChart=!this.showChart;
+  dashboardFilterByDate(filterBy:string){
+
+
+    this.dashboardservice.getDashboardFilterByDate(filterBy)
+    .subscribe((res:any)=>{
+
+    },(err)=>{
+      this.tostservice.showNotificationFailure(err);
+    })
   }
 
-  routeToIncidents(id:number,pcid?: number,icid?:number,stid?){
-    console.log(stid + "   state name")
-    this.router.navigate(['/incidents'], { queryParams: { sId: id , pcId:pcid, icId:icid, stId: stid } });
-  
+
+  showSubCat() {
+    this.showChart = !this.showChart;
   }
 
-
-  routeToInstallation(id:number,pcid?: number,stid?){
-    this.router.navigate(['/installation'], { queryParams: { sId: id , pcId:pcid,  stId: stid } });
-
-  }
 
   getDashboardDetails() {
     this.dashboardservice.getDashbord()
       .subscribe((res: any) => {
         console.log(res);
-        this.totalIncidents=res.complaintCount;
-        this.fixedIncidents=res.fixedComplaintCount;
-        this.installation=res.installationCount;
-        this.ProductRegister=res.productsRegisteredCount;
+// this.dashboardStatus.push("1","2","3","4");
+// this.dashboardStatus[1][0].push("1","2","3","4")
+// console.log(this.dashboardStatus);
+        this.totalIncidents = res.complaintCount;
+        this.fixedIncidents = res.fixedComplaintCount;
+        this.installation = res.installationCount;
+        this.ProductRegister = res.productsRegisteredCount;
       })
+    this.status_new_closed_carryForword()
   }
 
+  status_new_closed_carryForword() {
+    let data = google.visualization.arrayToDataTable([
+      ['Task', 'Hours per Day'],
+      ['Work',     11],
+      ['Eat',      2],
+      ['Commute',  8],
+      // ['Watch TV', 9],
+      // ['Sleep',    7]
+    ])
+   var options:{
+    chartArea:{left:10,top:0,width:'250%',height:'25%'}
+   
+   
+    // "legend": 'top'
 
+    // animation: {
+    //   "startup": true,
+    //   duration: 600,
+    //   easing: 'in-out'
+    // }
+  };
+
+    let chart = new google.visualization.PieChart(document.getElementById('graph_status'));
+   
+   
+    chart.draw(data, options);
+
+  }
 
 
 
@@ -126,20 +164,20 @@ installationProdCategory=[]
 
 
   get_Sub_Cat_vs_Status(id) {
-this.subCatStatus=[];
-this.subProductStatusId=[];
+    this.subCatStatus = [];
+    this.subProductStatusId = [];
 
 
 
 
-    this.showChart=true;
+    this.showChart = true;
     this.dashboardservice.getSubCatCount(id)
       .subscribe((res: any) => {
         console.log(res);
         this.subCatStatus.push(['Appliances', 'New', 'Assigned Service Engineer', 'Scheduled', 'Rejected', 'Not Fixed', 'Fixed', 'OnHold', { role: 'annotation' }]);
         res.forEach((element1: any) => {
 
-this.subProductStatusId.push(element1.productCategoryId)
+          this.subProductStatusId.push(element1.productCategoryId)
 
           element1.statusInfo.forEach(element => {
 
@@ -194,42 +232,42 @@ this.subProductStatusId.push(element1.productCategoryId)
 
 
     let chart = new google.visualization.BarChart(document.getElementById('sub_Cat_vs_Status'));
-    
-   
-    google.visualization.events.addListener(chart, 'select', ()=>{
+
+
+    google.visualization.events.addListener(chart, 'select', () => {
       let selectedItem = chart.getSelection()[0];
-     
-     let stdId :number;
- 
-       if (selectedItem) {
 
-        if (selectedItem.column==1) {
-          stdId=1;
-        };
-        if (selectedItem.column==2) {
-          stdId=2;
-        };
-        if (selectedItem.column==3) {
-          stdId=4;
-        };
-        if (selectedItem.column==4) {
-          stdId=5;
-        };
-        if (selectedItem.column==5) {
-          stdId=6;
-        };
-        if (selectedItem.column==6) {
-          stdId=7;
-        };
-        if (selectedItem.column==7) {
-          stdId=9;
-        };
-this.subProductStatusId[selectedItem.row]
+      let stdId: number;
 
- this.routeToIncidents(stdId,this.subProductStatusId[selectedItem.row],0,);
-       }
- 
-    });    
+      if (selectedItem) {
+
+        if (selectedItem.column == 1) {
+          stdId = 1;
+        };
+        if (selectedItem.column == 2) {
+          stdId = 2;
+        };
+        if (selectedItem.column == 3) {
+          stdId = 4;
+        };
+        if (selectedItem.column == 4) {
+          stdId = 5;
+        };
+        if (selectedItem.column == 5) {
+          stdId = 6;
+        };
+        if (selectedItem.column == 6) {
+          stdId = 7;
+        };
+        if (selectedItem.column == 7) {
+          stdId = 9;
+        };
+        this.subProductStatusId[selectedItem.row]
+
+        //  this.routeToIncidents(stdId,this.subProductStatusId[selectedItem.row],0,);
+      }
+
+    });
 
 
     chart.draw(data, options);
@@ -253,7 +291,7 @@ this.subProductStatusId[selectedItem.row]
         this.incidents.push(['Appliances', 'New', 'Assigned Service Engineer', 'Scheduled', 'Rejected', 'Not Fixed', 'Fixed', 'OnHold', { role: 'annotation' }]);
         res.forEach((element1: any) => {
 
-this.productCategoryId.push(element1.productId)
+          this.productCategoryId.push(element1.productId)
 
           element1.statusInfo.forEach(element => {
 
@@ -308,42 +346,42 @@ this.productCategoryId.push(element1.productId)
 
 
     let open_incidences_chart = new google.visualization.BarChart(document.getElementById('open_incidences'));
-    
-   
-    google.visualization.events.addListener(open_incidences_chart, 'select', ()=>{
+
+
+    google.visualization.events.addListener(open_incidences_chart, 'select', () => {
       var selectedItem = open_incidences_chart.getSelection()[0];
-     
-     var stdId :number;
- 
-       if (selectedItem) {
 
-        if (selectedItem.column==1) {
-          stdId=1;
-        };
-        if (selectedItem.column==2) {
-          stdId=2;
-        };
-        if (selectedItem.column==3) {
-          stdId=4;
-        };
-        if (selectedItem.column==4) {
-          stdId=5;
-        };
-        if (selectedItem.column==5) {
-          stdId=6;
-        };
-        if (selectedItem.column==6) {
-          stdId=7;
-        };
-        if (selectedItem.column==7) {
-          stdId=9;
-        };
-this.productCategoryId[selectedItem.row]
+      var stdId: number;
 
- this.routeToIncidents(stdId,this.productCategoryId[selectedItem.row],0,);
-       }
- 
-    });    
+      if (selectedItem) {
+
+        if (selectedItem.column == 1) {
+          stdId = 1;
+        };
+        if (selectedItem.column == 2) {
+          stdId = 2;
+        };
+        if (selectedItem.column == 3) {
+          stdId = 4;
+        };
+        if (selectedItem.column == 4) {
+          stdId = 5;
+        };
+        if (selectedItem.column == 5) {
+          stdId = 6;
+        };
+        if (selectedItem.column == 6) {
+          stdId = 7;
+        };
+        if (selectedItem.column == 7) {
+          stdId = 9;
+        };
+        this.productCategoryId[selectedItem.row]
+
+        //  this.routeToIncidents(stdId,this.productCategoryId[selectedItem.row],0,);
+      }
+
+    });
 
 
     open_incidences_chart.draw(data, options);
@@ -396,18 +434,18 @@ this.productCategoryId[selectedItem.row]
     };
     let data = google.visualization.arrayToDataTable(this.suffering);
     let chart = new google.visualization.BarChart(document.getElementById('customer_suffering_report'));
-   
-    google.visualization.events.addListener(chart, 'select', ()=>{
-      var selectedItem = chart.getSelection()[0];
-     
- 
-       if (selectedItem) {
 
-this.get_Sub_Cat_vs_Status(this.incidentProductCat[selectedItem.row])
-//  this.routeToIncidents(0,this.incidentProductCat[selectedItem.row],0,);
-       }
-      });
-   
+    google.visualization.events.addListener(chart, 'select', () => {
+      var selectedItem = chart.getSelection()[0];
+
+
+      if (selectedItem) {
+
+        this.get_Sub_Cat_vs_Status(this.incidentProductCat[selectedItem.row])
+        //  this.routeToIncidents(0,this.incidentProductCat[selectedItem.row],0,);
+      }
+    });
+
     chart.draw(data, options);
     // google.visualization.events.addListener(chart, 'select', function () {
     //   var selection = chart.getSelection();
@@ -457,10 +495,10 @@ this.get_Sub_Cat_vs_Status(this.incidentProductCat[selectedItem.row])
     let options = {
       chartArea: {
         left: 100,
-        height:100,
+        height: 100,
       },
 
-    
+
 
       hAxis: {
         title: 'Incidents',
@@ -468,12 +506,12 @@ this.get_Sub_Cat_vs_Status(this.incidentProductCat[selectedItem.row])
       vAxis: {
         title: 'Appliances'
       },
-     
-      
+
+
       bar: { groupWidth: '75%' },
       'legend': 'top',
       bars: 'vertical',
-      colors: ['#006600', '#00cc00','#92c409', ],
+      colors: ['#006600', '#00cc00', '#92c409',],
       animation: {
         "startup": true,
         duration: 600,
@@ -497,11 +535,13 @@ this.get_Sub_Cat_vs_Status(this.incidentProductCat[selectedItem.row])
       .subscribe((res: any) => {
         console.log(res)
         this.stateCount.push(['State', 'Total Incidents'])
-        
+
         res.forEach(element => {
           this.stateCount.push([element.state, element.count])
         });
         this.regions_chart();
+      }, (err) => {
+        this.tostservice.showNotificationFailure(err)
       })
   }
 
@@ -521,18 +561,18 @@ this.get_Sub_Cat_vs_Status(this.incidentProductCat[selectedItem.row])
       };
 
       let chart = new google.visualization.GeoChart(document.getElementById('regions_chart'));
-      google.visualization.events.addListener(chart, 'select', ()=>{
+      google.visualization.events.addListener(chart, 'select', () => {
         var selectedItem = chart.getSelection()[0];
         console.log(selectedItem)
 
-   
-         if (selectedItem) {
-  
-  
-  //  this.routeToIncidents(0,0,0,this.stateCount[selectedItem.row + 1 ][0]);
-         }
-        });
-  
+
+        if (selectedItem) {
+
+
+          //  this.routeToIncidents(0,0,0,this.stateCount[selectedItem.row + 1 ][0]);
+        }
+      });
+
       chart.draw(data, options);
     }
   }
@@ -575,71 +615,97 @@ this.get_Sub_Cat_vs_Status(this.incidentProductCat[selectedItem.row])
     };
     let data = google.visualization.arrayToDataTable(this.complaintCount);
     let chart = new google.visualization.BarChart(document.getElementById('Complaint_Category'));
-   
-    google.visualization.events.addListener(chart, 'select', ()=>{
+
+    google.visualization.events.addListener(chart, 'select', () => {
       var selectedItem = chart.getSelection()[0];
-     
-       if (selectedItem) {
+
+      if (selectedItem) {
 
 
- this.routeToIncidents(0,0,this.incidentCatIncident[selectedItem.row],);
-       }
-      });
-  
-   
+        //  this.routeToIncidents(0,0,this.incidentCatIncident[selectedItem.row],);
+      }
+    });
+
+
     chart.draw(data, options);
   }
   // incidents against incidents ends here 
 
 
-  getCategoryByStatus() {
-    this.dashboardservice.getCategoryStatus()
-      .subscribe((res: any) => {
-        console.log(res)
-      })
-  }
 
-
-  // mean time to repair start here
-  getMeanTime() {
+  // mean timetill date to repair start here
+  get_MeanTime_Till_Date() {
     this.dashboardservice.getMTTR()
       .subscribe((res: any) => {
         console.log(res)
-        this.meanTiming.push(['Appliances', 'Mean time to repair'])
+        this.mttrTillDate.push(['Appliances', '0-1 Day', '1-3 Days', '3-6 Days'])
         res.forEach(element => {
-          this.meanTiming.push([element.name, parseInt(element.meanTime)])
-        });
+          if (element.meanTime == 0 || element.meanTime == "0") {
+          } else {
+            this.mttrTillDate.push([element.name, element.meanTime, element.meanTime, element.meanTime])
+            this.mttrTillDate.push([element.name, element.meanTime, element.meanTime, element.meanTime])
 
-        this.repair_time();
+          }
+        }, (err) => {
+          this.tostservice.showNotificationFailure(err)
+        }
+        );
+
+        this.repair_time_Till_Date();
       })
   }
-  repair_time() {
+  repair_time_Till_Date() {
 
-    var data = google.visualization.arrayToDataTable(this.meanTiming);
+    var data = google.visualization.arrayToDataTable(this.mttrTillDate);
 
     var options = {
+
+      title: 'Mean Time To Repair Product',
+      height: 250,
       chartArea: {
-        left: 80,
+        height: 150,
+        top: 50,
       },
+      vAxis: { title: 'Count' },
       hAxis: {
-        title: 'Mean Time To Repair (in days)',
-        minValue: 0
+        title: 'Product Category',
+        // slantedText:true,
+        // slantedTextAngle:330 
       },
+      seriesType: 'bars',
 
-      vAxis: {
-        title: 'Appliances'
-      },
-      legend: { position: 'top', maxLines: 7 },
-      bar: { groupWidth: '75%' },
-      isStacked: true,
+      legend: { position: 'top', maxLines: 3 },
+      bar: { groupWidth: '80%' },
 
-      colors: ['#e63935'],
       animation: {
         "startup": true,
         duration: 600,
         easing: 'in-out'
       }
     };
+
+    // var options = {
+    //   chartArea: {
+    //     left: 80,
+    //   },
+    //   hAxis: {
+    //     title: 'Mean Time To Repair (in days)',
+    //   },
+
+    //   vAxis: {
+    //     title: 'Appliances'
+    //   },
+    //   legend: { position: 'top', maxLines: 7 },
+    //   bar: { groupWidth: '75%' },
+    //   isStacked: true,
+
+    //   colors: ['#e63935'],
+    //   animation: {
+    //     "startup": true,
+    //     duration: 600,
+    //     easing: 'in-out'
+    //   }
+    // };
 
     var chart = new google.visualization.BarChart(document.getElementById('repair_time'));
 
@@ -650,236 +716,6 @@ this.get_Sub_Cat_vs_Status(this.incidentProductCat[selectedItem.row])
 
 
 
-///////////////////////
-
-
-getCurrentInstallations() {
-  this.dashboardservice.getCurrentInstallation()
-    .subscribe((res: any) => {
-      console.log(res);
-      this.installationBycategory.push(['Appliances', 'New', 'Assigned', 'Scheduled',  'OnHold','Installed', { role: 'annotation' }]);
-      res.forEach((element1: any) => {
-
-        this.InstallproductCategoryId.push(element1.productId)
-
-        element1.statusInfo.forEach(element => {
-
-          if (element.id == 1) {
-            this.installationProduct1 = element.count;
-          }
-          if (element.id == 4) {
-            this.installationProduct2 = element.count;
-          }
-          if (element.id == 9) {
-            this.installationProduct3 = element.count;
-          }
-          if (element.id == 10) {
-            this.installationProduct4 = element.count;
-          }
-          if (element.id == 11) {
-            this.installationProduct5 = element.count;
-          }
-          
-
-
-        })
-        this.installationBycategory.push([element1.productCategory, parseInt(this.installationProduct1), parseInt(this.installationProduct4), parseInt(this.installationProduct2), parseInt(this.installationProduct3), parseInt(this.installationProduct5), ''])
-      });
-
-      this.draw_open_installation_chart();
-    }
-    )
-}
-
-draw_open_installation_chart() {
-  let data = google.visualization.arrayToDataTable(this.installationBycategory)
-  let options = {
-    chartArea: {
-      left: 120,
-    },
-    legend: { position: 'top', maxLines: 7 },
-    bar: { groupWidth: '75%' },
-    isStacked: true,
-    colors: ['#ffd600','#29b6f6', '#6600cc', '#ff0066',  '#41c300',],
-    animation: {
-      "startup": true,
-      duration: 600,
-      easing: 'in-out'
-    }
-  };
-
-
-  let open_installations_chart = new google.visualization.BarChart(document.getElementById('open_installations'));
-  
- 
-  google.visualization.events.addListener(open_installations_chart, 'select', ()=>{
-    var selectedItem = open_installations_chart.getSelection()[0];
-   
-    var inStdId :number;
-    
-
-     if (selectedItem) {
-      if (selectedItem.column==1) {
-        inStdId=1;
-      };
-      if (selectedItem.column==2) {
-        inStdId=4;
-      };
-      if (selectedItem.column==3) {
-        inStdId=9;
-      };
-      if (selectedItem.column==4) {
-        inStdId=10;
-      };
-      if (selectedItem.column==5) {
-        inStdId=11;
-      };
-// this.routeToIncidents(selectedItem.column);
-this.router.navigate(['/installation'], { queryParams: { sId:inStdId ,pcId:this.InstallproductCategoryId[selectedItem.row] } });
-
-       // var topping = data.getValue(selectedItem.row, 0);
-       // alert('The user selected ' + topping);
-     }
-
-  });    
-
-
-  open_installations_chart.draw(data, options);
-}
-
-
-
-
-  //  installation against Product   starts here
-  getInstallationStatusCounts() {
-
-    this.dashboardservice.getInstallationStatusCount()
-      .subscribe((res: any[]) => {
-        // this.statusCount = res;
-        console.log(res);
-        this.installationProdCategory.push(['Appliances', '#Installation'])
-        res.forEach((element: any) => {
-          this.installationProdCat.push(element.productId)
-          console.log(element.productCategoryId)
-          this.installationProdCategory.push([element.productCategory, element.count])
-
-
-
-        });
-
-        this.installation_against_Product_Category();
-      });
-
-  }
-
-  installation_against_Product_Category() {
-
-    let options = {
-      chartArea: { width: '50%' },
-      hAxis: {
-        title: 'Installation against Product Category',
-        minValue: 0
-      },
-      vAxis: {
-        title: 'Product Category'
-      },
-      'legend': 'top',
-      colors: ['#ff9800'],
-      animation: {
-        "startup": true,
-        duration: 600,
-        easing: 'in-out'
-      }
-    };
-    let data = google.visualization.arrayToDataTable(this.installationProdCategory);
-    let chart = new google.visualization.BarChart(document.getElementById('installation_against_Product_Category'));
-   
-    google.visualization.events.addListener(chart, 'select', ()=>{
-      var selectedItem = chart.getSelection()[0];
-     
- 
-       if (selectedItem) {
-
-console.log(this.installationProdCat[selectedItem.row])
- this.routeToInstallation(0,this.installationProdCat[selectedItem.row],0);
-       }
-      });
-   
-    chart.draw(data, options);
-    // google.visualization.events.addListener(chart, 'select', function () {
-    //   var selection = chart.getSelection();
-    //   if (selection.length) {
-    //     var title = data.getValue(selection[0].row, 0);
-    //     var value = data.getValue(selection[0].row, selection[0].column);
-    //   }
-    //   if (title == 'Vacuum Cleaner')
-    //     $('#Vacuum CleanerSufferers').modal();
-
-    // });
-
-
-
-
-
-  }
-  //  installation against Product   Ending here
-
-
-
-  // incidents status by state starts here
-  getInstallationStatusByState() {
-    this.dashboardservice.getInstallationStateByStatus()
-      .subscribe((res: any) => {
-        this.installationStateCount.push(['provinces', 'Total Installation'])
-        
-        res.forEach(element => {
-          this.installationStateCount.push([element.state, element.count])
-        });
-        this.installation_regions_chart();
-      })
-  }
-
-  installation_regions_chart() {
-    {
-      let data = google.visualization.arrayToDataTable(this.installationStateCount);
-
-      let options = {
-        region: 'IN',
-        resolution: 'provinces',
-        colorAxis: { colors: ['#01bcd7'] },
-        animation: {
-          "startup": true,
-          duration: 600,
-          easing: 'in-out'
-        }
-      };
-
-      let chart = new google.visualization.GeoChart(document.getElementById('installation_regions_chart'));
-      google.visualization.events.addListener(chart, 'select', ()=>{
-        var selectedItem = chart.getSelection()[0];
-        console.log(selectedItem)
-
-   
-         if (selectedItem) {
-  
-  
-   this.routeToInstallation(0,0,this.installationStateCount[selectedItem.row + 1 ][0]);
-         }
-        });
-  
-      chart.draw(data, options);
-    }
-  }
-
-  // incidents status by state ends here
-
-
-
-
-
-//////////////////////
-
-
 
 
 
@@ -888,27 +724,27 @@ console.log(this.installationProdCat[selectedItem.row])
   getAllManagmentCharts() {
     google.charts.load('current', { packages: ['corechart', 'bar'] });
 
-    google.charts.setOnLoadCallback(()=>{
+    google.charts.setOnLoadCallback(() => {
 
 
 
-// this.get_Sub_Cat_vs_Status();
-    // this.getCurrent_Incid_Againgst_Incid_Category();
-    // this.getDashboardDetails();
-    // this.getStatusCounts();
-    // this.getCurrentIncidents();
-    this.getIncidentWeeklyReports();
-    this.getStatusByState();
-    // this.getCategoryByStatus();
-    // this.getCategoryCount();
-    // this.getMeanTime();
+      // this.get_Sub_Cat_vs_Status();
+      // this.getCurrent_Incid_Againgst_Incid_Category();
+      this.getDashboardDetails();
+      // this.getStatusCounts();
+      // this.getCurrentIncidents();
+      this.getIncidentWeeklyReports();
+      this.getStatusByState();
+      // this.getCategoryByStatus();
+      // this.getCategoryCount();
+      this.get_MeanTime_Till_Date();
 
 
-    // installations charts
-    // this.getCurrentInstallations();
-    // this.getInstallationStatusCounts();
-    // this.getInstallationStatusByState()
-  })
+      // installations charts
+      // this.getCurrentInstallations();
+      // this.getInstallationStatusCounts();
+      // this.getInstallationStatusByState()
+    })
 
 
   }
@@ -953,6 +789,6 @@ console.log(this.installationProdCat[selectedItem.row])
 
 
 
- 
+
 }
 

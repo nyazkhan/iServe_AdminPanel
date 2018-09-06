@@ -22,15 +22,24 @@
 
 .smiley
 {
-  margin-top: 88PX;
-  background: linear-gradient(135deg, rgb(255, 233, 25) 0%, rgb(251, 192, 0) 100%);
+  margin-top: 80PX;
+  background: linear-gradient(135deg, #ffe919 0%, #fbc000 100%);
   border-radius: 100%;
-  padding: 25px;
+  padding: 1px;
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 75px;
+  height: 75px;
   left: 50%;
   top: 50%;
+  // margin-top: 88PX;
+  // background: linear-gradient(135deg, rgb(255, 233, 25) 0%, rgb(251, 192, 0) 100%);
+  // border-radius: 100%;
+  // padding: 25px;
+  // position: relative;
+  // width: 150px;
+  // height: 150px;
+  // left: 50%;
+  // top: 50%;
   transform: translateX(-50%) translateY(calc(-50% - 121px));
   box-shadow: rgba(0, 0, 0, 0.09) 0px 30px 30px 1px, #0000001a 0px 20px 10px 1px;
 }

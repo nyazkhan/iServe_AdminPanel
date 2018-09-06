@@ -57,6 +57,17 @@ export class DashboardService {
 }
 
 
+
+
+
+getDashboardFilterByDate(filterBy){
+     return this.customHttp.post(`dhbh`,{"duration":filterBy})
+}
+
+
+
+
+
     getInstallationStatusCount(){
         const I_api = `/m/installation/graph/product`
 
@@ -144,6 +155,8 @@ export class DashboardService {
 
         return this.customHttp.get(I_api)
     }
+
+
 
 
 
