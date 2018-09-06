@@ -4,7 +4,7 @@
             <h4 class="card-title ">Service Engineer</h4>
             <div class="dropdown">
                 <a class="nav-link ">
-                    <i class="material-icons" data-toggle="modal" data-target="#EngineerFormModal"> add_to_photos</i>
+                    <i class="material-icons" (click)="engineerForm.reset()" data-toggle="modal" data-target="#EngineerFormModal"> add_to_photos</i>
                 </a>
 
             </div>
@@ -31,8 +31,8 @@
                         <!-- <td data-toggle="collapse"  (click)="getId( row)"attr.href="#collapseExample{{i}}" >
                             <img src="{{row.picUrl}}"> // src="/src/assets/img/avatar.jpg"
                         </td> -->
-                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">                       
-                           
+                        <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">
+
                             <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}">                            &nbsp;
                             <i *ngIf="!row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" class="material-icons">person</i>
                             {{row.name}}
@@ -53,72 +53,73 @@
                     </tr>
                     <tr class="collapse" attr.id="collapseExample{{i}}">
                         <td colspan=7 class=" incident-details">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <h5>
-                                            <b> {{row.addressType }} Address:</b>
-                                            {{row.address}} ,
-                                            <br> {{row.city}} , {{row.state}} ,
-                                            <br> {{row.country}}, , {{row.postalCode}}
-                                        </h5>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h5>
+                                        <b> {{row.addressType }} Address:</b>
+                                        {{row.address}} ,
+                                        <br> {{row.city}} , {{row.state}} ,
+                                        <br> {{row.country}}, , {{row.postalCode}}
+                                    </h5>
 
+                                </div>
+                                <div class="col-md-8">
+                                    <b>Assign Pincodes</b>
+
+                                    <span *ngIf="!editPinShow" (click)="showEditPin()" class="badge badge-pill badge-primary">Edit</span>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ul *ngFor="let pin of assignpincode">
+                                                <li class="badge badge-pill badge-primary">
+                                                    {{pin}}
+                                                    <i *ngIf="editPinShow" (click)="removePincode(pin)" class="material-icons">
+                                                        remove_circle
+                                                    </i>
+                                                </li>
+
+                                            </ul>
                                         </div>
-                                        <div class="col-md-8">
-                                        <b>Assign Pincodes</b>
+                                        <div class="col-md-6" *ngIf="editPinShow">
+                                            <ul *ngFor="let pin of editpins">
+                                                <li class="badge badge-pill badge-primary">{{pin}}
+                                                    <i (click)="addPin(pin)" class="material-icons">
+                                                        add
+                                                    </i>
+                                                </li>
+                                            </ul>
+                                        </div>
 
-                                        <span *ngIf="!editPinShow" (click)="showEditPin()" class="badge badge-pill badge-primary">Edit</span>
-                                        <div class="row" >
-                                            <div class="col-md-6">
-                                                <ul *ngFor="let pin of assignpincode">
-                                                    <li class="badge badge-pill badge-primary">
-                                                        {{pin}}
-                                                        <i *ngIf="editPinShow" (click)="removePincode(pin)" class="material-icons">
-                                                            remove_circle
-                                                        </i>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                            <div  class="col-md-6" *ngIf="editPinShow">
-                                                <ul *ngFor="let pin of editpins">
-                                                    <li class="badge badge-pill badge-primary">{{pin}}
-                                                        <i (click)="addPin(pin)" class="material-icons">
-                                                            add
-                                                        </i>
-                                                    </li>
-                                                </ul>
-                                            </div>
-
-                                           <div *ngIf="editPinShow">
-                                                <button type="button" (click)="canclePinchanges(row)" class="badge badge-pill badge-secondary">Cancle</button>
+                                        <div *ngIf="editPinShow">
+                                            <button type="button" (click)="canclePinchanges(row)" class="badge badge-pill badge-secondary">Cancle</button>
                                             <button *ngIf="!changeSuccessfuly" type="submit" (click)="changePincode()" class="badge badge-pill badge-success">Save
-                                                Changes</button>
+                                                Changes
+                                            </button>
                                             <button *ngIf="changeSuccessfuly " type="button" class="badge badge-pill badge-primary">
                                                 <i class="fa fa-spinner fa-spin"></i>submitting</button>
-                                           </div>
-                                                
                                         </div>
+
                                     </div>
                                 </div>
-                                <div class="row">
-                                    
-                                        <div class="col-md-6">
-                                                <b>Assign Product Category</b> &nbsp;
-                                                <span (click)="editProductCategory()" class="badge badge-pill badge-primary" >Edit</span>
-                                                <ul style="list-style-type:none" *ngFor="let type of row.productTypes let i = index">
-                                                    <li>
-                                                        {{i+1}} . {{type.productCategoryName}} <i class="material-icons">
-                                                            remove_circle
-                                                        </i>
-                                                    </li>
-                                                </ul>
-        
-                                            </div>
-                                            <div class="col-md-6">
+                            </div>
+                            <div class="row">
 
-                                            </div>
+                                <div class="col-md-6">
+                                    <b>Assign Product Category</b> &nbsp;
+                                    <span (click)="editProductCategory()" class="badge badge-pill badge-primary">Edit</span>
+                                    <ul style="list-style-type:none" *ngFor="let type of row.productTypes let i = index">
+                                        <li>
+                                            {{i+1}} . {{type.productCategoryName}} <i class="material-icons">
+                                                remove_circle
+                                            </i>
+                                        </li>
+                                    </ul>
+
                                 </div>
-                                
+                                <div class="col-md-6">
+
+                                </div>
+                            </div>
+
 
                         </td>
                     </tr>
@@ -151,7 +152,7 @@
                 <div class="modal-body">
                     <form (ngSubmit)="onSubmit()" #engineerForm="ngForm">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label> Name
 
@@ -163,10 +164,10 @@
                                     </h4>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                            <!-- </div>
+                        <div class="row"> -->
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Contact No
                                     </label>
@@ -180,7 +181,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
 
                                 <label>Profile Picture
                                 </label>
@@ -189,37 +190,7 @@
 
 
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group ">
-                                    <label>username
-                                    </label>
-                                    <input type="text" minlength="4" maxlength="20" required [(ngModel)]="engineerDetails.username" name="username" id="username"
-                                        class="form-control " #username="ngModel">
-
-                                    <h5 [hidden]="username.valid || username.untouched" style="color: red">
-                                        name with minimum six characters is required
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>password
-                                    </label>
-                                    <input type="password" required minlength="6" class="form-control  " [(ngModel)]="engineerDetails.password" name="password"
-                                        id="password" #password="ngModel">
-                                    <h5 [hidden]="password.valid || password.untouched" style="color: red">
-                                        password with minimum six characters is required
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group ">
                                     <label>Email Id
                                     </label>
@@ -233,8 +204,37 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group ">
+                                    <label>username
+                                    </label>
+                                    <input type="text" minlength="4" maxlength="20" required [(ngModel)]="engineerDetails.username" name="username" id="username"
+                                        class="form-control " #username="ngModel">
 
-                            <div class="col-md-12">
+                                    <h5 [hidden]="username.valid || username.untouched" style="color: red">
+                                        name with minimum six characters is required
+                                    </h5>
+                                </div>
+                            </div>
+                            <!-- </div>
+                        <div class="row"> -->
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>password
+                                    </label>
+                                    <input type="password" required minlength="6" class="form-control  " [(ngModel)]="engineerDetails.password" name="password"
+                                        id="password" #password="ngModel">
+                                    <h5 [hidden]="password.valid || password.untouched" style="color: red">
+                                        password with minimum six characters is required
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Specialization
                                     </label>
@@ -245,31 +245,7 @@
                                     </h5>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Product Type Id
-                                    </label>
-                                    <button *ngIf="pinIstrue" type="button" class="buttonload">
-                                        <i class="fa fa-spinner fa-spin"></i>
-                                    </button>
-                                    <select class="form-control" id="prodTypeOptions" required multiple [(ngModel)]="engineerDetails.productTypeIds" name="prodType"
-                                        #prodType="ngModel">
-                                        <option *ngFor="let product of prodTypeOptions" [value]="product.id">{{product.name}}</option>
-                                    </select>
-                                    <h5 [hidden]="prodType.valid || prodType.untouched" style="color: red">
-                                        prodTypeOptions is required
-                                    </h5>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Pin Code
                                     </label>
@@ -286,8 +262,56 @@
                                 </div>
                             </div>
                         </div>
+
+
+                         <div class="row">
+                            <div class="col-md-12">
+                                    <label>Product category Id {{catarray}}
+                                    </label>
+                                    <button *ngIf="pinIstrue" type="button" class="buttonload">
+                                        <i class="fa fa-spinner fa-spin"></i>
+                                    </button>
+                                    <select class="form-control" id="productCategory"  required multiple [(ngModel)]="catarray" name="prodType"
+                                        #prodType="ngModel">
+                                        <option *ngFor="let product of productCategory let i = index" [value]="i">{{product.name}}</option>
+                                    </select>
+                                    
+
+                            </div>
+                            <div>
+                                <label>Product Sub-Category</label>
+                                <select class="form-control" id="productSubCategory"  required multiple [(ngModel)]="subCatArray" name="subCat"
+                                #subCat="ngModel">
+                                <option *ngFor="let product of productCategory[catarray.length].childCategory let i = index" [value]="i">{{product.name}}</option>
+                            </select>
+                            </div>
+                        </div>  
+
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="form-group">
+
+                                    <label for="product Category"> Product category</label>
+                                    <input type="checkbox" name="catSelect" id="catSelect" >
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Enter Address Type
+                                    </label>
+                                    <select class="form-control" required [(ngModel)]="engineerDetails.address.addressType" name="addressType" #addressType="ngModel">
+                                        <option *ngFor="let addr of addressTypeOptions" [value]="addr">{{addr}}</option>
+                                    </select>
+                                    <h5 [hidden]="addressType.valid || addressType.untouched" style="color: red">
+                                        Address type is required
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>street / house no
                                     </label>
@@ -300,7 +324,7 @@
                         </div>
                         <div class="row">
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Enter City
                                     </label>
@@ -310,7 +334,7 @@
                                     </h5>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Enter State
                                     </label>
@@ -322,7 +346,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Postel Code
                                     </label>
@@ -333,10 +357,10 @@
                                     </h5>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                            <!-- </div>
+                        <div class="row"> -->
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Enter country
                                     </label>
@@ -348,23 +372,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Enter Address Type
-                                    </label>
-                                    <select class="form-control" required [(ngModel)]="engineerDetails.address.addressType" name="addressType" #addressType="ngModel">
-                                        <option *ngFor="let addr of addressTypeOptions" [value]="addr">{{addr}}</option>
-                                    </select>
-                                    <h5 [hidden]="addressType.valid || addressType.untouched" style="color: red">
-                                        Address type is required
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="modal-footer">
 
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" (click)="engineerForm.reset()" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button *ngIf="!loadingButton" type="submit" [disabled]="!engineerForm.valid" class="btn btn-success">Submit</button>
                             <button *ngIf="loadingButton" type="button" class="btn btn-primary">
                                 <i class="fa fa-spinner fa-spin"></i>submitting</button>
@@ -412,3 +423,42 @@
         </div>
     </div>
     <!-- delete modal end here -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Product Type Id
+                                    </label>
+                                    <button *ngIf="pinIstrue" type="button" class="buttonload">
+                                        <i class="fa fa-spinner fa-spin"></i>
+                                    </button>
+                                    <select class="form-control" id="productCategory" required multiple [(ngModel)]="engineerDetails.productTypeIds" name="prodType"
+                                        #prodType="ngModel">
+                                        <option *ngFor="let product of productCategory" [value]="product.id">{{product.name}}</option>
+                                    </select>
+                                    <h5 [hidden]="prodType.valid || prodType.untouched" style="color: red">
+                                        productCategory is required
+                                    </h5>
+
+                                </div>
+                            </div>
+                        </div>  -->

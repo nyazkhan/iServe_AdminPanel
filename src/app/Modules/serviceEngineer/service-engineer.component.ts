@@ -15,6 +15,9 @@ export class ServiceEngineerComponent implements OnInit {
   assignpincode = [];
   editPinShow = false;
   changeSuccessfuly=false;
+
+  catarray:Array<number>;
+  subCatArray:Array<number>;  
   constructor(private router: Router, private tostservice: TostService, private engineerService: ServiceEngineerService) { }
 
   dataRows: any;
@@ -25,7 +28,8 @@ export class ServiceEngineerComponent implements OnInit {
   engineerDetails = new EngineerDetails
   pinIstrue: boolean = true;
   loadingButton: boolean = false;
-  prodTypeOptions: Array<any>
+  productCategory: any
+  proCat:any;
   addressTypeOptions = ['Home', 'Office', 'Permanent'];
   pins: any;
   editpins = [];
@@ -78,14 +82,25 @@ export class ServiceEngineerComponent implements OnInit {
   getProductCategorys() {
     this.engineerService.getProductCategory()
       .subscribe((res: any) => {
-        this.prodTypeOptions = res;
-        console.log(res)
+        this.productCategory = res;
+        this.proCat=res;
+        console.log(res[0].childCategory)
       },
         (err) => {
           this.tostservice.showNotificationFailure(err)
         })
   }
 
+  getProductSubCat(){
+   for(let key in this.proCat) {
+    this.subCatArray.push(this.proCat[key[key]].childCategory)
+    console.log(this.subCatArray)
+   }
+
+   this.proCat.forEach(element => {
+    console.log(element.childCategory)
+   });
+  }
 
   getId(row) {
     this.editPinShow = false;
@@ -139,19 +154,26 @@ export class ServiceEngineerComponent implements OnInit {
         for (const key1 in this.engineerDetails.address) {
           fd.append(key + "." + key1, this.engineerDetails.address[key1])
         }
+      } else {
+        fd.append(key, this.engineerDetails[key]);
       }
 
-
-
-
-      else {
-        fd.append(key, this.engineerDetails[key]);
+      if (this.imgfile) {
+        
         fd.append("pic", this.imgfile);
       }
+
+
+
+
+
+
     }
     this.engineerService.addEngineer(fd)
       .subscribe((res: any) => {
         this.resetform();
+        this.loadingButton = false;
+
         this.closeEngineerFormModal();
         this.dataRows.unshift(res);
         this.showNotification();
@@ -253,6 +275,7 @@ changeCategory(){}
 
 
   resetform() {
+    
     this.imgfile = null;
     this.engineerDetails = new EngineerDetails();
   }
