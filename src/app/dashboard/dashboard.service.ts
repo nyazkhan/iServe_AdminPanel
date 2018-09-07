@@ -73,26 +73,26 @@ getDashboardFilterByDate(){
 
 
     getDashbord(fd){
-        return this.customHttp.post(`/m/complaint/dashboard/card`,{"duration":fd});
+        return this.customHttp.post(`/m/complaint/dashboard/card`,fd);
     }
 
 // state by status of complaints
 getStateByStatus(fd) {
     const I_api = `/m/complaint/dashboard/region`
 
-    return this.customHttp.post(I_api,{"duration":fd})
+    return this.customHttp.post(I_api,fd)
 
 }
 
 // product status vs category
 get_Product_Status(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/status`,{"duration":fd})
+    return this.customHttp.post(`/m/complaint/dashboard/status`,fd)
 
 }
 
 
 getProductIncidentAge(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/incident-age`,{"duration":fd})
+    return this.customHttp.post(`/m/complaint/dashboard/incident-age`,fd)
  
 }
 
@@ -103,7 +103,7 @@ test(){
 
 
 getProductWarrantyStatus(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/warranty`, {"duration":fd})
+    return this.customHttp.post(`/m/complaint/dashboard/warranty`, fd)
 }
 
 
@@ -112,7 +112,7 @@ getProductWarrantyStatus(fd){
 getMTTR(fd) {
     const I_api = `/m/complaint/dashboard/mttr`
 
-    return this.customHttp.post(I_api,{"duration":fd})
+    return this.customHttp.post(I_api,fd)
 }
 
 

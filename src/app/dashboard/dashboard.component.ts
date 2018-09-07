@@ -22,11 +22,15 @@ export class DashboardComponent implements OnInit {
   mttrTillDate = [];
   productWarranty = [];
   incidentAge = [];
-
+  filter = {};
   statusCarryForward: number
   statusClosed: number
   statusNew: number;
-  productCategoryName:Array<any>
+  productCategoryName: Array<any>
+
+  filterByDate = "today";
+  filterId: number;
+  filterRange: object;
 
   constructor(private dashboardservice: DashboardService,
     private tostservice: TostService,
@@ -34,29 +38,53 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  dashboardFilterByDate(filterBy) {
-this.getCharts(filterBy);
+  dashboardFilterByDate() {
+    this.getCharts();
 
   }
 
-  filterByProduct(){
+  filterByRange(value) {
+    this.filterByDate="";
+    this.filterRange = value;
+  }
 
+  getFilter() {
+
+    if (this.filterRange) {
+      this.filter["range"] = this.filterRange;
+
+    } else {
+      if (this.filterByDate) {
+        this.filter["duration"] = this.filterByDate;
+      }
+    }
+
+    if (this.filterId) {
+      this.filter["id"] = this.filterId;
+    }
+
+
+  }
+
+  filterByProduct(id) {
+    // this.getFilter(id)
+    this.filterId = id;
   }
 
 
 
-  getProductCategory(){
+  getProductCategory() {
     this.dashboardservice.getDashboardFilterByDate()
-    .subscribe((res)=>{
-      console.log(res)
-      this.productCategoryName=res;
-    })
+      .subscribe((res) => {
+        console.log(res)
+        this.productCategoryName = res;
+      })
   }
 
 
 
-  getDashboardDetails(filterBy) {
-    this.dashboardservice.getDashbord(filterBy)
+  getDashboardDetails() {
+    this.dashboardservice.getDashbord(this.filter)
       .subscribe((res: any) => {
         // console.log(res);
         this.statusCarryForward = res.CARRYFORWARD;
@@ -74,10 +102,10 @@ this.getCharts(filterBy);
 
   //  incidents weekly report statrs here
 
-  get_Product_Status(filterBy) {
+  get_Product_Status() {
 
-this.statusByProductCat=[];
-    this.dashboardservice.get_Product_Status(filterBy)
+    this.statusByProductCat = [];
+    this.dashboardservice.get_Product_Status(this.filter)
       .subscribe((res: any) => {
         console.log(res);
         this.statusByProductCat.push(['Appliances', 'Carry Forward', 'New', 'Closed'])
@@ -130,9 +158,9 @@ this.statusByProductCat=[];
 
 
 
-  getStatusByState(filterBy) {
-    this.stateCount=[];
-    this.dashboardservice.getStateByStatus(filterBy)
+  getStatusByState() {
+    this.stateCount = [];
+    this.dashboardservice.getStateByStatus(this.filter)
       .subscribe((res: any) => {
         console.log(res)
         this.stateCount.push(['provinces', 'Open Incidents'])
@@ -181,18 +209,18 @@ this.statusByProductCat=[];
 
 
 
-  get_MeanTime_Till_Date(filterBy) {
-    this.mttrTillDate=[];
+  get_MeanTime_Till_Date() {
+    this.mttrTillDate = [];
 
-    this.dashboardservice.getMTTR(filterBy)
+    this.dashboardservice.getMTTR(this.filter)
       .subscribe((res: any) => {
         console.log(res)
-        this.mttrTillDate.push(['Appliances', '0-1 Day', '1-3 Days', '3-5 Days','>5'])
-res.forEach(element => {
-  
-  this.mttrTillDate.push([element.name, element["0-1"],element["1-3"],element["3-5"],element[">5"]])
-});
-this.repair_time_Till_Date();
+        this.mttrTillDate.push(['Appliances', '0-1 Day', '1-3 Days', '3-5 Days', '>5'])
+        res.forEach(element => {
+
+          this.mttrTillDate.push([element.name, element["0-1"], element["1-3"], element["3-5"], element[">5"]])
+        });
+        this.repair_time_Till_Date();
 
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
@@ -263,15 +291,15 @@ this.repair_time_Till_Date();
 
 
 
-  get_Product_Warranty_Status(filterBy) {
-    this.productWarranty=[];
+  get_Product_Warranty_Status() {
+    this.productWarranty = [];
 
 
-    this.dashboardservice.getProductWarrantyStatus(filterBy)
+    this.dashboardservice.getProductWarrantyStatus(this.filter)
       .subscribe((res: any) => {
         this.productWarranty.push(['Appliances', 'In Warranty ', 'Out of warranty'])
         res.forEach(element => {
-          this.productWarranty.push([element.name,element['in-Warranty'], element['outSide-Warranty']  ])
+          this.productWarranty.push([element.name, element['in-Warranty'], element['outSide-Warranty']])
           console.log(this.productWarranty)
           this.product_Warranty_Status_chart();
         });
@@ -322,15 +350,15 @@ this.repair_time_Till_Date();
 
 
 
-  get_Product_Incident_Age(filterBy) {
-    this.incidentAge=[];
-    this.dashboardservice.getProductIncidentAge(filterBy)
+  get_Product_Incident_Age() {
+    this.incidentAge = [];
+    this.dashboardservice.getProductIncidentAge(this.filter)
       .subscribe((res: any) => {
-        this.incidentAge.push(['Appliances', '0-1 Day', '1-3 Days', '3-5 Days','>5'])
+        this.incidentAge.push(['Appliances', '0-1 Day', '1-3 Days', '3-5 Days', '>5'])
         // console.log(res[0].data)
 
         res.forEach(element => {
-          this.incidentAge.push([element.name, element["0-1"],element["1-3"],element["3-5"],element[">5"]])
+          this.incidentAge.push([element.name, element["0-1"], element["1-3"], element["3-5"], element[">5"]])
           this.Product_Incident_Age_chart();
         });
         console.log(this.incidentAge)
@@ -350,7 +378,7 @@ this.repair_time_Till_Date();
       vAxis: { title: 'Count' },
       hAxis: { title: 'Categories' },
       seriesType: 'bars',
-      
+
     };
 
 
@@ -366,7 +394,7 @@ this.repair_time_Till_Date();
     google.charts.load('current', { packages: ['corechart', 'bar'] });
 
     google.charts.setOnLoadCallback(() => {
-      this.getCharts("month");
+      this.getCharts();
 
 
     })
@@ -375,14 +403,14 @@ this.repair_time_Till_Date();
   }
 
 
-  getCharts(filterBy) {
-
-    this.get_Product_Incident_Age(filterBy);
-    this.getDashboardDetails(filterBy);
-    this.get_Product_Status(filterBy);
-    this.getStatusByState(filterBy);
-    this.get_Product_Warranty_Status(filterBy);
-    this.get_MeanTime_Till_Date(filterBy);
+  getCharts() {
+    // this.getFilter(data,id,range);
+    this.get_Product_Incident_Age();
+    this.getDashboardDetails();
+    this.get_Product_Status();
+    this.getStatusByState();
+    this.get_Product_Warranty_Status();
+    this.get_MeanTime_Till_Date();
     this.getProductCategory();
   }
 
@@ -398,7 +426,6 @@ this.repair_time_Till_Date();
 
   ngOnInit() {
     this.role = localStorage.getItem("currentUserName");
-
 
 
     this.dashboardservice.loadScript().subscribe(
