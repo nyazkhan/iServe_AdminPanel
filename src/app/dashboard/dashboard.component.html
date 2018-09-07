@@ -46,7 +46,9 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
-                            <!-- <a class="dropdown-item">Date</a>
+                            
+                             <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
+                            <!--
                             <a class="dropdown-item">Priority</a>
                             <a class="dropdown-item">Category</a>
                             <a class="dropdown-item">Clear Sorting</a> -->

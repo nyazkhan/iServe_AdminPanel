@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   statusNew: number;
   productCategoryName: Array<any>
 
-  filterByDate = "today";
+  filterByDate="today";
   filterId: number;
   filterRange: object;
 
@@ -38,25 +38,36 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  dashboardFilterByDate() {
+  dashboardFilterByDate(value) {
+  this.filterByDate=value;
+  console.log(this.filterByDate)
+    this.filterRange={};
+   this.getFilter();
     this.getCharts();
+
+  }
+
+  forAllProduct(){
+    this.filterId=null;
+    this.getFilter();
 
   }
 
   filterByRange(value) {
     this.filterByDate="";
     this.filterRange = value;
+    this.getFilter();
   }
 
   getFilter() {
 
-    if (this.filterRange) {
-      this.filter["range"] = this.filterRange;
+    // if (this.filterRange) {
+    //   this.filter["range"] = this.filterRange;
 
-    } else {
+    // } 
       if (this.filterByDate) {
         this.filter["duration"] = this.filterByDate;
-      }
+      
     }
 
     if (this.filterId) {
@@ -69,6 +80,8 @@ export class DashboardComponent implements OnInit {
   filterByProduct(id) {
     // this.getFilter(id)
     this.filterId = id;
+    this.getFilter();
+    this.getCharts();
   }
 
 
@@ -426,7 +439,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.role = localStorage.getItem("currentUserName");
-
+this.getFilter();
 
     this.dashboardservice.loadScript().subscribe(
       (res) => { },
