@@ -60,61 +60,26 @@ export class DashboardService {
 
 
 
-getDashboardFilterByDate(){
-     return this.customHttp.get(`/m/product-category`)
+getDashboardFilterByDate(filterBy){
+     return this.customHttp.post(`dhbh`,{"duration":filterBy})
 }
 
 
 
 
 
-   
+    // getInstallationStatusCount(){
+    //     const I_api = `/m/installation/graph/product`
+
+    //     return this.customHttp.get(I_api)  
+    // }
 
 
 
-    getDashbord(fd){
-        return this.customHttp.post(`/m/complaint/dashboard/card`,{"duration":fd});
+
+    getDashbord(){
+        return this.customHttp.get(`/m/complaint/dashboard/card`);
     }
-
-// state by status of complaints
-getStateByStatus(fd) {
-    const I_api = `/m/complaint/dashboard/region`
-
-    return this.customHttp.post(I_api,{"duration":fd})
-
-}
-
-// product status vs category
-get_Product_Status(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/status`,{"duration":fd})
-
-}
-
-
-getProductIncidentAge(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/incident-age`,{"duration":fd})
- 
-}
-
-test(){
-    return this.customHttp.post(`/m/complaint/dashboard/rating`,{"duration":"month"})
- 
-}
-
-
-getProductWarrantyStatus(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/warranty`, {"duration":fd})
-}
-
-
-
-
-getMTTR(fd) {
-    const I_api = `/m/complaint/dashboard/mttr`
-
-    return this.customHttp.post(I_api,{"duration":fd})
-}
-
 
 
     // current incident new, fixed, inprogress,
@@ -141,7 +106,13 @@ getMTTR(fd) {
 
 
 
-    
+    // state by status of complaints
+    getStateByStatus() {
+        const I_api = `/m/complaint/graph/state-status`
+
+        return this.customHttp.get(I_api)
+
+    }
 
     // state by status of installation
     getInstallationStateByStatus() {
@@ -179,7 +150,11 @@ getMTTR(fd) {
     }
 
 
-    
+    getMTTR() {
+        const I_api = `/m/complaint/graph/mttr`
+
+        return this.customHttp.get(I_api)
+    }
 
 
 
