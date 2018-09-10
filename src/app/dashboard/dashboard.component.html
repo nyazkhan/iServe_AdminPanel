@@ -22,7 +22,7 @@
                        
                         <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             
-                            <div class="nav-link dropdown-toggle listHoverColor" style="background: transparent ;" >Product</div>
+                            <div class="nav-link dropdown-toggle " style="background: transparent ;" >Product</div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
@@ -127,12 +127,13 @@
 
     </div>
     <div *ngIf="role=='management'" class="row">
-        <div class="col-lg-2 col-md-2 col-sm-6">
+        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
             <div class="card ">
                 <div class="card-header card-header-info card-header-icon">
 
                     <div class="card-icon">
                         <h3><b>{{statusCarryForward}}</b></h3>
+                        <h5><b>Carry Forward</b></h5>
                     </div>
 
                 </div>
@@ -140,9 +141,22 @@
                     <h5><b>Carry Forward</b></h5>
                 </div>
             </div>
+        </div> -->
+        <div class="col-lg-2 col-md-2 col-sm-6">
+            <div class="card card-header-info">
+                
+
+                  
+                        <h3><b>{{statusCarryForward}}</b></h3>
+                        <h5><b>Carry Forward</b></h5>
+                  
+
+               
+                
+            </div>
         </div>
 
-        <div class="col-lg-2 col-md-2 col-sm-6">
+        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
             <div class="card ">
                 <div class="card-header card-header-warning card-header-icon">
 
@@ -155,8 +169,21 @@
                     <h5><b>New</b></h5>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-lg-2 col-md-2 col-sm-6">
+            <div class="card card-header-warning">
+                
+
+                  
+                        <h3><b>{{statusNew}} </b></h3>
+                        <h5><b>New</b></h5>
+                  
+
+               
+                
+            </div>
+        </div>
+        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
             <div class="card ">
                 <div class="card-header card-header-success card-header-icon">
 
@@ -168,6 +195,19 @@
                 <div class="card-footer">
                     <h5><b>Closed</b></h5>
                 </div>
+            </div>
+        </div> -->
+        <div class="col-lg-2 col-md-2 col-sm-6">
+            <div class="card card-header-success">
+                
+
+                  
+                        <h3><b>{{statusClosed}} </b></h3>
+                        <h5><b>Closed</b></h5>
+                  
+
+               
+                
             </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6">
@@ -218,7 +258,7 @@
                             
                         </div> -->
 
-            <div class="card card-stats">
+            <div class="card ">
                <div class="row">
                 <div class="col-md-6">
 
