@@ -228,8 +228,7 @@
 
                   <!-- <new>    -->
 
-                  <div class="card card-nav-tabs"
-                    style="width: 45%; ">
+                  <div class="card card-nav-tabs" *ngIf="!(row.statusName=='Not Fixed')" style="width: 45%; ">
                     <div>
                       <div class="card-header card-header-info float-right" style="width:150px;">
                         Important Dates
@@ -303,6 +302,72 @@
                     </div>
 
                   </div>
+          <!-- not fin=xed info -->
+          <div class="card card-nav-tabs  " *ngIf="row.statusName==='Not Fixed'" style="width: 45%; ">
+            <div>
+              <div class="card-header card-header-info float-right" style="width:150px;">
+              Not  Fixed Details
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+              <div class="row">
+                <div  class="col-md-4 col-lg-4 col-sm-4 ">
+                  <img class="product-image" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" />
+                  
+
+                </div>
+                <div class="col-md- 6 col-lg-6  col-sm-6">
+
+                  <div *ngIf="row.lastModifiedAt">
+
+                    <b>Date:</b>{{row.lastModifiedAt | date: 'dd MMM ,yyyy'}}
+                  </div>
+                  <div *ngIf="row.lastModifiedAt">
+                    <b>Time:</b>
+                    {{row.lastModifiedAt | date: 'hh : mm a'}}
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card card-nav-tabs detail-box" *ngIf="(row.statusName=='Not Fixed')" style="width: 45%; ">
+            <div>
+              <div class="card-header card-header-info float-right" style="width:150px;">
+                Important Dates
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+              <div class="row gridrow">
+                <div class="col-md-4 col-lg-4 col-sm-4 border-right">
+                  <b> Purchased</b>
+                  <br>{{row.productPurchaseDate | date: 'dd MMM, yyyy'}}
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4 border-right">
+                  <b>Registered</b>
+                  <br> {{row.createdAt | date: 'dd MMM, yyyy'}}
+                </div>
+                <div class="col-md-4 col-lg-4 col-sm-4">
+                  <b>Installad</b>
+                  <br>
+                  <span *ngIf="row.productInstallationDateTime "> {{row.productInstallationDateTime | date: 'dd MMM,
+                    yyyy'}}</span>
+                  <span *ngIf="!row.productInstallationDateTime "> Not Installed</span>
+                </div>
+              </div>
+              <div class="row warantyRow">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 border-right">
+                  <b>Waranty Start</b>
+                  <br> {{row.productWarrantyStart | date: 'dd MMM, yyyy'}}
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                  <b>Waranty End</b>
+                  <br> {{row.productWarrantyEnd | date: 'dd MMM, yyyy'}}
+                </div>
+              </div>
+            </div>
+          </div>
 
 
                   <!-- <scheduled case> -->
@@ -376,7 +441,8 @@
                   </div>
 
                   <!-- not fin=xed info -->
-                  <div *ngIf="row.statusName==='Not Fixed' " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                  
+                  <!-- <div *ngIf="row.statusName==='Not Fixed' " class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                     <div class="row">
                       <div class="collg-12 col-sm-12">
                         <h4>
@@ -399,7 +465,7 @@
                         <img class="product-image" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" />
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div *ngIf="row.rating" class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                     <div class="row">
                       <div class="collg-12 col-sm-12">
