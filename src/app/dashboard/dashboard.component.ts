@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   statusNew: number;
   productCategoryName: Array<any>
 
-  filterByDate="today";
+  filterByDate="year";
   filterId: number;
   filterRange: object;
 
@@ -163,7 +163,15 @@ export class DashboardComponent implements OnInit {
     };
 
     let chart = new google.visualization.BarChart(document.getElementById('product_status_Chart'));
+    google.visualization.events.addListener(chart, 'onmouseover', uselessHandler2);
+         google.visualization.events.addListener(chart, 'onmouseout', uselessHandler3);
     chart.draw(data, options);
+    function uselessHandler2() {
+      document.getElementById('product_status_Chart').style.cursor="pointer";
+  }
+  function uselessHandler3(){
+    document.getElementById('Product_status_Chart').style.cursor="auto";
+  }
   }
 
 

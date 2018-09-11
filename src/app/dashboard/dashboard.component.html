@@ -5,7 +5,7 @@
             <div class="nav-tabs-wrapper">
                 <ul class="nav nav-tabs" data-tabs="tabs">
                     <li class="nav-item hover-cursor">
-                        <a class="nav-link"  (click)="dashboardFilterByDate('today')" data-toggle="tab">Today</a>
+                        <a class="nav-link active dropdown-item"  (click)="dashboardFilterByDate('today')" data-toggle="tab">Today</a>
                     </li>
                     <li class="nav-item hover-cursor">
                         <a class="nav-link" (click)="dashboardFilterByDate('week')" data-toggle="tab">This Week</a>
@@ -53,6 +53,7 @@
             </div>
         </div>
   </div>
+  
   <div class="container-fluid" style="z-index: 0;">
     <div class="row">
         <!-- <div class="col-lg-2 col-md-4 col-sm-6">
@@ -142,7 +143,57 @@
                 </div>
             </div>
         </div> -->
-        <div class="col-lg-2 col-md-2 col-sm-6">
+        <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="card card-stats padding">
+              <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">store</i>
+                </div>
+                <p class="card-category">Carry Forward</p>
+                <h3 class="card-title">{{statusCarryForward}}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="card card-stats padding">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">
+                        new_releases
+                        </i>
+                </div>
+                <p class="card-category">New</p>
+                <h3 class="card-title">{{statusNew}}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6">
+            <div class="card card-stats padding">
+              <div class="card-header card-header-danger card-header-icon">
+                <div class="card-icon">
+                   <img src="assets/img/close.png/" width="50px;">
+                </div>
+                <p class="card-category">Closed</p>
+                <h3 class="card-title">{{statusClosed}}</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">date_range</i> Last 24 Hours
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
             <div class="card card-header-info">
                 
 
@@ -154,7 +205,7 @@
                
                 
             </div>
-        </div>
+        </div> -->
 
         <!-- <div class="col-lg-2 col-md-2 col-sm-6">
             <div class="card ">
@@ -170,7 +221,7 @@
                 </div>
             </div>
         </div> -->
-        <div class="col-lg-2 col-md-2 col-sm-6">
+        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
             <div class="card card-header-warning">
                 
 
@@ -182,7 +233,7 @@
                
                 
             </div>
-        </div>
+        </div> -->
         <!-- <div class="col-lg-2 col-md-2 col-sm-6">
             <div class="card ">
                 <div class="card-header card-header-success card-header-icon">
@@ -197,7 +248,7 @@
                 </div>
             </div>
         </div> -->
-        <div class="col-lg-2 col-md-2 col-sm-6">
+        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
             <div class="card card-header-success">
                 
 
@@ -209,105 +260,10 @@
                
                 
             </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <!-- <div class="card card-chart">
-                            <div class="card-header card-header-info">
-                                <div class="feedback-chart">
-                                    <div class="rated-happy">
-                                      <div class="smiley happy">
-                                  <div class="eyes">
-                                    <div class="eye"></div>
-                                    <div class="eye"></div>
-                                  </div>
-                                  <div class="mouth"></div>
-                                  <div class="card-title">
-                                      <h3><b>55%</b></h3>
-                                      <h4>Happy</h4>
-                                    </div>
-                                </div>
-                                  </div>
-                                  <div  class="rated-sad">
-                                    <div class="smiley normal">
-                                  <div class="eyes">
-                                    <div class="eye"></div>
-                                    <div class="eye"></div>
-                                  </div>
-                                  <div class="mouth"></div>
-                                  <div class="card-title">
-                                      <h3><b>27%</b></h3>
-                                      <h4>Satisfied</h4>
-                                    </div>
-                                </div>
-                                  </div>
-                                  <div  class="rated-angry"> 
-                                    <div class="smiley angry">
-                                  <div class="eyes">
-                                    <div class="eye"></div>
-                                    <div class="eye"></div>
-                                  </div>
-                                  <div class="mouth"></div>
-                                  <div class="card-title">
-                                      <h3><b>18%</b></h3>
-                                      <h4>Angry</h4>
-                                    </div>
-                                </div>
-                                  </div>
-                                </div>
-                            </div>
-                            
-                        </div> -->
-
-            <div class="card ">
-               <div class="row">
-                <div class="col-md-6">
-
-                </div>
-                <div class="col-md-6">
-                    <div class="d-flex">
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                    </div>
-                    <div class="d-flex">
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                    </div>
-                    <div class="d-flex">
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                    </div>
-                    <div class="d-flex">
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                    </div>
-                    <div class="d-flex">
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                    </div>
-                    <div class="d-flex">
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                    </div>
-                </div>
-            </div>
+        </div> -->
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          
+           
         </div>
         </div>
 
