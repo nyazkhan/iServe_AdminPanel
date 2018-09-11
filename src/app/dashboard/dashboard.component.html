@@ -41,13 +41,22 @@
                             <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
                         </div>
                       </div> -->
+
+
+
                     <li class="nav-item hover-cursor">
-                        <div class="stats" (click)="filterByRange({})" style="margin-top: 10px;" >
+                        <div class="input-group input-daterange">
+                            <input type="date" class="form-control" value="2012-04-05">
+                            <div class="input-group-addon">to</div>
+                            <input type="date" class="form-control" value="2012-04-19">
+                        </div>
+                       
+                        <!-- <div class="stats" (click)="filterByRange({})" style="margin-top: 10px;" >
                             <i class="material-icons">date_range</i>
     
                             &nbsp; To 
                             <i class="material-icons">date_range</i>
-                        </div>
+                        </div> -->
                     </li>
                 </ul>
             </div>
@@ -101,6 +110,7 @@
                             <h6 class="nav-link dropdown-toggle " style="font-size: 14px">Product</h6>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
                             <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
                             
                              <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
@@ -117,9 +127,10 @@
 
                     <div class="stats" (click)="filterByRange({})" >
                         <i class="material-icons">date_range</i>
-
                         &nbsp;
-                        <i class="material-icons">date_range</i>To
+                        <i class="material-icons">date_range</i>
+                        <input type=date name="fromDate" placeholder="to" >
+
                     </div>
                 </div>
 
@@ -260,18 +271,25 @@
                
                 
             </div>
-        </div> -->
-        <div class="col-lg-3 col-md-3 col-sm-6">
-          
-           
         </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+           
+            
+                <div class="card ">
+                    <div class="card-header card-header-warning">
+                        <div id="Rating_Chart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Rating </h4>
+                    </div>
+            </div>
         </div>
 
     </div>
 
     <!-- Chart Cards -->
     <div (resize)="getAllManagmentCharts()" class="row">
-        <!-- <ng-container  *ngIf="role=='superadmin'">
+         <!-- <ng-container  *ngIf="role=='superadmin'">
 
                   <div class="col-md-6">
                           <div class="card card-chart">
@@ -345,7 +363,7 @@
                 </div>
             </div>
         </div>
-          </ng-container> -->
+          </ng-container>  -->
         <ng-container *ngIf="role=='management'">
             <!-- <div class="col-md-6 col-sm-12">
               <div class="card card-chart">

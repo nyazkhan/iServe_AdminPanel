@@ -3,7 +3,7 @@ import { DashboardService } from './dashboard.service';
 import { TostService } from '../providers/tost.service';
 
 declare var google: any;
-
+declare let $: any;
 
 @Component({
   selector: 'app-dashboard',
@@ -28,9 +28,21 @@ export class DashboardComponent implements OnInit {
   statusNew: number;
   productCategoryName: Array<any>
 
-  filterByDate="year";
+  filterByDate = "year";
   filterId: number;
   filterRange: object;
+
+
+  rating = [];
+  rating0: number;
+  rating1: number;
+  rating2: number;
+  rating3: number;
+  rating4: number;
+  rating5: number;
+
+
+
 
   constructor(private dashboardservice: DashboardService,
     private tostservice: TostService,
@@ -38,23 +50,27 @@ export class DashboardComponent implements OnInit {
   }
 
 
+
+
   dashboardFilterByDate(value) {
-  this.filterByDate=value;
-  console.log(this.filterByDate)
-    this.filterRange={};
-   this.getFilter();
+    this.filterByDate = value;
+    console.log(this.filterByDate)
+    this.filterRange = {};
+    this.getFilter();
     this.getCharts();
 
   }
 
-  forAllProduct(){
-    this.filterId=null;
+  forAllProduct() {
+    this.filterId = null;
+    console.log(this.filterId)
     this.getFilter();
+    this.getCharts();
 
   }
 
   filterByRange(value) {
-    this.filterByDate="";
+    this.filterByDate = "";
     this.filterRange = value;
     this.getFilter();
   }
@@ -65,13 +81,14 @@ export class DashboardComponent implements OnInit {
     //   this.filter["range"] = this.filterRange;
 
     // } 
-      if (this.filterByDate) {
-        this.filter["duration"] = this.filterByDate;
-      
+    if (this.filterByDate) {
+      this.filter["duration"] = this.filterByDate;
+
     }
 
     if (this.filterId) {
-      this.filter["id"] = this.filterId;
+      console.log(this.filterId)
+      this.filter["categoryId"] = this.filterId;
     }
 
 
@@ -111,6 +128,128 @@ export class DashboardComponent implements OnInit {
 
 
 
+  get_product_rating_chart() {
+this.rating=[];
+
+    this.dashboardservice.getProductRating(this.filter)
+      .subscribe((res: any) => {
+        console.log(res);
+
+
+        this.rating.push(['Appliances', "Don't Care","Rating 1","Rating 2","Rating 3","Rating 4","Rating 5" ]);
+        res.forEach((element1: any) => {
+
+          // this.InstallproductCategoryId.push(element1.productId)
+
+          element1.ratingInfo.forEach(element => {
+
+            if (element.rating == 0) {
+              this.rating0 = element.count;
+            }
+            if (element.rating == 1) {
+              this.rating1 = element.count;
+            }
+            if (element.rating == 2) {
+              this.rating2 = element.count;
+            }
+            if (element.rating == 3) {
+              this.rating3 = element.count;
+            }
+            if (element.rating == 4) {
+              this.rating4 = element.count;
+            }
+            if (element.rating == 5) {
+              this.rating5 = element.count;
+            }
+
+
+
+          })
+          // this.rating.push([element1.name, this.rating0, this.rating1, this.rating2, this.rating3, this.rating4, this.rating5, ]);
+          this.rating.push([element1.name, 12,24,31,25,26,54,]);
+          console.log(this.rating)
+        });
+
+
+        this.draw_rating_chart();
+
+
+      }, (err) => {
+        this.tostservice.showNotificationFailure(err);
+      })
+  }
+
+
+  
+  
+  draw_rating_chart() {
+    let data = google.visualization.arrayToDataTable(this.rating)
+    // let options = {
+    //   chartArea: {
+    //     left: 120,
+    //   },
+    //   legend: { position: 'top', maxLines: 7 },
+    //   bar: { groupWidth: '75%' },
+    //   isStacked: true,
+    //   colors: ['#ffd600','#29b6f6', '#6600cc', '#ff0066',  '#41c300',],
+    //   animation: {
+    //     "startup": true,
+    //     duration: 600,
+    //     easing: 'in-out'
+    //   }
+    // };
+    
+    let options = {
+      // height: 350,
+
+      chartArea: {
+        left: 100,
+        // height: 100,
+      },
+
+
+
+      hAxis: {
+        title: 'Incidents',
+      },
+      vAxis: {
+        title: 'Appliances'
+      },
+
+
+      bar: { groupWidth: '75%' },
+      legend: { position: 'top', maxLines: 3 },
+      // bars: 'vertical',
+            isStacked: true,
+
+      colors: ['#006600', '#00cc00', '#92c409',],
+      animation: {
+        "startup": true,
+        duration: 600,
+        easing: 'in-out'
+      }
+    };
+    let chart = new google.visualization.BarChart(document.getElementById('Rating_Chart'));
+    chart.draw(data,options);
+  }
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   //  incidents weekly report statrs here
@@ -136,9 +275,11 @@ export class DashboardComponent implements OnInit {
     let data = google.visualization.arrayToDataTable(this.statusByProductCat);
 
     let options = {
+      height: 350,
+
       chartArea: {
         left: 100,
-        height: 100,
+        // height: 100,
       },
 
 
@@ -153,7 +294,7 @@ export class DashboardComponent implements OnInit {
 
       bar: { groupWidth: '75%' },
       legend: { position: 'top', maxLines: 3 },
-      bars: 'vertical',
+      // bars: 'vertical',
       colors: ['#006600', '#00cc00', '#92c409',],
       animation: {
         "startup": true,
@@ -200,6 +341,8 @@ export class DashboardComponent implements OnInit {
       let data = google.visualization.arrayToDataTable(this.stateCount);
 
       let options = {
+        height: 350,
+
         region: 'IN',
         resolution: 'provinces',
         colorAxis: { colors: ['#01bcd7'] },
@@ -257,7 +400,7 @@ export class DashboardComponent implements OnInit {
     var options = {
 
       title: 'Mean Time To Repair Product',
-      height: 250,
+      height: 350,
       chartArea: {
         height: 150,
         top: 50,
@@ -272,6 +415,7 @@ export class DashboardComponent implements OnInit {
 
       legend: { position: 'top', maxLines: 3 },
       bar: { groupWidth: '80%' },
+      // isStacked: true,
 
       animation: {
         "startup": true,
@@ -339,10 +483,11 @@ export class DashboardComponent implements OnInit {
     var options = {
 
       title: 'Product repair in warranty or without warranty',
-      height: 250,
+      height: 350,
       chartArea: {
-        height: 150,
-        top: 50,
+        left: 120,
+        // height: 150,
+        // top: 50,
       },
       vAxis: { title: 'Count' },
       hAxis: {
@@ -353,7 +498,7 @@ export class DashboardComponent implements OnInit {
       seriesType: 'bars',
 
       legend: { position: 'top', maxLines: 3 },
-      bar: { groupWidth: '80%' },
+      bar: { groupWidth: '75%' },
 
       animation: {
         "startup": true,
@@ -394,16 +539,20 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.incidentAge);
     console.log(this.incidentAge)
     var options = {
-
+      height: 350,
       title: 'Incident Age',
       vAxis: { title: 'Count' },
-      hAxis: { title: 'Categories' },
+      hAxis: {
+        title: 'Categories',
+
+      },
       seriesType: 'bars',
+      legend: { position: 'top', maxLines: 8 },
 
     };
 
 
-    var chart = new google.visualization.ComboChart(document.getElementById('Product_Incident_Age'));
+    var chart = new google.visualization.BarChart(document.getElementById('Product_Incident_Age'));
 
     chart.draw(data, options);
   }
@@ -433,6 +582,7 @@ export class DashboardComponent implements OnInit {
     this.get_Product_Warranty_Status();
     this.get_MeanTime_Till_Date();
     this.getProductCategory();
+    this.get_product_rating_chart();
   }
 
 
@@ -447,7 +597,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.role = localStorage.getItem("currentUserName");
-this.getFilter();
+    this.getFilter();
 
     this.dashboardservice.loadScript().subscribe(
       (res) => { },
