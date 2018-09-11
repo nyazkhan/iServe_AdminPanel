@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
   statusNew: number;
   productCategoryName: Array<any>
 
-  filterByDate="today";
+  filterByDate="year";
   filterId: number;
   filterRange: object;
 
@@ -136,9 +136,11 @@ export class DashboardComponent implements OnInit {
     let data = google.visualization.arrayToDataTable(this.statusByProductCat);
 
     let options = {
+      height:350,
+
       chartArea: {
         left: 100,
-        height: 100,
+        // height: 100,
       },
 
 
@@ -153,7 +155,7 @@ export class DashboardComponent implements OnInit {
 
       bar: { groupWidth: '75%' },
       legend: { position: 'top', maxLines: 3 },
-      bars: 'vertical',
+      // bars: 'vertical',
       colors: ['#006600', '#00cc00', '#92c409',],
       animation: {
         "startup": true,
@@ -192,6 +194,8 @@ export class DashboardComponent implements OnInit {
       let data = google.visualization.arrayToDataTable(this.stateCount);
 
       let options = {
+        height:350,
+
         region: 'IN',
         resolution: 'provinces',
         colorAxis: { colors: ['#01bcd7'] },
@@ -249,7 +253,7 @@ export class DashboardComponent implements OnInit {
     var options = {
 
       title: 'Mean Time To Repair Product',
-      height: 250,
+      height:350,
       chartArea: {
         height: 150,
         top: 50,
@@ -331,10 +335,11 @@ export class DashboardComponent implements OnInit {
     var options = {
 
       title: 'Product repair in warranty or without warranty',
-      height: 250,
+      height:350,
       chartArea: {
-        height: 150,
-        top: 50,
+       left:120,
+        // height: 150,
+        // top: 50,
       },
       vAxis: { title: 'Count' },
       hAxis: {
@@ -345,7 +350,7 @@ export class DashboardComponent implements OnInit {
       seriesType: 'bars',
 
       legend: { position: 'top', maxLines: 3 },
-      bar: { groupWidth: '80%' },
+      bar: { groupWidth: '75%' },
 
       animation: {
         "startup": true,
@@ -386,16 +391,19 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.incidentAge);
     console.log(this.incidentAge)
     var options = {
-
+      height:350,
       title: 'Incident Age',
       vAxis: { title: 'Count' },
-      hAxis: { title: 'Categories' },
+      hAxis: { title: 'Categories',
+           
+ },
       seriesType: 'bars',
+      legend: { position: 'top', maxLines: 8 },
 
     };
 
 
-    var chart = new google.visualization.ComboChart(document.getElementById('Product_Incident_Age'));
+    var chart = new google.visualization.BarChart(document.getElementById('Product_Incident_Age'));
 
     chart.draw(data, options);
   }

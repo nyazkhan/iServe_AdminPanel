@@ -45,9 +45,9 @@
                             <h6 class="nav-link dropdown-toggle " style="font-size: 14px">Product</h6>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
                             <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
                             
-                             <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
                             <!--
                             <a class="dropdown-item">Priority</a>
                             <a class="dropdown-item">Category</a>
@@ -65,9 +65,11 @@
 
                     <div class="stats" (click)="filterByRange({})" >
                         <i class="material-icons">date_range</i>
-                        <!-- <input type=date name="fromDate" placeholder="from" > -->
+                        <input type=date name="fromDate" placeholder="from" >
                         &nbsp;
-                        <i class="material-icons">date_range</i>To
+                        <i class="material-icons">date_range</i>
+                        <input type=date name="fromDate" placeholder="to" >
+
                     </div>
                 </div>
 
