@@ -200,7 +200,7 @@ this.rating=[];
     // };
     
     let options = {
-      // height: 350,
+      height: 200,
 
       chartArea: {
         left: 100,
@@ -275,7 +275,7 @@ this.rating=[];
     let data = google.visualization.arrayToDataTable(this.statusByProductCat);
 
     let options = {
-      height: 350,
+      height: 200,
 
       chartArea: {
         left: 100,
@@ -341,7 +341,7 @@ this.rating=[];
       let data = google.visualization.arrayToDataTable(this.stateCount);
 
       let options = {
-        height: 350,
+        height: 200,
 
         region: 'IN',
         resolution: 'provinces',
@@ -400,9 +400,9 @@ this.rating=[];
     var options = {
 
       title: 'Mean Time To Repair Product',
-      height: 350,
+      height: 200,
       chartArea: {
-        height: 150,
+        height: 200,
         top: 50,
       },
       vAxis: { title: 'Count' },
@@ -415,6 +415,7 @@ this.rating=[];
 
       legend: { position: 'top', maxLines: 3 },
       bar: { groupWidth: '80%' },
+      colors:['#F48FB1','#E91E63','#C2185B','#880E4F',],
       // isStacked: true,
 
       animation: {
@@ -483,7 +484,7 @@ this.rating=[];
     var options = {
 
       title: 'Product repair in warranty or without warranty',
-      height: 350,
+      height: 200,
       chartArea: {
         left: 120,
         // height: 150,
@@ -499,6 +500,7 @@ this.rating=[];
 
       legend: { position: 'top', maxLines: 3 },
       bar: { groupWidth: '75%' },
+      colors:['#FFA726','#EF6C00'],
 
       animation: {
         "startup": true,
@@ -539,7 +541,7 @@ this.rating=[];
     var data = google.visualization.arrayToDataTable(this.incidentAge);
     console.log(this.incidentAge)
     var options = {
-      height: 350,
+      height: 200,
       title: 'Incident Age',
       vAxis: { title: 'Count' },
       hAxis: {
@@ -548,6 +550,7 @@ this.rating=[];
       },
       seriesType: 'bars',
       legend: { position: 'top', maxLines: 8 },
+      colors:['#FFCDD2','#FF8A80','#E57373','#B71C1C'],
 
     };
 
