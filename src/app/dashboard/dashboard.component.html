@@ -1,6 +1,70 @@
-<div class="container-fluid">
+<div class="card card-nav-tabs card-plain">
+    <div class="card-header card-header-primary" style="margin-bottom: 50px;" >
+        <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+        <div class="nav-tabs-navigation">
+            <div class="nav-tabs-wrapper">
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                    <li class="nav-item hover-cursor">
+                        <a class="nav-link"  (click)="dashboardFilterByDate('today')" data-toggle="tab">Today</a>
+                    </li>
+                    <li class="nav-item hover-cursor">
+                        <a class="nav-link" (click)="dashboardFilterByDate('week')" data-toggle="tab">This Week</a>
+                    </li>
+                    <li class="nav-item hover-cursor">
+                        <a class="nav-link" (click)="dashboardFilterByDate('month')" data-toggle="tab">This Month</a>
+                    
+                    </li>
+                    <li class="nav-item hover-cursor">
+                        <a class="nav-link" (click)="dashboardFilterByDate('year')" data-toggle="tab">This year</a>
+                    </li>
+                    
+                    <li class="nav-item hover-cursor ">
+                       
+                        <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            
+                            <div class="nav-link dropdown-toggle " style="background: transparent ;" >Product</div>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
+                            
+                             <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
+                            
+                        </div>
+                    </li>
+                    <!-- <div class="dropdown" >
+                        <a class="nav-link  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                          Product
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
+                            
+                            <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
+                        </div>
+                      </div> -->
+
+
+
+                    <li class="nav-item hover-cursor">
+                        <div class="input-group input-daterange">
+                            <input type="date" class="form-control" value="2012-04-05">
+                            <div class="input-group-addon">to</div>
+                            <input type="date" class="form-control" value="2012-04-19">
+                        </div>
+                       
+                        <!-- <div class="stats" (click)="filterByRange({})" style="margin-top: 10px;" >
+                            <i class="material-icons">date_range</i>
+    
+                            &nbsp; To 
+                            <i class="material-icons">date_range</i>
+                        </div> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+  </div>
+  <div class="container-fluid" style="z-index: 0;">
     <div class="row">
-        <div class="col-lg-2 col-md-4 col-sm-6">
+        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="card ">
                 <div class="card-body">
 
@@ -8,8 +72,8 @@
                 </div>
 
             </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6">
+        </div> -->
+        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="card ">
                 <div class="card-body">
 
@@ -17,8 +81,8 @@
                 </div>
 
             </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6">
+        </div> -->
+        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="card ">
                 <div class="card-body">
 
@@ -26,8 +90,8 @@
                 </div>
 
             </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6">
+        </div> -->
+        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="card ">
                 <div class="card-body">
 
@@ -35,37 +99,33 @@
                 </div>
 
             </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6">
+        </div> -->
+        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="card ">
                 <div class="card-body">
                     <div class="dropdown" >
                         <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <!-- <i class="material-icons"> filter_list </i> -->
+                            
                             <h6 class="nav-link dropdown-toggle " style="font-size: 14px">Product</h6>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
                             <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
                             
-                            <!--
-                            <a class="dropdown-item">Priority</a>
-                            <a class="dropdown-item">Category</a>
-                            <a class="dropdown-item">Clear Sorting</a> -->
-
+                             <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
+                            
                         </div>
                     </div>
                 </div>
 
             </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-6">
+        </div> -->
+        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
             <div class="card ">
                 <div class="card-body">
 
                     <div class="stats" (click)="filterByRange({})" >
                         <i class="material-icons">date_range</i>
-                        <input type=date name="fromDate" placeholder="from" >
                         &nbsp;
                         <i class="material-icons">date_range</i>
                         <input type=date name="fromDate" placeholder="to" >
@@ -74,16 +134,17 @@
                 </div>
 
             </div>
-        </div>
+        </div> -->
 
     </div>
     <div *ngIf="role=='management'" class="row">
-        <div class="col-lg-2 col-md-2 col-sm-6">
-            <div class="card card-stats">
+        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
+            <div class="card ">
                 <div class="card-header card-header-info card-header-icon">
 
                     <div class="card-icon">
                         <h3><b>{{statusCarryForward}}</b></h3>
+                        <h5><b>Carry Forward</b></h5>
                     </div>
 
                 </div>
@@ -91,10 +152,23 @@
                     <h5><b>Carry Forward</b></h5>
                 </div>
             </div>
+        </div> -->
+        <div class="col-lg-2 col-md-2 col-sm-6">
+            <div class="card card-header-info">
+                
+
+                  
+                        <h3><b>{{statusCarryForward}}</b></h3>
+                        <h5><b>Carry Forward</b></h5>
+                  
+
+               
+                
+            </div>
         </div>
 
-        <div class="col-lg-2 col-md-2 col-sm-6">
-            <div class="card card-stats">
+        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
+            <div class="card ">
                 <div class="card-header card-header-warning card-header-icon">
 
                     <div class="card-icon">
@@ -106,9 +180,22 @@
                     <h5><b>New</b></h5>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-lg-2 col-md-2 col-sm-6">
-            <div class="card card-stats">
+            <div class="card card-header-warning">
+                
+
+                  
+                        <h3><b>{{statusNew}} </b></h3>
+                        <h5><b>New</b></h5>
+                  
+
+               
+                
+            </div>
+        </div>
+        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
+            <div class="card ">
                 <div class="card-header card-header-success card-header-icon">
 
                     <div class="card-icon">
@@ -120,113 +207,38 @@
                     <h5><b>Closed</b></h5>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6">
-            <!-- <div class="card card-chart">
-                            <div class="card-header card-header-info">
-                                <div class="feedback-chart">
-                                    <div class="rated-happy">
-                                      <div class="smiley happy">
-                                  <div class="eyes">
-                                    <div class="eye"></div>
-                                    <div class="eye"></div>
-                                  </div>
-                                  <div class="mouth"></div>
-                                  <div class="card-title">
-                                      <h3><b>55%</b></h3>
-                                      <h4>Happy</h4>
-                                    </div>
-                                </div>
-                                  </div>
-                                  <div  class="rated-sad">
-                                    <div class="smiley normal">
-                                  <div class="eyes">
-                                    <div class="eye"></div>
-                                    <div class="eye"></div>
-                                  </div>
-                                  <div class="mouth"></div>
-                                  <div class="card-title">
-                                      <h3><b>27%</b></h3>
-                                      <h4>Satisfied</h4>
-                                    </div>
-                                </div>
-                                  </div>
-                                  <div  class="rated-angry"> 
-                                    <div class="smiley angry">
-                                  <div class="eyes">
-                                    <div class="eye"></div>
-                                    <div class="eye"></div>
-                                  </div>
-                                  <div class="mouth"></div>
-                                  <div class="card-title">
-                                      <h3><b>18%</b></h3>
-                                      <h4>Angry</h4>
-                                    </div>
-                                </div>
-                                  </div>
-                                </div>
-                            </div>
-                            
-                        </div> -->
+        </div> -->
+        <div class="col-lg-2 col-md-2 col-sm-6">
+            <div class="card card-header-success">
+                
 
-            <div class="card card-stats">
-               <div class="row">
-                <div class="col-md-6">
+                  
+                        <h3><b>{{statusClosed}} </b></h3>
+                        <h5><b>Closed</b></h5>
+                  
 
-                </div>
-                <div class="col-md-6">
-                    <div class="d-flex">
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                    </div>
-                    <div class="d-flex">
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                    </div>
-                    <div class="d-flex">
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                    </div>
-                    <div class="d-flex">
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                    </div>
-                    <div class="d-flex">
-                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                    </div>
-                    <div class="d-flex">
-                        <!-- <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i> -->
-                    </div>
-                </div>
+               
+                
             </div>
         </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+           
+            
+                <div class="card ">
+                    <div class="card-header card-header-warning">
+                        <div id="Rating_Chart"></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Rating </h4>
+                    </div>
+            </div>
         </div>
 
     </div>
 
     <!-- Chart Cards -->
     <div (resize)="getAllManagmentCharts()" class="row">
-        <!-- <ng-container  *ngIf="role=='superadmin'">
+         <!-- <ng-container  *ngIf="role=='superadmin'">
 
                   <div class="col-md-6">
                           <div class="card card-chart">
@@ -300,7 +312,7 @@
                 </div>
             </div>
         </div>
-          </ng-container> -->
+          </ng-container>  -->
         <ng-container *ngIf="role=='management'">
             <!-- <div class="col-md-6 col-sm-12">
               <div class="card card-chart">
@@ -313,7 +325,7 @@
               </div>
           </div>-->
             <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
+                <div class="card ">
                     <div class="card-header card-header-warning">
                         <div id="product_Warranty_Status"></div>
                     </div>

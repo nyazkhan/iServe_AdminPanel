@@ -60,7 +60,7 @@ this.subscribeUserPictureChanges();
           route: '/manager'
         }
       ];
-      this.picUrl = null;
+      // this.picUrl = null;
 
     }
   }

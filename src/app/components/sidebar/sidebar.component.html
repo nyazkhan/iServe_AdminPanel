@@ -9,20 +9,13 @@
         <div class="user">
                 <div class="d-flex">
                     <div>
-                    <img *ngIf="!picUrl" src="/assets/img/avatar.jpg" />
-                    <img *ngIf="picUrl" src="{{picUrl}}" />
+                    <img *ngIf="picUrl" src="assets/img/avatar.png/"/>
+                    <img *ngIf="!picUrl" src="{{picUrl}}" />
 
                 </div>
                     <span class="lightColor" style=" padding: .5rem 15px;">{{name}}</span>
                 </div>
-                <!-- <div class="user-info">
-                        <a data-toggle="collapse" href="#" class="username">
-                            <span>
-                               Tania Andrew 
-                              <b class="caret"></b>
-                            </span>
-                        </a>
-                    </div> -->
+    
         </div>
       <ul class="nav">
          
@@ -34,21 +27,7 @@
               </a>
           </li>
 
-
-
-
-          <!-- <li class="nav-item ">
-              <a class="nav-link" href="#">
-                  <i class="material-icons">person</i>
-                  <p>User Profile</p>
-              </a>
-          </li>
-          <li class="nav-item ">
-              <a class="nav-link" href="#">
-                  <i class="material-icons">notifications</i>
-                  <p>Notifications</p>
-              </a>
-          </li>-->
+         
           <li class="nav-item ">
                 <a class="nav-link"(click)="logout()" >
                         <i class="material-icons">

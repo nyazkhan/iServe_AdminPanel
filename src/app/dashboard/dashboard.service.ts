@@ -96,8 +96,8 @@ getProductIncidentAge(fd){
  
 }
 
-test(){
-    return this.customHttp.post(`/m/complaint/dashboard/rating`,{"duration":"month"})
+getProductRating(fd){
+    return this.customHttp.post(`/m/complaint/dashboard/rating/`,fd)
  
 }
 
@@ -119,11 +119,7 @@ getMTTR(fd) {
 
     // current incident new, fixed, inprogress,
     getCurrentIncident() {
-        // const I_api = `/m/status/complaint`
-
-        // const I_api = `/m/complaint/graph/status`
-        // const I_api = `/m/complaint/graph/product`
-        // const I_api = ` /m/complaint/graph/category`
+     
         const I_api = `/m/complaint/graph/product-status`
         // const I_api = `/m/complaint/graph/category-status`
 

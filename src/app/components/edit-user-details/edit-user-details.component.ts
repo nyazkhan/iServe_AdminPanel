@@ -89,8 +89,10 @@ export class EditUserDetailsComponent implements OnInit {
 
   editValue(data) {
     this.formButtonHide = true;
-    console.log(data);
+   
 
+    console.log(data);
+  
     if (data.contactNo) { data.contactNo = data.contactNo.toString(); }
 
     this.loginService.editManagerdetails(data)
@@ -100,6 +102,7 @@ export class EditUserDetailsComponent implements OnInit {
         this.closeFormModal()
         this.resetForm();
         this.tostservice.showNotificationSuccess("change successfuly");
+        $('#filed').show();
 
         this.formButtonHide = false;
       }, (err) => {
@@ -111,10 +114,14 @@ export class EditUserDetailsComponent implements OnInit {
   toEdit(val) {
     this.toBeEdit = val;
     this.showForm = true;
+   
 
     if (this.toBeEdit == 'Name') {
 
       this.toBeEditValue = this.editManagerDetails.name;
+      $('#filed').hide();
+
+
     }
     if (this.toBeEdit == 'Email') {
 
@@ -131,6 +138,7 @@ export class EditUserDetailsComponent implements OnInit {
     this.urlTOShowImg = null;
     this.formButtonHide = false;
     this.closeFormModal();
+    $('#filed').show();
 
   }
 

@@ -48,7 +48,7 @@ $main:#9c27b0;
     color: #4620ae;
     font-size: 18px;
   }
-
+    
     .heading{
         margin-left: 20px;
         font-weight: 400;
@@ -81,5 +81,9 @@ $main:#9c27b0;
 .change-icon:hover > .deleteIcon + .deleteChange-icon {
   display: inherit;
 }
-
- 
+.listHoverColor:active{
+    background: #f06e6b !important;
+  }
+  .dropdown-item.active, .dropdown-item:active {
+    background-color: $main !important;
+   }
