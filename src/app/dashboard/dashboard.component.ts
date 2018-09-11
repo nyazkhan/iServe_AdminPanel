@@ -341,7 +341,7 @@ this.rating=[];
       let data = google.visualization.arrayToDataTable(this.stateCount);
 
       let options = {
-        height: 200,
+        height: 300,
 
         region: 'IN',
         resolution: 'provinces',
@@ -400,7 +400,7 @@ this.rating=[];
     var options = {
 
       title: 'Mean Time To Repair Product',
-      height: 200,
+      height: 300,
       chartArea: {
         height: 200,
         top: 50,
