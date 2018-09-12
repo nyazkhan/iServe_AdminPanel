@@ -1,8 +1,8 @@
 <div class="card card-nav-tabs card-plain">
     <div class="card-header card-header-primary" style="margin-bottom: 50px;" >
-        <!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
+        
         <div class="nav-tabs-navigation">
-            <div class="nav-tabs-wrapper space-between">
+            <!-- <div class="nav-tabs-wrapper space-between">
                 <ul class="nav nav-tabs" data-tabs="tabs">
                     <li class="nav-item hover-cursor">
                         <a class="nav-link active dropdown-item"  (click)="dashboardFilterByDate('today')" data-toggle="tab">Today</a>
@@ -45,9 +45,65 @@
                 </ul>
                
                
+            </div> -->
+            <!-- <second new design> -->
+            <div class="nav-tabs-wrapper space-between">
+                <div style="border-right: 1px solid white;padding-right: 32px;">
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                        <li class="nav-item hover-cursor">
+                                <a class="nav-link active show "  (click)="dashboardFilterByDate('today')" data-toggle="tab">Today</a>
+                            </li>
+                            <li class="nav-item hover-cursor">
+                                <a class="nav-link" (click)="dashboardFilterByDate('week')" data-toggle="tab">This Week</a>
+                            </li>
+                            <li class="nav-item hover-cursor">
+                                <a class="nav-link" (click)="dashboardFilterByDate('month')" data-toggle="tab">This Month</a>
+                            
+                            </li>
+                            <li class="nav-item hover-cursor">
+                                    <a class="nav-link" (click)="dashboardFilterByDate('year')" data-toggle="tab">This year</a>
+                                </li>
+                    </ul>
+                </div>
+                <div >
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item hover-cursor ">
+                       
+                                    <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        
+                                        <div class="nav-link dropdown-toggle " style="background: transparent ;" >Product</div>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
+                                        
+                                         <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
+                                        
+                                    </div>
+                                </li>
+                                 
+                    </ul>
+                </div>
+                <div style="border-left: 1px solid white;padding-left: 32px;">
+                    <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item hover-cursor ">
+                                    <div class="input-group input-daterange">
+                                            <span style="margin: 10px;">From</span>  <input type="date" class="form-control text-right" value="2012-04-05" style="color: white;">
+                                        <p class="input-group-addon " style="margin:10px; ">To</p>
+                                        <input type="date" class="form-control text-right" value="2012-04-19" style="color: white;">
+                                    </div>
+                                   
+                                </li>
+                                 <div style="margin-top: 10px;"><i class="material-icons">
+                                        check_circle
+                                        </i></div>
+                     </ul>
+                    </div>
+
+
             </div>
         </div>
   </div>
+
   
   <div class="container-fluid" style="z-index: 0;">
     <div class="row">
