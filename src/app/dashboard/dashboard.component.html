@@ -25,12 +25,12 @@
 
               <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                <div class="nav-link dropdown-toggle " style="background: transparent ;">Product</div>
+                <div class="nav-link dropdown-toggle " style="background: transparent ;">Appliances</div>
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item  hoverColor">{{Category.name}}</a>
 
-                <a (click)="forAllProduct()" class="dropdown-item hoverColor">All Product</a>
+                <a (click)="forAllProduct()" class="dropdown-item hoverColor">All Appliances</a>
 
               </div>
             </li>
