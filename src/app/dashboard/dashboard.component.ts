@@ -232,23 +232,6 @@ this.rating=[];
     let chart = new google.visualization.BarChart(document.getElementById('Rating_Chart'));
     chart.draw(data,options);
   }
-  
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -399,7 +382,7 @@ this.rating=[];
 
     var options = {
 
-      title: 'Mean Time To Repair Product',
+      // title: 'Mean Time To Repair Product',
       height: 300,
       chartArea: {
         height: 200,
@@ -542,7 +525,7 @@ this.rating=[];
     console.log(this.incidentAge)
     var options = {
       height: 200,
-      title: 'Incident Age',
+      // title: 'Incident Age',
       vAxis: { title: 'Count' },
       hAxis: {
         title: 'Categories',
