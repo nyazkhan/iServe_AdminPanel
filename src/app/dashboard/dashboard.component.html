@@ -1,256 +1,203 @@
-<div class="card card-nav-tabs card-plain">
-    <div class="card-header card-header-primary" style="margin-bottom: 50px;" >
-        
-        <div class="nav-tabs-navigation">
-            <!-- <div class="nav-tabs-wrapper space-between">
-                <ul class="nav nav-tabs" data-tabs="tabs">
-                    <li class="nav-item hover-cursor">
-                        <a class="nav-link active dropdown-item"  (click)="dashboardFilterByDate('today')" data-toggle="tab">Today</a>
-                    </li>
-                    <li class="nav-item hover-cursor">
-                        <a class="nav-link" (click)="dashboardFilterByDate('week')" data-toggle="tab">This Week</a>
-                    </li>
-                    <li class="nav-item hover-cursor">
-                        <a class="nav-link" (click)="dashboardFilterByDate('month')" data-toggle="tab">This Month</a>
-                    
-                    </li>
-                    <li class="nav-item hover-cursor">
-                        <a class="nav-link" (click)="dashboardFilterByDate('year')" data-toggle="tab">This year</a>
-                    </li>
-                </ul>
-                <ul class="nav nav-tabs" data-tabs="tabs">
-                    <li class="nav-item hover-cursor " style="margin-right: 12px;">
-                       
-                        <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            
-                            <div class="nav-link dropdown-toggle " style="background: transparent ;" >Product</div>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
-                            
-                             <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
-                            
-                        </div>
-                    </li>
-                    
-                    <li class="nav-item hover-cursor ">
-                        <div class="input-group input-daterange">
-                                <input type="date" class="form-control text-right" value="2012-04-05" style="color: white;">
-                            <p class="input-group-addon " style="margin:10px; ">To</p>
-                            <input type="date" class="form-control text-right" value="2012-04-19" style="color: white;">
-                        </div>
-                       
-                    </li>
-                    <button class="btn btn-primary btn-sm">Submit</button>
-                </ul>
-               
-               
-            </div> -->
-            <!-- <second new design> -->
-            <div class="nav-tabs-wrapper space-between">
-                <div style="border-right: 1px solid white;padding-right: 32px;">
-                <ul class="nav nav-tabs" data-tabs="tabs">
-                        <li class="nav-item hover-cursor">
-                                <a class="nav-link active show "  (click)="dashboardFilterByDate('today')" data-toggle="tab">Today</a>
-                            </li>
-                            <li class="nav-item hover-cursor">
-                                <a class="nav-link" (click)="dashboardFilterByDate('week')" data-toggle="tab">This Week</a>
-                            </li>
-                            <li class="nav-item hover-cursor">
-                                <a class="nav-link" (click)="dashboardFilterByDate('month')" data-toggle="tab">This Month</a>
-                            
-                            </li>
-                            <li class="nav-item hover-cursor">
-                                    <a class="nav-link" (click)="dashboardFilterByDate('year')" data-toggle="tab">This year</a>
-                                </li>
-                    </ul>
-                </div>
-                <div >
-                    <ul class="nav nav-tabs" data-tabs="tabs">
-                            <li class="nav-item hover-cursor ">
-                       
-                                    <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        
-                                        <div class="nav-link dropdown-toggle " style="background: transparent ;" >Product</div>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
-                                        
-                                         <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
-                                        
-                                    </div>
-                                </li>
-                                 
-                    </ul>
-                </div>
-                <div style="border-left: 1px solid white;padding-left: 32px;">
-                    <ul class="nav nav-tabs" data-tabs="tabs">
-                            <li class="nav-item hover-cursor ">
-                                    <div class="input-group input-daterange">
-                                            <span style="margin: 10px;">From</span>  <input type="date" class="form-control text-right" value="2012-04-05" style="color: white;">
-                                        <p class="input-group-addon " style="margin:10px; ">To</p>
-                                        <input type="date" class="form-control text-right" value="2012-04-19" style="color: white;">
-                                    </div>
-                                   
-                                </li>
-                                 <div style="margin-top: 10px;"><i class="material-icons">
-                                        check_circle
-                                        </i></div>
-                     </ul>
-                    </div>
+<div class="card  card-plain" style="margin-top: 0px;">
+  <div class="card-header card-header-primary" >
+    <div class="nav-tabs-navigation">
+      <div class="nav-tabs-wrapper space-between">
+        <div  class="addBar">
+          <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="nav-item hover-cursor">
+              <a class="nav-link active show " (click)="dashboardFilterByDate('today')" data-toggle="tab">Today</a>
+            </li>
+            <li class="nav-item hover-cursor">
+              <a class="nav-link" (click)="dashboardFilterByDate('week')" data-toggle="tab">This Week</a>
+            </li>
+            <li class="nav-item hover-cursor">
+              <a class="nav-link" (click)="dashboardFilterByDate('month')" data-toggle="tab">This Month</a>
 
-
-            </div>
+            </li>
+            <li class="nav-item hover-cursor">
+              <a class="nav-link" (click)="dashboardFilterByDate('year')" data-toggle="tab">This year</a>
+            </li>
+          </ul>
         </div>
+        <div>
+          <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="nav-item hover-cursor ">
+
+              <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                <div class="nav-link dropdown-toggle " style="background: transparent ;">Product</div>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item  hoverColor">{{Category.name}}</a>
+
+                <a (click)="forAllProduct()" class="dropdown-item hoverColor">All Product</a>
+
+              </div>
+            </li>
+
+          </ul>
+        </div>
+        <div class="addBarleft">
+          <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="nav-item hover-cursor ">
+              <div class="input-group input-daterange">
+                <span style="margin: 10px;">From</span> <input type="date" class="form-control text-right" value="2012-04-05"
+                  style="color: white;">
+                <p class="input-group-addon " style="margin:10px; ">To</p>
+                <input type="date" class="form-control text-right" value="2012-04-19" style="color: white;">
+              </div>
+
+            </li>
+            <div style="margin-top: 10px;"><i class="material-icons">
+                check_circle
+              </i>
+            </div>
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
   </div>
 
-  
+
   <div class="container-fluid" style="z-index: 0;">
     <div class="row">
-        
+
 
     </div>
     <div *ngIf="role=='management'" class="row">
-        
-        <div class="col-lg-4 col-md-4 col-sm-6">
-            <div class="card card-stats padding">
-              <div class="card-header card-header-warning card-header-icon">
-                <div class="card-icon">
-                  <i class="material-icons">store</i>
-                </div>
-                <p class="card-category">Carry Forward</p>
-                <h3 class="card-title">{{statusCarryForward}}</h3>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">date_range</i> Last 24 Hours
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-6">
-            <div class="card card-stats padding">
-              <div class="card-header card-header-info card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">
-                        new_releases
-                        </i>
-                </div>
-                <p class="card-category">New</p>
-                <h3 class="card-title">{{statusNew}}</h3>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">date_range</i> Last 24 Hours
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-6">
-            <div class="card card-stats padding">
-              <div class="card-header card-header-danger card-header-icon">
-                <div class="card-icon">
-                   <img src="assets/img/close.png/" width="50px;">
-                </div>
-                <p class="card-category">Closed</p>
-                <h3 class="card-title">{{statusClosed}}</h3>
-              </div>
-              <div class="card-footer">
-                <div class="stats">
-                  <i class="material-icons">date_range</i> Last 24 Hours
-                </div>
-              </div>
-            </div>
-          </div>
-       
 
-    <!-- Chart Cards -->
-    <div (resize)="getAllManagmentCharts()" class="row">
-         
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="card card-stats padding">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">store</i>
+            </div>
+            <p class="card-category">Carry Forward</p>
+            <h3 class="card-title">{{statusCarryForward}}</h3>
+          </div>
+          <div class="card-footer" style="border: 0;">
+            <div class="stats">
+              <!-- <i class="material-icons">date_range</i> Last 24 Hours -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="card card-stats padding">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">
+                new_releases
+              </i>
+            </div>
+            <p class="card-category">New</p>
+            <h3 class="card-title">{{statusNew}}</h3>
+          </div>
+          <div class="card-footer" style="border: 0;">
+            <div class="stats">
+              <!-- <i class="material-icons">date_range</i> Last 24 Hours -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="card card-stats padding">
+          <div class="card-header card-header-danger card-header-icon">
+            <div class="card-icon">
+              <img src="assets/img/close.png/" width="50px;">
+            </div>
+            <p class="card-category">Closed</p>
+            <h3 class="card-title">{{statusClosed}}</h3>
+          </div>
+          <div class="card-footer" style="border: 0;">
+            <div class="stats">
+              <!-- <i class="material-icons">date_range</i> Last 24 Hours -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Chart Cards -->
+      <div (resize)="getAllManagmentCharts()" class="row">
+
         <ng-container *ngIf="role=='management'">
-            <div class="col-md-6 col-sm-12">
-              <div class="card card-chart">
-                  <div class="card-header card-header-danger">
-        
-        <div id="Rating_Chart"></div>
-                  </div>
-                  <div class="card-body">
-                          <h4 class="card-title"> Rating </h4>
-                  </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-danger">
+
+                <div id="Rating_Chart"></div>
               </div>
+              <div class="card-body">
+                <h4 class="card-title"> Rating </h4>
+              </div>
+            </div>
           </div>
 
-            <div class="col-md-6 col-sm-12">
-                <div class="card ">
-                    <div class="card-header card-header-warning">
-                        <div id="product_Warranty_Status"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">product Warranty Status</h4>
-                    </div>
-                </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card ">
+              <div class="card-header card-header-warning">
+                <div id="product_Warranty_Status"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">product Warranty Status</h4>
+              </div>
             </div>
-            <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
-                    <div class="card-header card-header-danger">
-                        <div id="Product_Incident_Age"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Incidents Age</h4>
-                    </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-danger">
+                <div id="Product_Incident_Age"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Incidents Age</h4>
+              </div>
 
-                </div>
             </div>
+          </div>
 
 
-            <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
-                    <div class="card-header card-header-success">
-                        <div id="product_status_Chart"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Incident Weekly Report</h4>
-                    </div>
-                </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-success">
+                <div id="product_status_Chart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Incident Weekly Report</h4>
+              </div>
             </div>
-            <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
-                    <div class="card-header card-header-info">
-                        <div id="regions_chart"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Incidents By State</h4>
-                    </div>
-                </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-info">
+                <div id="regions_chart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Incidents By State</h4>
+              </div>
             </div>
+          </div>
 
 
-            <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
-                    <div class="card-header card-header-success" style="background: #E91E63;">
-                        <div id="repair_time"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Mean Time To Repair (in days)</h4>
-                    </div>
-                </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-success" style="background: #E91E63;">
+                <div id="repair_time"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Mean Time To Repair (in days)</h4>
+              </div>
             </div>
-            <div class="col-md-3 col-sm-12">
-                <div class="card card-chart">
-                    <!-- <div class="card-header card-header-danger"> -->
-                    <div id="graph_status"></div>
-                </div>
+          </div>
+          <div class="col-md-3 col-sm-12">
+            <div class="card card-chart">
+              <div id="graph_status"></div>
             </div>
-            <!-- <div class="card-body">
-                        <h4 class="card-title"> Incidents VS productCategories By Status </h4>
-                    </div>
-                </div>
-                </div> -->
-
-
-
+          </div>
         </ng-container>
 
+      </div>
+      <!-- end of chart cards -->
     </div>
-    <!-- end of chart cards -->
-</div>

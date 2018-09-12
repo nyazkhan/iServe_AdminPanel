@@ -1,27 +1,30 @@
 // feedback chart
-.card-chart{
-    // height:100%;
+.card-chart {
+  // height:100%;
 }
-.feedback-chart{
-    display:flex;
-    justify-content:space-around;
-    .card-title{
-        position: absolute;
+
+.feedback-chart {
+  display: flex;
+  justify-content: space-around;
+
+  .card-title {
+    position: absolute;
     bottom: -80px;
     left: 50%;
     transform: translate(-50%);
-    text-align:center;
-    width:100%;
-    h3{
-        // font-weight:400;
-        margin:0px;
-    }
+    text-align: center;
+    width: 100%;
+
+    h3 {
+      // font-weight:400;
+      margin: 0px;
     }
   }
+}
+
 /* Smiley */
 
-.smiley
-{
+.smiley {
   margin-top: 80PX;
   background: linear-gradient(135deg, #ffe919 0%, #fbc000 100%);
   border-radius: 100%;
@@ -45,8 +48,7 @@
 }
 
 
-.mouth
-{
+.mouth {
   width: 60%;
   height: 30%;
   border-top-left-radius: 0;
@@ -63,8 +65,7 @@
 }
 
 
-.eyes
-{
+.eyes {
   width: 100%;
   margin-top: 15%;
   box-sizing: border-box;
@@ -72,8 +73,7 @@
   transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-.eyes .eye
-{
+.eyes .eye {
   width: 20px;
   height: 20px;
   background: #B57700;
@@ -82,13 +82,11 @@
   position: relative;
 }
 
-.eyes .eye:nth-of-type(2)
-{
+.eyes .eye:nth-of-type(2) {
   float: right;
 }
 
-.eyes .eye::after
-{
+.eyes .eye::after {
   content: "";
   display: block;
   position: absolute;
@@ -98,11 +96,10 @@
   transform: rotate(0deg);
   top: -15px;
   left: 5px;
-  transition:         all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-.eyes .eye:first-of-type::after
-{
+.eyes .eye:first-of-type::after {
   transform: rotate(0deg);
   left: auto;
   right: 5px;
@@ -110,8 +107,7 @@
 
 /* Normal animation */
 .smiley.normal .mouth,
-#normal[type=radio]:checked ~ .smiley .mouth
-{
+#normal[type=radio]:checked~.smiley .mouth {
   border-top-left-radius: 100px;
   border-top-right-radius: 100px;
   border-bottom-left-radius: 100px;
@@ -123,15 +119,13 @@
 }
 
 .smiley.normal .eyes,
-#normal[type=radio]:checked ~ .smiley .eyes
-{
+#normal[type=radio]:checked~.smiley .eyes {
   margin-top: 30%
 }
 
 /* angry animation */
 .smiley.angry .mouth,
-#angry[type=radio]:checked ~ .smiley .mouth
-{
+#angry[type=radio]:checked~.smiley .mouth {
   width: 40%;
   height: 20%;
   border-top-left-radius: 100%;
@@ -145,14 +139,12 @@
 }
 
 .smiley.angry .eyes,
-#angry[type=radio]:checked ~ .smiley .eyes
-{
+#angry[type=radio]:checked~.smiley .eyes {
   margin-top: 35%
 }
 
 .smiley.angry .eye::after,
-#angry[type=radio]:checked ~ .smiley .eye::after
-{
+#angry[type=radio]:checked~.smiley .eye::after {
   width: 120%;
   height: 50%;
   transform: rotate(-35deg);
@@ -162,8 +154,7 @@
 }
 
 .smiley.angry .eye:first-of-type::after,
-#angry[type=radio]:checked ~ .smiley .eye:first-of-type::after
-{
+#angry[type=radio]:checked~.smiley .eye:first-of-type::after {
   transform: rotate(35deg);
   left: auto;
   right: -5px;
@@ -172,163 +163,134 @@
 /* */
 
 .smiley.happy .mouth,
-#happy[type=radio]:checked ~ .smiley .mouth
-{
-  animation: infinite  move-mouth-down 3s ;
+#happy[type=radio]:checked~.smiley .mouth {
+  animation: infinite move-mouth-down 3s;
   animation-delay: 2s;
 }
 
 
-@keyframes move-mouth-down 
-{
-  0%
-  { 
-  bottom: 18%;
-  }
-
- 20%
-  {
-  bottom: 16%; 
-  }
-
-  40%
-  {
-    bottom: 16%; 
-  }
-  
-  60% 
-  { 
+@keyframes move-mouth-down {
+  0% {
     bottom: 18%;
   }
-  100%{
 
+  20% {
+    bottom: 16%;
   }
+
+  40% {
+    bottom: 16%;
+  }
+
+  60% {
+    bottom: 18%;
+  }
+
+  100% {}
 }
 
 
 .smiley.happy .eyes,
-#happy[type=radio]:checked ~ .smiley .eyes
-{
-  animation: infinite  move-eyes-down 3s;
+#happy[type=radio]:checked~.smiley .eyes {
+  animation: infinite move-eyes-down 3s;
   animation-delay: 2s;
 }
 
 
-@keyframes move-eyes-down 
-{
-  0%
-  { 
-  margin-top: 15%;
+@keyframes move-eyes-down {
+  0% {
+    margin-top: 15%;
   }
 
-  20%
-  {
-  margin-top: 19%; 
+  20% {
+    margin-top: 19%;
   }
 
-  40%
-  {
-  margin-top: 19%;
+  40% {
+    margin-top: 19%;
   }
-  
-60% 
-  { 
-  margin-top: 15%;
-  }
-  100%{
 
+  60% {
+    margin-top: 15%;
   }
+
+  100% {}
 }
 
 
 
 .smiley.happy .eye:nth-of-type(2),
-#happy[type=radio]:checked ~ .smiley .eye:nth-of-type(2)
-{
+#happy[type=radio]:checked~.smiley .eye:nth-of-type(2) {
   height: 20px;
   margin-top: 0;
-  animation: infinite  wink 3s;
+  animation: infinite wink 3s;
   animation-delay: 2s;
 }
 
 
-@keyframes wink 
-{
-  0%
-  { 
-   height: 20px;
-    margin-top: 0; 
-  }
-
-  20%
-  {
-    height: 3px;
-    margin-top: 8px; 
-  }
-
-  40%
-  {
-    height: 3px;
-    margin-top: 8px; 
-  }
-  
-  60% 
-  { 
+@keyframes wink {
+  0% {
     height: 20px;
-    margin-top: 0; 
+    margin-top: 0;
   }
-  100%{
 
+  20% {
+    height: 3px;
+    margin-top: 8px;
   }
+
+  40% {
+    height: 3px;
+    margin-top: 8px;
+  }
+
+  60% {
+    height: 20px;
+    margin-top: 0;
+  }
+
+  100% {}
 }
 
 
 
 .smiley.normal .eye,
-#normal[type=radio]:checked ~ .smiley .eye
-{
+#normal[type=radio]:checked~.smiley .eye {
   height: 20px;
   margin-top: 0;
-  animation: infinite  blink 3s;
+  animation: infinite blink 3s;
   -webkit-animation-timing-function: ease-in-out;
   animation-delay: 2s;
 }
 
 
-@keyframes blink 
-{
-  0%
-  { 
+@keyframes blink {
+  0% {
     height: 20px;
-    margin-top: 0; 
+    margin-top: 0;
   }
 
-  10%
-  {
+  10% {
     height: 2px;
-    margin-top: 8px; 
+    margin-top: 8px;
   }
 
-  20% 
-  { 
+  20% {
     height: 20px;
-    margin-top: 0; 
+    margin-top: 0;
   }
 
-  30%
-  {
+  30% {
     height: 2px;
-    margin-top: 8px; 
+    margin-top: 8px;
   }
 
-  40% 
-  { 
+  40% {
     height: 20px;
-    margin-top: 0; 
+    margin-top: 0;
   }
-  100%{
 
-  }
+  100% {}
 }
 
 
@@ -336,55 +298,61 @@
 
 .smiley.angry .eyes,
 .smiley.angry .mouth,
-#angry[type=radio]:checked ~ .smiley .eyes,
-#angry[type=radio]:checked ~ .smiley .mouth
-{
-  animation: infinite  move-angry-head 6s;
+#angry[type=radio]:checked~.smiley .eyes,
+#angry[type=radio]:checked~.smiley .mouth {
+  animation: infinite move-angry-head 6s;
   -webkit-animation-timing-function: ease-in-out;
   animation-delay: 2s;
 }
 
-@keyframes move-angry-head 
-{
-  0%
-  { 
+@keyframes move-angry-head {
+  0% {
     transform: translateX(0%);
   }
 
-  10%
-  {
+  10% {
     transform: translateX(-20%);
   }
 
-  20% 
-  { 
+  20% {
     transform: translateX(15%);
   }
 
-  30%
-  {
+  30% {
     transform: translateX(-20%);
   }
 
-  40% 
-  { 
+  40% {
     transform: translateX(5%);
   }
 
-  50%
-  {
+  50% {
     transform: translateX(0%);
   }
-  100%{
 
-  }
+  100% {}
 }
+
 // #Product_Incident_Age{
 //   cursor: pointer;
 // }
-.padding{
-  padding-top: 25px;
+.padding {
+  // padding-top: 25px;
   padding-left: 10px;
   padding-right: 10px;
-  background: white!important;
+  background: white !important;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.addBar {
+  border-right: 1px solid white;
+  padding-right: 32px;
+}
+
+.addBarleft {
+  border-left: 1px solid white;
+  padding-left: 32px;
 }
