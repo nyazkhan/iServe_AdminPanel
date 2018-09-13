@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { TostService } from '../providers/tost.service';
+import { DateRange } from '../interface/user';
+import { element } from 'protractor';
 
 declare var google: any;
-declare let $: any;
+
 
 @Component({
   selector: 'app-dashboard',
@@ -14,13 +16,20 @@ export class DashboardComponent implements OnInit {
 
   public chart: any;
 
+
+
   role: string;
 
   statusCount: any;
+
+stateDate:Date;
+endDate:Date;
+
   statusByProductCat = [];
   stateCount = [];
   mttrTillDate = [];
-  productWarranty = [];
+  productWarranty = [[]];
+
   incidentAge = [];
   filter = {};
   statusCarryForward: number
@@ -30,8 +39,7 @@ export class DashboardComponent implements OnInit {
 
   filterByDate = "year";
   filterId: number;
-  filterRange: object;
-
+  filterRange: string;
 
   rating = [];
   rating0: number;
@@ -41,7 +49,8 @@ export class DashboardComponent implements OnInit {
   rating4: number;
   rating5: number;
 
-
+dateRange = new DateRange;
+  showRatingChart=true;
 
 
   constructor(private dashboardservice: DashboardService,
@@ -53,9 +62,10 @@ export class DashboardComponent implements OnInit {
 
 
   dashboardFilterByDate(value) {
+    this.dateRange= new DateRange();
     this.filterByDate = value;
-    console.log(this.filterByDate)
-    this.filterRange = {};
+    // console.log(this.filterByDate)
+    this.filterRange ="";
     this.getFilter();
     this.getCharts();
 
@@ -63,7 +73,7 @@ export class DashboardComponent implements OnInit {
 
   forAllProduct() {
     this.filterId = null;
-    console.log(this.filterId)
+    // console.log(this.filterId)
     this.getFilter();
     this.getCharts();
 
@@ -73,23 +83,32 @@ export class DashboardComponent implements OnInit {
     this.filterByDate = "";
     this.filterRange = value;
     this.getFilter();
+    this.getCharts();
+
   }
 
   getFilter() {
 
-    // if (this.filterRange) {
-    //   this.filter["range"] = this.filterRange;
+    if (this.filterRange) {
+      this.filter["duration"] = this.filterRange;
+      this.filter["startDate"]=this.dateRange.startDate;
+      this.filter["endDate"]=this.dateRange.endDate;
 
-    // } 
+    } else {
     if (this.filterByDate) {
+      this.filter={};
       this.filter["duration"] = this.filterByDate;
 
     }
+  }
 
     if (this.filterId) {
-      console.log(this.filterId)
+      // console.log(this.filterId)
       this.filter["categoryId"] = this.filterId;
     }
+
+
+
 
 
   }
@@ -106,7 +125,7 @@ export class DashboardComponent implements OnInit {
   getProductCategory() {
     this.dashboardservice.getDashboardFilterByDate()
       .subscribe((res) => {
-        console.log(res)
+        // console.log(res)
         this.productCategoryName = res;
       })
   }
@@ -129,50 +148,29 @@ export class DashboardComponent implements OnInit {
 
 
   get_product_rating_chart() {
-this.rating=[];
 
     this.dashboardservice.getProductRating(this.filter)
       .subscribe((res: any) => {
-        console.log(res);
+        this.rating = [[]];
+   
+          
 
-
-        this.rating.push(['Appliances', "Don't Care","Rating 1","Rating 2","Rating 3","Rating 4","Rating 5" ]);
-        res.forEach((element1: any) => {
-
-          // this.InstallproductCategoryId.push(element1.productId)
-
-          element1.ratingInfo.forEach(element => {
-
-            if (element.rating == 0) {
-              this.rating0 = element.count;
-            }
-            if (element.rating == 1) {
-              this.rating1 = element.count;
-            }
-            if (element.rating == 2) {
-              this.rating2 = element.count;
-            }
-            if (element.rating == 3) {
-              this.rating3 = element.count;
-            }
-            if (element.rating == 4) {
-              this.rating4 = element.count;
-            }
-            if (element.rating == 5) {
-              this.rating5 = element.count;
-            }
-
-
-
-          })
-          // this.rating.push([element1.name, this.rating0, this.rating1, this.rating2, this.rating3, this.rating4, this.rating5, ]);
-          this.rating.push([element1.name, 12,24,31,25,26,54,]);
-          console.log(this.rating)
-        });
+          this.rating[0].push('rating');
+          for (let i = 0; i < res[0].ratingInfo.length; i++) {
+            this.rating[0].push(res[0].ratingInfo[i].name);
+          }
+          
+          for (let i = 0; i < res.length; i++) {
+            this.rating[i+1] = [];
+            this.rating[i+1].push(res[i].rating);
+            for (let j = 0; j < res[i].ratingInfo.length; j++) {
+              this.rating[i+1].push(res[i].ratingInfo[j].count);        
+            }      
+          }       
 
 
         this.draw_rating_chart();
-
+      
 
       }, (err) => {
         this.tostservice.showNotificationFailure(err);
@@ -184,27 +182,12 @@ this.rating=[];
   
   draw_rating_chart() {
     let data = google.visualization.arrayToDataTable(this.rating)
-    // let options = {
-    //   chartArea: {
-    //     left: 120,
-    //   },
-    //   legend: { position: 'top', maxLines: 7 },
-    //   bar: { groupWidth: '75%' },
-    //   isStacked: true,
-    //   colors: ['#ffd600','#29b6f6', '#6600cc', '#ff0066',  '#41c300',],
-    //   animation: {
-    //     "startup": true,
-    //     duration: 600,
-    //     easing: 'in-out'
-    //   }
-    // };
+  
     
     let options = {
-      // height: 350,
 
       chartArea: {
         left: 100,
-        // height: 100,
       },
 
 
@@ -236,22 +219,6 @@ this.rating=[];
     
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   //  incidents weekly report statrs here
 
   get_Product_Status() {
@@ -259,7 +226,11 @@ this.rating=[];
     this.statusByProductCat = [];
     this.dashboardservice.get_Product_Status(this.filter)
       .subscribe((res: any) => {
-        console.log(res);
+
+
+
+
+        
         this.statusByProductCat.push(['Appliances', 'Carry Forward', 'New', 'Closed'])
         res.forEach(element => {
           this.statusByProductCat.push([element.name, element.CARRYFORWARD, element.NEW, element.CLOSED])
@@ -291,6 +262,7 @@ this.rating=[];
         title: 'Appliances'
       },
 
+      isStacked: true,
 
       bar: { groupWidth: '75%' },
       legend: { position: 'top', maxLines: 3 },
@@ -316,7 +288,7 @@ this.rating=[];
     this.stateCount = [];
     this.dashboardservice.getStateByStatus(this.filter)
       .subscribe((res: any) => {
-        console.log(res)
+        // console.log(res)
         this.stateCount.push(['provinces', 'Open Incidents'])
 
         res.forEach(element => {
@@ -370,12 +342,18 @@ this.rating=[];
 
     this.dashboardservice.getMTTR(this.filter)
       .subscribe((res: any) => {
-        console.log(res)
-        this.mttrTillDate.push(['Appliances', '0-1 Day', '1-3 Days', '3-5 Days', '>5'])
-        res.forEach(element => {
+        this.mttrTillDate.push(['Appliances', 'avgCustomer', 'avgEngineer', 'avgRepair'])
+          res.forEach(element => {
+          console.log(element)
+         for (const key in element) {
+         console.log( element[key][0]);
+         this.mttrTillDate.push([key, parseInt(element[key][0].avgCustomer),parseInt(element[key][0].avgEngineer), parseInt(element[key][0].avgRepair)])
+   
+         }
 
-          this.mttrTillDate.push([element.name, element["0-1"], element["1-3"], element["3-5"], element[">5"]])
         });
+        console.log(this.mttrTillDate);
+        
         this.repair_time_Till_Date();
 
       }, (err) => {
@@ -407,7 +385,7 @@ this.rating=[];
 
       legend: { position: 'top', maxLines: 3 },
       bar: { groupWidth: '80%' },
-      // isStacked: true,
+      isStacked: true,
 
       animation: {
         "startup": true,
@@ -449,17 +427,33 @@ this.rating=[];
 
 
   get_Product_Warranty_Status() {
-    this.productWarranty = [];
-
-
+   
+    console.log(this.productWarranty)
+    
     this.dashboardservice.getProductWarrantyStatus(this.filter)
-      .subscribe((res: any) => {
-        this.productWarranty.push(['Appliances', 'In Warranty ', 'Out of warranty'])
-        res.forEach(element => {
-          this.productWarranty.push([element.name, element['in-Warranty'], element['outSide-Warranty']])
-          console.log(this.productWarranty)
+    .subscribe((res: Array<any>) => {
+      this.productWarranty = [[]];
+   
+          
+
+          this.productWarranty[0].push('Warranty');
+          for (let i = 0; i < res[0].warrantyInfo.length; i++) {
+            this.productWarranty[0].push(res[0].warrantyInfo[i].name);
+          }
+          
+          for (let i = 0; i < res.length; i++) {
+            this.productWarranty[i+1] = [];
+            this.productWarranty[i+1].push(res[i].warranty);
+            for (let j = 0; j < res[i].warrantyInfo.length; j++) {
+              this.productWarranty[i+1].push(res[i].warrantyInfo[j].count);        
+            }      
+          }
+
+         
           this.product_Warranty_Status_chart();
-        });
+        
+        
+
 
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
@@ -471,7 +465,6 @@ this.rating=[];
   product_Warranty_Status_chart() {
 
     var data = google.visualization.arrayToDataTable(this.productWarranty);
-    console.log(this.productWarranty)
     var options = {
 
       title: 'Product repair in warranty or without warranty',
@@ -488,6 +481,7 @@ this.rating=[];
         // slantedTextAngle:330 
       },
       seriesType: 'bars',
+      isStacked: true,
 
       legend: { position: 'top', maxLines: 3 },
       bar: { groupWidth: '75%' },
@@ -512,24 +506,34 @@ this.rating=[];
     this.incidentAge = [];
     this.dashboardservice.getProductIncidentAge(this.filter)
       .subscribe((res: any) => {
-        this.incidentAge.push(['Appliances', '0-1 Day', '1-3 Days', '3-5 Days', '>5'])
-        // console.log(res[0].data)
-
-        res.forEach(element => {
-          this.incidentAge.push([element.name, element["0-1"], element["1-3"], element["3-5"], element[">5"]])
-          this.Product_Incident_Age_chart();
-        });
-        console.log(this.incidentAge)
+     
+        this.Product_Incident_Age_chart(res);
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
       }
       );
 
   }
-  Product_Incident_Age_chart() {
+  Product_Incident_Age_chart(data: any[]) {
+    
+    var dataTable: any = [[]];
 
-    var data = google.visualization.arrayToDataTable(this.incidentAge);
-    console.log(this.incidentAge)
+    dataTable[0].push('range');
+    for (let i = 0; i < data[0].ageInfo.length; i++) {
+      dataTable[0].push(data[0].ageInfo[i].name);
+    }
+    
+    for (let i = 0; i < data.length; i++) {
+      dataTable[i+1] = [];
+      dataTable[i+1].push(data[i].range);
+      for (let j = 0; j < data[i].ageInfo.length; j++) {
+        dataTable[i+1].push(data[i].ageInfo[j].count);        
+      }      
+    }
+    
+
+    var data1 = google.visualization.arrayToDataTable(dataTable);
+    // console.log(this.incidentAge)
     var options = {
       height: 350,
       title: 'Incident Age',
@@ -538,6 +542,8 @@ this.rating=[];
         title: 'Categories',
 
       },
+      isStacked: true,
+
       seriesType: 'bars',
       legend: { position: 'top', maxLines: 8 },
 
@@ -546,8 +552,8 @@ this.rating=[];
 
     var chart = new google.visualization.BarChart(document.getElementById('Product_Incident_Age'));
 
-    chart.draw(data, options);
-  }
+    chart.draw(data1, options);
+  }  
 
 
 
@@ -582,10 +588,18 @@ this.rating=[];
   Test() {
     this.dashboardservice.getDashboardFilterByDate()
       .subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
       })
   }
 
+
+
+
+  onSubmit(){
+// console.log(this.dateRange.startDate)
+// console.log(this.dateRange.endDate)
+
+  }
 
   ngOnInit() {
     this.role = localStorage.getItem("currentUserName");
@@ -601,7 +615,6 @@ this.rating=[];
 
       }
     );
-
 
 
 

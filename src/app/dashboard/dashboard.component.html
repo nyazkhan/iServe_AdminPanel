@@ -11,11 +11,11 @@
                         <a class="nav-link" (click)="dashboardFilterByDate('week')" data-toggle="tab">This Week</a>
                     </li>
                     <li class="nav-item hover-cursor">
-                        <a class="nav-link" (click)="dashboardFilterByDate('month')" data-toggle="tab">This Month</a>
+                        <a class="nav-link"  (click)="dashboardFilterByDate('month')" data-toggle="tab">This Month</a>
                     
                     </li>
                     <li class="nav-item hover-cursor">
-                        <a class="nav-link" (click)="dashboardFilterByDate('year')" data-toggle="tab">This year</a>
+                        <a class="nav-link "   (click)="dashboardFilterByDate('year')" data-toggle="tab">This year</a>
                     </li>
                     
                     <li class="nav-item hover-cursor ">
@@ -25,9 +25,9 @@
                             <div class="nav-link dropdown-toggle " style="background: transparent ;" >Product</div>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
                             <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
                             
-                             <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
                             
                         </div>
                     </li>
@@ -46,9 +46,17 @@
 
                     <li class="nav-item hover-cursor">
                         <div class="input-group input-daterange">
-                            <input type="date" class="form-control" value="2012-04-05">
-                            <div class="input-group-addon">to</div>
-                            <input type="date" class="form-control" value="2012-04-19">
+                                <form (ngSubmit)="onSubmit()" #dateForm="ngForm" class="form">
+
+                                <input type="date" class="form-control" required name="startDate" id="startDate"   [(ngModel)]="dateRange.startDate"  #startDate="ngModel">
+                                <!-- [(ngModel)]="startDate" #startDate="ngModel"  > -->
+                                <div class="input-group-addon">to</div>
+                                <input type="date" class="form-control" required name="endDate" id="endDate"  [(ngModel)]="dateRange.endDate" #userName="ngModel" >
+                                <button (click)="filterByRange('byRange')" class="btn btn-rose btn-link btn-sm" type="submit" [disabled]="!dateForm.form.valid" > submit
+                                    
+                                </button>
+                            </form>
+                            <!-- [(ngModel)]="endDate" #endDate="ngModel"  > -->
                         </div>
                        
                         <!-- <div class="stats" (click)="filterByRange({})" style="margin-top: 10px;" >
@@ -226,7 +234,8 @@
             
                 <div class="card ">
                     <div class="card-header card-header-warning">
-                        <div id="Rating_Chart"></div>
+                      <div *ngIf="!showRatingChart" > nothing to show</div>
+                        <div   id="Rating_Chart"></div>
                     </div>
                     <div class="card-body">
                         <h4 class="card-title">Rating </h4>
