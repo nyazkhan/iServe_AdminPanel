@@ -60,7 +60,7 @@ export class DashboardService {
 
 
 
-getDashboardFilterByDate(){
+getProductCategory(){
      return this.customHttp.get(`/m/product-category`)
 }
 

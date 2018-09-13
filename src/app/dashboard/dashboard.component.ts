@@ -51,6 +51,7 @@ endDate:Date;
 
 dateRange = new DateRange;
   showRatingChart=true;
+  categoryName= 'ALL APPLIANCES';
 
 
   constructor(private dashboardservice: DashboardService,
@@ -71,8 +72,9 @@ dateRange = new DateRange;
 
   }
 
-  forAllProduct() {
+  forAllProduct(value) {
     this.filterId = null;
+    this.categoryName=value;
     // console.log(this.filterId)
     this.getFilter();
     this.getCharts();
@@ -113,17 +115,18 @@ dateRange = new DateRange;
 
   }
 
-  filterByProduct(id) {
+  filterByProduct(Category) {
     // this.getFilter(id)
-    this.filterId = id;
+    this.categoryName = Category.name;
+    this.filterId = Category.id;
     this.getFilter();
     this.getCharts();
   }
 
 
 
-  getProductCategory() {
-    this.dashboardservice.getDashboardFilterByDate()
+  getProductCategorys() {
+    this.dashboardservice.getProductCategory()
       .subscribe((res) => {
         // console.log(res)
         this.productCategoryName = res;
@@ -275,15 +278,16 @@ dateRange = new DateRange;
     };
 
     let chart = new google.visualization.BarChart(document.getElementById('product_status_Chart'));
-    google.visualization.events.addListener(chart, 'onmouseover', uselessHandler2);
-         google.visualization.events.addListener(chart, 'onmouseout', uselessHandler3);
-    chart.draw(data, options);
-    function uselessHandler2() {
+    google.visualization.events.addListener(chart, 'onmouseover', ()=>{
+
       document.getElementById('product_status_Chart').style.cursor="pointer";
-  }
-  function uselessHandler3(){
-    document.getElementById('Product_status_Chart').style.cursor="auto";
-  }
+    });
+         google.visualization.events.addListener(chart, 'select', ()=>{
+
+         });
+    chart.draw(data, options);
+ 
+  
   }
 
 
@@ -590,14 +594,14 @@ dateRange = new DateRange;
     this.getStatusByState();
     this.get_Product_Warranty_Status();
     this.get_MeanTime_Till_Date();
-    this.getProductCategory();
+    this.getProductCategorys();
     this.get_product_rating_chart();
   }
 
 
 
   Test() {
-    this.dashboardservice.getDashboardFilterByDate()
+    this.dashboardservice.getProductCategory()
       .subscribe((res: any) => {
         // console.log(res);
       })
@@ -611,10 +615,17 @@ dateRange = new DateRange;
 // console.log(this.dateRange.endDate)
 
   }
-
+today:any
   ngOnInit() {
     this.role = localStorage.getItem("currentUserName");
     this.getFilter();
+// console.log(new Date()| date: 'dd MMM, yyyy' );
+this.today= new Date()
+this.today.setDate(this.today.getDate() + 1);
+
+console.log(this.today);
+
+// | date :'YYYY, MM,DD'
 
     this.dashboardservice.loadScript().subscribe(
       (res) => { },

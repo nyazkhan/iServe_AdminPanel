@@ -21,7 +21,7 @@ export class SidebarComponent implements OnInit {
 
 this.subscribeUsernameChanges();
 this.subscribeUserPictureChanges();
-    if (localStorage.getItem("currentUserName") == 'management') {
+    if (localStorage.getItem("currentUserName") === 'management') {
       this.list = [
         {
           name: 'Dashboard',
@@ -41,8 +41,10 @@ this.subscribeUserPictureChanges();
       ];
 
       this.picUrl = localStorage.getItem("picUrl")
+      console.log(this.picUrl);
+      
     }
-    if (localStorage.getItem("currentUserName") == 'superadmin') {
+    if (localStorage.getItem("currentUserName") === 'superadmin') {
       this.list = [
         {
           name: 'Dashboard',
@@ -60,7 +62,7 @@ this.subscribeUserPictureChanges();
           route: '/manager'
         }
       ];
-      // this.picUrl = null;
+      this.picUrl = null;
 
     }
   }

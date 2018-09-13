@@ -12,7 +12,7 @@
       <div class="col-md-8">
         <div>
         <span><b>Name : </b></span>
-        <span *ngIf="!(name==='null')" id="filed">
+        <span *ngIf="(editManagerDetails.name)" id="filed">
           &nbsp; &nbsp;{{editManagerDetails.name}} &nbsp; &nbsp; &nbsp; <i class=" tiny material-icons editAccount" (click)="toEdit('Name')"
             data-toggle="modal" data-target="#editFormModel">create</i>
         </span>
@@ -23,11 +23,7 @@
                   <span>
                    
                    <input type="text" required class="form-control padding-left" id="name" name="name" [ngModel]="toBeEditValue" #name="ngModel"> </span> 
-                              
-<!--                 
-                  <h5 [hidden]="name.valid || name.untouched" style="color: red">
-                    Name is required
-                  </h5> -->
+
                 
                   <span>
                 <button type="button" class="btn btn-secondary" (click)="resetForm()"><i class="material-icons">
@@ -45,15 +41,15 @@
         </div>
         
 
-        <div *ngIf="!(userName==='null')"><b>User Name : </b>
+        <div *ngIf="(editManagerDetails.userName)"><b>User Name : </b>
           &nbsp; &nbsp;{{editManagerDetails.userName}}
         </div>
         
-        <div *ngIf="!(userType==='null')"><b>User Type : </b>
+        <div *ngIf="(editManagerDetails.userType)"><b>User Type : </b>
           &nbsp; &nbsp;{{editManagerDetails.userType}}
         </div>
 
-        <div *ngIf="!(email==='null')" id="filedd">
+        <div *ngIf="(editManagerDetails.email)" id="filedd">
           <b>Email Id: </b>
           &nbsp; &nbsp;{{editManagerDetails.email}} &nbsp; &nbsp; &nbsp;
           <i class=" tiny material-icons" (click)="toEdit('Email')" data-toggle="modal" data-target="#editFormModel">create</i>
@@ -79,7 +75,7 @@
                     </i></button>
           </div>
           </form>
-        <div *ngIf="!(contactNo==='null')" id="filedd"><b>Phone No: </b>
+        <div *ngIf="(editManagerDetails.contactNo)" id="filedd"><b>Phone No: </b>
           &nbsp; &nbsp;{{editManagerDetails.contactNo}} &nbsp; &nbsp; &nbsp; <i class=" tiny material-icons" (click)="toEdit('Contact No')"
             data-toggle="modal" data-target="#editFormModel">create</i></div>
             <form #editForm="ngForm" *ngIf="showForm">
@@ -105,11 +101,11 @@
               </form>
     
       </div>
-      <div *ngIf="!(pic==='null')" class="col-md-4">
+      <div  class="col-md-4">
         <h5><b>Profile Picture:</b>
           <br>
-          <img style="width: 150px; height: 150px;" src="{{editManagerDetails.pic}} " alt="">
-          <img style="width: 150px; height: 150px;" *ngIf="editManagerDetails.pic" src="assets/img/avatar.png/"/>
+          <img style="width: 150px; height: 150px;" *ngIf="(editManagerDetails.pic)" src="{{editManagerDetails.pic}}" alt="">
+          <img style="width: 150px; height: 150px;" *ngIf="(editManagerDetails.pic === 'null')" src="assets/img/avatar.png/"/>
           <br>
         </h5>
         <button type="button" (click)="toEdit('Profile Picture')" data-toggle="modal" data-target="#editFormModel" class="btn btn-rose  btn-md">
