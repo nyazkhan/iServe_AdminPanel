@@ -185,6 +185,7 @@ dateRange = new DateRange;
   
     
     let options = {
+      height: 200,
 
       chartArea: {
         left: 100,
@@ -215,8 +216,6 @@ dateRange = new DateRange;
     let chart = new google.visualization.BarChart(document.getElementById('Rating_Chart'));
     chart.draw(data,options);
   }
-  
-    
 
 
   //  incidents weekly report statrs here
@@ -246,7 +245,7 @@ dateRange = new DateRange;
     let data = google.visualization.arrayToDataTable(this.statusByProductCat);
 
     let options = {
-      height: 350,
+      height: 200,
 
       chartArea: {
         left: 100,
@@ -276,7 +275,15 @@ dateRange = new DateRange;
     };
 
     let chart = new google.visualization.BarChart(document.getElementById('product_status_Chart'));
+    google.visualization.events.addListener(chart, 'onmouseover', uselessHandler2);
+         google.visualization.events.addListener(chart, 'onmouseout', uselessHandler3);
     chart.draw(data, options);
+    function uselessHandler2() {
+      document.getElementById('product_status_Chart').style.cursor="pointer";
+  }
+  function uselessHandler3(){
+    document.getElementById('Product_status_Chart').style.cursor="auto";
+  }
   }
 
 
@@ -305,7 +312,7 @@ dateRange = new DateRange;
       let data = google.visualization.arrayToDataTable(this.stateCount);
 
       let options = {
-        height: 350,
+        height: 300,
 
         region: 'IN',
         resolution: 'provinces',
@@ -369,10 +376,10 @@ dateRange = new DateRange;
 
     var options = {
 
-      title: 'Mean Time To Repair Product',
-      height: 350,
+      // title: 'Mean Time To Repair Product',
+      height: 300,
       chartArea: {
-        height: 150,
+        height: 200,
         top: 50,
       },
       vAxis: { title: 'Count' },
@@ -386,6 +393,8 @@ dateRange = new DateRange;
       legend: { position: 'top', maxLines: 3 },
       bar: { groupWidth: '80%' },
       isStacked: true,
+      colors:['#F48FB1','#E91E63','#C2185B','#880E4F',],
+      // isStacked: true,
 
       animation: {
         "startup": true,
@@ -468,7 +477,7 @@ dateRange = new DateRange;
     var options = {
 
       title: 'Product repair in warranty or without warranty',
-      height: 350,
+      height: 200,
       chartArea: {
         left: 120,
         // height: 150,
@@ -485,6 +494,7 @@ dateRange = new DateRange;
 
       legend: { position: 'top', maxLines: 3 },
       bar: { groupWidth: '75%' },
+      colors:['#FFA726','#EF6C00'],
 
       animation: {
         "startup": true,
@@ -535,8 +545,8 @@ dateRange = new DateRange;
     var data1 = google.visualization.arrayToDataTable(dataTable);
     // console.log(this.incidentAge)
     var options = {
-      height: 350,
-      title: 'Incident Age',
+      height: 200,
+      // title: 'Incident Age',
       vAxis: { title: 'Count' },
       hAxis: {
         title: 'Categories',
@@ -546,6 +556,7 @@ dateRange = new DateRange;
 
       seriesType: 'bars',
       legend: { position: 'top', maxLines: 8 },
+      colors:['#FFCDD2','#FF8A80','#E57373','#B71C1C'],
 
     };
 

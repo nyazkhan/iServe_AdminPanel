@@ -69,347 +69,172 @@
                 </ul>
             </div>
         </div>
+        <div>
+          <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="nav-item hover-cursor ">
+
+              <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                <div class="nav-link dropdown-toggle " style="background: transparent ;">Appliances</div>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item  hoverColor">{{Category.name}}</a>
+
+                <a (click)="forAllProduct()" class="dropdown-item hoverColor">All Appliances</a>
+
+              </div>
+            </li>
+
+          </ul>
+        </div>
+        <div class="addBarleft">
+          <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="nav-item hover-cursor ">
+              <div class="input-group input-daterange">
+                <span style="margin: 10px;">From</span> <input type="date" class="form-control text-right" value="2012-04-05"
+                  style="color: white;">
+                <p class="input-group-addon " style="margin:10px; ">To</p>
+                <input type="date" class="form-control text-right" value="2012-04-19" style="color: white;">
+              </div>
+
+            </li>
+            <div style="margin-top: 10px;"><i class="material-icons hover-cursor">
+                check_circle
+              </i>
+            </div>
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
   </div>
+
+
   <div class="container-fluid" style="z-index: 0;">
     <div class="row">
-        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
-            <div class="card ">
-                <div class="card-body">
 
-                    <h4 (click)="dashboardFilterByDate('today')">Today</h4>
-                </div>
-
-            </div>
-        </div> -->
-        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
-            <div class="card ">
-                <div class="card-body">
-
-                    <h4 (click)="dashboardFilterByDate('week')">This Week</h4>
-                </div>
-
-            </div>
-        </div> -->
-        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
-            <div class="card ">
-                <div class="card-body">
-
-                    <h4 (click)="dashboardFilterByDate('month')">This Month</h4>
-                </div>
-
-            </div>
-        </div> -->
-        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
-            <div class="card ">
-                <div class="card-body">
-
-                    <h4 (click)="dashboardFilterByDate('year')">This Year</h4>
-                </div>
-
-            </div>
-        </div> -->
-        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
-            <div class="card ">
-                <div class="card-body">
-                    <div class="dropdown" >
-                        <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            
-                            <h6 class="nav-link dropdown-toggle " style="font-size: 14px">Product</h6>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
-                            <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category.id)" class="dropdown-item">{{Category.name}}</a>
-                            
-                             <a (click)="forAllProduct()" class="dropdown-item">All Product</a>
-                            
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div> -->
-        <!-- <div class="col-lg-2 col-md-4 col-sm-6">
-            <div class="card ">
-                <div class="card-body">
-
-                    <div class="stats" (click)="filterByRange({})" >
-                        <i class="material-icons">date_range</i>
-                        &nbsp;
-                        <i class="material-icons">date_range</i>
-                        <input type=date name="fromDate" placeholder="to" >
-
-                    </div>
-                </div>
-
-            </div>
-        </div> -->
 
     </div>
     <div *ngIf="role=='management'" class="row">
-        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
-            <div class="card ">
-                <div class="card-header card-header-info card-header-icon">
 
-                    <div class="card-icon">
-                        <h3><b>{{statusCarryForward}}</b></h3>
-                        <h5><b>Carry Forward</b></h5>
-                    </div>
-
-                </div>
-                <div class="card-footer">
-                    <h5><b>Carry Forward</b></h5>
-                </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="card card-stats padding">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">store</i>
             </div>
-        </div> -->
-        <div class="col-lg-2 col-md-2 col-sm-6">
-            <div class="card card-header-info">
-                
-
-                  
-                        <h3><b>{{statusCarryForward}}</b></h3>
-                        <h5><b>Carry Forward</b></h5>
-                  
-
-               
-                
-            </div>
+            <p class="card-category">Carry Forward</p>
+            <h3 class="card-title">{{statusCarryForward}}</h3>
+          </div>
         </div>
-
-        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
-            <div class="card ">
-                <div class="card-header card-header-warning card-header-icon">
-
-                    <div class="card-icon">
-                        <h3><b> {{statusNew}} </b></h3>
-                    </div>
-
-                </div>
-                <div class="card-footer">
-                    <h5><b>New</b></h5>
-                </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="card card-stats padding">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">
+                new_releases
+              </i>
             </div>
-        </div> -->
-        <div class="col-lg-2 col-md-2 col-sm-6">
-            <div class="card card-header-warning">
-                
-
-                  
-                        <h3><b>{{statusNew}} </b></h3>
-                        <h5><b>New</b></h5>
-                  
-
-               
-                
-            </div>
+            <p class="card-category">New</p>
+            <h3 class="card-title">{{statusNew}}</h3>
+          </div>
         </div>
-        <!-- <div class="col-lg-2 col-md-2 col-sm-6">
-            <div class="card ">
-                <div class="card-header card-header-success card-header-icon">
-
-                    <div class="card-icon">
-                        <h3><b> {{statusClosed}} </b></h3>
-                    </div>
-
-                </div>
-                <div class="card-footer">
-                    <h5><b>Closed</b></h5>
-                </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6">
+        <div class="card card-stats padding">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                    <i class="material-icons">
+                            assignment_turned_in
+                            </i>
             </div>
-        </div> -->
-        <div class="col-lg-2 col-md-2 col-sm-6">
-            <div class="card card-header-success">
-                
-
-                  
-                        <h3><b>{{statusClosed}} </b></h3>
-                        <h5><b>Closed</b></h5>
-                  
-
-               
-                
-            </div>
+            <p class="card-category">Closed</p>
+            <h3 class="card-title">{{statusClosed}}</h3>
+          </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6">
-           
-            
-                <div class="card ">
-                    <div class="card-header card-header-warning">
-                      <div *ngIf="!showRatingChart" > nothing to show</div>
-                        <div   id="Rating_Chart"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Rating </h4>
-                    </div>
-            </div>
-        </div>
+      </div>
 
-    </div>
 
-    <!-- Chart Cards -->
-    <div (resize)="getAllManagmentCharts()" class="row">
-         <!-- <ng-container  *ngIf="role=='superadmin'">
+      <!-- Chart Cards -->
+      <div (resize)="getAllManagmentCharts()" class="row">
 
-                  <div class="col-md-6">
-                          <div class="card card-chart">
-                                  <div class="card-header card-header-success">
-                              <div id="ceo_customer_sufferers"></div>
-                                  </div>
-                              <div class="card-body">
-                                  <h4 class="card-title">Customer Suffering Report</h4>
-                                  <p class="card-category">
-                                      <span class="text-success"><i class="fa fa-long-arrow-up"></i> 25% </span> increase in today's report.</p>
-                              </div>
-                              <div class="card-footer">
-                                  <div class="stats">
-                                      <i class="material-icons">refresh</i> updated 4 minutes ago
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-        <div class="col-md-6">
-            <div class="card card-chart">
-                <div class="card-header card-header-info">
-                    <div class="feedback-chart">
-                        <div class="rated-happy">
-                          <div class="smiley happy">
-                      <div class="eyes">
-                        <div class="eye"></div>
-                        <div class="eye"></div>
-                      </div>
-                      <div class="mouth"></div>
-                      <div class="card-title">
-                          <h3><b>55%</b></h3>
-                          <h3>Happy</h3>
-                        </div>
-                    </div>
-                      </div>
-                      <div  class="rated-sad">
-                        <div class="smiley normal">
-                      <div class="eyes">
-                        <div class="eye"></div>
-                        <div class="eye"></div>
-                      </div>
-                      <div class="mouth"></div>
-                      <div class="card-title">
-                          <h3><b>27%</b></h3>
-                          <h3>Satisfied</h3>
-                        </div>
-                    </div>
-                      </div>
-                      <div  class="rated-angry"> 
-                        <div class="smiley angry">
-                      <div class="eyes">
-                        <div class="eye"></div>
-                        <div class="eye"></div>
-                      </div>
-                      <div class="mouth"></div>
-                      <div class="card-title">
-                          <h3><b>18%</b></h3>
-                          <h3>Angry</h3>
-                        </div>
-                    </div>
-                      </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <h4 class="card-title">Voice of Customer</h4>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">access_time</i> Weekly Report
-                    </div>
-                </div>
-            </div>
-        </div>
-          </ng-container>  -->
         <ng-container *ngIf="role=='management'">
-            <!-- <div class="col-md-6 col-sm-12">
-              <div class="card card-chart">
-                  <div class="card-header card-header-danger">
-                          <div id="open_incidences"></div>
-                  </div>
-                  <div class="card-body">
-                          <h4 class="card-title"> Incidents VS productCategories By Status </h4>
-                  </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-danger">
+
+                <div id="Rating_Chart"></div>
               </div>
-          </div>-->
-            <div class="col-md-6 col-sm-12">
-                <div class="card ">
-                    <div class="card-header card-header-warning">
-                        <div id="product_Warranty_Status"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">product Warranty Status</h4>
-                    </div>
-                </div>
+              <div class="card-body">
+                <h4 class="card-title"> Rating </h4>
+              </div>
             </div>
-            <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
-                    <div class="card-header card-header-danger">
-                        <div id="Product_Incident_Age"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Incidents Age</h4>
-                    </div>
+          </div>
 
-                </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card ">
+              <div class="card-header card-header-warning">
+                <div id="product_Warranty_Status"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">product Warranty Status</h4>
+              </div>
             </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-danger">
+                <div id="Product_Incident_Age"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Incidents Age</h4>
+              </div>
 
-
-
-
-
-
-
-
-            <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
-                    <div class="card-header card-header-success">
-                        <div id="product_status_Chart"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Incident Weekly Report</h4>
-                    </div>
-                </div>
             </div>
-            <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
-                    <div class="card-header card-header-info">
-                        <div id="regions_chart"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Incidents By State</h4>
-                    </div>
-                </div>
+          </div>
+
+
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-success">
+                <div id="product_status_Chart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Incident Weekly Report</h4>
+              </div>
             </div>
-
-
-            <div class="col-md-6 col-sm-12">
-                <div class="card card-chart">
-                    <div class="card-header card-header-success">
-                        <div id="repair_time"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Mean Time To Repair (in days)</h4>
-                    </div>
-                </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-info">
+                <div id="regions_chart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Incidents By State</h4>
+              </div>
             </div>
-            <div class="col-md-3 col-sm-12">
-                <div class="card card-chart">
-                    <!-- <div class="card-header card-header-danger"> -->
-                    <div id="graph_status"></div>
-                </div>
+          </div>
+
+
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-success" style="background: #E91E63;">
+                <div id="repair_time"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Mean Time To Repair (in days)</h4>
+              </div>
             </div>
-            <!-- <div class="card-body">
-                        <h4 class="card-title"> Incidents VS productCategories By Status </h4>
-                    </div>
-                </div>
-                </div> -->
-
-
-
+          </div>
+          <div class="col-md-3 col-sm-12">
+            <div class="card card-chart">
+              <div id="graph_status"></div>
+            </div>
+          </div>
         </ng-container>
 
+      </div>
+      <!-- end of chart cards -->
     </div>
-    <!-- end of chart cards -->
-</div>

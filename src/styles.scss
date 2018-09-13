@@ -87,3 +87,10 @@ $main:#9c27b0;
   .dropdown-item.active, .dropdown-item:active {
     background-color: $main !important;
    }
+   .space-between{
+       display: flex;
+       justify-content: space-between;
+   }
+   .hoverColor:hover{
+    color: white!important;
+   }
