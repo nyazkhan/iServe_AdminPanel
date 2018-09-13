@@ -17,6 +17,9 @@
                 <li class="nav-item hover-cursor">
                   <a class="nav-link" (click)="dashboardFilterByDate('year')" data-toggle="tab">This year</a>
                 </li>
+                <li class="nav-item hover-cursor">
+                    <a class="nav-link" (click)="dashboardFilterByRange()" data-toggle="tab">Range</a>
+                  </li>
               </ul>
             </div>
             <div>
@@ -37,7 +40,7 @@
     
               </ul>
             </div>
-            <div class="addBarleft">
+            <div *ngIf="showRange" class="addBarleft">
               <ul class="nav nav-tabs" data-tabs="tabs">
                 <li class="nav-item hover-cursor ">
                   <div class="input-group input-daterange">
@@ -47,7 +50,6 @@
                     <p class="input-group-addon " style="margin:10px; ">To</p>
                     <input type="date" class="form-control text-right" [disabled]="!dateRange.startDate" required name="endDate" id="endDate" min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}"  [(ngModel)]="dateRange.endDate" #userName="ngModel" style="color: white;">
                   <!-- </form> -->
-
                   </div>
     
                 </li>

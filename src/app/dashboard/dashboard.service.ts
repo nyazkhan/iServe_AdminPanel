@@ -92,18 +92,18 @@ get_Product_Status(fd){
 
 
 getProductIncidentAge(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/incident-age1`,fd)
+    return this.customHttp.post(`/m/complaint/dashboard/incident-age`,fd)
  
 }
 
 getProductRating(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/rating1/`,fd)
+    return this.customHttp.post(`/m/complaint/dashboard/rating`,fd)
  
 }
 
 
 getProductWarrantyStatus(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/warranty1`, fd)
+    return this.customHttp.post(`/m/complaint/dashboard/warranty`, fd)
 }
 
 

@@ -37,10 +37,10 @@ endDate:Date;
   statusNew: number;
   productCategoryName: Array<any>
 
-  filterByDate = "year";
+  filterByDate = "today";
   filterId: number;
   filterRange: string;
-
+  showRange=false;
   rating = [];
   rating0: number;
   rating1: number;
@@ -63,6 +63,8 @@ dateRange = new DateRange;
 
 
   dashboardFilterByDate(value) {
+    this.showRange=false;
+
     this.dateRange= new DateRange();
     this.filterByDate = value;
     // console.log(this.filterByDate)
@@ -82,6 +84,7 @@ dateRange = new DateRange;
   }
 
   filterByRange(value) {
+
     this.filterByDate = "";
     this.filterRange = value;
     this.getFilter();
@@ -123,6 +126,10 @@ dateRange = new DateRange;
     this.getCharts();
   }
 
+
+  dashboardFilterByRange(){
+this.showRange=true;
+  }
 
 
   getProductCategorys() {
