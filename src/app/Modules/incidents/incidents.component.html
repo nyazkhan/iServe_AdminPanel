@@ -340,7 +340,7 @@
 
 
                   <!-- <scheduled case> -->
-                  <div class="card card-nav-tabs " *ngIf="!(row.statusName == 'New' || row.statusName == 'Assigned Service Engineer'|| row.statusName == 'Rejected')"
+                  <div class="card card-nav-tabs " *ngIf="!(row.statusName == 'New' || row.statusName == 'Assigned Engineer'|| row.statusName == 'Rejected')"
                     style="width: 45%; ">
                     <div>
                       <div class="card-header card-header-info float-right" style="width:150px;">
@@ -385,14 +385,14 @@
                         </div>
                         <div class="col-md- 6 col-lg-6  col-sm-6">
 
-                          <div *ngIf="row.name">
-                            <b>{{comment.name}}</b>
+                          <div *ngIf="row.fixedInfo[0].name">
+                            <b>{{row.fixedInfo[0].name}}</b>
                           </div>
                           <div *ngIf="row.fixDate">
-                            <b>Date:</b>{{row.fixDate | date: 'dd MMM ,yyyy'}}
+                            <b>Date:</b>{{row.fixedInfo[0].createdAt | date: 'dd MMM ,yyyy'}}
                           </div>
                           <div *ngIf="row.fixDate">
-                            <b>Time:</b>{{row.fixDate | date: 'hh : mm a'}}
+                            <b>Time:</b>{{row.fixedInfo[0].createdAt | date: 'hh : mm a'}}
                           </div>
 
 
@@ -445,11 +445,11 @@
 
                       <div class="col-sm-9 col-md-9 col-lg-9">
                         <div>
-                          <b>Date:</b>
+                          <b>Date:</b>{{row.fixedInfo[1].createdAt | date: 'dd MMM ,yyyy'}}
 
                         </div>
                         <div>
-                          <b>Time:</b>
+                            <b>Time:</b>{{row.fixedInfo[1].createdAt | date: 'hh : mm a'}}
 
                         </div>
                         <div class="d-flex">
@@ -460,7 +460,7 @@
                           <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
                         </div>
                         <div>
-                          <b>Comment:</b> Skilled person and polite nature.
+                          <b>Comment:</b> {{row.fixedInfo[1].comment}}
                         </div>
                       </div>
                       <div class="col-sm-3 col-md-3 col-lg-3">
