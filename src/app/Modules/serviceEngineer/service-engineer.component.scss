@@ -133,4 +133,16 @@ ul#menu li {
 color: #e8e8e8;
  position: absolute;
 top: -10px;
+background: gray;
+    border-radius: 50%;
+    border: 1px solid gray;
+}
+
+.editBtn{
+    padding-top: 0;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-bottom: 0;
+    height: 25px;
+    margin-top: 18px;
 }
