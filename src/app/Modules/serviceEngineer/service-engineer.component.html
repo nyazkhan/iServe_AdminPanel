@@ -59,46 +59,11 @@
           <tr class="collapse" attr.id="collapseExample{{i}}">
             <td colspan=7 class=" incident-details" style="background: whitesmoke;">
               <div class="row" style="margin-top: 20px;">
-                <!-- <div class="col-md-5 col-lg-5 col-sm-5 col-xs-12 margin-top card " style="margin-left: 20px;">
-                  <b>Assign Pincodes</b>
-                  
-                  <span  *ngIf="!editPinShow" (click)="showEditPin()" class="badge badge-pill badge-primary">edit</span>
-                  <div class="row">
-                    <div >
-                      <ul *ngFor="let pin of assignpincode">
-                        <li class="badge badge-pill badge-primary">
-                          {{pin}}
-                          <i *ngIf="editPinShow" (click)="removePincode(pin)" class="material-icons">
-                            remove_circle
-                          </i>
-                        </li>
-
-                      </ul>
-                    </div>
-                    <div class="col-md-6" *ngIf="editPinShow">
-                      <ul *ngFor="let pin of editpins">
-                        <li class="badge badge-pill badge-primary">{{pin}}
-                          <i (click)="addPin(pin)" class="material-icons">
-                            add
-                          </i>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div *ngIf="editPinShow">
-                      <button type="button" (click)="canclePinchanges(row)" class="badge badge-pill badge-secondary">Cancle</button>
-                      <button *ngIf="!changeSuccessfuly" type="submit" (click)="changePincode()" class="badge badge-pill badge-success">Save
-                        Changes
-                      </button>
-                      <button *ngIf="changeSuccessfuly " type="button" class="badge badge-pill badge-primary">
-                        <i class="fa fa-spinner fa-spin"></i>submitting</button>
-                    </div>
-                  </div>
-                </div> -->
+               
                 <div class="card card-nav-tabs margin-top" style="width: 45%; margin-left: 50px; ">
                   <div>
                     <div class="card-header card-header-info float-right" style="width:150px;">
-                      Assign Pincodes
+                       Pincodes
                     </div>
                   </div>
                   <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" >
@@ -118,21 +83,15 @@
                 </div>
                   
                   <div class="row scroll">
-                    
                     <div class="col-md-6"  >
                         <ul *ngFor="let pin of assignpincode">
                           <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;" >
                              {{pin}}
-                           
                            <i *ngIf="editPinShow" (click)="removePincode(pin)" class="material-icons iconPosition" >
                                 remove_circle
                             </i>
                           </li>
-                          
-                          
-
                         </ul>
-                        
                       </div>
                     <div class="col-md-6" *ngIf="editPinShow">
                       <ul *ngFor="let pin of editpins">
@@ -142,9 +101,7 @@
                           </i>
                         </li>
                       </ul>
-                    </div>
-                    
-                    
+                    </div>  
                   </div>
                   <div *ngIf="editPinShow"  class="modal-footer" >
                     <div style="margin: auto;">
@@ -152,8 +109,6 @@
                       <button *ngIf="!changeSuccessfuly" type="submit" (click)="changePincode()" class="btn btn-outline-success" style="padding: 5px;">Save
                         Changes
                       </button>
-                    <!-- <button type="button" class="btn btn-outline-primary">Primary</button>
-                    <button type="button" class="btn btn-outline-primary">Primary</button> -->
                       <button *ngIf="changeSuccessfuly " type="button" class="btn btn-outline-success" style="padding: 5px;">
                         <i class="fa fa-spinner fa-spin"></i>submitting
                       </button>
@@ -164,7 +119,7 @@
                 <div class="card card-nav-tabs margin-top" style="width: 45%; margin-left: 20px; ">
                     <div>
                       <div class="card-header card-header-info float-right" style="width:200px;">
-                          Assign Product Category
+                           Product Category
                       </div>
                     </div>
                     <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" >
@@ -194,9 +149,6 @@
                             </ul>
           
                           </div>
-                      
-  
-                      
                     </div>
                     
                        
@@ -264,8 +216,6 @@
     </div>
   </div>
 </div>
-
-
 <!-- Service engineer form -->
 
 <div class="modal fade bd-example-modal-lg" id="EngineerFormModal" tabindex="-1" role="dialog" aria-labelledby="EngineerFormModal"
