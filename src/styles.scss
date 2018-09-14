@@ -94,3 +94,8 @@ $main:#9c27b0;
    .hoverColor:hover{
     color: white!important;
    }
+   .scroll{
+       max-height: 150px;
+       padding-top: 20px;
+       overflow-y: scroll;
+   }
