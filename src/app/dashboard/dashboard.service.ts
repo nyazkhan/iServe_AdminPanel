@@ -60,7 +60,7 @@ export class DashboardService {
 
 
 
-getDashboardFilterByDate(){
+getProductCategory(){
      return this.customHttp.get(`/m/product-category`)
 }
 
@@ -97,7 +97,7 @@ getProductIncidentAge(fd){
 }
 
 getProductRating(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/rating/`,fd)
+    return this.customHttp.post(`/m/complaint/dashboard/rating`,fd)
  
 }
 
@@ -110,7 +110,7 @@ getProductWarrantyStatus(fd){
 
 
 getMTTR(fd) {
-    const I_api = `/m/complaint/dashboard/mttr`
+    const I_api = `/m/complaint/dashboard/avg`
 
     return this.customHttp.post(I_api,fd)
 }

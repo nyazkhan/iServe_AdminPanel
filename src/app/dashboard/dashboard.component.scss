@@ -1,7 +1,5 @@
 // feedback chart
-.card-chart {
-  // height:100%;
-}
+
 
 .feedback-chart {
   display: flex;
@@ -259,7 +257,7 @@
   height: 20px;
   margin-top: 0;
   animation: infinite blink 3s;
-  -webkit-animation-timing-function: ease-in-out;
+  // -webkit-animation-timing-function: ease-in-out;
   animation-delay: 2s;
 }
 
@@ -301,7 +299,7 @@
 #angry[type=radio]:checked~.smiley .eyes,
 #angry[type=radio]:checked~.smiley .mouth {
   animation: infinite move-angry-head 6s;
-  -webkit-animation-timing-function: ease-in-out;
+  // -webkit-animation-timing-function: ease-in-out;
   animation-delay: 2s;
 }
 

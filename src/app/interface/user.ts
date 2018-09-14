@@ -43,3 +43,11 @@ export class Token {
     comment:string;
     updateInfo="reject";
   }
+
+
+  export class DateRange{
+
+    startDate:Date;
+    endDate:Date;
+  }
+  

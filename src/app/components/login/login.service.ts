@@ -52,6 +52,7 @@ export class LoginService {
   storeUserInfo = (userInfo: UserInfo): Observable<any> => {
     return Observable.create((observer) => {
       Object.keys(userInfo).forEach((key, index) => {
+       
         localStorage.setItem(key, userInfo[key]);
       });
       observer.next('success');

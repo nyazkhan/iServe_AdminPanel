@@ -59,8 +59,8 @@
                                 
                                 <div class="d-flex">
                                     <div>
-                                            <img class="userImage" *ngIf="picUrl !=null" (click)="show('picTrue')"  src="{{picUrl}}"  />
-                                            <img *ngIf="picUrl==null" class="userImage" (click)="show('picfalse')" src="assets/img/avatar.png/"  />
+                                            <img class="userImage" *ngIf="picUrl !='null'" src="{{picUrl}}" />
+                                            <img *ngIf="picUrl=='null'" class="userImage" src="assets/img/avatar.png/"  />
                                     </div>
                                     <!-- <i class="material-icons">create</i> -->
 

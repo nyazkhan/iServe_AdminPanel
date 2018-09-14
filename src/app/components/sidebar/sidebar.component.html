@@ -9,8 +9,8 @@
         <div class="user">
                 <div class="d-flex">
                     <div>
-                    <img *ngIf="picUrl==null" src="assets/img/avatar.png/">
-                    <img *ngIf="picUrl!=null" src="{{picUrl}}" />
+                    <img *ngIf=" (picUrl === 'null')" src="assets/img/avatar.png/"/>
+                    <img *ngIf=" !(picUrl === 'null')" src="{{picUrl}}" />
 
                 </div>
                     <span class="lightColor" style=" padding: .5rem 15px;">{{name}}</span>
