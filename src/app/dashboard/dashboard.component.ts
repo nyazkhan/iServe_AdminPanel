@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { TostService } from '../providers/tost.service';
 import { DateRange } from '../interface/user';
-import { element } from 'protractor';
 
 declare var google: any;
 
@@ -487,7 +486,7 @@ this.showRange=true;
     var data = google.visualization.arrayToDataTable(this.productWarranty);
     var options = {
 
-      title: 'Product repair in warranty or without warranty',
+      // title: 'Product repair in warranty or without warranty',
       height: 200,
       chartArea: {
         left: 120,
