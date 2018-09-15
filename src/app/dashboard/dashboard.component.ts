@@ -203,12 +203,12 @@ this.showRange=true;
 
 
 
-      hAxis: {
-        title: 'Incidents',
-      },
-      vAxis: {
-        title: 'Appliances'
-      },
+      // hAxis: {
+      //   title: 'Incidents',
+      // },
+      // vAxis: {
+      //   title: 'Appliances'
+      // },
 
 
       bar: { groupWidth: '75%' },
@@ -360,12 +360,12 @@ this.showRange=true;
 
     this.dashboardservice.getMTTR(this.filter)
       .subscribe((res: any) => {
-        this.mttrTillDate.push(['Appliances', 'avgCustomer', 'avgEngineer', 'avgRepair'])
+        this.mttrTillDate.push(['Appliances', 'customer', 'engineer', 'repair'])
           res.forEach(element => {
           console.log(element)
          for (const key in element) {
          console.log( element[key][0]);
-         this.mttrTillDate.push([key, parseInt(element[key][0].avgCustomer),parseInt(element[key][0].avgEngineer), parseInt(element[key][0].avgRepair)])
+         this.mttrTillDate.push([key, parseInt(element[key][0].customer),parseInt(element[key][0].avgEngineer), parseInt(element[key][0].avgRepair)])
    
          }
 
