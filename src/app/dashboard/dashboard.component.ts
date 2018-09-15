@@ -21,7 +21,7 @@ export class DashboardComponent implements OnInit {
 
   statusCount: any;
 
-stateDate:Date;
+startDate:Date;
 endDate:Date;
 
   statusByProductCat = [];
@@ -203,10 +203,10 @@ this.showRange=true;
 
 
       hAxis: {
-        title: 'Incidents',
+        // title: 'Incidents',
       },
       vAxis: {
-        title: 'Appliances'
+        // title: 'Appliances'
       },
 
 
@@ -264,10 +264,10 @@ this.showRange=true;
 
 
       hAxis: {
-        title: 'Incidents',
+        // title: 'Incidents',
       },
       vAxis: {
-        title: 'Appliances'
+        // title: 'Appliances'
       },
 
       isStacked: true,
@@ -359,7 +359,7 @@ this.showRange=true;
 
     this.dashboardservice.getMTTR(this.filter)
       .subscribe((res: any) => {
-        this.mttrTillDate.push(['Appliances', 'avgCustomer', 'avgEngineer', 'avgRepair'])
+        this.mttrTillDate.push(['Appliances', 'Customer', 'Engineer', 'Repair'])
           res.forEach(element => {
           console.log(element)
          for (const key in element) {
@@ -392,9 +392,11 @@ this.showRange=true;
         height: 200,
         top: 50,
       },
-      vAxis: { title: 'Count' },
+      vAxis: {
+        //  title: 'Count' 
+        },
       hAxis: {
-        title: 'Product Category',
+        // title: 'Product Category',
         // slantedText:true,
         // slantedTextAngle:330 
       },
@@ -493,9 +495,11 @@ this.showRange=true;
         // height: 150,
         // top: 50,
       },
-      vAxis: { title: 'Count' },
+      vAxis: { 
+        // title: 'Count'
+       },
       hAxis: {
-        title: 'Product Category',
+        // title: 'Product Category',
         // slantedText:true,
         // slantedTextAngle:330 
       },
@@ -557,9 +561,11 @@ this.showRange=true;
     var options = {
       height: 200,
       // title: 'Incident Age',
-      vAxis: { title: 'Count' },
+      vAxis: { 
+        // title: 'Count'
+       },
       hAxis: {
-        title: 'Categories',
+        // title: 'Categories',
 
       },
       isStacked: true,
@@ -627,7 +633,7 @@ today:any
     this.getFilter();
 // console.log(new Date()| date: 'dd MMM, yyyy' );
 this.today= new Date()
-this.today.setDate(this.today.getDate() + 1);
+this.today.setDate(this.today.getDate() );
 
 console.log(this.today);
 
