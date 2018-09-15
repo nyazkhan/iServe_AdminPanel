@@ -216,7 +216,7 @@ this.showRange=true;
       // bars: 'vertical',
             isStacked: true,
 
-      colors: ['#006600', '#00cc00', '#92c409',],
+      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
       animation: {
         "startup": true,
         duration: 600,
@@ -276,7 +276,7 @@ this.showRange=true;
       bar: { groupWidth: '75%' },
       legend: { position: 'top', maxLines: 3 },
       // bars: 'vertical',
-      colors: ['#006600', '#00cc00', '#92c409',],
+      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
       animation: {
         "startup": true,
         duration: 600,
@@ -404,7 +404,7 @@ this.showRange=true;
       legend: { position: 'top', maxLines: 3 },
       bar: { groupWidth: '80%' },
       isStacked: true,
-      colors:['#F48FB1','#E91E63','#C2185B','#880E4F',],
+      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
       // isStacked: true,
 
       animation: {
@@ -505,7 +505,7 @@ this.showRange=true;
 
       legend: { position: 'top', maxLines: 3 },
       bar: { groupWidth: '75%' },
-      colors:['#FFA726','#EF6C00'],
+      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
 
       animation: {
         "startup": true,
@@ -567,7 +567,7 @@ this.showRange=true;
 
       seriesType: 'bars',
       legend: { position: 'top', maxLines: 8 },
-      colors:['#FFCDD2','#FF8A80','#E57373','#B71C1C'],
+      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
 
     };
 

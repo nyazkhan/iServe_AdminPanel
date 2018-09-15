@@ -25,7 +25,7 @@
                         <li class="nav-item hover-cursor ">
                           <div class="input-group input-daterange">
                            
-                            <span style="margin: 10px;">From</span> <input type="date" class="form-control text-right"  min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"  required name="startDate" id="startDate"   [(ngModel)]="dateRange.startDate"  #startDate="ngModel"
+                            <input type="date" class="form-control text-right"  min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"  required name="startDate" id="startDate"   [(ngModel)]="dateRange.startDate"  #startDate="ngModel"
                               style="color: white;">
                             <p class="input-group-addon " style="margin:10px; ">To</p>
                             <input type="date" class="form-control text-right" [disabled]="!dateRange.startDate" required name="endDate" id="endDate" min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}"  [(ngModel)]="dateRange.endDate" #userName="ngModel" style="color: white;">

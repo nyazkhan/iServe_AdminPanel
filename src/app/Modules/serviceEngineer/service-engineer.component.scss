@@ -146,3 +146,22 @@ background: gray;
     height: 25px;
     margin-top: 18px;
 }
+.activePin{
+    font-weight: 500;
+    color: gray;
+    padding-left: 57px;
+}
+.InactivePin{
+    font-weight: 500;
+    color: gray;
+    padding-right: 90px;  
+}
+.product-image{
+    width: 96px;
+}
+
+@media only screen and  (max-width:1125px){
+    .InactivePin{
+    padding-right: 47px;  
+    }
+}
