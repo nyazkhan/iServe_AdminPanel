@@ -74,7 +74,11 @@ dateRange = new DateRange;
   }
 
   forAllProduct(value) {
+    console.log(this.filterId);
+    
     this.filterId = null;
+    console.log(this.filterId);
+
     this.categoryName=value;
     // console.log(this.filterId)
     this.getFilter();
@@ -94,6 +98,8 @@ dateRange = new DateRange;
   getFilter() {
 
     if (this.filterRange) {
+      this.filter={};
+
       this.filter["duration"] = this.filterRange;
       this.filter["startDate"]=this.dateRange.startDate;
       this.filter["endDate"]=this.dateRange.endDate;
@@ -107,6 +113,8 @@ dateRange = new DateRange;
   }
 
     if (this.filterId) {
+      console.log(this.filterId);
+      
       // console.log(this.filterId)
       this.filter["categoryId"] = this.filterId;
     }
@@ -128,6 +136,7 @@ dateRange = new DateRange;
 
   dashboardFilterByRange(){
 this.showRange=true;
+
   }
 
 
@@ -297,10 +306,6 @@ this.showRange=true;
   }
 
 
-
-
-
-
   getStatusByState() {
     this.stateCount = [];
     this.dashboardservice.getStateByStatus(this.filter)
@@ -364,7 +369,7 @@ this.showRange=true;
           console.log(element)
          for (const key in element) {
          console.log( element[key][0]);
-         this.mttrTillDate.push([key, parseInt(element[key][0].avgCustomer),parseInt(element[key][0].avgEngineer), parseInt(element[key][0].avgRepair)])
+         this.mttrTillDate.push([key, parseInt(element[key][0].customer),parseInt(element[key][0].engineer), parseInt(element[key][0].repair)])
    
          }
 
@@ -449,7 +454,6 @@ this.showRange=true;
 
   get_Product_Warranty_Status() {
    
-    console.log(this.productWarranty)
     
     this.dashboardservice.getProductWarrantyStatus(this.filter)
     .subscribe((res: Array<any>) => {
@@ -622,22 +626,15 @@ this.showRange=true;
 
 
 
-  onSubmit(){
-// console.log(this.dateRange.startDate)
-// console.log(this.dateRange.endDate)
 
-  }
 today:any
   ngOnInit() {
     this.role = localStorage.getItem("currentUserName");
     this.getFilter();
-// console.log(new Date()| date: 'dd MMM, yyyy' );
 this.today= new Date()
-this.today.setDate(this.today.getDate() );
+this.today.setDate(this.today.getDate() +1 );
 
-console.log(this.today);
 
-// | date :'YYYY, MM,DD'
 
     this.dashboardservice.loadScript().subscribe(
       (res) => { },
