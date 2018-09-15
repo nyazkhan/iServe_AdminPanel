@@ -20,22 +20,29 @@
             <div class="row" *ngIf="toBeEdit==='Name'">
                
                   
-                  <span>
-                   
-                   <input type="text" required class="form-control padding-left" id="name" name="name" [ngModel]="toBeEditValue" #name="ngModel"> </span> 
-
+               
+                   <span>
+                   <input type="text" required class="form-control padding-left" id="name" name="name" [ngModel]="toBeEditValue" #name="ngModel"> <br/>
+                              
                 
-                  <span>
+                  <div [hidden]="name.valid || name.untouched" style="color: red">
+                    Name is required
+                  </div>
+                
+                 </span>
                 <button type="button" class="btn btn-secondary" (click)="resetForm()"><i class="material-icons">
                     clear
                     </i></button>
                     <button *ngIf="!(formButtonHide || toBeEdit=='Profile Picture')" type="submit" (click)="editValue(editForm.value)" [disabled]="!editForm.valid" class="btn btn-rose"><i class="material-icons">
                         done
                         </i></button> 
-                      </span>
+                     <br />
+                     
                 </div>
+                
                     
               </form>
+              
               
         
         </div>
@@ -54,7 +61,7 @@
           &nbsp; &nbsp;{{editManagerDetails.email}} &nbsp; &nbsp; &nbsp;
           <i class=" tiny material-icons" (click)="toEdit('Email')" data-toggle="modal" data-target="#editFormModel">create</i>
         </div>
-        <form #editForm="ngForm" *ngIf="showForm">
+        <form #editForm="ngForm" *ngIf="showForm" style="display: inline-block;">
         <div class="row" *ngIf="toBeEdit==='Email'">
             <span>
               <div class="form-group ">

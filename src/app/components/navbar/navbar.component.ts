@@ -39,67 +39,70 @@ export class NavbarComponent implements OnInit {
       this.username = localStorage.getItem("username");
       this.contactNo = localStorage.getItem("contactNo");
     this.userType = localStorage.getItem("roles");
-
-
-
-
-      this.getchart();
-
-    }
-
-this.subscribeUserContactNoChanges();
-this.subscribeUserEmailChanges();
-this.subscribeUsernameChanges();
-this.subscribeUserPictureChanges();
-
-
-
+    
+    
+    this.getchart();
+    
   }
+  
+  this.subscribeUserContactNoChanges();
+  this.subscribeUserEmailChanges();
+  this.subscribeUsernameChanges();
+  this.subscribeUserPictureChanges();
+  
+  
+  
+}
+
+show(value){
+  console.log(value)
+}
 
 
+logout(){
+  localStorage.clear();
+  this.router.navigate(['/login']);
+}
 
-  logout(){
-    localStorage.clear();
-    this.router.navigate(['/login']);
-  }
+getchart() {
+  this.incidentService.getChartData()
+  .subscribe((res: any) => {
+    this.countStatus = res;
+    this.countStatus.forEach(element=>{
+      this.totalCount= this.totalCount +    element.count;
+    })
+    
+  })
+}
 
-  getchart() {
-    this.incidentService.getChartData()
-      .subscribe((res: any) => {
-        this.countStatus = res;
-        this.countStatus.forEach(element=>{
-         this.totalCount= this.totalCount +    element.count;
-        })
-
-      })
-  }
-
-  accountSetting(){
+accountSetting(){
   this.router.navigate(["/edit"])
-  }
+}
 
 
-  subscribeUsernameChanges(){
-    this.loginService.username.asObservable()
-    .subscribe((updatedName:string)=>this.name=updatedName);
-  }
+subscribeUsernameChanges(){
+  this.loginService.username.asObservable()
+  .subscribe((updatedName:string)=>this.name=updatedName);
+}
 
 
-  subscribeUserPictureChanges(){
-    this.loginService.userpicture.asObservable()
-    .subscribe((updatedPicture:string)=>this.picUrl=updatedPicture);
-  }
+subscribeUserPictureChanges(){
+  this.loginService.userpicture.asObservable()
+  .subscribe((updatedPicture:string)=>{this.picUrl=updatedPicture
+  console.log(this.picUrl)});
+}
 
 
-  subscribeUserEmailChanges(){
-    this.loginService.useremail.asObservable()
-    .subscribe((updatedEmail:string)=>this.email=updatedEmail);
-  }
+subscribeUserEmailChanges(){
+  this.loginService.useremail.asObservable()
+  .subscribe((updatedEmail:string)=>this.email=updatedEmail);
+}
 
 
-  subscribeUserContactNoChanges(){
-    this.loginService.usercontactno.asObservable()
-    .subscribe((updatedContactNo:string)=>this.contactNo=updatedContactNo);
-  }
+subscribeUserContactNoChanges(){
+  this.loginService.usercontactno.asObservable()
+  .subscribe((updatedContactNo:string)=>this.contactNo=updatedContactNo);
+}
 
 }
+

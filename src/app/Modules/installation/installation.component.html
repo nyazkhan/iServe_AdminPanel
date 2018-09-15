@@ -67,11 +67,7 @@
                   <tr class="collapse tabel-detail col-md-8 col-lg-8" attr.id="collapseExample{{i}}">
                     <td colspan=8 class=" incident-details">
                       <div class="row p-2 auto-cursor">
-                        <!-- <div *ngIf="row.description" class="col-lg-12">
-      
-                          {{row.description}}
-      
-                        </div> -->
+                        
                         <div class="card card-nav-tabs description"  *ngIf="row.description"  style= "margin:10px; width:94% ; margin: auto; margin-bottom: 0px;
                        ">
                             <div class="card-body" style="padding-bottom: 0px;">
@@ -80,39 +76,6 @@
                               
                             </div>
                           </div>
-                        
-                        <!-- <div class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
-                                              <div class="row">
-                                                  <div class="collg-12 col-sm-12">
-                                                      <h4>
-                                                          <b>Product Details</b>
-                                                      </h4>
-                                                  </div>
-                                                  <div class="col-sm-9 col-md-9 col-lg-9">
-                                                      <div *ngIf="row.productModelNumber">
-                                                          <b>Model: </b> {{ row.productModelNumber }}
-                                                      </div>
-                                                      <div *ngIf="row.productCategoryName">
-                                                          <b>Category:</b> {{ row.productCategoryName }}
-                                                      </div>
-                                                      <div *ngIf="row.productPurchaseDate">
-                                                          <b>Purchase Date:</b> {{ row.productPurchaseDate | date: 'ddMMM,yyyy' }}
-                                                      </div>
-                                                      <div *ngIf="row.productWarrantyEnd">
-                                                          <b>Product Warranty Till : </b>{{ row.productWarrantyEnd | date: 'ddMMM,yyyy'
-                                                          }}
-                                                      </div>
-                                                  </div>
-                                                  <div *ngIf="row.registeredProductPicUrl" class="col-sm-3 col-md-3 col-lg-3">
-                                                      <img class="product-image" [src]="row.registeredProductPicUrl" />
-                                                  </div>
-                                              </div>
-                                          </div> -->
-                        <!-- <new> -->
-                        <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                          <div class="row" style="margin: auto;"> -->
-      
-                        <!-- <div class="row col-md-12 col-lg-12 col-sm-12 col-xs-12"> -->
                         <div class="card card-nav-tabs detail-box " style="width: 45%; ">
                           <div>
                             <div class="card-header card-header-info float-right" style="width:150px;">
@@ -136,9 +99,7 @@
                                 <div *ngIf="row.productCategoryName">
                                   <b>Category:</b> {{ row.productCategoryName }}
                                 </div>
-                                <!-- <div *ngIf="row.productCategoryName">
-                                  <b>Assign CN</b> {{ row.productCategoryName }}
-                                </div> -->
+                               
                                 <div *ngIf="row.productWarrantyEnd">
       
                                  <b> Warranty : </b> {{ row.productWarrantyEnd | date: 'dd MMM, yyyy'}}
@@ -305,28 +266,7 @@
                                   <i class="fa fa-envelope details-icon" aria-hidden="true"></i>{{ row.assignedServiceEngineerEmail }}
                                 </div>
 
-                                <!-- <span class"badge badge-pill badge-success"  data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id)">Edit</span> -->
-                                <!-- <div *ngIf="!(row.statusName =='Installed')">
-                                  <span class="badge badge-pill badge-primary" data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id ,'AssignEngName')">Edit</span>
-                                </div> -->
-                                <!-- <div *ngIf="!(row.statusName =='Installed')">
-                                  
-                                  <button class="btn btn-social btn-link btn-linkedin btn-primary"  data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id ,'AssignEngName')" style="padding:0;">
-                                   <span><i class="material-icons" style="border-radius: 4px;
-                                    font-size: 20px;
-                                    color: white;
-                                    background: #9c27b0;">
-                                    edit
-                                    </i></span> 
-                                      edit
-                                  </button>
-                                  <button  class="btn btn-primary btn-sm btn-round" data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id ,'AssignEngName')" style="background:purple;" >
-                                      <i class="material-icons" >
-                                    edit
-                                    </i>Edit
-                                    </button>
-                                 
-                                </div> -->
+                                
                               <button class="btn btn-primary btn-sm changeEng" data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id ,row.assignedServiceEngineerName)"  >Change Engineer</button>
                               </div>
       
@@ -474,9 +414,6 @@
                         <i class="material-icons">
                           history
                           </i> History</button>
-                        <!-- <button *ngIf="row.statusName!=='Rejected' " class="btn btn-sm btn-outline-danger" type="submit" data-toggle="modal" (click)="getRejectId(row.id)"
-                          data-target="#rejectModal">
-                          <i class="material-icons"> clear </i> reject</button> -->
                       </div>
                     </td>
                   </tr>
@@ -602,20 +539,7 @@
                 <div class="timeline" *ngFor="let comment of installationsHistory let i=index ">
                   <div class="history" *ngIf="installationsHistory.length!==0">
                     <div class="badge badge-pill status-badge " [style.background]="comment.statusColor">{{comment.statusName}}</div>
-                    <!-- <div class="comment">
-                      <div> <b>{{comment.name }}</b></div>
-                      <b>{{comment.comment}}</b>
-                      <div  *ngIf="comment.scheduleDate" class="date">
-                          {{comment.scheduleDate | date: 'dd MMM, yyyy  hh : mm a'}}
-                        </div>
-                      <div>
-                        {{comment.autoComment}}
-                      </div>
-                      
-                      <div class="date">
-                          {{comment.createdAt | date: 'dd MMM, yyyy  hh : mm a'}}
-                        </div>
-                    </div> -->
+                    
                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
                 <div class="row">
                   <div class="comment-name col-md-4 col-lg-4 col-sm-4 col-xs-4">

@@ -129,10 +129,12 @@ export class EditUserDetailsComponent implements OnInit {
     if (this.toBeEdit == 'Email') {
 
       this.toBeEditValue = this.editManagerDetails.email;
+      // $('#filed').hide();
     }
     if (this.toBeEdit == 'Contact No') {
 
       this.toBeEditValue = this.editManagerDetails.contactNo;
+      // $('#filed').hide();
     }
   }
 

@@ -133,4 +133,35 @@ ul#menu li {
 color: #e8e8e8;
  position: absolute;
 top: -10px;
+background: gray;
+    border-radius: 50%;
+    border: 1px solid gray;
+}
+
+.editBtn{
+    padding-top: 0;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-bottom: 0;
+    height: 25px;
+    margin-top: 18px;
+}
+.activePin{
+    font-weight: 500;
+    color: gray;
+    padding-left: 57px;
+}
+.InactivePin{
+    font-weight: 500;
+    color: gray;
+    padding-right: 90px;  
+}
+.product-image{
+    width: 96px;
+}
+
+@media only screen and  (max-width:1125px){
+    .InactivePin{
+    padding-right: 47px;  
+    }
 }

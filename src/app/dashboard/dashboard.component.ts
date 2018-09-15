@@ -225,8 +225,8 @@ this.showRange=true;
       // bars: 'vertical',
             isStacked: true,
 
-            colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
-            animation: {
+      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
+      animation: {
         "startup": true,
         duration: 600,
         easing: 'in-out'
