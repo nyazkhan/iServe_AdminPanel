@@ -76,13 +76,13 @@
                               
                             </div>
                           </div>
-                        <div class="card card-nav-tabs detail-box " style="width: 45%; ">
+                        <div class="card card-nav-tabs detail-box responsiveCard  ">
                           <div>
                             <div class="card-header card-header-info float-right" style="width:150px;">
                               Product Details
                             </div>
                           </div>
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                          <div class="card-body" style="padding:15px;">
                             <div class="row">
                               <div *ngIf="row.registeredProductPicUrl" class="col-md-4 col-lg-4 col-sm-4 ">
                                 <img class="product-image" [src]="row.registeredProductPicUrl" />
@@ -115,13 +115,13 @@
       
       
                         <!-- <customer detail> -->
-                        <div class="card card-nav-tabs" style="width: 45%; ">
+                        <div class="card card-nav-tabs detail-box responsiveCard" >
                           <div>
                             <div class="card-header card-header-info float-right" style="width:150px;">
                               Customer Details
                             </div>
                           </div>
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                          <div class="card-body" style="padding:15px;">
                             <div class="row">
                               <div class="col-md-4 col-lg-4 col-sm-4 ">
                                 <img class="product-image" *ngIf="row.customerPicUrl" [src]="row.customerPicUrl" />
@@ -153,14 +153,14 @@
       
       
                         <!-- <dealer and assign engineer> -->
-                        <div class="card card-nav-tabs detail-box" *ngIf="row.dealerName || row.dealerAddress || row.dealerContact || row.dealerEmail"
-                          style="width: 45%; ">
+                        <div class="card card-nav-tabs detail-box responsiveCard" *ngIf="row.dealerName || row.dealerAddress || row.dealerContact || row.dealerEmail"
+                          >
                           <div>
                             <div class="card-header card-header-info float-right" style="width:150px;">
                               Dealer Details
                             </div>
                           </div>
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                          <div class="card-body" style="padding:15px;">
                             <div class="row">
                               <div class="col-md-4 col-lg-4 col-sm-4 ">
       
@@ -191,14 +191,14 @@
       
                         <!-- <new>    -->
       
-                        <div class="card card-nav-tabs"
-                          style="width: 45%; ">
+                        <div class="card card-nav-tabs detail-box responsiveCard"
+                          >
                           <div>
                             <div class="card-header card-header-info float-right" style="width:150px;">
                               Important Dates
                             </div>
                           </div>
-                          <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                          <div class="card-body">
                             <div class="row gridrow">
                               <div class="col-md-4 col-lg-4 col-sm-4 border-right">
                                 <b> Purchased</b>
@@ -230,14 +230,14 @@
                         </div>
       
                         <!-- <assigned engineer-->
-                        <div class="card card-nav-tabs detail-box" *ngIf="!(row.statusName=='New'|| !row.assignedServiceEngineerName)" style="width: 45%; ">
+                        <div class="card card-nav-tabs detail-box responsiveCard" *ngIf="!(row.statusName=='New'|| !row.assignedServiceEngineerName)" >
                             
                           <div> 
                             <div class="card-header card-header-info float-right" style="width:150px;">
                               Assigned Engineer
                             </div>
                           </div>
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                          <div class="card-body" style="padding:15px;">
                             <div class="row">
                               <div class="col-md-4 col-lg-4 col-sm-4 ">
                                 <img class="product-image" *ngIf="row.assignedServiceEngineerPicUrl" [src]="row.assignedServiceEngineerPicUrl" />
@@ -277,13 +277,13 @@
       
       
                         <!-- <scheduled case> -->
-                        <div class="card card-nav-tabs " *ngIf="!(row.statusName == 'New' || row.statusName == 'Assigned' )" style="width: 45%; ">
+                        <div class="card card-nav-tabs detail-box responsiveCard" *ngIf="!(row.statusName == 'New' || row.statusName == 'Assigned' )">
                           <div>
                             <div class="card-header card-header-info float-right" style="width:150px;">
                               Scheduled Details
                             </div>
                           </div>
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                          <div class="card-body" style="padding:15px;">
                             <div class="row">
                               <div class="col-md-4 col-lg-4 col-sm-4 ">
       
@@ -306,13 +306,13 @@
                         </div>
       
                         <!-- <fixed details case-->
-                        <div class="card card-nav-tabs detail-box " *ngIf="row.statusName==='Installed'" style="width: 45%; ">
+                        <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.statusName==='Installed'" >
                           <div *ngIf="row.installationPicUrl">
                             <div class="card-header card-header-info detail-box" style="width:150px;">
                                     Installed Details
                             </div>
                           </div>
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" *ngIf="row.installationPicUrl" style="padding:15px;">
+                          <div class="card-body" *ngIf="row.installationPicUrl" style="padding:15px;">
                             <div class="row">
                               <div *ngIf="row.signatureUrl" class="col-md-4 col-lg-4 col-sm-4 ">
       

@@ -117,3 +117,11 @@ $main:#9c27b0;
         margin-right: 18px;
     }
 }
+// .sidebar[data-color=rose] li.active>a{
+//     background: $main!important;
+// }
+@media print {
+    .sidebar{
+        display: none !important;
+    }
+   }

@@ -71,7 +71,7 @@
 
                   </div>
                    -->
-                   <div class="card card-nav-tabs description" *ngIf="row.description" style= "margin:10px; width:96% ; margin: auto;">
+                   <div class="card card-nav-tabs description" *ngIf="row.description" style= "margin:10px; width:94% ; margin: auto; margin-bottom: 0px;">
                       
                       <div class="card-body"  style="padding-bottom: 0px;">
                         <div class="description-heading">Product Description</div>
@@ -80,13 +80,13 @@
                       </div>
                     </div>
                   
-                  <div class="card card-nav-tabs detail-box responsiveCard">
+                  <div class="card  detail-box responsiveCard">
                     <div>
                       <div class="card-header card-header-info float-right" style="width:150px;">
                         Product Details
                       </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                    <div class="card-body" style="padding:15px;">
                       <div class="row">
                         <div *ngIf="row.registeredProductPicUrl" class="col-md-4 col-lg-4 col-sm-4 ">
                           <img class="product-image" [src]="row.registeredProductPicUrl" />
@@ -121,13 +121,14 @@
                   
 
                   <!-- <customer detail> -->
-                  <div class="card card-nav-tabs responsiveCard detail-box" >
+                  <div class="card  detail-box responsiveCard " >
                     <div>
                       <div class="card-header card-header-info float-right" style="width:150px;">
                         Customer Details
                       </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                    
+                    <div class="card-body" style="padding:15px;">
                       <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-4 ">
                           <img class="product-image" *ngIf="row.customerPicUrl" [src]="row.customerPicUrl" />
@@ -140,7 +141,7 @@
                             <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{ row.customerName }}</b>
                           </div>
                           <div *ngIf="row.customerPhone">
-                            <i class="fa fa-phone details-icon" aria-hidden="true"></i>  {{ row.customerPhone }}
+                            <i class="fa fa-phone details-icon" aria-hidden="true"></i>  {{ row.customerContactNo }}
                           </div>
 
                           <div *ngIf=" row.customerEmail ">
@@ -156,20 +157,23 @@
                       </div>
                     </div>
                   </div>
-
+                  
+                     
+                    
 
                   <!-- <dealer and assign engineer> -->
                   
 
                   <!-- <new>    -->
 
-                  <div class="card card-nav-tabs responsiveCard detail-box " *ngIf="!(row.statusName=='Not Fixed')" >
+                  <div class="card detail-box card-nav-tabs detail-box responsiveCard " *ngIf="!(row.statusName=='Not Fixed')" >
                     <div>
                       <div class="card-header card-header-info float-right" style="width:150px;">
                         Important Dates
                       </div>
                     </div>
-                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    
+                    <div class="card-body">
                       <div class="row gridrow">
                         <div class="col-md-4 col-lg-4 col-sm-4 border-right">
                           <b> Purchased</b>
@@ -206,7 +210,7 @@
                               Fixed Details
                             </div>
                           </div>
-                          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                          <div class="card-body" style="padding:15px;">
                             <div class="row">
                               <div *ngIf="row.signatureUrl" class="col-md-4 col-lg-4 col-sm-4 ">
       
@@ -245,7 +249,7 @@
                         Dealer Details
                       </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                    <div class="card-body" style="padding:15px;">
                       <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-4 ">
 
@@ -281,7 +285,7 @@
                         Assigned Engineer
                       </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                    <div class="card-body" style="padding:15px;">
                       <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-4 ">
                           <img class="product-image" *ngIf="row.assignedServiceEngineerPicUrl" [src]="row.assignedServiceEngineerPicUrl" />
@@ -317,7 +321,7 @@
                           Assigned Engineer
                         </div>
                       </div>
-                      <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                      <div class="card-body" style="padding:15px;">
                         <div class="row">
                           <div class="col-md-4 col-lg-4 col-sm-4 ">
                             <img class="product-image" *ngIf="row.assignedServiceEngineerPicUrl" [src]="row.assignedServiceEngineerPicUrl" />
@@ -354,7 +358,7 @@
                         Scheduled Details
                       </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                    <div class="card-body" style="padding:15px;">
                       <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-4 ">
 
@@ -383,7 +387,7 @@
                 Important Dates
               </div>
             </div>
-            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="card-body">
               <div class="row gridrow">
                 <div class="col-md-4 col-lg-4 col-sm-4 border-right">
                   <b> Purchased</b>
@@ -419,7 +423,7 @@
                 Not  Fixed Details
                 </div>
               </div>
-              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+              <div class="card-body" style="padding:15px;">
                 <div class="row">
                   <div  class="col-md-4 col-lg-4 col-sm-4 ">
                     <img class="product-image" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" />
@@ -512,11 +516,11 @@
 
                       <div class="col-sm-9 col-md-9 col-lg-9">
                         <div>
-                          <b>Date:</b>
+                          <b>Date:</b>{{row.fixedInfo[1].createdAt | date: 'dd MMM ,yyyy'}}
 
                         </div>
                         <div>
-                          <b>Time:</b>
+                            <b>Time:</b>{{row.fixedInfo[1].createdAt | date: 'hh : mm a'}}
 
                         </div>
                         <div class="d-flex">
@@ -527,7 +531,7 @@
                           <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
                         </div>
                         <div>
-                          <b>Comment:</b> Skilled person and polite nature.
+                          <b>Comment:</b> {{row.fixedInfo[1].comment}}
                         </div>
                       </div>
                       <div class="col-sm-3 col-md-3 col-lg-3">
@@ -694,10 +698,7 @@
               </div>
              
             </div>
-            <!-- <div class="emptyData" *ngIf="!history || !history.length">
-                <img src="/assets/imgs/notfound.png">
-               <h2 color="gray">No Records Found</h2>
-              </div> -->
+            
           </div>
 
         </div>
@@ -753,15 +754,7 @@
 
           </div>
 
-
-
-
-
-
         </form>
-
-
-
 
       </div>
     </div>
