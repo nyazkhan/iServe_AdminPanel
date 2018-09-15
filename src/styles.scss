@@ -96,7 +96,7 @@ $main:#9c27b0;
    }
    .scroll{
        max-height: 150px;
-       padding-top: 20px;
+    //    padding-top: 20px;
        overflow-y: scroll;
    }
    .backgroundColor{
@@ -105,3 +105,15 @@ $main:#9c27b0;
    .transparent{
        background: transparent!important;
    }
+   .responsiveCard{
+       width: 45%;
+   }
+   @media only screen and  (min-width:768px) and (max-width:1200px){
+    .responsiveCard{
+        width: 91%;
+    }
+    .detail-box{
+        margin-left: 14px;
+        margin-right: 18px;
+    }
+}
