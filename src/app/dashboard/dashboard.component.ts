@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { TostService } from '../providers/tost.service';
 import { DateRange } from '../interface/user';
-import { element } from 'protractor';
 
 declare var google: any;
 
@@ -22,7 +21,7 @@ export class DashboardComponent implements OnInit {
 
   statusCount: any;
 
-stateDate:Date;
+startDate:Date;
 endDate:Date;
 
   statusByProductCat = [];
@@ -75,7 +74,11 @@ dateRange = new DateRange;
   }
 
   forAllProduct(value) {
+    console.log(this.filterId);
+    
     this.filterId = null;
+    console.log(this.filterId);
+
     this.categoryName=value;
     // console.log(this.filterId)
     this.getFilter();
@@ -95,6 +98,8 @@ dateRange = new DateRange;
   getFilter() {
 
     if (this.filterRange) {
+      this.filter={};
+
       this.filter["duration"] = this.filterRange;
       this.filter["startDate"]=this.dateRange.startDate;
       this.filter["endDate"]=this.dateRange.endDate;
@@ -108,6 +113,8 @@ dateRange = new DateRange;
   }
 
     if (this.filterId) {
+      console.log(this.filterId);
+      
       // console.log(this.filterId)
       this.filter["categoryId"] = this.filterId;
     }
@@ -129,6 +136,7 @@ dateRange = new DateRange;
 
   dashboardFilterByRange(){
 this.showRange=true;
+
   }
 
 
@@ -265,10 +273,10 @@ this.showRange=true;
 
 
       hAxis: {
-        title: 'Incidents',
+        // title: 'Incidents',
       },
       vAxis: {
-        title: 'Appliances'
+        // title: 'Appliances'
       },
 
       isStacked: true,
@@ -296,10 +304,6 @@ this.showRange=true;
  
   
   }
-
-
-
-
 
 
   getStatusByState() {
@@ -360,12 +364,12 @@ this.showRange=true;
 
     this.dashboardservice.getMTTR(this.filter)
       .subscribe((res: any) => {
-        this.mttrTillDate.push(['Appliances', 'customer', 'engineer', 'repair'])
+        this.mttrTillDate.push(['Appliances', 'Customer', 'Engineer', 'Repair'])
           res.forEach(element => {
           console.log(element)
          for (const key in element) {
          console.log( element[key][0]);
-         this.mttrTillDate.push([key, parseInt(element[key][0].customer),parseInt(element[key][0].avgEngineer), parseInt(element[key][0].avgRepair)])
+         this.mttrTillDate.push([key, parseInt(element[key][0].customer),parseInt(element[key][0].engineer), parseInt(element[key][0].repair)])
    
          }
 
@@ -393,9 +397,11 @@ this.showRange=true;
         height: 200,
         top: 50,
       },
-      vAxis: { title: 'Count' },
+      vAxis: {
+        //  title: 'Count' 
+        },
       hAxis: {
-        title: 'Product Category',
+        // title: 'Product Category',
         // slantedText:true,
         // slantedTextAngle:330 
       },
@@ -448,7 +454,6 @@ this.showRange=true;
 
   get_Product_Warranty_Status() {
    
-    console.log(this.productWarranty)
     
     this.dashboardservice.getProductWarrantyStatus(this.filter)
     .subscribe((res: Array<any>) => {
@@ -487,16 +492,18 @@ this.showRange=true;
     var data = google.visualization.arrayToDataTable(this.productWarranty);
     var options = {
 
-      title: 'Product repair in warranty or without warranty',
+      // title: 'Product repair in warranty or without warranty',
       height: 200,
       chartArea: {
         left: 120,
         // height: 150,
         // top: 50,
       },
-      vAxis: { title: 'Count' },
+      vAxis: { 
+        // title: 'Count'
+       },
       hAxis: {
-        title: 'Product Category',
+        // title: 'Product Category',
         // slantedText:true,
         // slantedTextAngle:330 
       },
@@ -558,9 +565,11 @@ this.showRange=true;
     var options = {
       height: 200,
       // title: 'Incident Age',
-      vAxis: { title: 'Count' },
+      vAxis: { 
+        // title: 'Count'
+       },
       hAxis: {
-        title: 'Categories',
+        // title: 'Categories',
 
       },
       isStacked: true,
@@ -617,22 +626,15 @@ this.showRange=true;
 
 
 
-  onSubmit(){
-// console.log(this.dateRange.startDate)
-// console.log(this.dateRange.endDate)
 
-  }
 today:any
   ngOnInit() {
     this.role = localStorage.getItem("currentUserName");
     this.getFilter();
-// console.log(new Date()| date: 'dd MMM, yyyy' );
 this.today= new Date()
-this.today.setDate(this.today.getDate() + 1);
+this.today.setDate(this.today.getDate() +1 );
 
-console.log(this.today);
 
-// | date :'YYYY, MM,DD'
 
     this.dashboardservice.loadScript().subscribe(
       (res) => { },

@@ -1,4 +1,4 @@
-<div class="sidebar" data-color="rose"  >
+<div class="sidebar" data-color="purple"  >
    <div style="background-color: #000000b0;height: 100%;">
   <div class="logo text-center">
       <a href="#" class="simple-text logo-normal " class="lightColor" >
@@ -10,7 +10,8 @@
                 <div class="d-flex">
                     <div>
                     <img *ngIf=" (picUrl === 'null')" src="assets/img/avatar.png/"/>
-                    <img *ngIf=" !(picUrl === 'null')" src="{{picUrl}}" />
+                   
+                     <img *ngIf=" !(picUrl === 'null')" src="{{picUrl}}" />
 
                 </div>
                     <span class="lightColor" style=" padding: .5rem 15px;">{{name}}</span>

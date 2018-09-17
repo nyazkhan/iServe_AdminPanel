@@ -17,7 +17,7 @@ export class ServiceEngineerComponent implements OnInit {
   changeSuccessfuly=false;
 
   catarray:Array<number>;
-  subCatArray:Array<number>;  
+  subCatArray=[];  
   constructor(private router: Router, private tostservice: TostService, private engineerService: ServiceEngineerService) { }
 
   dataRows: any;
@@ -84,6 +84,7 @@ export class ServiceEngineerComponent implements OnInit {
       .subscribe((res: any) => {
         this.productCategory = res;
         this.proCat=res;
+        this.getProductSubCat();
         console.log(res[0].childCategory)
       },
         (err) => {
