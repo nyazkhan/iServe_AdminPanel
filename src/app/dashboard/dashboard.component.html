@@ -20,26 +20,39 @@
             <li class="nav-item hover-cursor">
               <a class="nav-link" (click)="dashboardFilterByRange()" data-toggle="tab">Range</a>
             </li>
-          </ul>
-        </div>
-        <div *ngIf="showRange" class="addBarRight">
-          <ul class="nav nav-tabs" data-tabs="tabs">
-            <li class="nav-item hover-cursor ">
+            <li class="nav-item hover-cursor " *ngIf="showRange">
               <div class="input-group input-daterange">
-                <!-- <form (ngSubmit)="onSubmit()" 
- min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
-
-
-                         min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}"            
-                  #dateForm="ngForm" class="form"> -->
-                <!-- <span style="margin: 10px;">From</span> -->
+               
                 <input type="date" class="form-control text-right" value="2018-09-01" min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
                   required name="startDate" id="startDate" [(ngModel)]="dateRange.startDate" #startDate="ngModel" style="color: white;">
                 <p class="input-group-addon " style="margin:10px; ">To</p>
                 <input type="date" class="form-control text-right" [disabled]="!dateRange.startDate" value="2018-09-15"
                   min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}" required name="endDate" id="endDate"
                   [(ngModel)]="dateRange.endDate" #userName="ngModel" style="color: white;">
-                <!-- </form> -->
+                  <div style="margin-top: 10px;">
+                  <i (click)="filterByRange('byRange')" class="material-icons hover-cursor">
+                    check_circle
+                  </i>
+                </div>
+              </div>
+
+            </li>
+            
+          </ul>
+          
+        </div>
+        <!-- <div *ngIf="showRange" >
+          <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="nav-item hover-cursor ">
+              <div class="input-group input-daterange">
+               
+                <input type="date" class="form-control text-right" value="2018-09-01" min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
+                  required name="startDate" id="startDate" [(ngModel)]="dateRange.startDate" #startDate="ngModel" style="color: white;">
+                <p class="input-group-addon " style="margin:10px; ">To</p>
+                <input type="date" class="form-control text-right" [disabled]="!dateRange.startDate" value="2018-09-15"
+                  min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}" required name="endDate" id="endDate"
+                  [(ngModel)]="dateRange.endDate" #userName="ngModel" style="color: white;">
+              
               </div>
 
             </li>
@@ -50,7 +63,7 @@
 
             </div>
           </ul>
-        </div>
+        </div> -->
         <div>
           <ul class="nav nav-tabs" data-tabs="tabs">
             <li class="nav-item hover-cursor ">
