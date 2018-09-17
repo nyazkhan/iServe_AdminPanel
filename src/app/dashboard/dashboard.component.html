@@ -8,7 +8,7 @@
               <a class="nav-link active show " (click)="dashboardFilterByDate('today')" data-toggle="tab">Today</a>
             </li>
             <li class="nav-item hover-cursor">
-              <a class="nav-link" (click)="dashboardFilterByDate('week')" data-toggle="tab">This Week</a>
+              <a class="nav-link " (click)="dashboardFilterByDate('week')" data-toggle="tab">This Week</a>
             </li>
             <li class="nav-item hover-cursor">
               <a class="nav-link" (click)="dashboardFilterByDate('month')" data-toggle="tab"> This month</a>
@@ -20,40 +20,33 @@
             <li class="nav-item hover-cursor">
               <a class="nav-link" (click)="dashboardFilterByRange()" data-toggle="tab">Range</a>
             </li>
+            
+            <li class="nav-item hover-cursor " *ngIf="showRange">
+                <div class="input-group input-daterange">
+                 
+                  <input type="date" class="form-control"  min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
+                    required name="startDate" id="startDate" [(ngModel)]="dateRange.startDate" #startDate="ngModel" style="color: white;width: 142px;">
+                  <p class="input-group-addon " style="margin:10px; ">To</p>
+                  <input type="date" class="form-control" [disabled]="!dateRange.startDate" 
+                    min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}" required name="endDate" id="endDate"
+                    [(ngModel)]="dateRange.endDate" #userName="ngModel" style="color: white;width: 142px;">
+                  
+                     <button  (click)="filterByRange('byRange')" class="btn btn-primary btn-sm chkBtn" [disabled]="!dateRange.endDate">
+                    <i  class="material-icons hover-cursor">
+                      check_circle
+                    </i>
+                    </button>
+                 
+                </div>
+                
+                
+              </li> 
+             
           </ul>
-        </div>
-        <div *ngIf="showRange" class="addBarRight">
-          <ul class="nav nav-tabs" data-tabs="tabs">
-            <li class="nav-item hover-cursor ">
-              <div class="input-group input-daterange">
-                <!-- <form (ngSubmit)="onSubmit()" 
- min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
-
-
-                         min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}"            
-                  #dateForm="ngForm" class="form"> -->
-                <span style="margin: 10px;">From</span>
-                <input type="date" class="form-control text-right"  min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
-                  required name="startDate" id="startDate" [(ngModel)]="dateRange.startDate" #startDate="ngModel" style="color: white;">
-                <p class="input-group-addon " style="margin:10px; ">To</p>
-                <input type="date" class="form-control text-right" [disabled]="!dateRange.startDate" 
-                  min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}" required name="endDate" id="endDate"
-                  [(ngModel)]="dateRange.endDate" #userName="ngModel" style="color: white;">
-                <!-- </form> -->
-              </div>
-
-            </li>
-            <div style="margin-top: 10px;">
-
-              <button [disabled]="!dateRange.endDate" (click)="filterByRange('byRange')" class="material-icons hover-cursor">
-                check_circle
-              </button>
-
-            </div>
-          </ul>
+          
         </div>
         <div>
-          <ul class="nav nav-tabs" data-tabs="tabs">
+          <ul class="nav " data-tabs="tabs" style="font-weight: 500; width: 190px;">
             <li class="nav-item hover-cursor ">
 
               <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -120,12 +113,12 @@
 
 
       <!-- Chart Cards -->
-      <div (resize)="getAllManagmentCharts()" class="row">
+      <div class="row">
 
         <ng-container *ngIf="role=='management'">
           <div class="col-md-6 col-sm-12">
             <div class="card card-chart">
-              <div class="card-header card-header-danger">
+              <div class="card-header card-header-primary">
 
                 <div id="Rating_Chart"></div>
               </div>
@@ -137,7 +130,7 @@
 
           <div class="col-md-6 col-sm-12">
             <div class="card ">
-              <div class="card-header card-header-warning">
+              <div class="card-header card-header-primary">
                 <div id="product_Warranty_Status"></div>
               </div>
               <div class="card-body">
@@ -147,7 +140,7 @@
           </div>
           <div class="col-md-6 col-sm-12">
             <div class="card card-chart">
-              <div class="card-header card-header-danger">
+              <div class="card-header card-header-primary">
                 <div id="Product_Incident_Age"></div>
               </div>
               <div class="card-body">
@@ -160,7 +153,7 @@
 
           <div class="col-md-6 col-sm-12">
             <div class="card card-chart">
-              <div class="card-header card-header-success">
+              <div class="card-header card-header-primary">
                 <div id="product_status_Chart"></div>
               </div>
               <div class="card-body">
@@ -170,7 +163,7 @@
           </div>
           <div class="col-md-6 col-sm-12">
             <div class="card card-chart">
-              <div class="card-header card-header-info">
+              <div class="card-header card-header-primary">
                 <div id="regions_chart"></div>
               </div>
               <div class="card-body">
@@ -182,7 +175,7 @@
 
           <div class="col-md-6 col-sm-12">
             <div class="card card-chart">
-              <div class="card-header card-header-success" style="background: #E91E63;">
+              <div class="card-header card-header-primary" >
                 <div id="repair_time"></div>
               </div>
               <div class="card-body">
@@ -200,3 +193,6 @@
       </div>
       <!-- end of chart cards -->
     </div>
+  </div>
+
+</div>

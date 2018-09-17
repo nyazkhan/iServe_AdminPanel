@@ -212,12 +212,12 @@ this.showRange=true;
 
 
 
-      hAxis: {
-        // title: 'Incidents',
-      },
-      vAxis: {
-        // title: 'Appliances'
-      },
+      // hAxis: {
+      //   title: 'Incidents',
+      // },
+      // vAxis: {
+      //   title: 'Appliances'
+      // },
 
 
       bar: { groupWidth: '75%' },

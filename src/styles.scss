@@ -108,6 +108,9 @@ $main:#9c27b0;
    .responsiveCard{
        width: 45%;
    }
+   .text-right{
+       text-align: right;
+   }
    @media only screen and  (min-width:768px) and (max-width:1200px){
     .responsiveCard{
         width: 91%;
@@ -117,3 +120,11 @@ $main:#9c27b0;
         margin-right: 18px;
     }
 }
+// .sidebar[data-color=rose] li.active>a{
+//     background: $main!important;
+// }
+@media print {
+    .sidebar{
+        display: none !important;
+    }
+   }
