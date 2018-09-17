@@ -33,10 +33,10 @@
                          min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}"            
                   #dateForm="ngForm" class="form"> -->
                 <span style="margin: 10px;">From</span>
-                <input type="date" class="form-control text-right" value="2018-09-01" min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
+                <input type="date" class="form-control text-right"  min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
                   required name="startDate" id="startDate" [(ngModel)]="dateRange.startDate" #startDate="ngModel" style="color: white;">
                 <p class="input-group-addon " style="margin:10px; ">To</p>
-                <input type="date" class="form-control text-right" [disabled]="!dateRange.startDate" value="2018-09-15"
+                <input type="date" class="form-control text-right" [disabled]="!dateRange.startDate" 
                   min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}" required name="endDate" id="endDate"
                   [(ngModel)]="dateRange.endDate" #userName="ngModel" style="color: white;">
                 <!-- </form> -->
@@ -44,9 +44,10 @@
 
             </li>
             <div style="margin-top: 10px;">
-              <i (click)="filterByRange('byRange')" class="material-icons hover-cursor">
+
+              <button [disabled]="!dateRange.endDate" (click)="filterByRange('byRange')" class="material-icons hover-cursor">
                 check_circle
-              </i>
+              </button>
 
             </div>
           </ul>
@@ -77,10 +78,6 @@
 
 
   <div class="container-fluid" style="z-index: 0;">
-    <div class="row">
-
-
-    </div>
     <div *ngIf="role=='management'" class="row">
 
       <div class="col-lg-4 col-md-4 col-sm-6">

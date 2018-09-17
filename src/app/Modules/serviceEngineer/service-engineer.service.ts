@@ -34,7 +34,12 @@ export class ServiceEngineerService {
     return this.customHttp.get("/sa/product-category")
   }
 
-
+getProductTypeIds(ids:Array<number>){
+  const idss = ids.join(',');
+  console.log(idss);
+  
+  return this.customHttp.get(`/sa/product-type?categoryIds=${idss}`)
+}
 
   // //get brand id
   // getBrandIds(){
@@ -62,5 +67,11 @@ deleteEngineer(delete_id){
 editPincodes(fd){
   console.log(fd);
   return this.customHttp.post(`/sa/pincode-service-engineer`, fd)
+}
+
+
+
+editProductCategoryType(fd,id){
+  return this.customHttp.post(`/sa/product-type-service-engineer`,{"productTypeIds":fd,"serviceEngineerId":id})
 }
 }

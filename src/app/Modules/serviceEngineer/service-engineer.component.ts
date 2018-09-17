@@ -14,11 +14,18 @@ export class ServiceEngineerComponent implements OnInit {
   currentId: number;
   assignpincode = [];
   editPinShow = false;
+  editCatShow = false;
+
   changeSuccessfuly=false;
 
   catarray:Array<number>;
   subCatArray=[];  
-  constructor(private router: Router, private tostservice: TostService, private engineerService: ServiceEngineerService) { }
+  productType=[];
+  constructor(
+    private router: Router, 
+    private tostservice: TostService, 
+    private engineerService: ServiceEngineerService,
+    ) { }
 
   dataRows: any;
   isDataLoad: boolean = true;
@@ -29,12 +36,13 @@ export class ServiceEngineerComponent implements OnInit {
   pinIstrue: boolean = true;
   loadingButton: boolean = false;
   productCategory: any
-  proCat:any;
+  selectedProductCategories:Array<any>;
+  selectedProductCategoryChildren:Array<any>;
   addressTypeOptions = ['Home', 'Office', 'Permanent'];
   pins: any;
   editpins = [];
-
-
+ProductCategoryTypeIds:Array<number>
+subCatArray1=[];
 
   ngOnInit() {
     this.getEngineers();
@@ -68,10 +76,11 @@ export class ServiceEngineerComponent implements OnInit {
         res.forEach(element => {
 
           this.editpins.push(element.pincode);
+          console.log(this.editpins);
+          this.pinIstrue = false;
         });
 
-        console.log(this.editpins)
-        this.pinIstrue = false;
+        
       },
         (err) => {
           this.tostservice.showNotificationFailure(err)
@@ -83,25 +92,27 @@ export class ServiceEngineerComponent implements OnInit {
     this.engineerService.getProductCategory()
       .subscribe((res: any) => {
         this.productCategory = res;
-        this.proCat=res;
-        this.getProductSubCat();
-        console.log(res[0].childCategory)
+        this.selectedProductCategories=res[0];
+        console.log(this.productCategory);
+
+        
       },
         (err) => {
           this.tostservice.showNotificationFailure(err)
         })
   }
 
-  getProductSubCat(){
-   for(let key in this.proCat) {
-    this.subCatArray.push(this.proCat[key[key]].childCategory)
-    console.log(this.subCatArray)
-   }
-
-   this.proCat.forEach(element => {
-    console.log(element.childCategory)
-   });
+  onProductTypeIdChange(){
+    console.log(this.selectedProductCategories);
+    if(this.selectedProductCategories){
+      this.selectedProductCategoryChildren=[];
+      this.selectedProductCategories.forEach(product=>{
+        this.selectedProductCategoryChildren = this.selectedProductCategoryChildren.concat(product.childCategory);
+      });
+    }
   }
+
+ 
 
   getId(row) {
     this.editPinShow = false;
@@ -109,7 +120,7 @@ export class ServiceEngineerComponent implements OnInit {
     this.currentId = row.id;
 
     this.assignpincode = row.assignPincodes.slice(0);
-
+  
     this.filterPincode();
 
   }
@@ -121,14 +132,20 @@ export class ServiceEngineerComponent implements OnInit {
   deleteEngineer() {
     this.engineerService.deleteEngineer(this.currentId)
       .subscribe((res: any) => {
-        this.tostservice.showNotificationSuccess(res)
+        this.tostservice.showNotificationSuccess("Service Engineer Delete Successfuly")
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
       })
   }
 
 
-
+  getProdutId(){
+    this.engineerService.getProductTypeIds(this.ProductCategoryTypeIds)
+    .subscribe((res:any)=>{
+     this.productType=res
+      console.log(res)
+    })
+  }
 
 
   onSelectFile(event) { // called each time file input changes
@@ -143,9 +160,7 @@ export class ServiceEngineerComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    // this.closeEngineerFormModal();
-    // $('#loaderModel').modal('show')
+  creatEngineer() {
 
     this.loadingButton = true;
     const fd = new FormData();
@@ -158,6 +173,7 @@ export class ServiceEngineerComponent implements OnInit {
       } else {
         fd.append(key, this.engineerDetails[key]);
       }
+    }
 
       if (this.imgfile) {
         
@@ -169,7 +185,7 @@ export class ServiceEngineerComponent implements OnInit {
 
 
 
-    }
+    
     this.engineerService.addEngineer(fd)
       .subscribe((res: any) => {
         this.resetform();
@@ -177,7 +193,7 @@ export class ServiceEngineerComponent implements OnInit {
 
         this.closeEngineerFormModal();
         this.dataRows.unshift(res);
-        this.showNotification();
+        this.tostservice.showNotificationSuccess("Service Engineer Creat Successfuly")
       }, (err) => {
         this.loadingButton = false;
 
@@ -214,7 +230,7 @@ export class ServiceEngineerComponent implements OnInit {
   }
 
   canclePinchanges(row) {
-    this.assignpincode = row.assignPincodes;
+    this.assignpincode = row.assignPincodes.slice(0);
     console.log(row)
     this.editpins = [];
     this.pins.forEach(element => {
@@ -287,27 +303,7 @@ changeCategory(){}
 
   }
 
-  showNotification() {
-
-    $.notify({
-
-      icon: "add_alert",
-      message: "Manager add successfuly"
-
-
-
-    }, {
-        type: 'success',
-        timer: 1000,
-        placement: {
-          from: "top",
-          align: "right"
-        }
-      });
-
-
-
-  }
+  
 
 
 

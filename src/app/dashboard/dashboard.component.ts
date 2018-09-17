@@ -370,7 +370,7 @@ this.showRange=true;
           console.log(element)
          for (const key in element) {
          console.log( element[key][0]);
-         this.mttrTillDate.push([key, parseInt(element[key][0].customer),parseInt(element[key][0].engineer), parseInt(element[key][0].repair)])
+         this.mttrTillDate.push([key, parseFloat(element[key][0].customer),parseFloat(element[key][0].engineer), parseFloat(element[key][0].repair)])
    
          }
 

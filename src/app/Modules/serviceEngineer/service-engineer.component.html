@@ -6,7 +6,7 @@
       <div class="dropdown">
         <a class="nav-link ">
           <!-- <i class="material-icons" (click)="managerForm.reset()" data-toggle="modal" data-target="#ManagerFormModal"> add_to_photos</i> -->
-          <button class="btn btn-primary transparent " (click)="engineerForm.reset()" data-toggle="modal" data-target="#EngineerFormModal" ><i
+          <button class="btn btn-primary transparent " (click)="engineerForm.reset()" data-toggle="modal" data-target="#EngineerFormModal"><i
               class="material-icons" style="font-size: 30px;">
               person_add
             </i></button>
@@ -52,83 +52,24 @@
                             <i (click)="getId( row)" data-toggle="modal" data-target="#deleteModal" class="material-icons">delete_forever</i>
                         </td> -->
             <td class="change-icon">
-              <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteIcon">delete</i>
-              <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteChange-icon">delete_forever</i>
+              <i (click)="getId(row) "  class="material-icons mainColor deleteIcon">delete</i>
+              <i (click)="getId(row)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteChange-icon">delete_forever</i>
             </td>
           </tr>
           <tr class="collapse" attr.id="collapseExample{{i}}">
             <td colspan=7 class=" incident-details" style="background: whitesmoke;">
               <div class="row" style="margin-top: 20px;">
-               
+
                 <div class="card card-nav-tabs margin-top" style="width: 45%; margin-left: 50px; ">
                   <div>
                     <div class="card-header card-header-info float-right" style="width:150px;">
-                       Pincodes
+                      Pincodes
                     </div>
                   </div>
-                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" >
-                    <div class="space-between" >
-                        <!-- <span  *ngIf="!editPinShow" (click)="showEditPin()" class="" style="margin-top: 18px;height: 19px;" >edit</span> -->
-                    <button  *ngIf="!editPinShow" (click)="showEditPin()" class=" btn btn-primary btn-sm backgroundColor editBtn" type="button">Edit</button>
-                    <form class="form-inline ml-auto">
-                      <div class=" no-border">
-                        <input type="text" class="form-control" placeholder="Search">
-                      </div>
-                      <button type="submit" class="btn btn-just-icon btn-round " style="background: purple">
-                        <i class="material-icons">search</i>
-                      </button>
-                  </form>
-                </div>
-                <div class="space-between">
-                <div class="activePin">Active</div>
-                <div class="InactivePin">Inactive</div>
-              </div>
-                  <div class="row scroll" style="padding-top: 13px;">
-                    <div class="col-md-6"  >
-                       
-                        <ul *ngFor="let pin of assignpincode">
-                          
-                          <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;" >
-                             {{pin}}
-                           <i *ngIf="editPinShow" (click)="removePincode(pin)" class="material-icons iconPosition" >
-                                remove_circle
-                            </i>
-                          </li>
-                        </ul>
-                      </div>
-                    <div class="col-md-6" *ngIf="editPinShow">
-                      <ul *ngFor="let pin of editpins">
-                       
-                        <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;">{{pin}}
-                          <i (click)="addPin(pin)" class="material-icons iconPosition">
-                              add_circle
-                          </i>
-                        </li>
-                      </ul>
-                    </div>  
-                  </div>
-                  <div *ngIf="editPinShow"  class="modal-footer" >
-                    <div style="margin: auto;">
-                      <button (click)="canclePinchanges(row)" class="btn btn-outline-danger" style="padding: 5px;margin-right: 12px;">Cancle</button>
-                      <button *ngIf="!changeSuccessfuly" type="submit" (click)="changePincode()" class="btn btn-outline-success" style="padding: 5px;">Save
-                        Changes
-                      </button>
-                      <button *ngIf="changeSuccessfuly " type="button" class="btn btn-outline-success" style="padding: 5px;">
-                        <i class="fa fa-spinner fa-spin"></i>submitting
-                      </button>
-                    </div>
-                    </div>
-                      </div>
-                </div>
-                <div class="card card-nav-tabs margin-top" style="width: 45%; margin-left: 20px; ">
-                    <div>
-                      <div class="card-header card-header-info float-right" style="width:200px;">
-                           Product Category
-                      </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" >
-                      <div class="space-between" >
-                          <button (click)="editProductCategory()" class="btn btn-primary btn-sm backgroundColor editBtn">Edit</button>
+                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                    <div class="space-between">
+                      <button *ngIf="!editPinShow" (click)="showEditPin()" class=" btn btn-primary btn-sm backgroundColor editBtn"
+                        type="button">Edit</button>
                       <form class="form-inline ml-auto">
                         <div class=" no-border">
                           <input type="text" class="form-control" placeholder="Search">
@@ -136,65 +77,238 @@
                         <button type="submit" class="btn btn-just-icon btn-round " style="background: purple">
                           <i class="material-icons">search</i>
                         </button>
-                    </form>
+                      </form>
+                    </div>
+                    <div class="space-between">
+                      <div class="activePin">Active</div>
+                      <div class="InactivePin">Inactive</div>
+                    </div>
+                    <div class="row scroll" style="padding-top: 13px;">
+                      <div class="col-md-6">
+
+                        <ul *ngFor="let pin of assignpincode">
+
+                          <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;">
+                            {{pin}}
+                            <i *ngIf="editPinShow" (click)="removePincode(pin)" class="material-icons iconPosition">
+                              remove_circle
+                            </i>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-md-6" *ngIf="editPinShow">
+                        <ul *ngFor="let pin of editpins">
+
+                          <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;">{{pin}}
+                            <i (click)="addPin(pin)" class="material-icons iconPosition">
+                              add_circle
+                            </i>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div *ngIf="editPinShow" class="modal-footer">
+                      <div style="margin: auto;">
+                        <button (click)="canclePinchanges(row)" class="btn btn-outline-danger" style="padding: 5px;margin-right: 12px;">Cancle</button>
+                        <button *ngIf="!changeSuccessfuly" type="submit" (click)="changePincode()" class="btn btn-outline-success"
+                          style="padding: 5px;">Save
+                          Changes
+                        </button>
+                        <button *ngIf="changeSuccessfuly " type="button" class="btn btn-outline-success" style="padding: 5px;">
+                          <i class="fa fa-spinner fa-spin"></i>submitting
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <div class="space-between">
+                </div>
+                <div class="card card-nav-tabs margin-top" style="width: 45%; margin-left: 20px; ">
+                  <div>
+                    <div class="card-header card-header-info float-right" style="width:200px;">
+                      </div>
+                      Engineer Details
+                    </div>
+                  <!-- <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                    <div class="space-between">
+                      <button (click)="editProductCategory()" class="btn btn-primary btn-sm backgroundColor editBtn">Edit</button>
+                      <form class="form-inline ml-auto">
+                        <div class=" no-border">
+                          <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-just-icon btn-round " style="background: purple">
+                          <i class="material-icons">search</i>
+                        </button>
+                      </form>
+                    </div>
+                    <div class="space-between">
                       <div class="activePin">Active</div>
                       <div class="InactivePin">Inactive</div>
                     </div>
                     <div class="row scroll">
-                        <div class="col-md-6">
-                            <!-- <span (click)="editProductCategory()" class="badge badge-pill badge-primary">Edit</span> -->
-                            <ul style="list-style-type:none;padding: 0;font-size: 11px;" *ngFor="let type of row.productTypes let i = index">
-                              <li>
-                                {{i+1}} . {{type.productCategoryName}}   <i class="material-icons">
-                                  remove_circle
-                                </i>
-                              </li>
-                            </ul>
-          
-                          </div>
-                    </div>
-                    
-                       
-                        </div>
-                  </div>
-                
-             
-                </div>
-                
-              
-              <div class="card card-nav-tabs margin-top" style="width: 45%; margin-left: 25px;">
-                <div>
-                  <div class="card-header card-header-info float-right" style="width:150px;">
-                   Engineer Details
-                  </div>
-                </div>
-                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
-                  <div class="row">
-                      <div class="col-md-4 col-lg-4 col-sm-4 ">
-                         <img *ngIf="row.picUrl"  class="product-image" src="{{row.picUrl}}">
-                         <img *ngIf="!row.picUrl " class="product-image" src="/assets/img/user.png">
+                      <div class="col-md-6">
+                        <ul style="list-style-type:none;padding: 0;font-size: 11px;" *ngFor="let type of row.productTypes let i = index">
+                          <li>
+                            {{i+1}} . {{type.productCategoryName}} <i class="material-icons">
+                              remove_circle
+                            </i>
+                          </li>
+                        </ul>
+
                       </div>
-                    
-                    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                        <div *ngIf=" row.name ">
+                    </div>
+
+
+                  </div> -->
+                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
+                      <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-4 ">
+                          <img *ngIf="row.picUrl" class="product-image" src="{{row.picUrl}}">
+                          <img *ngIf="!row.picUrl " class="product-image" src="/assets/img/user.png">
+                        </div>
+    
+                        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                          <div *ngIf=" row.name ">
                             <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{ row.name }}</b>
                           </div>
                           <div *ngIf="row.contactNo">
-                              <i class="fa fa-phone details-icon" aria-hidden="true"></i>  {{ row.contactNo }}
+                            <i class="fa fa-phone details-icon" aria-hidden="true"></i> {{ row.contactNo }}
                           </div>
                           <div *ngIf=" row.email ">
-                              <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{ row.email}}
-                            </div>
-                            <div >
-                                <i class="fa fa-home details-icon" aria-hidden="true" style="font-size: 18px;"></i> {{row.city}} , {{row.state}} ,
-                                {{row.country}}, , {{row.postalCode}}
-                             </div>
-                          
+                            <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{ row.email}}
+                          </div>
+                          <div>
+                            <i class="fa fa-home details-icon" aria-hidden="true" style="font-size: 18px;"></i>
+                            {{row.city}} , {{row.state}} ,
+                            {{row.country}}, , {{row.postalCode}}
+                          </div>
+    
+                        </div>
+                      </div>
                     </div>
+                  
+                
+                </div>
+
+
+              </div>
+
+
+              <div class="card card-nav-tabs margin-top" style="width: 95%; margin-left: 25px;">
+                <div>
+                  <div class="card-header card-header-info float-right" style="width:150px;">
+                      Product Category
+
                   </div>
                 </div>
+                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                    <div class="space-between">
+                      <button (click)="editProductCategory()" class=" btn btn-primary btn-sm backgroundColor editBtn"
+                        type="button">Edit</button>
+                      <form class="form-inline ml-auto">
+                        <div class=" no-border">
+                          <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-just-icon btn-round " style="background: purple">
+                          <i class="material-icons">search</i>
+                        </button>
+                      </form>
+                    </div>
+                    <div class="space-between">
+                      <div class="activePin">Active</div>
+                      <div class="InactivePin">Inactive</div>
+                    </div>
+                    <div class="row " style="padding-top: 13px;">
+                      <div class="col-md-4 scroll">
+
+                        <ul *ngFor="let type of row.productTypes let i = index">
+
+                          <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;">
+                              {{i+1}} . {{type.productCategoryName}}
+                        <i *ngIf="editCatShow" (click)="removeCategory(type)" class="material-icons iconPosition">
+                              remove_circle
+                            </i>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-md-8">
+                          <div class="row">
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label> Select Product Categories <span style="color: red;">*</span>
+                                  </label>
+                                  <button *ngIf="pinIstrue" type="button" class="buttonload">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                  </button>
+                                  <select class="form-control selectHieght" id="proSubCat" required multiple [(ngModel)]="selectedProductCategories"
+                                    name="proSubCat" #proSubCat="ngModel" (ngModelChange)="onProductTypeIdChange()">
+                                    <option *ngFor="let product of productCategory" [ngValue]="product">{{product.name}}</option>
+                                  </select>
+                                  <small [hidden]="proSubCat.valid || proSubCat.untouched" style="color: red">
+                                    Product Type options is required
+                                  </small>
+                  
+                                </div>
+                  
+                              </div>
+                              <div *ngIf="selectedProductCategoryChildren?.length > 0" class="col-md-4">
+                                <div class="form-group">
+                                  <label> Select Product Sub-Categories <span style="color: red;">*</span>
+                                  </label>
+                                  <button *ngIf="pinIstrue" type="button" class="buttonload">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                  </button>
+                                  <select class="form-control selectHieght" id="prodTypeOptions" required multiple [(ngModel)]="ProductCategoryTypeIds"
+                                    name="prodType" #prodType="ngModel">
+                                    <option *ngFor="let product of selectedProductCategoryChildren" [value]="product.id">{{product.name}}</option>
+                                  </select>
+                                  <small [hidden]="prodType.valid || prodType.untouched" style="color: red">
+                                    Product Type options is required
+                                  </small>
+                                  <button (click)="getProdutId()"> click</button>
+                                </div>
+                              </div>
+                            <div *ngIf="productType?.length > 0" class="col-md-4">
+                              <div class="form-group">
+                                <label> Select Product Type Ids <span style="color: red;">*</span>
+                                </label>
+                  
+                                <select class="form-control selectHieght" id="prodTypeId" required multiple [(ngModel)]="engineerDetails.productTypeIds"
+                                  name="prodTypeId" #prodTypeId="ngModel">
+                                  <option *ngFor="let product of productType" [ngValue]="product.id">{{product.name}}</option>
+                                </select>
+                                <small [hidden]="prodTypeId.valid || prodTypeId.untouched" style="color: red">
+                                  Product Type options is required
+                                </small>
+                  
+                              </div>
+                  
+                            </div>
+                                                        </div>
+
+                      </div>
+                      <!-- <div class="col-md-6" *ngIf="editCatShow">
+                        <ul *ngFor="let Category of editCategorys">
+
+                          <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;">{{Category}}
+                            <i (click)="addCategory(Category)" class="material-icons iconPosition">
+                              add_circle
+                            </i>
+                          </li>
+                        </ul>
+                      </div> -->
+                    </div>
+                    <div *ngIf="editCatShow" class="modal-footer">
+                      <div style="margin: auto;">
+                        <button (click)="cancleChange(row)" class="btn btn-outline-danger" style="padding: 5px;margin-right: 12px;">Cancle</button>
+                        <button *ngIf="!changeSuccessfuly" type="submit" (click)="changeCategory()" class="btn btn-outline-success"
+                          style="padding: 5px;">Save
+                          Changes
+                        </button>
+                        <button *ngIf="changeSuccessfuly " type="button" class="btn btn-outline-success" style="padding: 5px;">
+                          <i class="fa fa-spinner fa-spin"></i>submitting
+                        </button>
+                      </div>
+                    </div>
+                  </div>
               </div>
 
             </td>
@@ -227,7 +341,7 @@
       <div class="modal-body">
 
         <!-- <new-code> -->
-        <form (ngSubmit)="onSubmit()" #engineerForm="ngForm">
+        <form #engineerForm="ngForm">
           <div class="row">
             <div class="col-md-4">
               <div class="form-group">
@@ -235,7 +349,7 @@
 
                 </label>
                 <input type="text" required minlength="4" class="form-control " [(ngModel)]="engineerDetails.name" name="name"
-                  id="name" #name="ngModel" >
+                  id="name" #name="ngModel">
                 <small [hidden]="name.valid || name.untouched" style="color: red">
                   Name is required
                 </small>
@@ -246,7 +360,7 @@
                 <label>Username <span style="color: red;">*</span>
                 </label>
                 <input type="text" minlength="4" maxlength="20" required [(ngModel)]="engineerDetails.username" name="username"
-                  id="username" class="form-control " #username="ngModel" >
+                  id="username" class="form-control " #username="ngModel">
 
                 <small [hidden]="username.valid || username.untouched" style="color: red">
                   Username should consist of minimum 6 characters
@@ -257,8 +371,8 @@
               <div class="form-group">
                 <label>Contact No <span style="color: red;">*</span>
                 </label>
-                <input type="number" pl required pattern=".{10,11}" class="form-control "
-                  [(ngModel)]="engineerDetails.contactNo" name="contactNo" id="contactNo" #contactNo="ngModel">
+                <input type="number" pl required pattern=".{10,11}" class="form-control " [(ngModel)]="engineerDetails.contactNo"
+                  name="contactNo" id="contactNo" #contactNo="ngModel">
                 <small [hidden]="contactNo.valid || contactNo.untouched" style="color: red">
                   Contact No is required
                 </small>
@@ -280,12 +394,10 @@
               </div>
             </div>
             <div class="col-md-4">
-              <!-- <div class="form-group"> -->
               <label>Profile Picture
               </label>
               <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control ">
-              <!-- <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control "> -->
-              <!-- </div> -->
+
             </div>
             <div class="col-md-4">
               <div class="form-group">
@@ -301,7 +413,7 @@
 
           </div>
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>Password <span style="color: red;">*</span></label>
                 <input type="password" required minlength="6" class="form-control  " [(ngModel)]="engineerDetails.password"
@@ -312,24 +424,8 @@
               </div>
             </div>
 
-            <div class="col-md-4">
-              <div class="form-group">
-                <label> Select Product Types <span style="color: red;">*</span>
-                </label>
-                <button *ngIf="pinIstrue" type="button" class="buttonload">
-                  <i class="fa fa-spinner fa-spin"></i>
-                </button>
-                <select class="form-control selectHieght" id="prodTypeOptions" required multiple [(ngModel)]="engineerDetails.productTypeIds"
-                  name="prodType" #prodType="ngModel">
-                  <option *ngFor="let product of productCategory" [value]="product.id">{{product.name}}</option>
-                </select>
-                <small [hidden]="prodType.valid || prodType.untouched" style="color: red">
-                  Product Type options is required
-                </small>
 
-              </div>
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div class="form-group">
                 <label> Select Pin Codes <span style="color: red;">*</span>
                 </label>
@@ -347,14 +443,66 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label> Select Product Categories <span style="color: red;">*</span>
+                </label>
+                <button *ngIf="pinIstrue" type="button" class="buttonload">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </button>
+                <select class="form-control selectHieght" id="proSubCat" required multiple [(ngModel)]="selectedProductCategories"
+                  name="proSubCat" #proSubCat="ngModel" (ngModelChange)="onProductTypeIdChange()">
+                  <option *ngFor="let product of productCategory" [ngValue]="product">{{product.name}}</option>
+                </select>
+                <small [hidden]="proSubCat.valid || proSubCat.untouched" style="color: red">
+                  Product Type options is required
+                </small>
 
+              </div>
+
+            </div>
+            <div *ngIf="selectedProductCategoryChildren?.length > 0" class="col-md-6">
+              <div class="form-group">
+                <label> Select Product Sub-Categories <span style="color: red;">*</span>
+                </label>
+                <button *ngIf="pinIstrue" type="button" class="buttonload">
+                  <i class="fa fa-spinner fa-spin"></i>
+                </button>
+                <select class="form-control selectHieght" id="prodTypeOptions" required multiple [(ngModel)]="ProductCategoryTypeIds"
+                  name="prodType" #prodType="ngModel">
+                  <option *ngFor="let product of selectedProductCategoryChildren" [value]="product.id">{{product.name}}</option>
+                </select>
+                <small [hidden]="prodType.valid || prodType.untouched" style="color: red">
+                  Product Type options is required
+                </small>
+                <button (click)="getProdutId()"> click</button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="productType?.length > 0" class="col-md-6">
+            <div class="form-group">
+              <label> Select Product Type Ids <span style="color: red;">*</span>
+              </label>
+
+              <select class="form-control selectHieght" id="prodTypeId" required multiple [(ngModel)]="engineerDetails.productTypeIds"
+                name="prodTypeId" #prodTypeId="ngModel">
+                <option *ngFor="let product of productType" [ngValue]="product.id">{{product.name}}</option>
+              </select>
+              <small [hidden]="prodTypeId.valid || prodTypeId.untouched" style="color: red">
+                Product Type options is required
+              </small>
+
+            </div>
+
+          </div>
           <div class="row">
             <div class="col-md-10">
               <div class="form-group">
                 <label>Address Line <span style="color: red;">*</span>
                 </label>
-                <input type="text" required class="form-control "  [(ngModel)]="engineerDetails.address.address"
-                  name="addres" #addres="ngModel">
+                <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.address" name="addres"
+                  #addres="ngModel">
                 <small [hidden]="addres.valid || addres.untouched" style="color: red;">
                   Address Line is required
                 </small>
@@ -365,8 +513,8 @@
               <div class="form-group">
                 <label> City <span style="color: red;">*</span>
                 </label>
-                <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.city"
-                  name="city" id="city" #city="ngModel">
+                <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.city" name="city"
+                  id="city" #city="ngModel">
                 <small [hidden]="city.valid || city.untouched" style="color: red">
                   City is required
                 </small>
@@ -380,8 +528,8 @@
               <div class="form-group">
                 <label> State <span style="color: red;">*</span>
                 </label>
-                <input type="text" required class="form-control "  [(ngModel)]="engineerDetails.address.state"
-                  name="state" id="state" #state="ngModel">
+                <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.state" name="state"
+                  id="state" #state="ngModel">
                 <small [hidden]="state.valid || state.untouched" style="color: red">
                   State Name is required
                 </small>
@@ -391,8 +539,8 @@
               <div class="form-group">
                 <label>Country <span style="color: red;">*</span>
                 </label>
-                <input type="text" required class="form-control " pl [(ngModel)]="engineerDetails.address.country"
-                  name="country" id="country" #country="ngModel">
+                <input type="text" required class="form-control " pl [(ngModel)]="engineerDetails.address.country" name="country"
+                  id="country" #country="ngModel">
                 <small [hidden]="country.valid || country.untouched" style="color: red">
                   Country Name is required
                 </small>
@@ -404,8 +552,8 @@
               <div class="form-group">
                 <label>Postel Code <span style="color: red;">*</span>
                 </label>
-                <input type="text" required class="form-control "  [(ngModel)]="engineerDetails.address.postalCode"
-                  name="postalcode" id="postalcode" #postalcode="ngModel">
+                <input type="text" required class="form-control " [(ngModel)]="engineerDetails.address.postalCode" name="postalcode"
+                  id="postalcode" #postalcode="ngModel">
                 <small [hidden]="postalcode.valid || postalcode.untouched" style="color: red">
                   Postal code is required
                 </small>
@@ -431,38 +579,38 @@
         <!--footer-->
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" [disabled]="!engineerForm.valid" class="btn btn-success">Submit</button>
-        </div>
+          <button type="button" *ngIf="!loadingButton" (click)="creatEngineer()" [disabled]="!engineerForm.valid" class="btn btn-success">Submit</button>
+          <button type="button" *ngIf="loadingButton"  class="btn btn-success">submitting</button>
 
+        </div>
       </div>
     </div>
+  </div>
   </div>
   <!-- Service Engineer form end -->
 
-  <!-- delete modal for  service engineer -->
   <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content   card card-stats">
-        <div class="card-header card-header-success card-header-icon">
-          <div class="card-icon">
-            <i class="material-icons">delete_outline
-            </i>
+      <div class="modal-dialog" role="document">
+          <div class="modal-content   card card-stats">
+              <div class="card-header card-header-success card-header-icon">
+                  <div class="card-icon">
+                      <i class="material-icons">delete_outline
+                      </i>
+                  </div>
+                  <h3 class="card-title">Delete</h3>
+              </div>
+              <div class="modal-body">
+                  <h3>"Are you sure you want to delete this Service Engineer?",
+                  </h3>
+                  <div class="modal-footer">
+  
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
+                      <button type="submit" (click)="deleteEngineer()" class="btn btn-success">Delete</button>
+  
+                  </div>
+              </div>
+  
           </div>
-          <h3 class="card-title">Delete</h3>
-        </div>
-        <div class="modal-body">
-          <h3>"Are you sure you want to delete this Service Engineer?",
-          </h3>
-          <div class="modal-footer">
-
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
-            <button type="submit" (click)="deleteEngineer()" class="btn btn-success">Delete</button>
-
-          </div>
-        </div>
-
       </div>
-
-    </div>
   </div>
-  <!-- delete modal end here -->
+  
