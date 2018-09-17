@@ -12,12 +12,13 @@ export class SidebarComponent implements OnInit {
 
   list: SidebarList[];
   name: string;
-  picUrl: any;
+  picUrl: string;
 
   constructor(private router: Router,private loginService:LoginService) { }
 
   ngOnInit() {
     this.name = localStorage.getItem("name");
+    this.picUrl = typeof localStorage.getItem("picUrl")==='object'?'null':localStorage.getItem("picUrl");
 
 this.subscribeUsernameChanges();
 this.subscribeUserPictureChanges();
@@ -40,7 +41,6 @@ this.subscribeUserPictureChanges();
         }
       ];
 
-      this.picUrl = localStorage.getItem("picUrl")
       console.log(this.picUrl);
       
     }
@@ -62,7 +62,6 @@ this.subscribeUserPictureChanges();
           route: '/manager'
         }
       ];
-      this.picUrl = null;
 
     }
   }
