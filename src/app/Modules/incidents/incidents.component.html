@@ -223,14 +223,14 @@
                         </div>
                         <div class="col-md- 6 col-lg-6  col-sm-6">
 
-                          <div *ngIf="row.name">
-                            <b>{{comment.name}}</b>
+                          <div *ngIf="row.fixedInfo[0].name">
+                            <b>{{row.fixedInfo[0].name}}</b>
                           </div>
                           <div *ngIf="row.fixDate">
-                            <b>Date:</b>{{row.fixDate | date: 'dd MMM ,yyyy'}}
+                            <b>Date:</b>{{row.fixedInfo[0].createdAt | date: 'dd MMM ,yyyy'}}
                           </div>
                           <div *ngIf="row.fixDate">
-                            <b>Time:</b>{{row.fixDate | date: 'hh : mm a'}}
+                            <b>Time:</b>{{row.fixedInfo[0].createdAt | date: 'hh : mm a'}}
                           </div>
 
 
@@ -516,7 +516,7 @@
                       </div>
                     </div>
                   </div> -->
-                  <!-- <div *ngIf="row.rating" class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
+                  <div *ngIf="row.rating" class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                     <div class="row">
                       <div class="collg-12 col-sm-12">
                         <h4>
@@ -549,7 +549,7 @@
                         />
                       </div>
                     </div>
-                  /</div> -->
+                  /</div>
                 </div>
                 <div class="d-flex justify-content-center">
                   <button class="btn btn-sm btn-outline-success margin-right" *ngIf="row.statusName=='New' " type="submit"
