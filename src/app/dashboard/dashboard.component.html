@@ -20,24 +20,48 @@
             <li class="nav-item hover-cursor">
               <a class="nav-link" (click)="dashboardFilterByRange()" data-toggle="tab">Range</a>
             </li>
-            <li class="nav-item hover-cursor " *ngIf="showRange">
+            <!-- <li class="nav-item hover-cursor " *ngIf="showRange">
               <div class="input-group input-daterange">
                
-                <input type="date" class="form-control text-right" value="2018-09-01" min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
+                <input type="date" class="form-control text-right"  min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
                   required name="startDate" id="startDate" [(ngModel)]="dateRange.startDate" #startDate="ngModel" style="color: white;">
                 <p class="input-group-addon " style="margin:10px; ">To</p>
-                <input type="date" class="form-control text-right" [disabled]="!dateRange.startDate" value="2018-09-15"
+                <input type="date" class="form-control text-right" [disabled]="!dateRange.startDate" 
                   min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}" required name="endDate" id="endDate"
                   [(ngModel)]="dateRange.endDate" #userName="ngModel" style="color: white;">
-                  <div style="margin-top: 10px;">
-                  <i (click)="filterByRange('byRange')" class="material-icons hover-cursor">
+                
+                   <button  (click)="filterByRange('byRange')" class="btn btn-primary btn-sm chkBtn" [disabled]="!dateRange.endDate">
+                  <i  class="material-icons hover-cursor">
                     check_circle
                   </i>
-                </div>
+                  </button>
+               
               </div>
-
+              
+              
             </li>
-            
+            -->
+            <li class="nav-item hover-cursor " *ngIf="showRange">
+                <div class="input-group input-daterange">
+                 
+                  <input type="date" class="form-control"  min="1899-01-01" max="{{ today | date: 'y-MM-dd'}}"
+                    required name="startDate" id="startDate" [(ngModel)]="dateRange.startDate" #startDate="ngModel" style="color: white;width: 142px;">
+                  <p class="input-group-addon " style="margin:10px; ">To</p>
+                  <input type="date" class="form-control" [disabled]="!dateRange.startDate" 
+                    min="{{dateRange.startDate}}" max="{{ today | date: 'y-MM-dd'}}" required name="endDate" id="endDate"
+                    [(ngModel)]="dateRange.endDate" #userName="ngModel" style="color: white;width: 142px;">
+                  
+                     <button  (click)="filterByRange('byRange')" class="btn btn-primary btn-sm chkBtn" [disabled]="!dateRange.endDate">
+                    <i  class="material-icons hover-cursor">
+                      check_circle
+                    </i>
+                    </button>
+                 
+                </div>
+                
+                
+              </li>
+             
           </ul>
           
         </div>
@@ -65,7 +89,7 @@
           </ul>
         </div> -->
         <div>
-          <ul class="nav nav-tabs" data-tabs="tabs">
+          <ul class="nav " data-tabs="tabs" style="font-weight: 500; width: 190px;">
             <li class="nav-item hover-cursor ">
 
               <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -88,6 +112,8 @@
     </div>
   </div>
 
+
+      
 
   <div class="container-fluid" style="z-index: 0;" (window:resize)="getCharts()">
     <div class="row">
