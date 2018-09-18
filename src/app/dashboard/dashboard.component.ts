@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { TostService } from '../providers/tost.service';
 import { DateRange } from '../interface/user';
+import { Router } from '@angular/router';
 
 declare var google: any;
 
@@ -52,10 +53,12 @@ endDate:Date;
 dateRange = new DateRange;
   showRatingChart=true;
   categoryName= 'ALL APPLIANCES';
+  statusByProductCatIds=[];
 
 
   constructor(private dashboardservice: DashboardService,
     private tostservice: TostService,
+    private router: Router,
   ) {
   }
 
@@ -210,19 +213,8 @@ this.showRange=true;
         left: 100,
       },
 
-
-
-      // hAxis: {
-      //   title: 'Incidents',
-      // },
-      // vAxis: {
-      //   title: 'Appliances'
-      // },
-
-
       bar: { groupWidth: '75%' },
       legend: { position: 'top', maxLines: 3 },
-      // bars: 'vertical',
             isStacked: true,
 
       colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
@@ -232,11 +224,22 @@ this.showRange=true;
         easing: 'in-out'
       }
     };
+
     let chart = new google.visualization.BarChart(document.getElementById('Rating_Chart'));
-    chart.draw(data,options);
+
+
+    
+      chart.draw(data,options);
+}
+
+
+
+
+  routeToIncidents(id:number,pcid?: number,icid?:number,stid?){
+    console.log(stid + "   state name")
+    this.router.navigate(['/incidents'], { queryParams: { sId: id , pcId:pcid, icId:icid, stId: stid } });
+  
   }
-
-
   //  incidents weekly report statrs here
 
   get_Product_Status() {
@@ -246,13 +249,16 @@ this.showRange=true;
       .subscribe((res: any) => {
 
 
-
+        this.statusByProductCatIds=[]
 
         
         this.statusByProductCat.push(['Appliances', 'Carry Forward', 'New', 'Closed'])
         res.forEach(element => {
           this.statusByProductCat.push([element.name, element.CARRYFORWARD, element.NEW, element.CLOSED])
-        });
+       this.statusByProductCatIds.push(element.id);
+      console.log(this.statusByProductCatIds);
+       
+      });
 
         this.product_status_Chart();
       }, (err) => {
@@ -271,20 +277,10 @@ this.showRange=true;
         // height: 100,
       },
 
-
-
-      hAxis: {
-        // title: 'Incidents',
-      },
-      vAxis: {
-        // title: 'Appliances'
-      },
-
       isStacked: true,
 
       bar: { groupWidth: '75%' },
       legend: { position: 'top', maxLines: 3 },
-      // bars: 'vertical',
       colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
       animation: {
         "startup": true,
@@ -294,6 +290,21 @@ this.showRange=true;
     };
 
     let chart = new google.visualization.BarChart(document.getElementById('product_status_Chart'));
+    
+    google.visualization.events.addListener(chart, 'select', ()=>{
+            var selectedItem = chart.getSelection()[0];
+           
+             if (selectedItem) {
+      console.log(this.statusByProductCatIds[selectedItem.row]);
+      
+      console.log(selectedItem);
+      
+       this.routeToIncidents(0,this.statusByProductCatIds[selectedItem.row],);
+             }
+            });
+        
+    
+    
     google.visualization.events.addListener(chart, 'onmouseover', ()=>{
 
       document.getElementById('product_status_Chart').style.cursor="pointer";
@@ -349,7 +360,7 @@ this.showRange=true;
         if (selectedItem) {
 
 
-          //  this.routeToIncidents(0,0,0,this.stateCount[selectedItem.row + 1 ][0]);
+           this.routeToIncidents(0,0,0,this.stateCount[selectedItem.row + 1 ][0]);
         }
       });
 
@@ -367,15 +378,12 @@ this.showRange=true;
       .subscribe((res: any) => {
         this.mttrTillDate.push(['Appliances', 'Customer', 'Engineer', 'Repair'])
           res.forEach(element => {
-          console.log(element)
          for (const key in element) {
-         console.log( element[key][0]);
          this.mttrTillDate.push([key, parseFloat(element[key][0].customer),parseFloat(element[key][0].engineer), parseFloat(element[key][0].repair)])
    
          }
 
         });
-        console.log(this.mttrTillDate);
         
         this.repair_time_Till_Date();
 
@@ -392,28 +400,18 @@ this.showRange=true;
 
     var options = {
 
-      // title: 'Mean Time To Repair Product',
       height: 300,
       chartArea: {
         height: 200,
         top: 50,
       },
-      vAxis: {
-        //  title: 'Count' 
-        },
-      hAxis: {
-        // title: 'Product Category',
-        // slantedText:true,
-        // slantedTextAngle:330 
-      },
+      
       seriesType: 'bars',
 
       legend: { position: 'top', maxLines: 3 },
       bar: { groupWidth: '80%' },
       isStacked: true,
       colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
-      // isStacked: true,
-
       animation: {
         "startup": true,
         duration: 600,
@@ -421,28 +419,6 @@ this.showRange=true;
       }
     };
 
-    // var options = {
-    //   chartArea: {
-    //     left: 80,
-    //   },
-    //   hAxis: {
-    //     title: 'Mean Time To Repair (in days)',
-    //   },
-
-    //   vAxis: {
-    //     title: 'Appliances'
-    //   },
-    //   legend: { position: 'top', maxLines: 7 },
-    //   bar: { groupWidth: '75%' },
-    //   isStacked: true,
-
-    //   colors: ['#e63935'],
-    //   animation: {
-    //     "startup": true,
-    //     duration: 600,
-    //     easing: 'in-out'
-    //   }
-    // };
 
     var chart = new google.visualization.BarChart(document.getElementById('repair_time'));
 

@@ -32,27 +32,14 @@
         </thead>
         <tbody *ngFor="let row of dataRows let i =index">
           <tr>
-            <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">
-              <b>{{i+1}}</b>
-            </td>
-            <!-- <td data-toggle="collapse"  (click)="getId( row)"attr.href="#collapseExample{{i}}" >
-                            <img src="{{row.picUrl}}"> // src="/src/assets/img/avatar.jpg"
-                        </td> -->
-            <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">
-              <!-- <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}">
-              &nbsp;
-              <i *ngIf="!row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" class="material-icons">person</i> -->
-              {{row.name}}
-            </td>
+            <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}"><b>{{i+1}}</b></td>
+            <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.name}}</td>
             <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.username}}</td>
             <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.email}}</td>
             <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.contactNo}}</td>
             <td data-toggle="collapse" (click)="getId( row)" attr.href="#collapseExample{{i}}">{{row.specialist}}</td>
-            <!-- <td>
-                            <i (click)="getId( row)" data-toggle="modal" data-target="#deleteModal" class="material-icons">delete_forever</i>
-                        </td> -->
             <td class="change-icon">
-              <i (click)="getId(row) "  class="material-icons mainColor deleteIcon">delete</i>
+              <i class="material-icons mainColor deleteIcon">delete</i>
               <i (click)="getId(row)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteChange-icon">delete_forever</i>
             </td>
           </tr>
@@ -221,8 +208,8 @@
 
                         <ul *ngFor="let type of row.productTypes let i = index">
 
-                          <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;">
-                              {{i+1}} . {{type.productCategoryName}}
+                          <li class="badge badge-pill badge-primary" style="position: relative;    width: 150px;">
+                              {{type.productCategoryName}}
                         <i *ngIf="editCatShow" (click)="removeCategory(type)" class="material-icons iconPosition">
                               remove_circle
                             </i>

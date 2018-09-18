@@ -99,14 +99,14 @@ export class IncidentsService {
       }
 
       // sorting against diffrent value
-      getSorting(sort){
-        const sort_api =`/m/complaint/sort/${sort}/true`
+      getSorting(sort ,isAsc){
+        const sort_api =`/m/complaint/sort/${sort}/${isAsc}`
         return this.customHttp.get(sort_api)
       }
 
       // sorting by status, priority, category filter by status id
-getFilterSorting(sort,filter){
-  const filterSort_api =`/m/complaint/filter-sort/${sort}/true`
+getFilterSorting(sort,filter,isAsc){
+  const filterSort_api =`/m/complaint/filter-sort/${sort}/${isAsc}`
   return this.customHttp.post(filterSort_api,filter)
 }
 

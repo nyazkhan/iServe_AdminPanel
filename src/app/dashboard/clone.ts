@@ -1005,7 +1005,7 @@
 //     this.getStatusCounts();
 //     this.getCurrentIncidents();
 //     this.getIncidentWeeklyReports();
-//     this.getStatusByState();
+//      this.getStatusByState();
 //     this.getCategoryByStatus();
 //     this.getCategoryCount();
 //     this.getMeanTime();
