@@ -194,15 +194,21 @@ isAsc=true;
 
   x=1;
   onScroll() {
+    console.log('scrolled!! ' + this.x);
   
     if(this.x===1){
-      console.log('scrolled!!');
-     this.lodeMore();
-    this.x=this.x+1;
-   }
-   setTimeout(() => {
-    this.x=1
-   }, 5000);
+      setTimeout(()=>{
+
+        this.lodeMore();
+      },1000)
+      this.x++;
+    }else{
+      //  setTimeout(() => {
+        this.x=1
+    console.log("hey there");
+    
+  //  }, 200);
+  }
   }
 
 
