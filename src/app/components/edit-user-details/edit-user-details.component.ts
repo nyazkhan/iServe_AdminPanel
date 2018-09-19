@@ -47,8 +47,7 @@ export class EditUserDetailsComponent implements OnInit {
   getManagerDetails() {
     
     this.editManagerDetails.name = localStorage.getItem("name");
-    this.editManagerDetails.pic = localStorage.getItem("picUrl");
-    console.log( this.editManagerDetails.pic );
+    this.editManagerDetails.pic = typeof localStorage.getItem("picUrl")==='object'?'null':localStorage.getItem("picUrl");
     
     this.editManagerDetails.email = localStorage.getItem("email");
     this.editManagerDetails.contactNo = localStorage.getItem("contactNo");

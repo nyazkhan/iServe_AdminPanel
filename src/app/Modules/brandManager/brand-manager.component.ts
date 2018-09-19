@@ -92,7 +92,7 @@ export class BrandManagerComponent implements OnInit {
         this.resetform();
             this.closeManagerFormModal();
         this.dataRows.unshift(res)
-        this.showNotification();
+        this.tostservice.showNotificationSuccess("Manager add successfuly");
       }, (err) => {
         this.loadingButton = false;
 
@@ -113,7 +113,7 @@ getId( id){
 deleteManager(){
 this.brandService.deleteManager(this.currentId)
 .subscribe((res:any)=>{
-this.tostservice.showNotificationSuccess(res);
+this.tostservice.showNotificationSuccess("Manager Delete successfuly");
 },(err)=>{
  this.tostservice.showNotificationFailure(err) 
 })
@@ -129,29 +129,11 @@ this.imgfile=null;
 
   closeManagerFormModal() {
     $('#ManagerFormModal').modal('hide')
-    // $('#loaderModel').modal('show')
 
     
   }
 
-  showNotification() {
-    
-        $.notify({
-      
-            icon: "add_alert",
-            message: "Manager add successfuly"
-         
-         
-    
-        }, {
-            type: 'success',
-            timer: 1000,
-            placement: {
-              from: "top",
-              align: "right"
-            }
-          });
-      } 
+  
      
 
 }

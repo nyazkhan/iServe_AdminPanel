@@ -9,9 +9,7 @@
         <div class="user">
                 <div class="d-flex">
                     <div>
-                    <img *ngIf=" (picUrl === 'null')" src="assets/img/avatar.png/"/>
-                   
-                     <img *ngIf=" !(picUrl === 'null')" src="{{picUrl}}" />
+                    <img  [src]=" picUrl!=='null'? picUrl:'assets/img/avatar.png'"/>
 
                 </div>
                     <span class="lightColor" style=" padding: .5rem 15px;">{{name}}</span>

@@ -111,8 +111,9 @@
       <div  class="col-md-4">
         <h5><b>Profile Picture:</b>
           <br>
-          <img style="width: 150px; height: 150px;" *ngIf="(editManagerDetails.pic)" src="{{editManagerDetails.pic}}" alt="">
-          <img style="width: 150px; height: 150px;" *ngIf="(editManagerDetails.pic === 'null')" src="assets/img/avatar.png/"/>
+          <img style="width: 150px; height: 150px;" [src]=" editManagerDetails.pic!=='null'? editManagerDetails.pic:'assets/img/avatar.png'"/>
+
+          
           <br>
         </h5>
         <button type="button" (click)="toEdit('Profile Picture')" data-toggle="modal" data-target="#editFormModel" class="btn btn-rose  btn-md">

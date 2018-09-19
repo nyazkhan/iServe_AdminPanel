@@ -27,7 +27,7 @@ export class IncidentsComponent implements OnInit {
   sortActive: string
   filterBy = {};
   filterbysort = {}
-
+isAsc=true;
 
   constructor(
     private incidentService: IncidentsService,
@@ -192,10 +192,23 @@ export class IncidentsComponent implements OnInit {
   }
 
 
-
+  x=1;
   onScroll() {
-    console.log('scrolled!!');
-    // this.lodeMore();
+    console.log('scrolled!! ' + this.x);
+  
+    if(this.x===1){
+      setTimeout(()=>{
+
+        this.lodeMore();
+      },1000)
+      this.x++;
+    }else{
+      //  setTimeout(() => {
+        this.x=1
+    console.log("hey there");
+    
+  //  }, 200);
+  }
   }
 
 
@@ -249,6 +262,9 @@ export class IncidentsComponent implements OnInit {
   }
 
 
+  isAscn(val){
+    this.isAsc=val;
+  }
 
   sortBy(val) {
     this.currentRouteParams();
@@ -257,7 +273,7 @@ export class IncidentsComponent implements OnInit {
     this.showLoader = true;
     if (this.statusId== 0 && this.ProductCategoryId == 0 && this.incidentCategoryId == 0 && this.stateId == 0||"") {
       this.filtercomplaints = [];
-      this.incidentService.getSorting(val)
+      this.incidentService.getSorting(val, this.isAsc)
         .subscribe((res: any) => {
           this.filtercomplaints = res;
           this.showLoader = false;
@@ -271,7 +287,7 @@ export class IncidentsComponent implements OnInit {
       this.filtercomplaints = [];
 
       this.showLoader = true;
-      this.incidentService.getFilterSorting(val, this.filterbysort)
+      this.incidentService.getFilterSorting(val, this.filterbysort, this.isAsc)
         .subscribe((res) => {
           this.filtercomplaints = res;
           this.showLoader = false;

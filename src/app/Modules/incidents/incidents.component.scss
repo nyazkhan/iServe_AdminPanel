@@ -3,7 +3,7 @@
 
 
     .search-results {
-        height: auto;
+        height: 100vh;
         overflow: scroll;
     }
    
@@ -108,9 +108,9 @@ tr{
 .margin-right{
     margin-right: 25px;
 }
-.product-image{
-    // width: 110px!important;
-}
+// .product-image{
+//     // width: 110px!important;
+// }
 .border-bottom{
     border-bottom: 1px solid #f2f2f2;
 }
@@ -231,4 +231,10 @@ margin-right: 18px;
 }
 .changeEng{
     background: #962daf !important;
+}
+.assendingBtn{
+    margin-bottom: 8px;
+    margin-top: -5px;
+    display: flex;
+    background: lightgray;
 }

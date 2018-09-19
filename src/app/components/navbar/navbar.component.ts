@@ -26,15 +26,11 @@ export class NavbarComponent implements OnInit {
   countStatus = [];
   ngOnInit() {
 
-    console.log(localStorage.getItem("picUrl"));
+    this.name = localStorage.getItem("name");
+    this.picUrl = typeof localStorage.getItem("picUrl")==='object'?'null':localStorage.getItem("picUrl");
     
-    if (localStorage.getItem("currentUserName") == 'superadmin') {
-      this.name = localStorage.getItem("name");
-      this.picUrl =null;
-    }
+   
     if (localStorage.getItem("currentUserName") == 'management') {
-      this.name = localStorage.getItem("name");
-      this.picUrl = localStorage.getItem("picUrl");
       this.email = localStorage.getItem("email");
       this.username = localStorage.getItem("username");
       this.contactNo = localStorage.getItem("contactNo");
