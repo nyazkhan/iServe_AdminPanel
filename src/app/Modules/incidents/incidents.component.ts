@@ -192,22 +192,16 @@ isAsc=true;
   }
 
 
-  x=1;
+  x=false;
   onScroll() {
     console.log('scrolled!! ' + this.x);
   
-    if(this.x===1){
-      setTimeout(()=>{
+    if(!this.x){
 
+      this.x=true
         this.lodeMore();
-      },1000)
-      this.x++;
     }else{
-      //  setTimeout(() => {
-        this.x=1
-    console.log("hey there");
-    
-  //  }, 200);
+      return;
   }
   }
 
@@ -225,6 +219,7 @@ isAsc=true;
       this.showLoader = true;
       this.incidentService.getAllComplaint(this.currentPage + 1)
         .subscribe((res: Array<any>) => {
+          this.x=false
 
           if (res.length) {
 
@@ -235,6 +230,8 @@ isAsc=true;
           this.showLoader = false;
         },
           (err) => {
+            this.x=true
+
             this.showLoader = false;
             this.tostservice.showNotificationFailure(err)
           })
@@ -243,6 +240,7 @@ isAsc=true;
       this.showLoader = true;
       this.incidentService.getFillterComplaint({"statusId":this.statusId}, this.currentPage + 1)
         .subscribe((res: Array<any>) => {
+          this.x=false
 
           if (res.length) {
 
@@ -252,7 +250,10 @@ isAsc=true;
 
           this.showLoader = false;
         },
-          (err) => {
+          (err) => {     
+             this.x=true
+
+
             this.showLoader = false;
             this.tostservice.showNotificationFailure(err)
 

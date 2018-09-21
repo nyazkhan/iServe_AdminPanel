@@ -1,4 +1,5 @@
-<div class="card  card-plain" style="margin-top: 0px;">
+<h4 class="heading">Dashboard</h4>
+<div class="card  card-plain" style="margin-top: 27px;">
   <div class="card-header card-header-primary" style="margin-bottom:20px; ">
     <div class="nav-tabs-navigation">
       <div class="nav-tabs-wrapper space-between">
@@ -36,14 +37,9 @@
                       check_circle
                     </i>
                     </button>
-                 
                 </div>
-                
-                
               </li> 
-             
           </ul>
-          
         </div>
         <div>
           <ul class="nav " data-tabs="tabs" style="font-weight: 500; width: 190px;">
@@ -57,14 +53,10 @@
                 <a (click)="forAllProduct('ALL APPLIANCES')" class="dropdown-item  hoverColor">All Appliances</a>
                 <a *ngFor="let Category of productCategoryName" (click)="filterByProduct(Category)" class="dropdown-item  hoverColor">{{Category.name}}</a>
 
-
               </div>
             </li>
-
           </ul>
         </div>
-
-
       </div>
     </div>
   </div>

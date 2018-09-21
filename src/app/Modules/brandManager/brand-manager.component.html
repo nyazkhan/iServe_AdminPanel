@@ -100,7 +100,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="name"> Name:</label>
+                                            <label for="name"> Name <span style="color: red;">*</span></label>
                                             <br>
                                             <input type="text" placeholder="Name" required class="form-control" id="name" name="name" [(ngModel)]="managerDetails.name" #name="ngModel">
                                              <small [hidden]="name.valid || name.untouched" style="color: red">
@@ -116,7 +116,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                        <label>Email Id </label>
+                                        <label>Email Id <span style="color: red;">*</span> </label>
                                              <input type="email" required [(ngModel)]="managerDetails.email" name="email" id="email" class="form-control " #email="ngModel"
                                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}">
                                      <small [hidden]="email.valid || email.untouched" style="color: red">
@@ -126,7 +126,7 @@
                                 </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="userName">User Name:</label>
+                                            <label for="userName">User Name <span style="color: red;">*</span></label>
                                             <br>
                                             <input type="text" placeholder="User Name"  required minlength="4" maxlength="20" class="form-control" id="userName" name="userName" [(ngModel)]="managerDetails.username" #userName="ngModel">
                                             <small [hidden]="userName.valid || userName.untouched" style="color: red">
@@ -139,7 +139,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="password">Password:</label>
+                                            <label for="password">Password <span style="color: red;">*</span></label>
                                             <br>
                                             <input type="password" placeholder="Password" required class="form-control" id="password" name="password" [(ngModel)]="managerDetails.password" #password="ngModel">
                                             <small [hidden]="password.valid || password.untouched" style="color: red">
@@ -151,7 +151,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="contactNo">Contact No:</label>
+                                            <label for="contactNo">Contact No <span style="color: red;">*</span></label>
                                             
                                             <input type="number" placeholder="Contact" required minlength="10" maxlength="13" class="form-control" id="contactNo" name="contactNo" [(ngModel)]="managerDetails.contactNo"
                                                 #contactNo="ngModel">

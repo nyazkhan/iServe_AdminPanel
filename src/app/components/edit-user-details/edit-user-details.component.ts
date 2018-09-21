@@ -105,6 +105,10 @@ export class EditUserDetailsComponent implements OnInit {
         this.resetForm();
         this.tostservice.showNotificationSuccess("change successfuly");
         $('#filed').show();
+        $('#filedmail').show();
+        $('#filedPhone').show();
+
+
 
         this.formButtonHide = false;
       }, (err) => {
@@ -122,18 +126,26 @@ export class EditUserDetailsComponent implements OnInit {
 
       this.toBeEditValue = this.editManagerDetails.name;
       $('#filed').hide();
+      $('#filedmail').show();
+      $('#filedPhone').show();
 
 
     }
     if (this.toBeEdit == 'Email') {
 
       this.toBeEditValue = this.editManagerDetails.email;
-      // $('#filed').hide();
+      $('#filedmail').hide();
+      $('#filed').show();
+      $('#filedPhone').show();
+
     }
     if (this.toBeEdit == 'Contact No') {
 
       this.toBeEditValue = this.editManagerDetails.contactNo;
-      // $('#filed').hide();
+      $('#filedPhone').hide();
+      $('#filed').show();
+      $('#filedmail').show();
+
     }
   }
 
@@ -143,6 +155,8 @@ export class EditUserDetailsComponent implements OnInit {
     this.formButtonHide = false;
     this.closeFormModal();
     $('#filed').show();
+    $('#filedmail').show();
+    $('#filedPhone').show();
 
   }
 

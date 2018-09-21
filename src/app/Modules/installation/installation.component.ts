@@ -56,7 +56,7 @@ export class InstallationComponent implements OnInit {
     },
   ]
   statusHeading:Array<any>;
-  headerRow = ["Installation No. ", "Date", "Product Name", "Product Category", "Priority", "Status","Comment",];
+  headerRow = ["Installation No. ", "Date", "Product Name", "Product Category", "Priority","Comment", "Status",];
 
   // statusHeading = ["ALL", "New", "Assigned Service Engineer", "Scheduled", "Fixed", "OnHold", "Not Fixed" ,"Rejected"];
   selectedHeadingId = 0;

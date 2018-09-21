@@ -2,33 +2,24 @@
 <div class="card">
 
   <div class="card-header card-header-primary">
-    <div class="d-flex justify-content-between">
-      <h4 class="card-title ">Incidents</h4>
-      <div class="dropdown">
-        <a class="nav-link  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+    <div class="d-flex justify-content-between float-right">
+      <!-- <h4 class="card-title ">Incidents</h4> -->
+      <div class="dropdown " >
+        <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           <i class="material-icons hover-cursor"> filter_list </i>
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <!-- <a class="dropdown-item ">
-            <button [class.active]="isAsc" (click)="isAscn(true)" class="dropdown-item hoverColor ">
+          <a class="dropdown-item margin" style="padding: 0;background: lightgray;margin-top: -6px;" >
+            <button [class.active]="isAsc" (click)="isAscn(true)" class="dropdown-item hoverColor margin">
               <i class="material-icons">
                 arrow_upward
               </i> </button>
-            <button [class.active]="!isAsc" (click)="isAscn(false)" class="dropdown-item hoverColor"><i class="material-icons">
+            <button [class.active]="!isAsc" (click)="isAscn(false)" class="dropdown-item hoverColor margin"><i class="material-icons">
                 arrow_downward
               </i> </button>
 
-          </a> -->
-          <div  class="assendingBtn">
-              <button [class.active]="isAsc" (click)="isAscn(true)" class="dropdown-item hoverColor btn-sm " style="margin-left: 0px;">
-                  <i class="material-icons">
-                    arrow_upward
-                  </i> </button>
-                <button [class.active]="!isAsc" (click)="isAscn(false)" class="dropdown-item hoverColor"  style="margin-left: -4px;"><i class="material-icons">
-                    arrow_downward
-                </i> </button>
-          </div>
+          </a>
           <a *ngIf="selectedHeadingId==0" class="dropdown-item hoverColor" [class.active]="sortActive=='status' "
             (click)="sortBy('status')">Status</a>
           <a class="dropdown-item hoverColor" [class.active]="sortActive=='createdAt' " (click)="sortBy('createdAt')">Date</a>
@@ -55,394 +46,432 @@
       <div class="table-responsive" id="coll">
         <table class="table table-hover ">
 
-          <thead class=" text-primary">
+            <thead class=" text-primary">
 
-            <th *ngFor="let head of headerRow">{{ head }}</th>
-
-
-          </thead>
-          <tbody *ngFor="let row of filtercomplaints let i =index">
+              <th *ngFor="let head of headerRow">{{ head }}</th>
 
 
-            <tr (click)="setId(row.id, i, row.statusId)" data-toggle="collapse" attr.href="#collapseExample{{i}}">
-              <td>{{row.number}}</td>
-              <td>{{row.createdAt | date: 'dd MMM, yyyy'}}</td>
-              <td>{{row.productName |fixedLength}}</td>
-              <td>{{row.description| fixedLength }}</td>
-              <td>
-                {{row.productCategoryName | fixedLength}}
-              </td>
-              <td>{{row.againstCategoryName}}</td>
-              <td>{{row.priority}}</td>
+            </thead>
+            <tbody *ngFor="let row of filtercomplaints let i =index">
 
-              <td>
-                {{ row.statusName | fixedLength }}
-              </td>
+              <tr (click)="setId(row.id, i, row.statusId)" id="heading{{i}}" data-toggle="collapse" attr.href="#collapseExample{{i}}">
+                <td>
+                  <span class="mainColor">{{ i+1 }}</span>
 
+                  {{row.number}}</td>
+                <td>{{row.createdAt | date: 'dd MMM, yyyy'}}</td>
+                <td>{{row.productName |fixedLength}}</td>
+                <td>{{row.description| fixedLength }}</td>
+                <td>
+                  {{row.productCategoryName | fixedLength}}
+                </td>
+                <td>{{row.againstCategoryName}}</td>
+                <td>{{row.priority}}</td>
 
-
-            </tr>
-
-            <tr class="collapse tabel-detail col-md-8 col-lg-8" attr.id="collapseExample{{i}}">
-              <td colspan=8 class=" incident-details">
-                <div class="row p-2 auto-cursor">
-                  <div class="card card-nav-tabs description" *ngIf="row.description" style="margin:10px; width:94% ; margin: auto; margin-bottom: 0px;">
-                    <div class="card-body" style="padding-bottom: 0px;">
-                      <div class="description-heading">Product Description</div>
-                      <p> {{row.description}}</p>
-                    </div>
-                  </div>
+                <td>
+                  <span class="badge badge-pill" [style.background]="row.statusColor">{{ row.statusName | fixedLength
+                    }}</span>
 
 
-                  <!-- product details -->
+                </td>
 
 
-                  <div class="card  detail-box responsiveCard">
-                    <div>
-                      <div class="card-header card-header-info float-right text-right" style="width:150px;">
-                        Product Details
+
+              </tr>
+
+              <tr class="collapse tabel-detail col-md-8 col-lg-8" data-parent="#coll" attr.id="collapseExample{{i}}">
+                <td colspan=8 class=" incident-details">
+                  <div class="row p-2 auto-cursor">
+                    <div class="card card-nav-tabs description" *ngIf="row.description" style="margin:10px; width:94% ; margin: auto; margin-bottom: 0px;">
+                      <div class="card-body" style="padding-bottom: 0px;">
+                        <div class="description-heading">Product Description</div>
+                        <p> {{row.description}}</p>
                       </div>
                     </div>
-                    <div class="card-body" style="padding:15px;">
+
+
+                    <!-- product details -->
+
+
+                    <div class="card detail-box responsiveCard">
+                      <div>
+                        <div class="card-header card-header-info float-right text-right" style="width:150px;">
+                          Product Details
+                        </div>
+                      </div>
+                      <div class="card-body" style="padding:15px;">
+                        <div class="row">
+                          <div *ngIf="row.registeredProductPicUrl" class="col-md-4 col-lg-4 col-sm-4 ">
+                            <img class="product-image" [src]="row.registeredProductPicUrl" />
+                          </div>
+                          <div class="col-md- 6 col-lg-6 col-sm-6">
+                            <div *ngIf="row.productModelNumber">
+                              <b>{{ row.productModelNumber }}</b>
+                            </div>
+                            <div *ngIf="row.productModelNumber">
+                              <b>{{ row.productName }}</b>
+                            </div>
+                            <div *ngIf="row.productCategoryName">
+                              <b>Category : </b> {{ row.productCategoryName }}
+                            </div>
+                            <div *ngIf="row.productWarrantyEnd">
+                              <b>Warranty : </b>{{ row.productWarrantyEnd | date: 'dd MMM, yyyy'}}
+                            </div>
+                          </div>
+                          <div class="col-md-2 col-lg-2 col-sm-2">
+                            <span class="badge badge-pill" [style.background]="row.statusColor">{{row.priority}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <!-- <customer detail> -->
+                    <div class="card detail-box responsiveCard ">
+                      <div>
+                        <div class="card-header card-header-info float-right text-right" style="width:150px;">
+                          Customer Details
+                        </div>
+                      </div>
+
+                      <div class="card-body" style="padding:15px;">
+                        <div class="row">
+                          <div class="col-md-4 col-lg-4 col-sm-4 ">
+                            <img class="product-image" *ngIf="row.customerPicUrl" [src]="row.customerPicUrl" />
+                            <img *ngIf="!row.customerPicUrl " class="product-image" src="/assets/img/user.png">
+
+                          </div>
+                          <div class="col-md- 6 col-lg-6 col-sm-6">
+                            <div *ngIf=" row.customerName ">
+                              <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{ row.customerName }}</b>
+                            </div>
+                            <div *ngIf="row.customerContactNo">
+                              <i class="fa fa-phone details-icon" aria-hidden="true"></i> {{ row.customerContactNo }}
+                            </div>
+
+                            <div *ngIf=" row.customerEmail ">
+                              <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{ row.customerEmail }}
+                            </div>
+                            <div *ngIf="row.customerAddress" class="font-size">
+                              <i class="fa fa-home details-icon" aria-hidden="true" style="font-size: 18px;"></i> {{
+                              row.customerAddress }} {{ row.customerCity }}, {{ row.customerState }} {{
+                              row.customerPostalCode }} {{ row.customerCountry }}
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <dealer details> -->
+                    <div class="card card-nav-tabs detail-box responsiveCard" *ngIf="row.dealerName || row.dealerAddress || row.dealerContact || row.dealerEmail">
+                      <div>
+                        <div class="card-header card-header-info float-right text-right" style="width:150px;">
+                          Dealer Details
+                        </div>
+                      </div>
+                      <div class="card-body" style="padding:15px;">
+                        <div class="row">
+                          <div class="col-md-4 col-lg-4 col-sm-4 ">
+
+                            <img class="product-image" src="/assets/img/user.png">
+
+                          </div>
+                          <div class="col-md- 6 col-lg-6 col-sm-6">
+                            <div *ngIf=" row.dealerName ">
+                              <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{ row.dealerName }}</b>
+                            </div>
+                            <div *ngIf="row.dealerContact">
+                              <i class="fa fa-phone details-icon" aria-hidden="true"></i> {{ row.dealerContact }}
+                            </div>
+
+                            <div *ngIf="row.dealerEmail ">
+                              <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{ row.customerEmail}}
+                            </div>
+                            <div *ngIf="row.dealerAddress">
+                              <b>Address:</b> {{ row.dealerAddress }}
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <!-- <important dates> -->
+
+                    <div class="card detail-box card-nav-tabs detail-box responsiveCard ">
+                      <div>
+                        <div class="card-header card-header-info float-right text-right" style="width:150px;">
+                          Important Dates
+                        </div>
+                      </div>
+
+                      <div class="card-body">
+                        <div class="row gridrow">
+                          <div class="col-md-4 col-lg-4 col-sm-4 border-right">
+                            <b> Purchased</b>
+                            <br>{{row.productPurchaseDate | date: 'dd MMM, yyyy'}}
+                          </div>
+                          <div class="col-md-4 col-lg-4 col-sm-4 border-right">
+                            <b>Registered</b>
+                            <br> {{row.createdAt | date: 'dd MMM, yyyy'}}
+                          </div>
+                          <div class="col-md-4 col-lg-4 col-sm-4">
+                            <b>Installad</b>
+                            <br>
+                            <span *ngIf="row.productInstallationDateTime "> {{row.productInstallationDateTime | date:
+                              'dd
+                              MMM, yyyy'}}</span>
+                            <span *ngIf="!row.productInstallationDateTime "> Not Installed</span>
+                          </div>
+                        </div>
+                        <div class="row warantyRow">
+                          <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 border-right">
+                            <b>Waranty Start</b>
+                            <br> {{row.productWarrantyStart | date: 'dd MMM, yyyy'}}
+                          </div>
+                          <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                            <b>Waranty End</b>
+                            <br> {{row.productWarrantyEnd | date: 'dd MMM, yyyy'}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <assigned engineer-->
+                    <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="!(row.statusName == 'New' || row.statusName == 'Rejected')">
+                      <div>
+                        <div class="card-header card-header-info float-right text-right" style="width:150px;">
+                          Assigned Engineer
+                        </div>
+                      </div>
+                      <div class="card-body" style="padding:15px;">
+                        <div class="row">
+                          <div class="col-md-4 col-lg-4 col-sm-4 ">
+                            <img class="product-image" *ngIf="row.assignedServiceEngineerPicUrl" [src]="row.assignedServiceEngineerPicUrl" />
+                            <img *ngIf="!row.assignedServiceEngineerPicUrl " class="product-image" src="/assets/img/user.png">
+
+                          </div>
+                          <div class="col-md- 6 col-lg-6 col-sm-6">
+                            <!-- <div>product details</div> -->
+                            <div *ngIf=" row.assignedServiceEngineerName ">
+                              <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{row.assignedServiceEngineerName}}</b>
+                            </div>
+                            <div *ngIf="row.assignedServiceEngineerContactNo ">
+                              <i class="fa fa-phone details-icon" aria-hidden="true"></i> {{
+                              row.assignedServiceEngineerContactNo }}
+                            </div>
+
+                            <div *ngIf="row.assignedServiceEngineerEmail ">
+                              <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{
+                              row.assignedServiceEngineerEmail }}
+                            </div>
+                            <!-- <span class"badge badge-pill badge-success" data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id)">Edit</span> -->
+                            <div *ngIf="!(row.statusName =='Fixed' || row.statusName =='Rejected')">
+                              <!-- <span class="badge badge-pill badge-primary" data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id,row.assignedServiceEngineerName)">Edit</span> -->
+                              <button class="btn btn-primary btn-sm changeEng" data-target="#assignModal" data-toggle="modal"
+                                (click)="getAssingedId(row.id,row.assignedServiceEngineerName) ; assignForm.reset()">
+                                Change Engineer</button>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <scheduled details> -->
+                    <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="!(row.statusName == 'New' || row.statusName == 'Assigned Engineer'|| row.statusName == 'Rejected')">
+                      <div>
+                        <div class="card-header card-header-info float-right text-right" style="width:150px;">
+                          Scheduled Details
+                        </div>
+                      </div>
+                      <div class="card-body" style="padding:15px;">
+                        <div class="row">
+                          <div class="col-md-4 col-lg-4 col-sm-4 ">
+
+                            <i class="material-icons icon">
+                              access_alarm
+                            </i>
+
+                          </div>
+                          <div class="col-md- 6 col-lg-6 col-sm-6">
+
+                            <div *ngIf="row.lastScheduleDate">
+                              <b>Date:</b> {{ row.lastScheduleDate | date: 'dd MMM, yyyy' }}
+                            </div>
+                            <div *ngIf="row.lastScheduleDate">
+                              <b>Time:</b> {{ row.lastScheduleDate | date: 'hh : mm a' }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <fixed case> -->
+                    <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.statusName==='Fixed'">
+                      <div>
+                        <div class="card-header card-header-info float-right text-right" style="width:150px;">
+                          Fixed Details
+                        </div>
+                      </div>
+                      <div class="card-body" style="padding:15px;">
+                        <div class="row">
+                          <div *ngIf="row.signatureUrl" class="col-md-4 col-lg-4 col-sm-4 ">
+
+                            <img class="product-image" [src]="row.signatureUrl" />
+
+                          </div>
+                          <div class="col-md- 6 col-lg-6 col-sm-6">
+
+                            <div *ngIf="row.fixedInfo[0].name">
+                              <b>{{row.fixedInfo[0].name}}</b>
+                            </div>
+                            <div *ngIf="row.fixDate">
+                              <b>Date:</b>{{row.fixedInfo[0].createdAt | date: 'dd MMM ,yyyy'}}
+                            </div>
+                            <div *ngIf="row.fixDate">
+                              <b>Time:</b>{{row.fixedInfo[0].createdAt | date: 'hh : mm a'}}
+                            </div>
+
+
+                            <div *ngIf="row.fixedInfo[0].comment">
+                              Comment: <b>{{row.fixedInfo[0].comment}}</b>
+                            </div>
+                            <div *ngIf="row.rca">
+                              Rca: <b>{{row.rca}}</b>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+
+
+                    <!-- not fixed info -->
+                    <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.statusName==='Not Fixed'">
+                      <div>
+                        <div class="card-header card-header-info float-right text-right" style="width:150px;">
+                          Not Fixed Details
+                        </div>
+                      </div>
+                      <div class="card-body" style="padding:15px;">
+                        <div class="row">
+                          <div class="col-md-4 col-lg-4 col-sm-4 ">
+                            <img class="product-image" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" />
+
+
+                          </div>
+                          <div class="col-md- 6 col-lg-6 col-sm-6">
+
+                            <div *ngIf="row.lastModifiedAt">
+
+                              <b>Date:</b>{{row.lastModifiedAt | date: 'dd MMM ,yyyy'}}
+                            </div>
+                            <div *ngIf="row.lastModifiedAt">
+                              <b>Time:</b>
+                              {{row.lastModifiedAt | date: 'hh : mm a'}}
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- <feedback details> -->
+                    <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.rating">
+                        <div>
+                          <div class="card-header card-header-info float-right text-right" style="width:150px;">
+                           Feedback Details
+                          </div>
+                        </div>
+                        <div class="card-body" style="padding:15px;">
+                          <div class="row">
+                            <div class="col-md-4 col-lg-4 col-sm-4 ">
+                              <img class="product-image" src="assets/img/rating.png" />
+  
+  
+                            </div>
+                            <div class="col-md- 6 col-lg-6 col-sm-6">
+  
+                              <div *ngIf="row.fixedInfo[1]">
+  
+                                <b>Date:</b>{{row.fixedInfo[1].createdAt | date:'dd MMM, yyyy'}}
+                              </div>
+                              <div *ngIf="row.fixedInfo[1]">
+                                <b>Time:</b>
+                                {{row.fixedInfo[1].createdAt | date: 'hh : mm a'}}
+                              </div>
+                              <div class="d-flex">
+                                  <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                                  <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                                  <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                                  <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                                  <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
+                                </div>
+                                <div>
+                                  <b>Comment:</b> {{row.fixedInfo[1].comment}}
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+  
+                      </div>
+                    <!-- rating -->
+                    <!-- <div *ngIf="row.rating" class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                       <div class="row">
-                        <div *ngIf="row.registeredProductPicUrl" class="col-md-4 col-lg-4 col-sm-4 ">
-                          <img class="product-image" [src]="row.registeredProductPicUrl" />
-                        </div>
-                        <div class="col-md- 6 col-lg-6  col-sm-6">
-                          <div *ngIf="row.productModelNumber">
-                            <b>{{ row.productModelNumber }}</b>
-                          </div>
-                          <div *ngIf="row.productModelNumber">
-                            <b>{{ row.productName }}</b>
-                          </div>
-                          <div *ngIf="row.productCategoryName">
-                            <b>Category : </b> {{ row.productCategoryName }}
-                          </div>
-                          <div *ngIf="row.productWarrantyEnd">
-                            <b>Warranty : </b>{{ row.productWarrantyEnd | date: 'dd MMM, yyyy'}}
-                          </div>
-                        </div>
-                        <div class="col-md-2 col-lg-2 col-sm-2">
-                          <span class="badge badge-pill" [style.background]="row.statusColor">{{row.priority}}</span>
+                        <div class="collg-12 col-sm-12">
+                          <h4>
+                            <b>Feedback</b>
+                          </h4>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                      <div class="card-body" style="padding:15px;">
+                        <div class="row">
+                          <div class="col-md-4 col-lg-4 col-sm-4 ">
+                            <img class="product-image" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" />
 
 
-                  <!-- <customer detail> -->
-                  <div class="card  detail-box responsiveCard ">
-                    <div>
-                      <div class="card-header card-header-info float-right text-right" style="width:150px;">
-                        Customer Details
-                      </div>
-                    </div>
-
-                    <div class="card-body" style="padding:15px;">
-                      <div class="row">
-                        <div class="col-md-4 col-lg-4 col-sm-4 ">
-                          <img class="product-image" *ngIf="row.customerPicUrl" [src]="row.customerPicUrl" />
-                          <img *ngIf="!row.customerPicUrl " class="product-image" src="/assets/img/user.png">
-
-                        </div>
-                        <div class="col-md- 6 col-lg-6  col-sm-6">
-                          <div *ngIf=" row.customerName ">
-                            <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{ row.customerName }}</b>
                           </div>
-                          <div *ngIf="row.customerContactNo">
-                            <i class="fa fa-phone details-icon" aria-hidden="true"></i> {{ row.customerContactNo }}
+                          <div *ngIf="row.fixedInfo[1]">
+                            <b>Date:</b>{{row.fixedInfo[1].createdAt | date:'dd MMM, yyyy'}}
+                            <b>Time:</b>{{row.fixedInfo[1].createdAt | date: 'hh : mm a'}}
+
                           </div>
-
-                          <div *ngIf=" row.customerEmail ">
-                            <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{ row.customerEmail }}
+                          <div class="d-flex">
+                            <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                            <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                            <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                            <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                            <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
                           </div>
-                          <div *ngIf="row.customerAddress" class="font-size">
-                            <i class="fa fa-home details-icon" aria-hidden="true" style="font-size: 18px;"></i> {{
-                            row.customerAddress }} {{ row.customerCity }}, {{ row.customerState }} {{
-                            row.customerPostalCode }} {{ row.customerCountry }}
-                          </div>
-
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- <dealer details> -->
-                  <div class="card card-nav-tabs detail-box responsiveCard" *ngIf="row.dealerName || row.dealerAddress || row.dealerContact || row.dealerEmail">
-                    <div>
-                      <div class="card-header card-header-info float-right text-right" style="width:150px;">
-                        Dealer Details
-                      </div>
-                    </div>
-                    <div class="card-body" style="padding:15px;">
-                      <div class="row">
-                        <div class="col-md-4 col-lg-4 col-sm-4 ">
-
-                          <img class="product-image" src="/assets/img/user.png">
-
-                        </div>
-                        <div class="col-md- 6 col-lg-6 col-sm-6">
-                          <div *ngIf=" row.dealerName ">
-                            <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{ row.dealerName }}</b>
-                          </div>
-                          <div *ngIf="row.dealerContact">
-                            <i class="fa fa-phone details-icon" aria-hidden="true"></i> {{ row.dealerContact }}
-                          </div>
-
-                          <div *ngIf="row.dealerEmail ">
-                            <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{ row.customerEmail}}
-                          </div>
-                          <div *ngIf="row.dealerAddress">
-                            <b>Address:</b> {{ row.dealerAddress }}
-                          </div>
-
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <!-- <important dates> -->
-
-                  <div class="card detail-box card-nav-tabs detail-box responsiveCard ">
-                    <div>
-                      <div class="card-header card-header-info float-right text-right" style="width:150px;">
-                        Important Dates
-                      </div>
-                    </div>
-
-                    <div class="card-body">
-                      <div class="row gridrow">
-                        <div class="col-md-4 col-lg-4 col-sm-4 border-right">
-                          <b> Purchased</b>
-                          <br>{{row.productPurchaseDate | date: 'dd MMM, yyyy'}}
-                        </div>
-                        <div class="col-md-4 col-lg-4 col-sm-4 border-right">
-                          <b>Registered</b>
-                          <br> {{row.createdAt | date: 'dd MMM, yyyy'}}
-                        </div>
-                        <div class="col-md-4 col-lg-4 col-sm-4">
-                          <b>Installad</b>
-                          <br>
-                          <span *ngIf="row.productInstallationDateTime "> {{row.productInstallationDateTime | date: 'dd
-                            MMM, yyyy'}}</span>
-                          <span *ngIf="!row.productInstallationDateTime "> Not Installed</span>
-                        </div>
-                      </div>
-                      <div class="row warantyRow">
-                        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 border-right">
-                          <b>Waranty Start</b>
-                          <br> {{row.productWarrantyStart | date: 'dd MMM, yyyy'}}
-                        </div>
-                        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                          <b>Waranty End</b>
-                          <br> {{row.productWarrantyEnd | date: 'dd MMM, yyyy'}}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- <assigned engineer-->
-                  <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="!(row.statusName == 'New' ||  row.statusName == 'Rejected')">
-                    <div>
-                      <div class="card-header card-header-info float-right text-right" style="width:150px;">
-                        Assigned Engineer
-                      </div>
-                    </div>
-                    <div class="card-body" style="padding:15px;">
-                      <div class="row">
-                        <div class="col-md-4 col-lg-4 col-sm-4 ">
-                          <img class="product-image" *ngIf="row.assignedServiceEngineerPicUrl" [src]="row.assignedServiceEngineerPicUrl" />
-                          <img *ngIf="!row.assignedServiceEngineerPicUrl " class="product-image" src="/assets/img/user.png">
-
-                        </div>
-                        <div class="col-md- 6 col-lg-6  col-sm-6">
-                          <!-- <div>product details</div> -->
-                          <div *ngIf=" row.assignedServiceEngineerName  ">
-                            <i class="fa fa-user details-icon" aria-hidden="true"></i> <b>{{row.assignedServiceEngineerName}}</b>
-                          </div>
-                          <div *ngIf="row.assignedServiceEngineerContactNo ">
-                            <i class="fa fa-phone details-icon" aria-hidden="true"></i> {{
-                            row.assignedServiceEngineerContactNo }}
-                          </div>
-
-                          <div *ngIf="row.assignedServiceEngineerEmail ">
-                            <i class="fa fa-envelope details-icon" aria-hidden="true"></i> {{
-                            row.assignedServiceEngineerEmail }}
-                          </div>
-                          <!-- <span class"badge badge-pill badge-success"  data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id)">Edit</span> -->
-                          <div *ngIf="!(row.statusName =='Fixed' || row.statusName =='Rejected')">
-                            <!-- <span class="badge badge-pill badge-primary" data-target="#assignModal" data-toggle="modal" (click)="getAssingedId(row.id,row.assignedServiceEngineerName)">Edit</span> -->
-                            <button class="btn btn-primary btn-sm changeEng" data-target="#assignModal" data-toggle="modal"
-                              (click)="getAssingedId(row.id,row.assignedServiceEngineerName) ; assignForm.reset()">
-                              Change Engineer</button>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <scheduled details> -->
-                  <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="!(row.statusName == 'New' || row.statusName == 'Assigned Engineer'|| row.statusName == 'Rejected')">
-                    <div>
-                      <div class="card-header card-header-info float-right text-right" style="width:150px;">
-                        Scheduled Details
-                      </div>
-                    </div>
-                    <div class="card-body" style="padding:15px;">
-                      <div class="row">
-                        <div class="col-md-4 col-lg-4 col-sm-4 ">
-
-                          <i class="material-icons icon">
-                            access_alarm
-                          </i>
-
-                        </div>
-                        <div class="col-md- 6 col-lg-6 col-sm-6">
-
-                          <div *ngIf="row.lastScheduleDate">
-                            <b>Date:</b> {{ row.lastScheduleDate | date: 'dd MMM, yyyy' }}
-                          </div>
-                          <div *ngIf="row.lastScheduleDate">
-                            <b>Time:</b> {{ row.lastScheduleDate | date: 'hh : mm a' }}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <fixed case> -->
-                  <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.statusName==='Fixed'">
-                    <div>
-                      <div class="card-header card-header-info float-right text-right" style="width:150px;">
-                        Fixed Details
-                      </div>
-                    </div>
-                    <div class="card-body" style="padding:15px;">
-                      <div class="row">
-                        <div *ngIf="row.signatureUrl" class="col-md-4 col-lg-4 col-sm-4 ">
-
-                          <img class="product-image" [src]="row.signatureUrl" />
-
-                        </div>
-                        <div class="col-md- 6 col-lg-6  col-sm-6">
-
-                          <div *ngIf="row.fixedInfo[0].name">
-                            <b>{{row.fixedInfo[0].name}}</b>
-                          </div>
-                          <div *ngIf="row.fixDate">
-                            <b>Date:</b>{{row.fixedInfo[0].createdAt | date: 'dd MMM ,yyyy'}}
-                          </div>
-                          <div *ngIf="row.fixDate">
-                            <b>Time:</b>{{row.fixedInfo[0].createdAt | date: 'hh : mm a'}}
-                          </div>
-
-
-                          <div *ngIf="row.fixedInfo[0].comment">
-                            Comment: <b>{{row.fixedInfo[0].comment}}</b>
-                          </div>
-                          <div *ngIf="row.rca">
-                            Rca: <b>{{row.rca}}</b>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-
-
-
-
-                  <!-- not fixed info -->
-                  <div class="card card-nav-tabs detail-box  responsiveCard " *ngIf="row.statusName==='Not Fixed'">
-                    <div>
-                      <div class="card-header card-header-info float-right text-right" style="width:150px;">
-                        Not Fixed Details
-                      </div>
-                    </div>
-                    <div class="card-body" style="padding:15px;">
-                      <div class="row">
-                        <div class="col-md-4 col-lg-4 col-sm-4 ">
-                          <img class="product-image" src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-warning-icon.png" />
-
-
-                        </div>
-                        <div class="col-md- 6 col-lg-6  col-sm-6">
-
-                          <div *ngIf="row.lastModifiedAt">
-
-                            <b>Date:</b>{{row.lastModifiedAt | date: 'dd MMM ,yyyy'}}
-                          </div>
-                          <div *ngIf="row.lastModifiedAt">
-                            <b>Time:</b>
-                            {{row.lastModifiedAt | date: 'hh : mm a'}}
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <!-- rating -->
-                  
-                  <!-- <feedback> -->
-                      <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.rating">
                           <div>
-                            <div class="card-header card-header-info float-right text-right" style="width:150px;">
-                              Feedback Details
-                            </div>
+                            <b>Comment:</b> {{row.fixedInfo[1].comment}}
                           </div>
-                          <div class="card-body" style="padding:15px;">
-                            <div class="row">
-                              <div class="col-md-4 col-lg-4 col-sm-4 ">
-      
-                                <img class="product-image" src="assets/img/rating.png" />
-      
-                              </div>
-                              <div class="col-md- 6 col-lg-6  col-sm-6">
-      
-                                  <div *ngIf="row.fixedInfo[1].createdAt">
-                                      <b>Date : </b>{{row.fixedInfo[1].createdAt | date:'dd MMM, yyyy'}}<br/>
-                                      <b>Time : </b>{{row.fixedInfo[1].createdAt | date: 'hh : mm a'}}
-            
-                                  </div>
-                                  <div *ngIf="row.fixedInfo[1].comment">
-                                      <b>Comment:</b>{{row.fixedInfo[1].comment}}
-                                    </div>
-                                    <div class="d-flex">
-                                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                                        <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
-                                        <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
-                                      </div>
-                                
-                              </div>
-                            </div>
-                          </div>
-      
                         </div>
-                </div>
+                      </div>
+                    </div> -->
+                  </div>
 
-                <div class="d-flex justify-content-center">
-                  <button class="btn btn-sm btn-outline-success margin-right" *ngIf="row.statusName=='New' " type="submit"
-                    data-toggle="modal" data-target="#assignModal" (click)="getAssingedId(row.id); assignForm.reset();">
-                    <i class="material-icons"> assignment_turned_in </i> Assign</button>
-                  <button class="btn btn-sm btn-outline-primary margin-right" type="submit" data-toggle="modal" (click)=" getCommentsId(row.id)"
-                    data-target="#commentModal">
-                    <i class="material-icons">
-                      history
-                    </i> History</button>
-                  <button *ngIf="row.statusName!=='Rejected' " class="btn btn-sm btn-outline-danger " type="submit"
-                    data-toggle="modal" (click)="getRejectId(row.id)" data-target="#rejectModal">
-                    <i class="material-icons"> clear </i> reject</button>
-                </div>
-              </td>
-            </tr>
-
-          </tbody>
+                  <div class="d-flex justify-content-center">
+                    <button class="btn btn-sm btn-outline-success margin-right" *ngIf="row.statusName=='New' " type="submit"
+                      data-toggle="modal" data-target="#assignModal" (click)="getAssingedId(row.id); assignForm.reset();">
+                      <i class="material-icons"> assignment_turned_in </i> Assign</button>
+                    <button class="btn btn-sm btn-outline-primary margin-right" type="submit" data-toggle="modal"
+                      (click)=" getCommentsId(row.id)" data-target="#commentModal">
+                      <i class="material-icons">
+                        history
+                      </i> History</button>
+                    <button *ngIf="row.statusName!=='Rejected' " class="btn btn-sm btn-outline-danger " type="submit"
+                      data-toggle="modal" (click)="getRejectId(row.id)" data-target="#rejectModal">
+                      <i class="material-icons"> clear </i> reject</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
           <div class="col-md-8 col-lg-8" style="background: gray">
 
           </div>
@@ -475,7 +504,7 @@
 
 <div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="assignModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content   card card-stats">
+    <div class="modal-content card card-stats">
       <div class="card-header card-header-success card-header-icon">
         <div class="card-icon">
           <i class="material-icons">content_copy</i>
@@ -496,7 +525,6 @@
             <div class="row">
 
               <div class="col-md-12">
-
                 <div class="form-group">
                   <label>Select Service Engineer
                   </label>
@@ -566,9 +594,9 @@
                     <b style="color: gray;">{{comment.comment}}</b>
                   </div>
                   <div class="comment col-md- 8 col-lg-8 col-sm-8 col-xs-8" [style.border-left-color]="comment.statusColor">
-                    <!-- <div  *ngIf="comment.scheduleDate" class="date">
-                      {{comment.scheduleDate | date: 'dd MMM, yyyy  hh : mm a'}}
-                    </div> -->
+                    <!-- <div *ngIf="comment.scheduleDate" class="date">
+{{comment.scheduleDate | date: 'dd MMM, yyyy hh : mm a'}}
+</div> -->
                     <div>
                       {{comment.autoComment}}
                     </div>
@@ -642,4 +670,3 @@
     </div>
   </div>
 </div>
-<!-- End of reject modal -->
