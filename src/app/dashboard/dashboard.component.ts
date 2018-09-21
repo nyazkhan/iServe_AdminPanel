@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
 
   public chart: any;
 
-
+valFalse=false;
 
   role: string;
 
@@ -28,13 +28,16 @@ endDate:Date;
   statusByProductCat = [];
   stateCount = [];
   mttrTillDate = [];
-  productWarranty = [[]];
+  meanTiming=[];
+  inWarranty = [];
+  outOfWarranty=[];
 
   incidentAge = [];
   filter = {};
   statusCarryForward: number
-  statusClosed: number
+  statusFixed: number
   statusNew: number;
+  statusRejected:Number;
   productCategoryName: Array<any>
 
   filterByDate = "today";
@@ -43,12 +46,13 @@ endDate:Date;
   filterRange: string;
   showRange=false;
   rating = [];
-  rating0: number;
-  rating1: number;
-  rating2: number;
-  rating3: number;
-  rating4: number;
-  rating5: number;
+  
+  // rating0: number;
+  // rating1: number;
+  // rating2: number;
+  // rating3: number;
+  // rating4: number;
+  // rating5: number;
 
 dateRange = new DateRange;
   showRatingChart=true;
@@ -159,9 +163,9 @@ this.showRange=true;
       .subscribe((res: any) => {
         // console.log(res);
         this.statusCarryForward = res.CARRYFORWARD;
-        this.statusClosed = res.CLOSED;
+        this.statusFixed = res.FIXED;
         this.statusNew = res.NEW;
-
+        this.statusRejected=res.REJECTED;
       })
   }
 
@@ -171,7 +175,7 @@ this.showRange=true;
 
   get_product_rating_chart() {
 
-    this.dashboardservice.getProductRating(this.filter)
+    this.dashboardservice.getProductRating(this.filter,this.valFalse)
       .subscribe((res: any) => {
         this.rating = [[]];
    
@@ -209,23 +213,27 @@ this.showRange=true;
     let options = {
       height: 200,
 
-      chartArea: {
-        left: 100,
-      },
+      // chartArea: {
+      //   left: 100,
+      // },
 
-      bar: { groupWidth: '75%' },
-      legend: { position: 'top', maxLines: 3 },
-            isStacked: true,
+
+      seriesType: 'bars',
+      series: {6: {type: 'line'}},
+
+      // bar: { groupWidth: '75%' },
+      legend: { position: 'top', maxLines: 6 },
+            // isStacked: true,
 
       colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
-      animation: {
-        "startup": true,
-        duration: 600,
-        easing: 'in-out'
-      }
+      // animation: {
+      //   "startup": true,
+      //   duration: 600,
+      //   easing: 'in-out'
+      // }
     };
 
-    let chart = new google.visualization.BarChart(document.getElementById('Rating_Chart'));
+    let chart = new google.visualization.ComboChart(document.getElementById('Rating_Chart'));
 
 
     
@@ -245,18 +253,18 @@ this.showRange=true;
   get_Product_Status() {
 
     this.statusByProductCat = [];
-    this.dashboardservice.get_Product_Status(this.filter)
+    this.dashboardservice.get_Product_Status(this.filter,this.valFalse)
       .subscribe((res: any) => {
 
 
         this.statusByProductCatIds=[]
 
         
-        this.statusByProductCat.push(['Appliances', 'Carry Forward', 'New', 'Closed'])
+        this.statusByProductCat.push(['Appliances', 'Carry Forward', 'New', 'Rejected','Fixed',])
         res.forEach(element => {
-          this.statusByProductCat.push([element.name, element.CARRYFORWARD, element.NEW, element.CLOSED])
+          this.statusByProductCat.push([element.name, element.CARRYFORWARD, element.NEW, element.REJECTED, element.FIXED])
        this.statusByProductCatIds.push(element.id);
-      console.log(this.statusByProductCatIds);
+      // console.log(this.statusByProductCatIds);
        
       });
 
@@ -272,34 +280,33 @@ this.showRange=true;
     let options = {
       height: 200,
 
-      chartArea: {
-        left: 100,
-        // height: 100,
+   
+      seriesType: 'bars',
+      series: {6: {type: 'line'}},
+      vAxis:{
+       
       },
-
-      isStacked: true,
-
-      bar: { groupWidth: '75%' },
+  
       legend: { position: 'top', maxLines: 3 },
       colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
-      animation: {
-        "startup": true,
-        duration: 600,
-        easing: 'in-out'
-      }
+      // animation: {
+      //   "startup": true,
+      //   duration: 600,
+      //   easing: 'in-out'
+      // }
     };
 
-    let chart = new google.visualization.BarChart(document.getElementById('product_status_Chart'));
+    let chart = new google.visualization.ComboChart(document.getElementById('product_status_Chart'));
     
     google.visualization.events.addListener(chart, 'select', ()=>{
             var selectedItem = chart.getSelection()[0];
            
              if (selectedItem) {
-      console.log(this.statusByProductCatIds[selectedItem.row]);
+      // console.log(this.statusByProductCatIds[selectedItem.row]);
       
       console.log(selectedItem);
       
-       this.routeToIncidents(0,this.statusByProductCatIds[selectedItem.row],);
+      //  this.routeToIncidents(],);
              }
             });
         
@@ -320,7 +327,7 @@ this.showRange=true;
 
   getStatusByState() {
     this.stateCount = [];
-    this.dashboardservice.getStateByStatus(this.filter)
+    this.dashboardservice.getStateByStatus(this.filter,this.valFalse)
       .subscribe((res: any) => {
         // console.log(res)
         this.stateCount.push(['provinces', 'Open Incidents'])
@@ -374,14 +381,19 @@ this.showRange=true;
   get_MeanTime_Till_Date() {
     this.mttrTillDate = [];
 
-    this.dashboardservice.getMTTR(this.filter)
+    this.dashboardservice.getAVG(this.filter,this.valFalse)
       .subscribe((res: any) => {
         this.mttrTillDate.push(['Appliances', 'Customer', 'Engineer', 'Repair'])
-          res.forEach(element => {
-         for (const key in element) {
-         this.mttrTillDate.push([key, parseFloat(element[key][0].customer),parseFloat(element[key][0].engineer), parseFloat(element[key][0].repair)])
+         console.log(res[0]["avgResolveTime with Avg times(customer, engineer, repair)"]);
+          res[0]["avgResolveTime with Avg times(customer, engineer, repair)"].forEach(element => {
+            // ["'avgResolveTime with Avg times(customer, engineer, repair)'"]
+// console.log(element);
+
+
+            //  for (const key in element) {
+         this.mttrTillDate.push([element.name, parseFloat(element.customer),parseFloat(element.engineer), parseFloat(element.repair)])
    
-         }
+        //  }
 
         });
         
@@ -407,20 +419,21 @@ this.showRange=true;
       },
       
       seriesType: 'bars',
+      series: {3: {type: 'line'}},
 
       legend: { position: 'top', maxLines: 3 },
-      bar: { groupWidth: '80%' },
-      isStacked: true,
+      // bar: { groupWidth: '80%' },
+      // isStacked: true,
       colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
-      animation: {
-        "startup": true,
-        duration: 600,
-        easing: 'in-out'
-      }
+      // animation: {
+      //   "startup": true,
+      //   duration: 600,
+      //   easing: 'in-out'
+      // }
     };
 
 
-    var chart = new google.visualization.BarChart(document.getElementById('repair_time'));
+    var chart = new google.visualization.ComboChart(document.getElementById('repair_time'));
 
     chart.draw(data, options);
   }
@@ -429,30 +442,38 @@ this.showRange=true;
 
 
 
-  get_Product_Warranty_Status() {
+  get_Out_Warranty_Status() {
    
-    
-    this.dashboardservice.getProductWarrantyStatus(this.filter)
+    this.outOfWarranty = [];
+    this.inWarranty=[];
+    this.dashboardservice.getProductWarrantyStatus(this.filter,this.valFalse)
     .subscribe((res: Array<any>) => {
-      this.productWarranty = [[]];
    
-          
+            this.outOfWarranty.push(["Product Name", "Count"])
 
-          this.productWarranty[0].push('Warranty');
-          for (let i = 0; i < res[0].warrantyInfo.length; i++) {
-            this.productWarranty[0].push(res[0].warrantyInfo[i].name);
-          }
+          res[0]["warrantyInfo"].forEach(element => {
+           
+              this.outOfWarranty.push([element.name, element.count]);
           
-          for (let i = 0; i < res.length; i++) {
-            this.productWarranty[i+1] = [];
-            this.productWarranty[i+1].push(res[i].warranty);
-            for (let j = 0; j < res[i].warrantyInfo.length; j++) {
-              this.productWarranty[i+1].push(res[i].warrantyInfo[j].count);        
-            }      
-          }
+          });
 
+
+
+
+          this.inWarranty.push(["Product Name", "Count"])
+
+          res[1]["warrantyInfo"].forEach(element => {
+           
+              this.inWarranty.push([element.name, element.count]);
+          });
+
+
+                    this.In_Warranty_Status_chart();
+
+
+         console.log(this.outOfWarranty);
          
-          this.product_Warranty_Status_chart();
+          this.Out_Warranty_Status_chart();
         
         
 
@@ -464,52 +485,84 @@ this.showRange=true;
 
 
   }
-  product_Warranty_Status_chart() {
+  Out_Warranty_Status_chart() {
 
-    var data = google.visualization.arrayToDataTable(this.productWarranty);
-    var options = {
+    var data = google.visualization.arrayToDataTable(this.outOfWarranty);
+   
+   var options = {
+      title: ' out of warranty',
+    is3D:true,
+      legend: { position: 'bottom', maxLines: 8 },
 
-      // title: 'Product repair in warranty or without warranty',
-      height: 200,
-      chartArea: {
-        left: 120,
-        // height: 150,
-        // top: 50,
-      },
-      vAxis: { 
-        // title: 'Count'
-       },
-      hAxis: {
-        // title: 'Product Category',
-        // slantedText:true,
-        // slantedTextAngle:330 
-      },
-      seriesType: 'bars',
-      isStacked: true,
-
-      legend: { position: 'top', maxLines: 3 },
-      bar: { groupWidth: '75%' },
+      // pieSliceText:"value",
       colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
 
-      animation: {
-        "startup": true,
-        duration: 600,
-        easing: 'in-out'
-      }
-    };
+   }
+  
 
 
-    var chart = new google.visualization.BarChart(document.getElementById('product_Warranty_Status'));
+    var chart = new google.visualization.PieChart(document.getElementById('out_Warranty_Status'));
+
+    chart.draw(data, options);
+  }
+
+  // get_In_Warranty_Status() {
+   
+  //   this.inWarranty = [];
+    
+  //   this.dashboardservice.getProductWarrantyStatus(this.filter,this.valFalse)
+  //   .subscribe((res: Array<any>) => {
+   
+          
+   
+  //     this.inWarranty.push(["Product Name", "Count"])
+
+  //     res[1]["warrantyInfo"].forEach(element => {
+       
+  //         this.inWarranty.push([element.name, element.count]);
+      
+  //     });
+
+
+  //    console.log(this.inWarranty);
+       
+
+         
+  //         this.In_Warranty_Status_chart();
+        
+        
+
+
+  //     }, (err) => {
+  //       this.tostservice.showNotificationFailure(err)
+  //     }
+  //     );
+
+
+  // }
+  In_Warranty_Status_chart() {
+
+    var data = google.visualization.arrayToDataTable(this.inWarranty);
+    var options = {
+      title: 'In warranty',
+    is3D:true,
+    legend: { position: 'bottom', maxLines: 8 },
+    pieSliceText:"value",
+      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
+
+   }
+
+
+    var chart = new google.visualization.PieChart(document.getElementById('in_Warranty_Status'));
 
     chart.draw(data, options);
   }
 
 
 
-
   get_Product_Incident_Age() {
     this.incidentAge = [];
-    this.dashboardservice.getProductIncidentAge(this.filter)
+    this.dashboardservice.getProductIncidentAge(this.filter,this.valFalse)
       .subscribe((res: any) => {
      
         this.Product_Incident_Age_chart(res);
@@ -541,15 +594,7 @@ this.showRange=true;
     // console.log(this.incidentAge)
     var options = {
       height: 200,
-      // title: 'Incident Age',
-      vAxis: { 
-        // title: 'Count'
-       },
-      hAxis: {
-        // title: 'Categories',
-
-      },
-      isStacked: true,
+    
 
       seriesType: 'bars',
       legend: { position: 'top', maxLines: 8 },
@@ -558,10 +603,93 @@ this.showRange=true;
     };
 
 
-    var chart = new google.visualization.BarChart(document.getElementById('Product_Incident_Age'));
+    var chart = new google.visualization.ComboChart(document.getElementById('Product_Incident_Age'));
 
     chart.draw(data1, options);
   }  
+
+
+
+
+
+
+
+  
+
+
+  // mean time to repair start here
+  getMeanTime() {
+      // this.meanTiming=[];
+
+    this.dashboardservice.getMTTR(this.filter)
+      .subscribe((res: any) => {
+       
+
+        this.meanTiming=[[]]
+       this.meanTiming[0].push('avg');
+        for (let i = 0; i < res[0].mttrInfo.length; i++) {
+          this.meanTiming[0].push(res[0].mttrInfo[i].name);
+        }
+        
+        for (let i = 0; i < res.length; i++) {
+          this.meanTiming[i+1] = [];
+          this.meanTiming[i+1].push(res[i].range);
+          for (let j = 0; j < res[i].mttrInfo.length; j++) {
+            this.meanTiming[i+1].push(res[i].mttrInfo[j].count);        
+          }      
+        }    
+
+        this.repair_time();
+      })
+  }
+  repair_time() {
+
+    var data = google.visualization.arrayToDataTable(this.meanTiming);
+
+    var options = {
+      chartArea: {
+        left: 80,
+      },
+      // hAxis: {
+      //   title: 'Mean Time To Repair (in days)',
+      //   minValue: 0
+      // },
+
+      // vAxis: {
+      //   title: 'Appliances'
+      // },
+      legend: { position: 'top', maxLines: 7 },
+      bar: { groupWidth: '75%' },
+      isStacked: true,
+
+      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
+      animation: {
+        "startup": true,
+        duration: 600,
+        easing: 'in-out'
+      }
+    };
+
+    var chart = new google.visualization.BarChart(document.getElementById('time_to_repair'));
+
+    chart.draw(data, options);
+  }
+
+  // mean time to repair end here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -582,10 +710,12 @@ this.showRange=true;
   getCharts() {
     // this.getFilter(data,id,range);
     this.get_Product_Incident_Age();
+    this.getMeanTime();
     this.getDashboardDetails();
     this.get_Product_Status();
     this.getStatusByState();
-    this.get_Product_Warranty_Status();
+    this.get_Out_Warranty_Status();
+    // this.get_In_Warranty_Status();
     this.get_MeanTime_Till_Date();
     this.getProductCategorys();
     this.get_product_rating_chart();

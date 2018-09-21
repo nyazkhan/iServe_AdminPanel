@@ -44,6 +44,9 @@ export class ServiceEngineerComponent implements OnInit {
 ProductCategoryTypeIds:Array<number>
 subCatArray1=[];
 
+assignedProductType=[];
+
+
   ngOnInit() {
     this.getEngineers();
     this.getPincodes();
@@ -54,11 +57,11 @@ subCatArray1=[];
 
 
 
-
   getEngineers() {
     this.engineerService.getEngineer()
       .subscribe((res: any) => {
         this.dataRows = res;
+        
         this.isDataLoad = false;
         console.log(res);
 
@@ -116,7 +119,9 @@ subCatArray1=[];
 
   getId(row) {
     this.editPinShow = false;
-
+    this.assignedProductType= row.productTypes.slice(0);
+  console.log(this.assignedProductType);
+  
     this.currentId = row.id;
 
     this.assignpincode = row.assignPincodes.slice(0);
@@ -268,12 +273,15 @@ subCatArray1=[];
 //////////product category change start here///////
 
 editProductCategory(){
-
+this.editCatShow=!this.editCatShow;
 }
 
 
 
-removeCategory(){}
+removeCategory(){
+
+
+}
 
 
 addCategory(){}

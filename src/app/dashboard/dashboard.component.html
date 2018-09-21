@@ -73,7 +73,7 @@
   <div class="container-fluid" style="z-index: 0;">
     <div *ngIf="role=='management'" class="row">
 
-      <div class="col-lg-4 col-md-4 col-sm-6">
+      <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="card card-stats padding">
           <div class="card-header card-header-warning card-header-icon">
             <div class="card-icon">
@@ -84,7 +84,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-6">
+      <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="card card-stats padding">
           <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-6">
+      <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="card card-stats padding">
           <div class="card-header card-header-success card-header-icon">
             <div class="card-icon">
@@ -105,12 +105,25 @@
                 assignment_turned_in
               </i>
             </div>
-            <p class="card-category">Closed</p>
-            <h3 class="card-title">{{statusClosed}}</h3>
+            <p class="card-category">Fixed</p>
+            <h3 class="card-title">{{statusFixed}}</h3>
           </div>
         </div>
       </div>
-
+      <div class="col-lg-3 col-md-4 col-sm-6">
+          <div class="card card-stats padding">
+            <div class="card-header card-header-info card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">
+                  new_releases
+                </i>
+              </div>
+              <p class="card-category">Rejected</p>
+              <h3 class="card-title">{{statusRejected}}</h3>
+            </div>
+          </div>
+        </div>
+        
 
       <!-- Chart Cards -->
       <div class="row">
@@ -131,7 +144,17 @@
           <div class="col-md-6 col-sm-12">
             <div class="card ">
               <div class="card-header card-header-primary">
-                <div id="product_Warranty_Status"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                  
+                        <div   id="out_Warranty_Status"></div>
+                      </div>
+                      <div class="col-md-6">
+                        <div  id="in_Warranty_Status"></div>
+      
+                      </div>
+                </div>
+
               </div>
               <div class="card-body">
                 <h4 class="card-title">Open Incidents</h4>
@@ -171,6 +194,20 @@
               </div>
             </div>
           </div>
+
+
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-primary">
+                <div id="time_to_repair"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title"> Time To Repair</h4>
+              </div>
+            </div>
+          </div>
+
+
 
 
           <div class="col-md-6 col-sm-12">
