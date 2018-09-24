@@ -74,4 +74,7 @@ editPincodes(fd){
 editProductCategoryType(fd,id){
   return this.customHttp.post(`/sa/product-type-service-engineer`,{"productTypeIds":fd,"serviceEngineerId":id})
 }
+
+
+
 }

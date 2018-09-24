@@ -16,44 +16,52 @@ export class DashboardComponent implements OnInit {
 
   public chart: any;
 
-
+  valFalse = false;
 
   role: string;
 
   statusCount: any;
 
-startDate:Date;
-endDate:Date;
+  startDate: Date;
+  endDate: Date;
 
   statusByProductCat = [];
   stateCount = [];
   mttrTillDate = [];
-  productWarranty = [[]];
+  meanTiming = [];
+  inWarranty = [];
+  outOfWarranty = [];
 
   incidentAge = [];
   filter = {};
   statusCarryForward: number
-  statusClosed: number
+  statusFixed: number
   statusNew: number;
+  statusRejected: Number;
   productCategoryName: Array<any>
 
-  filterByDate = "today";
-  
+  filterByDate = "month";
+
   filterId: number;
   filterRange: string;
-  showRange=false;
+  showRange = false;
   rating = [];
-  rating0: number;
-  rating1: number;
-  rating2: number;
-  rating3: number;
-  rating4: number;
-  rating5: number;
 
-dateRange = new DateRange;
-  showRatingChart=true;
-  categoryName= 'ALL APPLIANCES';
-  statusByProductCatIds=[];
+  carryforwardChart = [];
+  newChart = [];
+  rejectedChart = [];
+  fixedChart = [];
+  // rating0: number;
+  // rating1: number;
+  // rating2: number;
+  // rating3: number;
+  // rating4: number;
+  // rating5: number;
+
+  dateRange = new DateRange;
+  showRatingChart = true;
+  categoryName = 'ALL APPLIANCES';
+  statusByProductCatIds = [];
 
 
   constructor(private dashboardservice: DashboardService,
@@ -66,12 +74,12 @@ dateRange = new DateRange;
 
 
   dashboardFilterByDate(value) {
-    this.showRange=false;
+    this.showRange = false;
 
-    this.dateRange= new DateRange();
+    this.dateRange = new DateRange();
     this.filterByDate = value;
     // console.log(this.filterByDate)
-    this.filterRange ="";
+    this.filterRange = "";
     this.getFilter();
     this.getCharts();
 
@@ -79,11 +87,11 @@ dateRange = new DateRange;
 
   forAllProduct(value) {
     console.log(this.filterId);
-    
+
     this.filterId = null;
     console.log(this.filterId);
 
-    this.categoryName=value;
+    this.categoryName = value;
     // console.log(this.filterId)
     this.getFilter();
     this.getCharts();
@@ -102,23 +110,23 @@ dateRange = new DateRange;
   getFilter() {
 
     if (this.filterRange) {
-      this.filter={};
+      this.filter = {};
 
       this.filter["duration"] = this.filterRange;
-      this.filter["startDate"]=this.dateRange.startDate;
-      this.filter["endDate"]=this.dateRange.endDate;
+      this.filter["startDate"] = this.dateRange.startDate;
+      this.filter["endDate"] = this.dateRange.endDate;
 
     } else {
-    if (this.filterByDate) {
-      this.filter={};
-      this.filter["duration"] = this.filterByDate;
+      if (this.filterByDate) {
+        this.filter = {};
+        this.filter["duration"] = this.filterByDate;
 
+      }
     }
-  }
 
     if (this.filterId) {
       console.log(this.filterId);
-      
+
       // console.log(this.filterId)
       this.filter["categoryId"] = this.filterId;
     }
@@ -138,8 +146,8 @@ dateRange = new DateRange;
   }
 
 
-  dashboardFilterByRange(){
-this.showRange=true;
+  dashboardFilterByRange() {
+    this.showRange = true;
 
   }
 
@@ -159,9 +167,9 @@ this.showRange=true;
       .subscribe((res: any) => {
         // console.log(res);
         this.statusCarryForward = res.CARRYFORWARD;
-        this.statusClosed = res.CLOSED;
+        this.statusFixed = res.FIXED;
         this.statusNew = res.NEW;
-
+        this.statusRejected = res.REJECTED;
       })
   }
 
@@ -171,28 +179,28 @@ this.showRange=true;
 
   get_product_rating_chart() {
 
-    this.dashboardservice.getProductRating(this.filter)
+    this.dashboardservice.getProductRating(this.filter, this.valFalse)
       .subscribe((res: any) => {
         this.rating = [[]];
-   
-          
 
-          this.rating[0].push('rating');
-          for (let i = 0; i < res[0].ratingInfo.length; i++) {
-            this.rating[0].push(res[0].ratingInfo[i].name);
+
+
+        this.rating[0].push('rating');
+        for (let i = 0; i < res[0].ratingInfo.length; i++) {
+          this.rating[0].push(res[0].ratingInfo[i].name);
+        }
+
+        for (let i = 0; i < res.length; i++) {
+          this.rating[i + 1] = [];
+          this.rating[i + 1].push(res[i].rating);
+          for (let j = 0; j < res[i].ratingInfo.length; j++) {
+            this.rating[i + 1].push(res[i].ratingInfo[j].count);
           }
-          
-          for (let i = 0; i < res.length; i++) {
-            this.rating[i+1] = [];
-            this.rating[i+1].push(res[i].rating);
-            for (let j = 0; j < res[i].ratingInfo.length; j++) {
-              this.rating[i+1].push(res[i].ratingInfo[j].count);        
-            }      
-          }       
+        }
 
 
         this.draw_rating_chart();
-      
+
 
       }, (err) => {
         this.tostservice.showNotificationFailure(err);
@@ -200,67 +208,100 @@ this.showRange=true;
   }
 
 
-  
-  
+
+
   draw_rating_chart() {
     let data = google.visualization.arrayToDataTable(this.rating)
-  
-    
+
+
     let options = {
       height: 200,
 
-      chartArea: {
-        left: 100,
-      },
+      // chartArea: {
+      //   left: 100,
+      // },
 
-      bar: { groupWidth: '75%' },
-      legend: { position: 'top', maxLines: 3 },
-            isStacked: true,
 
-      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
-      animation: {
-        "startup": true,
-        duration: 600,
-        easing: 'in-out'
-      }
+      seriesType: 'bars',
+      series: { 6: { type: 'line' } },
+
+      // bar: { groupWidth: '75%' },
+      legend: { position: 'top', maxLines: 6 },
+      // isStacked: true,
+
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+      // animation: {
+      //   "startup": true,
+      //   duration: 600,
+      //   easing: 'in-out'
+      // }
     };
 
-    let chart = new google.visualization.BarChart(document.getElementById('Rating_Chart'));
+    let chart = new google.visualization.ComboChart(document.getElementById('Rating_Chart'));
+    google.visualization.events.addListener(chart, 'select', ()=>{
+              var selectedItem = chart.getSelection()[0];
+              console.log(selectedItem)
+      
+         console.log(this.rating);
+         
+               if (selectedItem) {
+        
+                // routeToIncidents(pc?,gtype?,dur?,type?,ctype?,stid?,wrnty?,rating?) {
+
+         this.routeToIncidents('','rating','',);
+               }
+              });
+        
 
 
-    
-      chart.draw(data,options);
-}
+    chart.draw(data, options);
+  }
 
 
 
 
-  routeToIncidents(id:number,pcid?: number,icid?:number,stid?){
-    console.log(stid + "   state name")
-    this.router.navigate(['/incidents'], { queryParams: { sId: id , pcId:pcid, icId:icid, stId: stid } });
-  
+  routeToIncidents(pc?,gtype?,type?,ctype?,stid?,wrnty?,rating?) {
+    this.router.navigate(['/incidents'], { queryParams: { pcId: pc, gType: gtype, duration: this.filterByDate,Type : type, cType: ctype, stId: stid, warranty:wrnty,rating : rating } });
+
   }
   //  incidents weekly report statrs here
 
   get_Product_Status() {
 
     this.statusByProductCat = [];
-    this.dashboardservice.get_Product_Status(this.filter)
+    this.dashboardservice.get_Product_Status(this.filter, this.valFalse)
       .subscribe((res: any) => {
 
+        this.carryforwardChart = [];
+        this.newChart = [];
+        this.rejectedChart = [];
+        this.fixedChart = [];
 
-        this.statusByProductCatIds=[]
+        this.statusByProductCatIds = []
 
-        
-        this.statusByProductCat.push(['Appliances', 'Carry Forward', 'New', 'Closed'])
+        this.carryforwardChart.push(['Product Category', 'Carryforward']);
+        this.newChart.push(['Product Category', 'New']);
+        this.rejectedChart.push(['Product Category', 'Rejected']);
+        this.fixedChart.push(['Product Category', 'Fixed']);
+        this.statusByProductCat.push(['Appliances', 'Carry Forward', 'New', 'Rejected', 'Fixed',])
         res.forEach(element => {
-          this.statusByProductCat.push([element.name, element.CARRYFORWARD, element.NEW, element.CLOSED])
-       this.statusByProductCatIds.push(element.id);
-      console.log(this.statusByProductCatIds);
-       
-      });
+          this.statusByProductCat.push([element.name, element.CARRYFORWARD, element.NEW, element.REJECTED, element.FIXED]);
+
+          this.carryforwardChart.push([element.name, element.CARRYFORWARD]);
+          this.newChart.push([element.name, element.NEW]);
+          this.rejectedChart.push([element.name, element.REJECTED]);
+          this.fixedChart.push([element.name, element.FIXED]);
+
+          this.statusByProductCatIds.push(element.id);
+          // console.log(this.statusByProductCatIds);
+
+        });
 
         this.product_status_Chart();
+        this.carryFroward_Chart();
+        this.New_chart();
+        this.rejected_Chart();
+        this.fixed_Chard();
       }, (err) => {
         this.tostservice.showNotificationFailure(err);
       })
@@ -272,55 +313,138 @@ this.showRange=true;
     let options = {
       height: 200,
 
-      chartArea: {
-        left: 100,
-        // height: 100,
+
+      seriesType: 'bars',
+      series: { 6: { type: 'line' } },
+      vAxis: {
+
       },
 
-      isStacked: true,
-
-      bar: { groupWidth: '75%' },
       legend: { position: 'top', maxLines: 3 },
-      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
-      animation: {
-        "startup": true,
-        duration: 600,
-        easing: 'in-out'
-      }
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+      // animation: {
+      //   "startup": true,
+      //   duration: 600,
+      //   easing: 'in-out'
+      // }
     };
 
-    let chart = new google.visualization.BarChart(document.getElementById('product_status_Chart'));
-    
-    google.visualization.events.addListener(chart, 'select', ()=>{
-            var selectedItem = chart.getSelection()[0];
-           
-             if (selectedItem) {
-      console.log(this.statusByProductCatIds[selectedItem.row]);
-      
-      console.log(selectedItem);
-      
-       this.routeToIncidents(0,this.statusByProductCatIds[selectedItem.row],);
-             }
-            });
-        
-    
-    
-    google.visualization.events.addListener(chart, 'onmouseover', ()=>{
+    let chart = new google.visualization.ComboChart(document.getElementById('product_status_Chart'));
 
-      document.getElementById('product_status_Chart').style.cursor="pointer";
+    google.visualization.events.addListener(chart, 'select', () => {
+      var selectedItem = chart.getSelection()[0];
+
+      if (selectedItem) {
+        // console.log(this.statusByProductCatIds[selectedItem.row]);
+
+        console.log(selectedItem);
+
+        //  this.routeToIncidents(],);
+      }
     });
-         google.visualization.events.addListener(chart, 'select', ()=>{
 
-         });
+
+
+    google.visualization.events.addListener(chart, 'onmouseover', () => {
+
+      document.getElementById('product_status_Chart').style.cursor = "pointer";
+    });
+    google.visualization.events.addListener(chart, 'select', () => {
+
+    });
     chart.draw(data, options);
- 
-  
+
+
   }
 
+  carryFroward_Chart() {
+    var data = google.visualization.arrayToDataTable(this.carryforwardChart);
+
+    var options = {
+      // chartArea: {
+      //   height: 100,
+      //   // top: ,
+      // },
+      width:80,
+      height: 80,
+      // top: 50,
+      // is3D: true,
+      legend: { position: 'none', maxLines: 8 },
+
+      // pieSliceText:"value",
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+
+    }
+
+
+
+    var chart = new google.visualization.PieChart(document.getElementById('CarryForward_Chart'));
+
+    chart.draw(data, options);
+  }
+  New_chart() {
+
+    var data = google.visualization.arrayToDataTable(this.newChart);
+
+    var options = {
+      width:80,
+      height: 100,
+      // is3D: true,
+      legend: { position: 'none', maxLines: 8 },
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+
+    }
+
+
+
+    var chart = new google.visualization.PieChart(document.getElementById('New_Chart'));
+
+    chart.draw(data, options);
+  }
+
+  fixed_Chard() {
+
+    var data = google.visualization.arrayToDataTable(this.fixedChart);
+
+    var options = {
+      // is3D: true,
+      width:80,
+      height: 100,
+      legend: { position: 'none', maxLines: 8 },
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+
+    }
+
+
+
+    var chart = new google.visualization.PieChart(document.getElementById('Fixed_Chart'));
+
+    chart.draw(data, options);
+  }
+
+  rejected_Chart() {
+
+    var data = google.visualization.arrayToDataTable(this.rejectedChart);
+
+    var options = {
+      // is3D: true,
+      width:80,
+      height: 100,
+      legend: { position: 'none', maxLines: 8 },
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+
+    }
+
+
+
+    var chart = new google.visualization.PieChart(document.getElementById('Rejected_Chart'));
+
+    chart.draw(data, options);
+  }
 
   getStatusByState() {
     this.stateCount = [];
-    this.dashboardservice.getStateByStatus(this.filter)
+    this.dashboardservice.getStateByStatus(this.filter, this.valFalse)
       .subscribe((res: any) => {
         // console.log(res)
         this.stateCount.push(['provinces', 'Open Incidents'])
@@ -360,7 +484,7 @@ this.showRange=true;
         if (selectedItem) {
 
 
-           this.routeToIncidents(0,0,0,this.stateCount[selectedItem.row + 1 ][0]);
+          this.routeToIncidents(0, 0, 0, this.stateCount[selectedItem.row + 1][0]);
         }
       });
 
@@ -374,17 +498,22 @@ this.showRange=true;
   get_MeanTime_Till_Date() {
     this.mttrTillDate = [];
 
-    this.dashboardservice.getMTTR(this.filter)
+    this.dashboardservice.getAVG(this.filter, this.valFalse)
       .subscribe((res: any) => {
-        this.mttrTillDate.push(['Appliances', 'Customer', 'Engineer', 'Repair'])
-          res.forEach(element => {
-         for (const key in element) {
-         this.mttrTillDate.push([key, parseFloat(element[key][0].customer),parseFloat(element[key][0].engineer), parseFloat(element[key][0].repair)])
-   
-         }
+        this.mttrTillDate.push(['Appliances', 'Customer', 'Engineer', 'Repair', 'avg'])
+        console.log(res[0]["avgResolveTimeInfo"]);
+        res[0]["avgResolveTimeInfo"].forEach(element => {
+          // ["'avgResolveTimeInfo'"]
+          // console.log(element);
+
+
+          //  for (const key in element) {
+          this.mttrTillDate.push([element.name, parseFloat(element.customer), parseFloat(element.engineer), parseFloat(element.repair),parseFloat(element.avgResolveTime)])
+
+          //  }
 
         });
-        
+
         this.repair_time_Till_Date();
 
       }, (err) => {
@@ -405,22 +534,23 @@ this.showRange=true;
         height: 200,
         top: 50,
       },
-      
+
       seriesType: 'bars',
+      series: { 3: { type: 'line' } },
 
       legend: { position: 'top', maxLines: 3 },
-      bar: { groupWidth: '80%' },
-      isStacked: true,
-      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
-      animation: {
-        "startup": true,
-        duration: 600,
-        easing: 'in-out'
-      }
+      // bar: { groupWidth: '80%' },
+      // isStacked: true,
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+      // animation: {
+      //   "startup": true,
+      //   duration: 600,
+      //   easing: 'in-out'
+      // }
     };
 
 
-    var chart = new google.visualization.BarChart(document.getElementById('repair_time'));
+    var chart = new google.visualization.ComboChart(document.getElementById('repair_time'));
 
     chart.draw(data, options);
   }
@@ -429,32 +559,40 @@ this.showRange=true;
 
 
 
-  get_Product_Warranty_Status() {
-   
-    
-    this.dashboardservice.getProductWarrantyStatus(this.filter)
-    .subscribe((res: Array<any>) => {
-      this.productWarranty = [[]];
-   
-          
+  get_Out_Warranty_Status() {
 
-          this.productWarranty[0].push('Warranty');
-          for (let i = 0; i < res[0].warrantyInfo.length; i++) {
-            this.productWarranty[0].push(res[0].warrantyInfo[i].name);
-          }
-          
-          for (let i = 0; i < res.length; i++) {
-            this.productWarranty[i+1] = [];
-            this.productWarranty[i+1].push(res[i].warranty);
-            for (let j = 0; j < res[i].warrantyInfo.length; j++) {
-              this.productWarranty[i+1].push(res[i].warrantyInfo[j].count);        
-            }      
-          }
+    this.outOfWarranty = [];
+    this.inWarranty = [];
+    this.dashboardservice.getProductWarrantyStatus(this.filter, this.valFalse)
+      .subscribe((res: Array<any>) => {
 
-         
-          this.product_Warranty_Status_chart();
-        
-        
+        this.outOfWarranty.push(["Product Name", "Count"])
+
+        res[0]["warrantyInfo"].forEach(element => {
+
+          this.outOfWarranty.push([element.name, element.count]);
+
+        });
+
+
+
+
+        this.inWarranty.push(["Product Name", "Count"])
+
+        res[1]["warrantyInfo"].forEach(element => {
+
+          this.inWarranty.push([element.name, element.count]);
+        });
+
+
+        this.In_Warranty_Status_chart();
+
+
+        console.log(this.outOfWarranty);
+
+        this.Out_Warranty_Status_chart();
+
+
 
 
       }, (err) => {
@@ -464,54 +602,53 @@ this.showRange=true;
 
 
   }
-  product_Warranty_Status_chart() {
+  Out_Warranty_Status_chart() {
 
-    var data = google.visualization.arrayToDataTable(this.productWarranty);
+    var data = google.visualization.arrayToDataTable(this.outOfWarranty);
+
     var options = {
+      title: ' out of warranty',
+      // is3D: true,
+      legend: { position: 'bottom', maxLines: 8 },
 
-      // title: 'Product repair in warranty or without warranty',
-      height: 200,
-      chartArea: {
-        left: 120,
-        // height: 150,
-        // top: 50,
-      },
-      vAxis: { 
-        // title: 'Count'
-       },
-      hAxis: {
-        // title: 'Product Category',
-        // slantedText:true,
-        // slantedTextAngle:330 
-      },
-      seriesType: 'bars',
-      isStacked: true,
+      // pieSliceText:"value",
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
 
-      legend: { position: 'top', maxLines: 3 },
-      bar: { groupWidth: '75%' },
-      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
-
-      animation: {
-        "startup": true,
-        duration: 600,
-        easing: 'in-out'
-      }
-    };
+    }
 
 
-    var chart = new google.visualization.BarChart(document.getElementById('product_Warranty_Status'));
+
+    var chart = new google.visualization.PieChart(document.getElementById('out_Warranty_Status'));
+
+    chart.draw(data, options);
+  }
+
+  
+  In_Warranty_Status_chart() {
+
+    var data = google.visualization.arrayToDataTable(this.inWarranty);
+    var options = {
+      title: 'In warranty',
+       is3D: true,
+      legend: { position: 'bottom', maxLines: 8 },
+      // pieSliceText: "value",
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+
+    }
+
+
+    var chart = new google.visualization.PieChart(document.getElementById('in_Warranty_Status'));
 
     chart.draw(data, options);
   }
 
 
 
-
   get_Product_Incident_Age() {
     this.incidentAge = [];
-    this.dashboardservice.getProductIncidentAge(this.filter)
+    this.dashboardservice.getProductIncidentAge(this.filter, this.valFalse)
       .subscribe((res: any) => {
-     
+
         this.Product_Incident_Age_chart(res);
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
@@ -520,48 +657,123 @@ this.showRange=true;
 
   }
   Product_Incident_Age_chart(data: any[]) {
-    
+
     var dataTable: any = [[]];
 
     dataTable[0].push('range');
     for (let i = 0; i < data[0].ageInfo.length; i++) {
       dataTable[0].push(data[0].ageInfo[i].name);
     }
-    
+
     for (let i = 0; i < data.length; i++) {
-      dataTable[i+1] = [];
-      dataTable[i+1].push(data[i].range);
+      dataTable[i + 1] = [];
+      dataTable[i + 1].push(data[i].range);
       for (let j = 0; j < data[i].ageInfo.length; j++) {
-        dataTable[i+1].push(data[i].ageInfo[j].count);        
-      }      
+        dataTable[i + 1].push(data[i].ageInfo[j].count);
+      }
     }
-    
+
 
     var data1 = google.visualization.arrayToDataTable(dataTable);
     // console.log(this.incidentAge)
     var options = {
       height: 200,
-      // title: 'Incident Age',
-      vAxis: { 
-        // title: 'Count'
-       },
-      hAxis: {
-        // title: 'Categories',
 
-      },
-      isStacked: true,
 
       seriesType: 'bars',
       legend: { position: 'top', maxLines: 8 },
-      colors: ['#e91e63','#01adc2','#fd9710','#4ba64f','#9d36b3','#FFFF00','#AA00FF','#9E9D24'],
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
 
     };
 
 
-    var chart = new google.visualization.BarChart(document.getElementById('Product_Incident_Age'));
+    var chart = new google.visualization.ComboChart(document.getElementById('Product_Incident_Age'));
 
     chart.draw(data1, options);
-  }  
+  }
+
+
+
+
+
+
+
+
+
+
+  // mean time to repair start here
+  getMeanTime() {
+    // this.meanTiming=[];
+
+    this.dashboardservice.getMTTR(this.filter,this.valFalse)
+      .subscribe((res: any) => {
+
+
+        this.meanTiming = [[]]
+        this.meanTiming[0].push('avg');
+        for (let i = 0; i < res[0].mttrInfo.length; i++) {
+          this.meanTiming[0].push(res[0].mttrInfo[i].name);
+        }
+
+        for (let i = 0; i < res.length; i++) {
+          this.meanTiming[i + 1] = [];
+          this.meanTiming[i + 1].push(res[i].range);
+          for (let j = 0; j < res[i].mttrInfo.length; j++) {
+            this.meanTiming[i + 1].push(res[i].mttrInfo[j].count);
+          }
+        }
+
+        this.repair_time();
+      })
+  }
+  repair_time() {
+
+    var data = google.visualization.arrayToDataTable(this.meanTiming);
+
+    var options = {
+      chartArea: {
+        left: 80,
+      },
+      // hAxis: {
+      //   title: 'Mean Time To Repair (in days)',
+      //   minValue: 0
+      // },
+
+      // vAxis: {
+      //   title: 'Appliances'
+      // },
+      legend: { position: 'top', maxLines: 7 },
+      bar: { groupWidth: '75%' },
+      isStacked: true,
+
+      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+      animation: {
+        "startup": true,
+        duration: 600,
+        easing: 'in-out'
+      }
+    };
+
+    var chart = new google.visualization.BarChart(document.getElementById('time_to_repair'));
+
+    chart.draw(data, options);
+  }
+
+  // mean time to repair end here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -582,10 +794,12 @@ this.showRange=true;
   getCharts() {
     // this.getFilter(data,id,range);
     this.get_Product_Incident_Age();
+    this.getMeanTime();
     this.getDashboardDetails();
     this.get_Product_Status();
     this.getStatusByState();
-    this.get_Product_Warranty_Status();
+    this.get_Out_Warranty_Status();
+    // this.get_In_Warranty_Status();
     this.get_MeanTime_Till_Date();
     this.getProductCategorys();
     this.get_product_rating_chart();
@@ -604,12 +818,12 @@ this.showRange=true;
 
 
 
-today:any
+  today: any
   ngOnInit() {
     this.role = localStorage.getItem("currentUserName");
     this.getFilter();
-this.today= new Date()
-this.today.setDate(this.today.getDate() +1 );
+    this.today = new Date()
+    this.today.setDate(this.today.getDate() + 1);
 
 
 

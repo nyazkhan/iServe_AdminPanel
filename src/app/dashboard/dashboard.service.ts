@@ -64,57 +64,59 @@ getProductCategory(){
      return this.customHttp.get(`/m/product-category`)
 }
 
-
-
-
-
-   
-
-
-
     getDashbord(fd){
         return this.customHttp.post(`/m/complaint/dashboard/card`,fd);
     }
 
+
+
 // state by status of complaints
-getStateByStatus(fd) {
-    const I_api = `/m/complaint/dashboard/region`
+getStateByStatus(fd,x) {
+    const I_api = `/m/complaint/dashboard/region/${x}`
 
     return this.customHttp.post(I_api,fd)
 
 }
 
 // product status vs category
-get_Product_Status(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/status`,fd)
+get_Product_Status(fd,x){
+    return this.customHttp.post(`/m/complaint/dashboard/status/${x}`,fd)
 
 }
 
 
-getProductIncidentAge(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/incident-age`,fd)
+getProductIncidentAge(fd,x){
+    
+    return this.customHttp.post(`/m/complaint/dashboard/incident-age/${x}`,fd)
  
 }
 
-getProductRating(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/rating`,fd)
+getProductRating(fd,x){
+
+    return this.customHttp.post(`/m/complaint/dashboard/rating/${x}`,fd)
  
 }
 
 
-getProductWarrantyStatus(fd){
-    return this.customHttp.post(`/m/complaint/dashboard/warranty`, fd)
+getProductWarrantyStatus(fd,x){
+
+    return this.customHttp.post(`/m/complaint/dashboard/warranty/${x}`, fd)
 }
 
 
 
 
-getMTTR(fd) {
-    const I_api = `/m/complaint/dashboard/avg`
+getAVG(fd,x) {
+    const I_api = `/m/complaint/dashboard/avg/${x}`
 
     return this.customHttp.post(I_api,fd)
 }
 
+getMTTR(fd,x) {
+    const I_api = `/m/complaint/dashboard/mttr/${x}`
+
+    return this.customHttp.post(I_api,fd)
+}
 
 
     // current incident new, fixed, inprogress,

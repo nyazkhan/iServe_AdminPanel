@@ -11,6 +11,7 @@ import { HttpModule } from '@angular/http';
 import { LoginComponent } from './components/login/login.component';
 import { LoginService } from './components/login/login.service';
 import { TostService, } from './providers/tost.service';
+import { IncidentDashboardComponent } from './dashboard/incidents/incident-dashboard.component';
 
 
 
@@ -30,6 +31,9 @@ const routes: Routes = [
    
    
     LoginComponent,
+   
+   
+    IncidentDashboardComponent,
    
    
     
