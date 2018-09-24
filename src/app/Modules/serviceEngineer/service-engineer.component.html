@@ -269,11 +269,9 @@
                                 <small [hidden]="prodTypeId.valid || prodTypeId.untouched" style="color: red">
                                   Product Type options is required
                                 </small>
-                  
                               </div>
-                  
                             </div>
-                                                        </div>
+                           </div>
 
                       </div>
                       <!-- <div class="col-md-6" *ngIf="editCatShow">
@@ -467,7 +465,11 @@
                 <small [hidden]="prodType.valid || prodType.untouched" style="color: red">
                   Product Type options is required
                 </small>
-                <button class="btn btn-primary btn-sm" (click)="getProdutId()" > Next</button>
+                <div class="arrow bounce">
+                <button class="btn btn-primary btn-sm float-right " (click)="getProdutId()" ><i class="material-icons">
+                  arrow_forward
+                  </i></button>
+                </div>
 
                 <!-- <button (click)="getProdutId()"> click</button> -->
               </div>
