@@ -2,20 +2,20 @@
 <div class="card">
 
   <div class="card-header card-header-primary">
-    <div class="d-flex justify-content-between">
-      <h4 class="card-title ">Incidents</h4>
-      <div class="dropdown">
+    <div class="d-flex justify-content-between float-right">
+      <!-- <h4 class="card-title ">Incidents</h4> -->
+      <div class="dropdown " >
         <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           <i class="material-icons hover-cursor"> filter_list </i>
         </a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item ">
-            <button [class.active]="isAsc" (click)="isAscn(true)" class="dropdown-item hoverColor ">
+          <a class="dropdown-item margin" style="padding: 0;background: lightgray;margin-top: -6px;" >
+            <button [class.active]="isAsc" (click)="isAscn(true)" class="dropdown-item hoverColor margin">
               <i class="material-icons">
                 arrow_upward
               </i> </button>
-            <button [class.active]="!isAsc" (click)="isAscn(false)" class="dropdown-item hoverColor"><i class="material-icons">
+            <button [class.active]="!isAsc" (click)="isAscn(false)" class="dropdown-item hoverColor margin"><i class="material-icons">
                 arrow_downward
               </i> </button>
 
@@ -42,11 +42,10 @@
 
   <div class="card-body">
     <div class="search-results" infiniteScroll [infiniteScrollDistance]="1" [immediateCheck]="true"
-      [infiniteScrollThrottle]="0" (scrolled)="onScroll()" [scrollWindow]="false">
+      [infiniteScrollThrottle]="0" (scrolled)="onScroll()" [scrollWindow]="false" style="height:58vh;">
       <div class="table-responsive" id="coll">
         <table class="table table-hover ">
 
-          <!-- <div id="collapseIt"> -->
             <thead class=" text-primary">
 
               <th *ngFor="let head of headerRow">{{ head }}</th>
@@ -57,7 +56,7 @@
 
               <tr (click)="setId(row.id, i, row.statusId)" id="heading{{i}}" data-toggle="collapse" attr.href="#collapseExample{{i}}">
                 <td>
-                  <span class=" badge-primary"  >{{ i+1 }}</span>
+                  <span class="mainColor">{{ i+1 }}</span>
 
                   {{row.number}}</td>
                 <td>{{row.createdAt | date: 'dd MMM, yyyy'}}</td>
@@ -70,7 +69,8 @@
                 <td>{{row.priority}}</td>
 
                 <td>
-                  <span class="badge badge-pill" [style.background]="row.statusColor">{{ row.statusName }}</span>
+                  <span class="badge badge-pill" [style.background]="row.statusColor">{{ row.statusName | fixedLength
+                    }}</span>
 
 
                 </td>
@@ -82,10 +82,10 @@
               <tr class="collapse tabel-detail col-md-8 col-lg-8" data-parent="#coll" attr.id="collapseExample{{i}}">
                 <td colspan=8 class=" incident-details">
                   <div class="row p-2 auto-cursor">
-                    <div class="card card-nav-tabs description" *ngIf="row.description" style="margin:10px; width:94% ; margin: auto; margin-bottom: 0px;">
+                    <div class="card card-nav-tabs description word-break" *ngIf="row.description" style="margin:10px; width:94% ; margin: auto; margin-bottom: 0px;">
                       <div class="card-body" style="padding-bottom: 0px;">
                         <div class="description-heading">Product Description</div>
-                        <p> {{row.description}}</p>
+                        <p > {{row.description}}</p>
                       </div>
                     </div>
 
@@ -310,7 +310,7 @@
                       </div>
                     </div>
                     <!-- <fixed case> -->
-                    <!-- <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.statusName==='Fixed'">
+                    <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.statusName==='Fixed'">
                       <div>
                         <div class="card-header card-header-info float-right text-right" style="width:150px;">
                           Fixed Details
@@ -346,13 +346,13 @@
                         </div>
                       </div>
 
-                    </div> -->
+                    </div>
 
 
 
 
                     <!-- not fixed info -->
-                    <!-- <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.statusName==='Not Fixed'">
+                    <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.statusName==='Not Fixed'">
                       <div>
                         <div class="card-header card-header-info float-right text-right" style="width:150px;">
                           Not Fixed Details
@@ -380,8 +380,46 @@
                         </div>
                       </div>
 
-                    </div> -->
-
+                    </div>
+                    <!-- <feedback details> -->
+                    <div class="card card-nav-tabs detail-box responsiveCard " *ngIf="row.rating">
+                        <div>
+                          <div class="card-header card-header-info float-right text-right" style="width:150px;">
+                           Feedback Details
+                          </div>
+                        </div>
+                        <div class="card-body" style="padding:15px;">
+                          <div class="row">
+                            <div class="col-md-4 col-lg-4 col-sm-4 ">
+                              <img class="product-image" src="assets/img/rating.png" />
+  
+  
+                            </div>
+                            <div class="col-md- 6 col-lg-6 col-sm-6">
+  
+                              <div *ngIf="row.fixedInfo[1]">
+  
+                                <b>Date:</b>{{row.fixedInfo[1].createdAt | date:'dd MMM, yyyy'}}
+                              </div>
+                              <div *ngIf="row.fixedInfo[1]">
+                                <b>Time:</b>
+                                {{row.fixedInfo[1].createdAt | date: 'hh : mm a'}}
+                              </div>
+                              <div class="d-flex">
+                                  <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                                  <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                                  <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                                  <i class="material-icons" style="color:orange;width: 25px;"> star_rate </i>
+                                  <i class="material-icons" style="color:gray;width: 25px;"> star_rate </i>
+                                </div>
+                                <div>
+                                  <b>Comment:</b> {{row.fixedInfo[1].comment}}
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+  
+                      </div>
                     <!-- rating -->
                     <!-- <div *ngIf="row.rating" class="col-sm-12 col-md-6 col-lg-4 incident-detail-box">
                       <div class="row">
@@ -414,9 +452,7 @@
                             <b>Comment:</b> {{row.fixedInfo[1].comment}}
                           </div>
                         </div>
-           
                       </div>
-                      /
                     </div> -->
                   </div>
 
@@ -436,7 +472,6 @@
                 </td>
               </tr>
             </tbody>
-          
           <div class="col-md-8 col-lg-8" style="background: gray">
 
           </div>
@@ -460,10 +495,10 @@
       </div>
     </div>
   </div>
-  <div class="card-footer moreButton">
+  <!-- <div class="card-footer moreButton">
     <button type="button" (click)="lodeMore()" class="btn btn-defalte" style="margin:auto;">More</button>
 
-  </div>
+  </div> -->
 </div>
 
 
@@ -490,7 +525,6 @@
             <div class="row">
 
               <div class="col-md-12">
-
                 <div class="form-group">
                   <label>Select Service Engineer
                   </label>
@@ -561,8 +595,8 @@
                   </div>
                   <div class="comment col-md- 8 col-lg-8 col-sm-8 col-xs-8" [style.border-left-color]="comment.statusColor">
                     <!-- <div *ngIf="comment.scheduleDate" class="date">
- {{comment.scheduleDate | date: 'dd MMM, yyyy hh : mm a'}}
- </div> -->
+{{comment.scheduleDate | date: 'dd MMM, yyyy hh : mm a'}}
+</div> -->
                     <div>
                       {{comment.autoComment}}
                     </div>
@@ -636,4 +670,3 @@
     </div>
   </div>
 </div>
-<!-- End of reject modal -->

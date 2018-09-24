@@ -115,6 +115,7 @@ ul#menu li {
     display: flex;
     position: relative;
     .editPin{
+        margin-top: 0px;
         padding-top: 10px;
         padding-bottom: 10px;
     }
@@ -159,7 +160,22 @@ background: gray;
 .product-image{
     width: 96px;
 }
-
+.bounce {
+   
+    animation: bounce 2s infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateX(0);
+    }
+    40% {
+      transform: translateX(-30px);
+    }
+    60% {
+      transform: translateX(-15px);
+    }
+  }
 @media only screen and  (max-width:1125px){
     .InactivePin{
     padding-right: 47px;  

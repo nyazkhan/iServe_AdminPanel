@@ -349,7 +349,7 @@ console.log("durationdurationdurationdurationdurationdurationduration");
             this.showLoader = false;
           },
             (err) => {
-              this.x = false;
+              this.x = true;
               this.showLoader = false;
               this.tostservice.showNotificationFailure(err)
             })
@@ -358,6 +358,7 @@ console.log("durationdurationdurationdurationdurationdurationduration");
         this.showLoader = true;
         this.incidentService.getFillterComplaint({ "statusId": this.statusId }, this.currentPage + 1)
           .subscribe((res: Array<any>) => {
+            this.x = false;
 
             if (res.length) {
 
@@ -368,6 +369,8 @@ console.log("durationdurationdurationdurationdurationdurationduration");
             this.showLoader = false;
           },
             (err) => {
+              this.x = true;
+
               this.showLoader = false;
               this.tostservice.showNotificationFailure(err)
 

@@ -1,8 +1,8 @@
 <div class="heading">Installation</div>
 <div class="card">
         <div class="card-header card-header-primary">
-          <div class="d-flex justify-content-between">
-            <h4 class="card-title ">Installation</h4>
+          <div class="d-flex justify-content-between float-right">
+            <!-- <h4 class="card-title ">Installation</h4> -->
             <div class="dropdown">
               <a class="nav-link  dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="material-icons hover-cursor"> filter_list </i>
@@ -30,7 +30,7 @@
       
         <div class="card-body">
           <div class="search-results" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="0" (scrolled)="onScroll()"
-            [scrollWindow]="false">
+            [scrollWindow]="false" style="height: 60vh;">
             <div class="table-responsive" id="coll">
               <table class="table table-hover ">
       
@@ -53,18 +53,18 @@
                     </td>
                     <td>{{row.priority}}</td>
       
+                    <td>{{row.description |fixedLength }}</td>
                     <td>
-                      <!-- <span class="badge" [ngClass]="row.statusName"> -->
-                      {{ row.statusName }}
+                        <span class="badge badge-pill" [style.background]="row.statusColor"> {{ row.statusName }}</span>
+                     
                       <!-- </span> -->
                     </td>
-                    <td>{{row.description |fixedLength }}</td>
 
       
       
                   </tr>
       
-                  <tr class="collapse tabel-detail col-md-8 col-lg-8" attr.id="collapseExample{{i}}">
+                  <tr class="collapse tabel-detail col-md-8 col-lg-8" data-parent="#coll" attr.id="collapseExample{{i}}">
                     <td colspan=8 class=" incident-details">
                       <div class="row p-2 auto-cursor">
                         
@@ -442,11 +442,11 @@
             </div>
           </div>
         </div>
-        <div class="card-footer moreButton">
+        <!-- <div class="card-footer moreButton">
       
           <button type="button" (click)="lodeMore()" class="btn btn-defalte" style="margin: auto;">More</button>
       
-        </div>
+        </div> -->
       </div>
       
       

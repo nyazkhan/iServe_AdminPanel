@@ -43,8 +43,8 @@
               <i (click)="getId(row)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteChange-icon">delete_forever</i>
             </td>
           </tr>
-          <tr class="collapse" attr.id="collapseExample{{i}}">
-            <td colspan=7 class=" incident-details" style="background: whitesmoke;">
+          <tr class="collapse" data-parent="#coll"  attr.id="collapseExample{{i}}">
+            <td colspan=7   class=" incident-details" style="background: whitesmoke;">
               <div class="row" style="margin-top: 20px;">
 
                 <div class="card card-nav-tabs margin-top" style="width: 45%; margin-left: 50px; ">
@@ -54,9 +54,9 @@
                     </div>
                   </div>
                   <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                    <div class="space-between">
-                      <button *ngIf="!editPinShow" (click)="showEditPin()" class=" btn btn-primary btn-sm backgroundColor editBtn"
-                        type="button">Edit</button>
+                    <div style="margin-top: -19px;">
+                      <!-- <button *ngIf="!editPinShow" (click)="showEditPin()" class=" btn btn-primary btn-sm backgroundColor editBtn"
+                        type="button">Edit</button> -->
                       <form class="form-inline ml-auto">
                         <div class=" no-border">
                           <input type="text" class="form-control" placeholder="Search">
@@ -82,6 +82,7 @@
                             </i>
                           </li>
                         </ul>
+
                       </div>
                       <div class="col-md-6" *ngIf="editPinShow">
                         <ul *ngFor="let pin of editpins">
@@ -93,8 +94,11 @@
                           </li>
                         </ul>
                       </div>
+                     
                     </div>
-                    <div *ngIf="editPinShow" class="modal-footer">
+                   <div> <button *ngIf="!editPinShow" (click)="showEditPin()" class=" btn btn-outline-info btn-sm  editBtn float-right"
+                    type="button">Edit</button></div>
+                    <div *ngIf="editPinShow" class="modal-footer float-right" style="padding: 0;border: 0;">
                       <div style="margin: auto;">
                         <button (click)="canclePinchanges(row)" class="btn btn-outline-danger" style="padding: 5px;margin-right: 12px;">Cancle</button>
                         <button *ngIf="!changeSuccessfuly" type="submit" (click)="changePincode()" class="btn btn-outline-success"
@@ -265,11 +269,9 @@
                                 <small [hidden]="prodTypeId.valid || prodTypeId.untouched" style="color: red">
                                   Product Type options is required
                                 </small>
-                  
                               </div>
-                  
                             </div>
-                                                        </div>
+                           </div>
 
                       </div>
                       <!-- <div class="col-md-6" *ngIf="editCatShow">
@@ -380,7 +382,7 @@
                 </small>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" style="padding: 9px;">
               <label>Profile Picture
               </label>
               <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control ">
@@ -431,7 +433,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label> Select Product Categories <span style="color: red;">*</span>
                 </label>
@@ -449,7 +451,7 @@
               </div>
 
             </div>
-            <div *ngIf="selectedProductCategoryChildren?.length > 0" class="col-md-6">
+            <div *ngIf="selectedProductCategoryChildren?.length > 0" class="col-md-4">
               <div class="form-group">
                 <label> Select Product Sub-Categories <span style="color: red;">*</span>
                 </label>
@@ -463,11 +465,17 @@
                 <small [hidden]="prodType.valid || prodType.untouched" style="color: red">
                   Product Type options is required
                 </small>
-                <button (click)="getProdutId()"> click</button>
+                <div class="arrow bounce">
+                <button class="btn btn-primary btn-sm float-right " (click)="getProdutId()" ><i class="material-icons">
+                  arrow_forward
+                  </i></button>
+                </div>
+
+                <!-- <button (click)="getProdutId()"> click</button> -->
               </div>
             </div>
-          </div>
-          <div *ngIf="productType?.length > 0" class="col-md-6">
+          
+          <div *ngIf="productType?.length > 0" class="col-md-4">
             <div class="form-group">
               <label> Select Product Type Ids <span style="color: red;">*</span>
               </label>
@@ -483,6 +491,7 @@
             </div>
 
           </div>
+        </div>
           <div class="row">
             <div class="col-md-10">
               <div class="form-group">
