@@ -82,6 +82,7 @@
                             </i>
                           </li>
                         </ul>
+
                       </div>
                       <div class="col-md-6" *ngIf="editPinShow">
                         <ul *ngFor="let pin of editpins">
@@ -95,9 +96,9 @@
                       </div>
                      
                     </div>
-                   <div> <button *ngIf="!editPinShow" (click)="showEditPin()" class=" btn btn-primary btn-sm backgroundColor editBtn float-right"
+                   <div> <button *ngIf="!editPinShow" (click)="showEditPin()" class=" btn btn-outline-info btn-sm  editBtn float-right"
                     type="button">Edit</button></div>
-                    <div *ngIf="editPinShow" class="modal-footer">
+                    <div *ngIf="editPinShow" class="modal-footer float-right" style="padding: 0;border: 0;">
                       <div style="margin: auto;">
                         <button (click)="canclePinchanges(row)" class="btn btn-outline-danger" style="padding: 5px;margin-right: 12px;">Cancle</button>
                         <button *ngIf="!changeSuccessfuly" type="submit" (click)="changePincode()" class="btn btn-outline-success"
