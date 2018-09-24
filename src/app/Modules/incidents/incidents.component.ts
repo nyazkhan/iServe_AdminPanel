@@ -117,7 +117,7 @@ export class IncidentsComponent implements OnInit {
         // pcId: 0, gType: 0, duration: 0
         if (e.duration) {
           this.getDashboardIncidents();
-          // this.router.navigate(['/incidents'], { queryParams: { pcId: 0, gType: 0, duration: 0 } });
+          this.router.navigate(['/incidents'], { queryParams: { pcId: 0, gType: '', duration: '',Type:'',cType:'', stId:'', warranty:'',rating: 0 } });
 
         }
         }
