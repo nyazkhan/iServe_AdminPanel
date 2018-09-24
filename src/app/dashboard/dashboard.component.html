@@ -76,8 +76,11 @@
       <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="card card-stats padding">
           <div class="card-header card-header-warning card-header-icon">
-            <div class="card-icon">
-              <i class="material-icons">store</i>
+            <div class="card-icon" >
+              <div id="CarryForward_Chart">
+
+             </div>
+              <!-- <i class="material-icons">store</i> -->
             </div>
             <p class="card-category">Carry Forward</p>
             <h3 class="card-title">{{statusCarryForward}}</h3>
@@ -88,9 +91,12 @@
         <div class="card card-stats padding">
           <div class="card-header card-header-info card-header-icon">
             <div class="card-icon">
-              <i class="material-icons">
+
+              <div id="New_Chart">
+            </div>
+              <!-- <i class="material-icons">
                 new_releases
-              </i>
+              </i> -->
             </div>
             <p class="card-category">New</p>
             <h3 class="card-title">{{statusNew}}</h3>
@@ -100,10 +106,13 @@
       <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="card card-stats padding">
           <div class="card-header card-header-success card-header-icon">
-            <div class="card-icon">
-              <i class="material-icons">
+              <div class="card-icon">
+
+            <div id="Fixed_Chart">
+              <!-- <i class="material-icons">
                 assignment_turned_in
-              </i>
+              </i> -->
+              </div>
             </div>
             <p class="card-category">Fixed</p>
             <h3 class="card-title">{{statusFixed}}</h3>
@@ -113,11 +122,13 @@
       <div class="col-lg-3 col-md-4 col-sm-6">
           <div class="card card-stats padding">
             <div class="card-header card-header-info card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">
+                <div class="card-icon">
+
+              <div id="Rejected_Chart">
+                <!-- <i class="material-icons">
                   new_releases
-                </i>
-              </div>
+                </i> -->
+</div>              </div>
               <p class="card-category">Rejected</p>
               <h3 class="card-title">{{statusRejected}}</h3>
             </div>

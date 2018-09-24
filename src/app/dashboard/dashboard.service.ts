@@ -112,8 +112,8 @@ getAVG(fd,x) {
     return this.customHttp.post(I_api,fd)
 }
 
-getMTTR(fd) {
-    const I_api = `/m/complaint/dashboard/mttr`
+getMTTR(fd,x) {
+    const I_api = `/m/complaint/dashboard/mttr/${x}`
 
     return this.customHttp.post(I_api,fd)
 }
