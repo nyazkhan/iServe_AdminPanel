@@ -30,8 +30,10 @@ export class IncidentsComponent implements OnInit {
   rating: number;
   duration: string;
   filterDashboardIncidents = {};
+  startDate: any;
+  endDate:any;
   valTrue=true;
-
+showGraphHeader=false;
 
   sortActive: string
   filterBy = {};
@@ -94,6 +96,12 @@ export class IncidentsComponent implements OnInit {
     this.currentStatusId = statusId;
   }
 
+
+  goto(place:string){
+    this.router.navigate(["/" +place]);
+    this.showGraphHeader=false;
+  }
+
   subscribeRouteChanges() {
     this.activatedRoute.queryParams
       .subscribe((e: Params) => {
@@ -107,17 +115,21 @@ export class IncidentsComponent implements OnInit {
         this.type = e.Type || "";
         this.categoryType = e.cType || "";
         this.warranty = e.warranty || "";
-        this.rating = parseFloat(e.rating) || 0;
+        this.rating = parseFloat(e.rating) ;
+          this.startDate =e.start ||'';
+          this.endDate =e.end||'';
 
         if (e.sId) {
 
-
           this.getComplaints(this.statusId);
         }
+        
         // pcId: 0, gType: 0, duration: 0
         if (e.duration) {
+          
+          this.showGraphHeader=true;
           this.getDashboardIncidents();
-          this.router.navigate(['/incidents'], { queryParams: { pcId: 0, gType: '', duration: '',Type:'',cType:'', stId:'', warranty:'',rating: 0 } });
+          // this.router.navigate(['/incidents'], { queryParams: { pcId: 0, gType: '', duration: '',Type:'',cType:'', stId:'', warranty:'',rating: 0 } });
 
         }
         }
@@ -138,15 +150,20 @@ export class IncidentsComponent implements OnInit {
 
 
   getDashboardIncidents() {
+    this.filterDashboardIncidents = {};
 
-
-console.log("durationdurationdurationdurationdurationdurationduration");
-
+    if (this.duration==="byRange") {
+      this.filterDashboardIncidents['startDate']=this.startDate;
+      this.filterDashboardIncidents['endDate']=this.endDate;
+    }
 
     this.filterDashboardIncidents["duration"] = this.duration
-    this.filterDashboardIncidents["categoryType"] = this.categoryType
-    this.filterDashboardIncidents["categoryId"] = this.ProductCategoryId
     this.filterDashboardIncidents["graphType"] = this.graphType
+    
+    this.filterDashboardIncidents["categoryType"] = this.categoryType
+    if(this.ProductCategoryId){
+    }
+    this.filterDashboardIncidents["categoryId"] = this.ProductCategoryId
 
     if (this.type) {
       this.filterDashboardIncidents["type"] = this.type
@@ -157,7 +174,7 @@ console.log("durationdurationdurationdurationdurationdurationduration");
     }
 
     if (this.warranty) {
-      this.filterDashboardIncidents["warranty"] = this.warranty
+      this.filterDashboardIncidents["warrantyStatus"] = this.warranty
     }
 
     if (this.stateId) {
@@ -383,9 +400,11 @@ console.log("durationdurationdurationdurationdurationdurationduration");
 
   isAscn(val) {
     this.isAsc = val;
+    this.sortBy(this.sortActive);
   }
 
   sortBy(val) {
+
     this.currentRouteParams();
 
     this.sortActive = val;
