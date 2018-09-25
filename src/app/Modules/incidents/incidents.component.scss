@@ -93,9 +93,7 @@ tr{
 //         box-shadow:0 10px 10px rgba(0,0,0,0.1);
 //     }
 // }
-.tabel-detail{
-    background: #f2f2f2;
-}
+
 
 .margin-right{
     margin-right: 25px;
@@ -234,4 +232,25 @@ margin-right: 18px;
     margin-left: 0;
     margin-right: 0;
     
+}
+.filterBtn{
+    border-radius: 0;
+    background: transparent;
+    margin-top: 0;
+    width: 50%;
+    margin-bottom: 0;
+    margin-left: 0;
+    // background: #faaafa;
+}
+
+
+// .btncolor{
+//     background-color: #962daf;
+// }
+// .filterBtn:focus{
+// }
+.btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active, .show>.btn-light.dropdown-toggle{
+    color: white;
+    background-color: #972faf;
+    border-color: #972faf;
 }

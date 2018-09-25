@@ -185,9 +185,17 @@ export class InstallationComponent implements OnInit {
 
 
 
+  x=false;
   onScroll() {
-    console.log('scrolled!!');
-    // this.lodeMore();
+    console.log('scrolled!! ' + this.x);
+  
+    if(!this.x){
+
+      this.x=true
+        this.lodeMore();
+    }else{
+      return;
+  }
   }
 
 
@@ -201,7 +209,7 @@ export class InstallationComponent implements OnInit {
       this.showLoader = true;
       this.installationservice.getAllInstallation(this.currentPage + 1)
         .subscribe((res: Array<any>) => {
-
+          this.x=false
           if (res.length) {
 
             this.filterInstallation = this.filterInstallation.concat(res);
@@ -211,6 +219,8 @@ export class InstallationComponent implements OnInit {
           this.showLoader = false;
         },
           (err) => {
+            this.x=true
+
             this.showLoader = false;
             this.tostservice.showNotificationFailure(err)
           })
@@ -219,6 +229,7 @@ export class InstallationComponent implements OnInit {
       this.showLoader = true;
       this.installationservice.getFillterInstallation(this.selectedHeadingId, this.currentPage + 1)
         .subscribe((res: Array<any>) => {
+          this.x=false
 
           if (res.length) {
 
@@ -229,6 +240,8 @@ export class InstallationComponent implements OnInit {
           this.showLoader = false;
         },
           (err) => {
+            this.x=true
+
             this.showLoader = false;
             this.tostservice.showNotificationFailure(err)
 

@@ -2321,8 +2321,8 @@ fieldset:disabled a.btn {
           box-shadow: none; }
   .btn-primary:hover {
     color: #ffffff;
-    background-color: #0c83e2;
-    border-color: #0c7cd5; }
+    background-color: #962eaf;
+    border-color:#962eaf; }
   .btn-primary:focus, .btn-primary.focus {
     -webkit-box-shadow: none, 0 0 0 0.2rem rgba(33, 150, 243, 0.5);
             box-shadow: none, 0 0 0 0.2rem rgba(33, 150, 243, 0.5); }
@@ -2333,7 +2333,7 @@ fieldset:disabled a.btn {
   .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
   .show > .btn-primary.dropdown-toggle {
     color: #ffffff;
-    background-color: #0c7cd5;
+    background-color: #962eaf;
     border-color: #0b75c9; }
     .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
     .show > .btn-primary.dropdown-toggle:focus {
@@ -2930,7 +2930,7 @@ tbody.collapse.show {
   .dropdown-item.active, .dropdown-item:active {
     color: #ffffff;
     text-decoration: none;
-    background-color: #2196f3; }
+    background-color: #962eaf; }
   .dropdown-item.disabled, .dropdown-item:disabled {
     color: #6c757d;
     background-color: transparent; }
@@ -5119,7 +5119,7 @@ button.close {
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
-  background-color: #0c7cd5 !important; }
+  background-color: #942cae !important; }
 
 .bg-secondary {
   background-color: #6c757d !important; }

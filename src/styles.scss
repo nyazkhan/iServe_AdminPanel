@@ -115,7 +115,21 @@ $main:#9c27b0;
    .text-right{
        text-align: right;
    }
-   @media only screen and  (min-width:768px) and (max-width:1200px){
+//    <animation for tabel>
+.tabel-detail{
+    background: #f2f2f2;
+    animation: slide-down 0.2s ease-in;
+    transform-origin: top;
+    @keyframes slide-down {
+        0% {
+          transform: scaleY(0)
+        }
+        100% {
+          transform: scaleY(1)
+        }
+       }
+}
+   @media only screen and  (min-width:768px) and (max-width:1260px){
     .responsiveCard{
         width: 91%;
     }
@@ -130,5 +144,17 @@ $main:#9c27b0;
 @media print {
     .sidebar{
         display: none !important;
+    }
+    .printCard{
+        display: none;
+    }
+    .printHeader{
+        display: block !important;
+    }
+    .dekstopHeader{
+        display: none;
+    }
+    .cardHeaderPrint{
+        background: white !important;
     }
    }

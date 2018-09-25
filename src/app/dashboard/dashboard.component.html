@@ -61,40 +61,6 @@
       </div>
     </div>
   </div>
-  <!-- <div class="card-header card-header-primary" style="margin-bottom:20px; ">
-    <div class="nav-tabs-navigation">
-      <div class="nav-tabs-wrapper space-between">
-        <div class="addBar">
-          <ul class="nav nav-tabs" data-tabs="tabs">
-            <li class="nav-item hover-cursor">
-              <a class="nav-link active show " data-toggle="tab">{{filterByDate}}</a>
-            </li>
-         
-            
-            <li class="nav-item hover-cursor " *ngIf="showRange">
-                <div class="input-group input-daterange">
-                start date {{dateRange.startDate}}  / end Date {{dateRange.endDate}}
-                 
-                </div>
-              </li> 
-          </ul>
-        </div>
-        
-        <div>
-          <ul class="nav " data-tabs="tabs" style="font-weight: 500; width: 190px;">
-            <li class="nav-item hover-cursor ">
-
-              <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                <div class="nav-link active  dropdown-toggle " [class.active]="categoryName !='ALL APPLIANCES'">{{categoryName}}</div>
-              </a>
-             
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div> -->
 
 
   <div class="container-fluid" style="z-index: 0;">
@@ -222,7 +188,16 @@
               </div>
             </div>
           </div>
-          
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-primary">
+                <div id="regions_chart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title"> Open Incidents</h4>
+              </div>
+            </div>
+          </div>
 
 
           <div class="col-md-6 col-sm-12">
@@ -249,16 +224,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 col-sm-12">
-            <div class="card card-chart">
-              <div class="card-header card-header-primary">
-                <div id="regions_chart"></div>
-              </div>
-              <div class="card-body">
-                <h4 class="card-title"> Open Incidents</h4>
-              </div>
-            </div>
-          </div>
+          
         </ng-container>
 
       </div>
