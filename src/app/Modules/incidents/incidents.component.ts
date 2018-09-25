@@ -69,7 +69,7 @@ export class IncidentsComponent implements OnInit {
     },
   ];
   selectedHeadingIndex = 0;
-  headerRow = ["Incident_No. ", "Date", "Product Name", "Description", "Product Category", "Incident_Category", "Priority", "Status"];
+  headerRow = ["Incident_No. ", "Date", "Name", "Description", "Category", "Incident_Category", "Priority", "Status"];
   down: any;
   isDown: boolean = false;
 

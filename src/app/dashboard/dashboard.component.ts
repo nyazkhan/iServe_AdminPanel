@@ -361,10 +361,11 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.carryforwardChart);
 
     var options = {
-      // chartArea: {
-      //   height: 100,
-      //   // top: ,
-      // },
+      chartArea: {
+        height: 120,
+        width:120
+        // top: ,
+      },
       width:80,
       height: 80,
       // top: 50,
@@ -387,8 +388,13 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.newChart);
 
     var options = {
+      chartArea:
+      {
+        width:120,
+        height:120,
+      },
       width:80,
-      height: 100,
+      height: 80,
       // is3D: true,
       legend: { position: 'none', maxLines: 8 },
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
@@ -407,9 +413,14 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.fixedChart);
 
     var options = {
+      chartArea:
+      {
+        width:120,
+        height:120,
+      },
       // is3D: true,
       width:80,
-      height: 100,
+      height: 80,
       legend: { position: 'none', maxLines: 8 },
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
 
@@ -427,9 +438,14 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.rejectedChart);
 
     var options = {
+      chartArea:
+      {
+        width:120,
+        height:120,
+      },
       // is3D: true,
       width:80,
-      height: 100,
+      height: 80,
       legend: { position: 'none', maxLines: 8 },
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
 
@@ -529,7 +545,7 @@ export class DashboardComponent implements OnInit {
 
     var options = {
 
-      height: 300,
+      height: 200,
       chartArea: {
         height: 200,
         top: 50,
@@ -731,6 +747,7 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.meanTiming);
 
     var options = {
+      height:200,
       chartArea: {
         left: 80,
       },

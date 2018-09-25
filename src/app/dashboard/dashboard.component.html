@@ -1,6 +1,6 @@
 <h4 class="heading">Dashboard</h4>
 <div class="card  card-plain" style="margin-top: 27px;">
-  <div class="card-header card-header-primary" style="margin-bottom:20px; ">
+  <div class="card-header card-header-primary dekstopHeader" style="margin-bottom:20px; ">
     <div class="nav-tabs-navigation">
       <div class="nav-tabs-wrapper space-between">
         <div class="addBar">
@@ -60,15 +60,48 @@
       </div>
     </div>
   </div>
+  <div class="card-header card-header-primary printHeader" style="margin-bottom:20px; display: none; ">
+    <div class="nav-tabs-navigation">
+      <div class="nav-tabs-wrapper space-between">
+        <div class="addBar">
+          <ul class="nav nav-tabs" data-tabs="tabs">
+            <li class="nav-item hover-cursor">
+              <a class="nav-link active show " data-toggle="tab">{{filterByDate}}</a>
+            </li>
+            
+            
+            <li class="nav-item hover-cursor " *ngIf="showRange">
+                <div class="input-group input-daterange">
+                  Range   {{dateRange.startDate}}  To  {{dateRange.endDate}}
+                  
+                </div>
+              </li> 
+          </ul>
+        </div>
+        <div>
+          <ul class="nav " data-tabs="tabs" style="font-weight: 500; width: 190px;">
+            <li class="nav-item hover-cursor ">
+
+              <a id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                <div class="nav-link active  dropdown-toggle " [class.active]="categoryName !='ALL APPLIANCES'">{{categoryName}}</div>
+              </a>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
   <div class="container-fluid" style="z-index: 0;">
     <div *ngIf="role=='management'" class="row">
 
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="card card-stats padding">
-          <div class="card-header card-header-warning card-header-icon">
-            <div class="card-icon" >
+          <div class="card-header card-header-primary card-header-icon ">
+            <div class="card-icon printCard" >
               <div id="CarryForward_Chart">
 
              </div>
@@ -79,10 +112,11 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      
+      <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="card card-stats padding">
-          <div class="card-header card-header-info card-header-icon">
-            <div class="card-icon">
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon printCard">
 
               <div id="New_Chart">
             </div>
@@ -95,10 +129,10 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="card card-stats padding">
-          <div class="card-header card-header-success card-header-icon">
-              <div class="card-icon">
+          <div class="card-header card-header-primary card-header-icon">
+              <div class="card-icon printCard">
 
             <div id="Fixed_Chart">
               <!-- <i class="material-icons">
@@ -111,10 +145,10 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="col-lg-3 col-md-3 col-sm-6">
           <div class="card card-stats padding">
-            <div class="card-header card-header-info card-header-icon">
-                <div class="card-icon">
+            <div class="card-header card-header-primary card-header-icon">
+                <div class="card-icon printCard">
 
               <div id="Rejected_Chart">
                 <!-- <i class="material-icons">
@@ -134,7 +168,7 @@
         <ng-container *ngIf="role=='management'">
           <div class="col-md-6 col-sm-12">
             <div class="card card-chart">
-              <div class="card-header card-header-primary">
+              <div class="card-header card-header-primary cardHeaderPrint">
 
                 <div id="Rating_Chart"></div>
               </div>
@@ -143,10 +177,10 @@
               </div>
             </div>
           </div>
-
+         
           <div class="col-md-6 col-sm-12">
             <div class="card ">
-              <div class="card-header card-header-primary">
+              <div class="card-header card-header-primary cardHeaderPrint">
                 <div class="row">
                     <div class="col-md-6">
                   
@@ -166,7 +200,7 @@
           </div>
           <div class="col-md-6 col-sm-12">
             <div class="card card-chart">
-              <div class="card-header card-header-primary">
+              <div class="card-header card-header-primary cardHeaderPrint">
                 <div id="Product_Incident_Age"></div>
               </div>
               <div class="card-body">
@@ -179,7 +213,7 @@
 
           <div class="col-md-6 col-sm-12">
             <div class="card card-chart">
-              <div class="card-header card-header-primary">
+              <div class="card-header card-header-primary cardHeaderPrint">
                 <div id="product_status_Chart"></div>
               </div>
               <div class="card-body">
@@ -187,35 +221,17 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 col-sm-12">
-            <div class="card card-chart">
-              <div class="card-header card-header-primary">
-                <div id="regions_chart"></div>
-              </div>
-              <div class="card-body">
-                <h4 class="card-title"> Open Incidents</h4>
-              </div>
-            </div>
-          </div>
+         
 
 
-          <div class="col-md-6 col-sm-12">
-            <div class="card card-chart">
-              <div class="card-header card-header-primary">
-                <div id="time_to_repair"></div>
-              </div>
-              <div class="card-body">
-                <h4 class="card-title"> Time To Repair</h4>
-              </div>
-            </div>
-          </div>
+          
 
 
 
 
           <div class="col-md-6 col-sm-12">
             <div class="card card-chart">
-              <div class="card-header card-header-primary" >
+              <div class="card-header card-header-primary cardHeaderPrint" >
                 <div id="repair_time"></div>
               </div>
               <div class="card-body">
@@ -223,9 +239,31 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 col-sm-12">
+          <!-- <div class="col-md-3 col-sm-12">
             <div class="card card-chart">
               <div id="graph_status"></div>
+            </div>
+          </div> -->
+
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-primary cardHeaderPrint">
+                <div id="time_to_repair"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title"> Time To Repair</h4>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6 col-sm-12">
+            <div class="card card-chart">
+              <div class="card-header card-header-primary cardHeaderPrint">
+                <div id="regions_chart"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title"> Open Incidents</h4>
+              </div>
             </div>
           </div>
         </ng-container>
