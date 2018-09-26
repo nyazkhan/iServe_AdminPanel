@@ -14,39 +14,41 @@ export class ServiceEngineerComponent implements OnInit {
   currentId: number;
   assignpincode = [];
   editPinShow = false;
-  editCatShow = false;
-
-  changeSuccessfuly=false;
-
-  catarray:Array<number>;
-  subCatArray=[];  
-  productType=[];
+  addCatShow = false;
+  removeCatShow = false;
+  pinChangeSuccessfuly = false;
+  categoryChangeSuccessfuly = false;
+  catarray: Array<number>;
+  subCatArray = [];
+  productType = [];
   constructor(
-    private router: Router, 
-    private tostservice: TostService, 
+    private router: Router,
+    private tostservice: TostService,
     private engineerService: ServiceEngineerService,
-    ) { }
+  ) { }
 
   dataRows: any;
   isDataLoad: boolean = true;
   imgfile: any;
   urlTOShowImg: string;
-  headerRow: Array<string> = ['S.No.', 'Name', 'User Name', 'Email','Phone No', 'Specialization','Action']
+  headerRow: Array<string> = ['S.No.', 'Name', 'User Name', 'Email', 'Phone No', 'Specialization', 'Action']
   engineerDetails = new EngineerDetails
   pinIstrue: boolean = true;
   loadingButton: boolean = false;
   productCategory: any
-  selectedProductCategories:Array<any>;
-  selectedProductCategoryChildren:Array<any>;
+  selectedProductCategories: Array<any>;
+  selectedProductCategoryChildren: Array<any>;
   addressTypeOptions = ['Home', 'Office', 'Permanent'];
   pins: any;
   editpins = [];
-ProductCategoryTypeIds:Array<number>
-subCatArray1=[];
+  ProductCategoryTypeIds: Array<number>
+  subCatArray1 = [];
 
-assignedProductType=[];
+  assignedProductType = [];
+  assignedProductTypeId = [];
 
-
+  addCategoryTypeId = []
+  currentRow: any;
   ngOnInit() {
     this.getEngineers();
     this.getPincodes();
@@ -61,7 +63,7 @@ assignedProductType=[];
     this.engineerService.getEngineer()
       .subscribe((res: any) => {
         this.dataRows = res;
-        
+
         this.isDataLoad = false;
         console.log(res);
 
@@ -79,11 +81,10 @@ assignedProductType=[];
         res.forEach(element => {
 
           this.editpins.push(element.pincode);
-          console.log(this.editpins);
           this.pinIstrue = false;
         });
 
-        
+
       },
         (err) => {
           this.tostservice.showNotificationFailure(err)
@@ -95,37 +96,48 @@ assignedProductType=[];
     this.engineerService.getProductCategory()
       .subscribe((res: any) => {
         this.productCategory = res;
-        this.selectedProductCategories=res[0];
+        this.selectedProductCategories = res[0];
         console.log(this.productCategory);
 
-        
+
       },
         (err) => {
           this.tostservice.showNotificationFailure(err)
         })
   }
 
-  onProductTypeIdChange(){
+  onProductTypeIdChange() {
     console.log(this.selectedProductCategories);
-    if(this.selectedProductCategories){
-      this.selectedProductCategoryChildren=[];
-      this.selectedProductCategories.forEach(product=>{
+    if (this.selectedProductCategories) {
+      this.selectedProductCategoryChildren = [];
+      this.selectedProductCategories.forEach(product => {
         this.selectedProductCategoryChildren = this.selectedProductCategoryChildren.concat(product.childCategory);
       });
     }
   }
 
- 
 
   getId(row) {
+    this.assignpincode = []
+    this.assignedProductTypeId = [];
+    this.assignedProductType = []
+    this.selectedProductCategories=[];
+    this.selectedProductCategoryChildren = [];
+    this.productType =[];
+
+    this.currentRow = row;
+    this.addCatShow = false;
+    this.removeCatShow = false;
     this.editPinShow = false;
-    this.assignedProductType= row.productTypes.slice(0);
-  console.log(this.assignedProductType);
-  
+    this.assignedProductType = row.productTypes.slice(0);
+    this.assignedProductType.forEach(element => {
+      this.assignedProductTypeId.push(element.id)
+    });
+
     this.currentId = row.id;
 
     this.assignpincode = row.assignPincodes.slice(0);
-  
+
     this.filterPincode();
 
   }
@@ -144,12 +156,12 @@ assignedProductType=[];
   }
 
 
-  getProdutId(){
+  getProdutId() {
     this.engineerService.getProductTypeIds(this.ProductCategoryTypeIds)
-    .subscribe((res:any)=>{
-     this.productType=res
-      console.log(res)
-    })
+      .subscribe((res: any) => {
+        this.productType = res
+        console.log(res)
+      })
   }
 
 
@@ -180,17 +192,17 @@ assignedProductType=[];
       }
     }
 
-      if (this.imgfile) {
-        
-        fd.append("pic", this.imgfile);
-      }
+    if (this.imgfile) {
+
+      fd.append("pic", this.imgfile);
+    }
 
 
 
 
 
 
-    
+
     this.engineerService.addEngineer(fd)
       .subscribe((res: any) => {
         this.resetform();
@@ -220,6 +232,8 @@ assignedProductType=[];
 
   showEditPin() {
     this.editPinShow = true;
+    this.filterPincode();
+
 
   }
 
@@ -235,6 +249,7 @@ assignedProductType=[];
   }
 
   canclePinchanges(row) {
+    this.assignpincode = [];
     this.assignpincode = row.assignPincodes.slice(0);
     console.log(row)
     this.editpins = [];
@@ -249,58 +264,114 @@ assignedProductType=[];
 
 
   changePincode() {
-    this.changeSuccessfuly=true;
+    this.pinChangeSuccessfuly = true;
     console.log(this.assignpincode)
 
     this.engineerService.editPincodes({ "pincodes": this.assignpincode, "serviceEngineerId": this.currentId })
       .subscribe((res: any) => {
-        this.changeSuccessfuly=false;
+        this.pinChangeSuccessfuly = false;
         this.editPinShow = false;
+        this.filterPincode();
 
         console.log(res);
         this.tostservice.showNotificationSuccess("change successfuly")
+        this.engineerService.getEngineer()
+          .subscribe((res: any) => {
+            this.dataRows = res.slice(0)
+          }, (err) => {
+
+          })
       }, (err) => {
-        this.changeSuccessfuly=false;
+        this.pinChangeSuccessfuly = false;
         this.tostservice.showNotificationFailure(err)
       })
   }
 
-//////////////pincode change end here/////////////
+  //////////////pincode change end here/////////////
 
 
 
 
-//////////product category change start here///////
+  //////////product category change start here///////
 
-editProductCategory(){
-this.editCatShow=!this.editCatShow;
-}
+  editProductCategory(value?) {
 
+    this.getProductCategorys();
+    if (value === 'add') {
+      this.addCatShow = true;
+    }
+    if (value === 'remove') {
+      this.removeCatShow = true;
 
-
-removeCategory(){
-
-
-}
-
-
-addCategory(){}
-
-cancleChange(){}
+    }
 
 
-changeCategory(){}
+  }
 
 
 
+  removeCategory(type) {
+    this.assignedProductType = this.assignedProductType.filter(element => element.id != type.id);
+    this.assignedProductTypeId = this.assignedProductTypeId.filter(element => element != type.id);
+
+  }
 
 
 
-/////////product categor ends here////////////
+  cancleChange() {
+    this.getId(this.currentRow);
+    this.assignedProductType = this.currentRow.productTypes.slice(0);
+    this.addCatShow = false;
+    this.removeCatShow = false;
+    this.addCategoryTypeId = []
+  }
+
+
+
+  changeCategory() {
+    this.categoryChangeSuccessfuly = true;
+
+    let tempArray: any
+
+    tempArray = this.assignedProductTypeId.filter(element => this.addCategoryTypeId.indexOf(element) == -1).concat(this.addCategoryTypeId);
+    console.log(this.assignedProductTypeId);
+    console.log(tempArray);
+
+    console.log(this.addCategoryTypeId);
+
+    this.engineerService.editProductCategoryType(tempArray, this.currentId)
+      .subscribe((res: any) => {
+        this.addCatShow = false;
+        this.removeCatShow = false;
+        this.categoryChangeSuccessfuly = false
+        this.tostservice.showNotificationSuccess();
+
+
+        this.engineerService.getEngineer()
+          .subscribe((res: any) => {
+            this.dataRows = res.slice(0)
+          }, (err) => {
+
+          })
+
+      }, (err) => {
+        this.categoryChangeSuccessfuly = false;
+        this.tostservice.showNotificationFailure(err)
+      })
+
+
+  }
+
+
+
+
+
+
+  /////////product categor ends here////////////
 
 
   resetform() {
-    
+
     this.imgfile = null;
     this.engineerDetails = new EngineerDetails();
   }
@@ -311,7 +382,7 @@ changeCategory(){}
 
   }
 
-  
+
 
 
 

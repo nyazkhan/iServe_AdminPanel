@@ -55,8 +55,7 @@
                   </div>
                   <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                     <div style="margin-top: -19px;">
-                      <!-- <button *ngIf="!editPinShow" (click)="showEditPin()" class=" btn btn-primary btn-sm backgroundColor editBtn"
-                        type="button">Edit</button> -->
+                    
                       <form class="form-inline ml-auto">
                         <div class=" no-border">
                           <input type="text" class="form-control" placeholder="Search">
@@ -101,11 +100,11 @@
                     <div *ngIf="editPinShow" class="modal-footer float-right" style="padding: 0;border: 0;">
                       <div style="margin: auto;">
                         <button (click)="canclePinchanges(row)" class="btn btn-outline-danger" style="padding: 5px;margin-right: 12px;">Cancle</button>
-                        <button *ngIf="!changeSuccessfuly" type="submit" (click)="changePincode()" class="btn btn-outline-success"
+                        <button *ngIf="!pinChangeSuccessfuly" type="submit" (click)="changePincode()" class="btn btn-outline-success"
                           style="padding: 5px;">Save
                           Changes
                         </button>
-                        <button *ngIf="changeSuccessfuly " type="button" class="btn btn-outline-success" style="padding: 5px;">
+                        <button *ngIf="pinChangeSuccessfuly " type="button" class="btn btn-outline-success" style="padding: 5px;">
                           <i class="fa fa-spinner fa-spin"></i>submitting
                         </button>
                       </div>
@@ -118,37 +117,7 @@
                         Engineer Details
                       </div>
                     </div>
-                  <!-- <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                    <div class="space-between">
-                      <button (click)="editProductCategory()" class="btn btn-primary btn-sm backgroundColor editBtn">Edit</button>
-                      <form class="form-inline ml-auto">
-                        <div class=" no-border">
-                          <input type="text" class="form-control" placeholder="Search">
-                        </div>
-                        <button type="submit" class="btn btn-just-icon btn-round " style="background: purple">
-                          <i class="material-icons">search</i>
-                        </button>
-                      </form>
-                    </div>
-                    <div class="space-between">
-                      <div class="activePin">Active</div>
-                      <div class="InactivePin">Inactive</div>
-                    </div>
-                    <div class="row scroll">
-                      <div class="col-md-6">
-                        <ul style="list-style-type:none;padding: 0;font-size: 11px;" *ngFor="let type of row.productTypes let i = index">
-                          <li>
-                            {{i+1}} . {{type.productCategoryName}} <i class="material-icons">
-                              remove_circle
-                            </i>
-                          </li>
-                        </ul>
-
-                      </div>
-                    </div>
-
-
-                  </div> -->
+                  
                   <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" style="padding:15px;">
                       <div class="row">
                         <div class="col-md-4 col-lg-4 col-sm-4 ">
@@ -192,8 +161,10 @@
                 </div>
                 <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                     <div class="space-between">
-                      <button (click)="editProductCategory()" class=" btn btn-primary btn-sm backgroundColor editBtn"
-                        type="button">Edit</button>
+                      <button *ngIf="!removeCatShow" (click)="editProductCategory('add')" class=" btn btn-primary btn-sm backgroundColor editBtn"
+                        type="button">Add</button>
+                        <button *ngIf="!addCatShow" (click)="editProductCategory('remove')" class=" btn btn-primary btn-sm backgroundColor editBtn"
+                        type="button">Remove</button>
                       <form class="form-inline ml-auto">
                         <div class=" no-border">
                           <input type="text" class="form-control" placeholder="Search">
@@ -208,32 +179,32 @@
                       <div class="InactivePin">Inactive</div>
                     </div>
                     <div class="row " style="padding-top: 13px;">
-                      <div class="col-md-4 scroll">
+                      <div *ngIf="!addCatShow" class="col-md-6 scroll">
 
                         <ul *ngFor="let type of assignedProductType let i = index">
 
-                          <li class="badge badge-pill badge-primary" style="position: relative;    width: 150px;">
-                             {{i}} {{type.name}}
-                        <i *ngIf="editCatShow" (click)="removeCategory(type)" class="material-icons iconPosition">
-                              remove_circle
-                            </i>
-                          </li>
+                          <li class="badge badge-pill badge-primary" style="position: relative;  height: 21px;  width: 200px;">
+                              <p >{{i  }} . {{type.name}}
+                              </p>
+                              <i *ngIf="removeCatShow" (click)="removeCategory(type)" class="material-icons iconPosition">
+                                   remove_circle
+                                 </i>
+                            </li>
                         </ul>
-                      </div>
-                      <div class="col-md-8">
+                          </div>
+                        </div>
+                      <div class="row">
+                      <div *ngIf="addCatShow"  class="col-md-12">
                           <div class="row">
                               <div class="col-md-4">
                                 <div class="form-group">
                                   <label> Select Product Categories <span style="color: red;">*</span>
                                   </label>
-                                  <button *ngIf="pinIstrue" type="button" class="buttonload">
-                                    <i class="fa fa-spinner fa-spin"></i>
-                                  </button>
-                                  <select class="form-control selectHieght" id="proSubCat" required multiple [(ngModel)]="selectedProductCategories"
-                                    name="proSubCat" #proSubCat="ngModel" (ngModelChange)="onProductTypeIdChange()">
+                                  <select class="form-control selectHieght" id="changeProSubCat" required multiple [(ngModel)]="selectedProductCategories"
+                                    name="changeProSubCat" #changeProSubCat="ngModel" (ngModelChange)="onProductTypeIdChange()">
                                     <option *ngFor="let product of productCategory" [ngValue]="product">{{product.name}}</option>
                                   </select>
-                                  <small [hidden]="proSubCat.valid || proSubCat.untouched" style="color: red">
+                                  <small [hidden]="changeProSubCat.valid || changeProSubCat.untouched" style="color: red">
                                     Product Type options is required
                                   </small>
                   
@@ -247,11 +218,11 @@
                                   <button *ngIf="pinIstrue" type="button" class="buttonload">
                                     <i class="fa fa-spinner fa-spin"></i>
                                   </button>
-                                  <select class="form-control selectHieght" id="prodTypeOptions" required multiple [(ngModel)]="ProductCategoryTypeIds"
-                                    name="prodType" #prodType="ngModel">
+                                  <select class="form-control selectHieght" id="changeProdType" required multiple [(ngModel)]="ProductCategoryTypeIds"
+                                    name="changeProdType" #changeProdType="ngModel">
                                     <option *ngFor="let product of selectedProductCategoryChildren" [value]="product.id">{{product.name}}</option>
                                   </select>
-                                  <small [hidden]="prodType.valid || prodType.untouched" style="color: red">
+                                  <small [hidden]="changeProdType.valid || changeProdType.untouched" style="color: red">
                                     Product Type options is required
                                   </small>
                                   <button (click)="getProdutId()"> click</button>
@@ -262,11 +233,11 @@
                                 <label> Select Product Type Ids <span style="color: red;">*</span>
                                 </label>
                   
-                                <select class="form-control selectHieght" id="prodTypeId" required multiple [(ngModel)]="engineerDetails.productTypeIds"
-                                  name="prodTypeId" #prodTypeId="ngModel">
-                                  <option *ngFor="let product of productType" [ngValue]="product.id">{{product.name}}</option>
+                                <select class="form-control selectHieght" id="changeProdTypeId" required multiple [(ngModel)]="addCategoryTypeId"
+                                  name="changeProdTypeId" #changeProdTypeId="ngModel">
+                                  <option *ngFor="let product of productType" [value]="product.id">{{product.name}}</option>
                                 </select>
-                                <small [hidden]="prodTypeId.valid || prodTypeId.untouched" style="color: red">
+                                <small [hidden]="changeProdTypeId.valid || changeProdTypeId.untouched" style="color: red">
                                   Product Type options is required
                                 </small>
                               </div>
@@ -274,25 +245,16 @@
                            </div>
 
                       </div>
-                      <!-- <div class="col-md-6" *ngIf="editCatShow">
-                        <ul *ngFor="let Category of editCategorys">
-
-                          <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;">{{Category}}
-                            <i (click)="addCategory(Category)" class="material-icons iconPosition">
-                              add_circle
-                            </i>
-                          </li>
-                        </ul>
-                      </div> -->
+                   
                     </div>
-                    <div *ngIf="editCatShow" class="modal-footer">
+                    <div *ngIf="removeCatShow || addCatShow" class="modal-footer">
                       <div style="margin: auto;">
                         <button (click)="cancleChange(row)" class="btn btn-outline-danger" style="padding: 5px;margin-right: 12px;">Cancle</button>
-                        <button *ngIf="!changeSuccessfuly" type="submit" (click)="changeCategory()" class="btn btn-outline-success"
+                        <button *ngIf="!categoryChangeSuccessfuly" type="submit" (click)="changeCategory()" class="btn btn-outline-success"
                           style="padding: 5px;">Save
                           Changes
                         </button>
-                        <button *ngIf="changeSuccessfuly " type="button" class="btn btn-outline-success" style="padding: 5px;">
+                        <button *ngIf="categoryChangeSuccessfuly " type="button" class="btn btn-outline-success" style="padding: 5px;">
                           <i class="fa fa-spinner fa-spin"></i>submitting
                         </button>
                       </div>

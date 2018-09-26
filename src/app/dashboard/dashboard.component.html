@@ -166,7 +166,7 @@
       <div class="row">
 
         <ng-container *ngIf="role=='management'">
-          <div class="col-md-6 col-sm-12">
+          <div (window:resize)="getAllManagmentCharts()" class="col-md-6 col-sm-12">
             <div class="card card-chart">
               <div class="card-header card-header-primary cardHeaderPrint">
 

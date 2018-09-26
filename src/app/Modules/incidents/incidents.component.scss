@@ -254,3 +254,38 @@ margin-right: 18px;
     background-color: #972faf;
     border-color: #972faf;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.star-rating {
+    height: 30px;
+    width: 150px;
+    background-color: white;
+    position: relative;
+}
+
+.full-star {
+     position: absolute;
+    z-index: 1;
+    height: 100%;
+    background-image: url('http://www.solidsignal.com/images%5CReviewStars5.png');
+    background-size: 147px 28px;
+}
+
+.empty-star {
+    width: 100%;
+    height: 100%;  
+    background-image: url('http://fitchespresso.com.au/wp-content/uploads/2013/07/5-stars.jpg');
+    background-size: 150px 30px;
+}

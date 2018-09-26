@@ -91,12 +91,12 @@ export class IncidentsComponent implements OnInit {
     this.getComplaintStatus();
     this.subscribeRouteChanges();
   }
-  starWidth:number
+  starWidth:string
   setId(row, i,) {
     this.currentIndex = i;
     this.currentId = row.id;
     this.currentStatusId = row.statusId;
-     this.starWidth=  row.rating*86/5;
+     this.starWidth=  row.rating *20 +"%";
      console.log(this.starWidth);
      
   }

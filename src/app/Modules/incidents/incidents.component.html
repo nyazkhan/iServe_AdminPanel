@@ -426,9 +426,9 @@
   
   
                             </div>
-                            <div *ngIf="row.fixedInfo[1]?.length>1" class="col-md- 6 col-lg-6 col-sm-6">
+                            <div  class="col-md- 6 col-lg-6 col-sm-6">
   
-                              <div *ngIf="row.fixedInfo[1]?.length>1">
+                              <div *ngIf="row.fixedInfo?.length>1">
   
                                 <b>Date:</b>{{row.fixedInfo[1].createdAt | date:'dd MMM, yyyy'}}
                               </div>
@@ -436,13 +436,10 @@
                                 <b>Time:</b>
                                 {{row.fixedInfo[1].createdAt | date: 'hh : mm a'}}
                               </div>
-                              <div class="crop" [style.width.px]="starWidth" [title]="rating">
-                                <div style="width:86px; " class="d-flex">
-                                    <span>  <i class="material-icons" > star_rate </i> </span>
-                                    <span>  <i class="material-icons" > star_rate </i> </span>
-                                    <span>  <i class="material-icons" > star_rate </i> </span>
-                                    <span>  <i class="material-icons" > star_rate </i> </span>
-                                    <span>  <i class="material-icons"> star_rate </i></span>                                 </div>
+                              
+                                <div class="star-rating">
+                                    <div class="full-star" [style.width]="starWidth"></div>
+                                    <div class="empty-star"> </div>
                                 </div>
                                 <div >
                                   <b>Comment:</b> {{row.fixedInfo[1].comment}}
@@ -524,7 +521,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <textarea placeholder="Comment" required [(ngModel)]="assingedEngineer.comment" name="comment" class="form-control"
+                  <textarea placeholder="Comment"  [(ngModel)]="assingedEngineer.comment" name="comment" class="form-control"
                     #comment="ngModel"></textarea>
                 </div>
               </div>
@@ -548,8 +545,8 @@
 
           </div>
           <div *ngIf="!(listServiceEngineer?.length > 0)">
-            No service Engineer avalable for this Incidents
-          </div>
+              No service engineer available for this region/product
+                      </div>
           <div class="modal-footer">
 
             <button type="button" class="btn btn-secondary" (click)="assignForm.reset()" data-dismiss="modal">Close</button>

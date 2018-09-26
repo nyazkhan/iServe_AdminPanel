@@ -50,9 +50,7 @@ export class NavbarComponent implements OnInit {
   
 }
 
-show(value){
-  console.log(value)
-}
+
 
 
 logout(){
@@ -71,6 +69,11 @@ getchart() {
   })
 }
 
+
+gotoIncidents(id){
+this.router.navigate(["/incidents"],
+{ queryParams: { sId: id}})
+}
 accountSetting(){
   this.router.navigate(["/edit"])
 }
