@@ -184,6 +184,7 @@ export class DashboardComponent implements OnInit {
   }
 
   get_product_rating_chart() {
+    this.rating = [[]];
 
     this.dashboardservice.getProductRating(this.filter, this.valFalse)
       .subscribe((res: any) => {
@@ -235,9 +236,10 @@ export class DashboardComponent implements OnInit {
     let options = {
       height: 200,
 
-      // chartArea: {
-      //   left: 100,
-      // },
+    // chartArea:{
+    //   height:200,
+    //   width:120,
+    // },
 
 
       seriesType: 'bars',
@@ -528,7 +530,7 @@ export class DashboardComponent implements OnInit {
         height: 300,
         chartArea: {
           height: 320,
-          width: 500,
+          // width: 500,
         },
         region: 'IN',
         resolution: 'provinces',
@@ -595,10 +597,7 @@ export class DashboardComponent implements OnInit {
     var options = {
 
       height: 200,
-      // chartArea: {
-      //   height: 200,
-      //   top: 50,
-      // },
+      
 
       seriesType: 'bars',
       series: { 3: { type: 'line' } },
@@ -690,7 +689,7 @@ export class DashboardComponent implements OnInit {
       title: ' out of warranty',
       // is3D: true,
       chartArea: {
-        length: 120,
+        height: 120,
 
       },
       legend: { position: 'bottom', maxLines: 8 },
@@ -729,7 +728,10 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.inWarranty);
     var options = {
       title: 'In warranty',
-      is3D: true,
+      chartArea:{
+length:120,
+      },
+     // is3D: true,
       legend: { position: 'bottom', maxLines: 8 },
       // pieSliceText: "value",
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
