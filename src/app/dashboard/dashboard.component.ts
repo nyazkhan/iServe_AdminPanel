@@ -3,6 +3,7 @@ import { DashboardService } from './dashboard.service';
 import { TostService } from '../providers/tost.service';
 import { DateRange } from '../interface/user';
 import { Router } from '@angular/router';
+import { element } from 'protractor';
 
 declare var google: any;
 
@@ -17,7 +18,7 @@ export class DashboardComponent implements OnInit {
   public chart: any;
 
   valFalse = false;
-
+  showCategory=false
   role: string;
 
   statusCount: any;
@@ -42,7 +43,7 @@ export class DashboardComponent implements OnInit {
   productCategoryName: Array<any>
 
   filterByDate = "month";
-
+  
   filterId: number;
   showRange = false;
   rating = [];
@@ -58,7 +59,8 @@ export class DashboardComponent implements OnInit {
   fixedChart = [];
   statusType = ['CARRYFORWARD', 'NEW', 'FIXED', 'REJECTED',];
   
-
+  
+  showcolor:any;
   dateRange = new DateRange;
   showRatingChart = true;
   categoryName = 'ALL APPLIANCES';
@@ -86,6 +88,7 @@ export class DashboardComponent implements OnInit {
   }
 
   forAllProduct(value) {
+    this.showCategory=false;
     console.log(this.filterId);
 
     this.filterId = null;
@@ -141,11 +144,20 @@ export class DashboardComponent implements OnInit {
 
   filterByProduct(Category) {
     // this.getFilter(id)
+    this.showCategory=true;
     this.categoryName = Category.name;
     this.filterId = Category.id;
     this.categoryType = 'child';
-    this.getFilter();
-    this.getCharts();
+    this.proSubCatName=this.proSubCatName.filter(element=> element.categoryId === Category.id)
+   for (let k = 0; k < this.proSubCatName.length; k++) {
+    this.proSubCatName[k]['color']=this.colors[k];
+     
+   }
+   this.showcolor=this.proSubCatName
+   console.log(this.proSubCatName);
+   
+   this.getFilter();
+   this.getCharts();
   }
 
 
@@ -155,11 +167,46 @@ export class DashboardComponent implements OnInit {
   }
 
 
+  ProCategoryName=[];
+  proSubCatName=[];
+
+
+
+
+ 
+
+
+  colors= ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'];
+
+
   getProductCategorys() {
     this.dashboardservice.getProductCategory()
       .subscribe((res) => {
-        // console.log(res)
+this.proSubCatName=[];
+this.ProCategoryName=[];
+
         this.productCategoryName = res;
+
+        // res.forEach(element => {
+          for (let i = 0; i < res.length; i++) {
+
+          this.ProCategoryName.push({ "name": res[i].name, "id": res[i].id , "color":this.colors[i]})
+          res[i].childCategory.forEach(element => {
+            this.proSubCatName.push(element)
+          });
+        // });
+        }
+
+
+
+
+
+        // for (let i = 0; i < res.length; i++) {
+        //   for (let j = 0; j < res[i].childCategory.length; j++) {
+
+        //   }
+        // }
+
       })
   }
 
@@ -200,12 +247,7 @@ export class DashboardComponent implements OnInit {
 
         for (let k = 0; k < res[0].ratingInfo.length; k++) {
 
-          // if(res[0].ratingInfo[k].categoryId){
-
-          // }
-
           this.ratingId.push(res[0].ratingInfo[k].id);
-          console.log(this.ratingId);
         }
 
         for (let i = 0; i < res.length; i++) {
@@ -237,10 +279,10 @@ export class DashboardComponent implements OnInit {
     let options = {
       height: 200,
 
-    // chartArea:{
-    //   height:200,
-    //   width:120,
-    // },
+      // chartArea:{
+      //   height:200,
+      //   width:120,
+      // },
 
 
       seriesType: 'bars',
@@ -371,7 +413,7 @@ export class DashboardComponent implements OnInit {
 
   // }
 
-  
+
   carryFroward_Chart() {
     var data = google.visualization.arrayToDataTable(this.carryforwardChart);
 
@@ -572,7 +614,6 @@ export class DashboardComponent implements OnInit {
     this.dashboardservice.getAVG(this.filter, this.valFalse)
       .subscribe((res: any) => {
         this.mttrTillDate.push(['Appliances', 'Customer', 'Engineer', 'Repair', 'avg'])
-        console.log(res[0]["avgResolveTimeInfo"]);
         res[0]["avgResolveTimeInfo"].forEach(element => {
 
           this.avgId.push([element.id])
@@ -599,7 +640,7 @@ export class DashboardComponent implements OnInit {
     var options = {
 
       height: 200,
-      
+
 
       seriesType: 'bars',
       series: { 3: { type: 'line' } },
@@ -669,7 +710,6 @@ export class DashboardComponent implements OnInit {
         this.In_Warranty_Status_chart();
 
 
-        console.log(this.outOfWarranty);
 
         this.Out_Warranty_Status_chart();
 
@@ -688,8 +728,8 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.outOfWarranty);
 
     var options = {
-      height:300,
-      
+      height: 300,
+
       title: ' out of warranty',
       // is3D: true,
       // chartArea: {
@@ -732,8 +772,8 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.inWarranty);
     var options = {
       title: 'In warranty',
-      height:300,
-     // is3D: true,
+      height: 300,
+      // is3D: true,
       legend: { position: 'top', maxLines: 7 },
       // pieSliceText: "value",
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],

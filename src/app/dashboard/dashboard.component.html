@@ -93,16 +93,45 @@
       </div>
     </div>
   </div>
-  <div class="card-header card-header-primary dekstopHeader" style="margin-bottom:20px; margin-top: 5px; ">
-      <div class="nav-tabs-navigation">
-        <div class="nav-tabs-wrapper space-between">
-          <div class="addBar">
-            <ul class="nav nav-tabs" data-tabs="tabs">
-              <li class="nav-item hover-cursor">
-                <a class="nav-link active show " data-toggle="tab">{{filterByDate}}</a>
+
+
+<!-- <div style="background-color: #ffffff" class="row">
+  <div class="col-md-12 col-sm-6">
+    <div>
+        <div *ngIf="true" class="addBar">
+            <ul style="list-style-type: none; margin: 0; padding: 0;" *ngFor="let element of ProCategoryName" class="nav nav-tabs" data-tabs="tabs">
+              <li style="display: inline"  class="nav-item hover-cursor">
+                   {{element.color}}  {{element.name}}
               </li>
             </ul>
+            
           </div>
+    </div>
+
+  </div>
+
+</div> -->
+
+
+  <div class="card-header  dekstopHeader" style="margin-bottom:20px; margin-top: 5px;height: 40px;  background-color: #ffffff ">
+      <div class="nav-tabs-navigation">
+        <div class="nav-tabs-wrapper space-between">
+          <div *ngIf="!showCategory" style="width: 100%">
+            <ul *ngFor="let element of ProCategoryName" style="display: inline-block;" class="nav nav-tabs" data-tabs="tabs">
+              <li style="display: inline-block" class="nav-item hover-cursor">
+                {{element.color  }}  {{   element.name }}  ,
+              </li>
+            </ul>
+            
+          </div>
+          <div *ngIf="showCategory" style="width: 100%">
+              <ul *ngFor="let element of showcolor" class="nav nav-tabs" style="display: inline-block;">
+                  <li style="display: inline-block" class="nav-item hover-cursor">
+                    {{element.color  }}  {{  element.name   }}  ,
+                  </li>
+                </ul>
+              
+            </div>
         
         </div>
       </div>
