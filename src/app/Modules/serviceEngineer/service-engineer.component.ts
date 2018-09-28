@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ServiceEngineerService } from './service-engineer.service';
 import { EngineerDetails } from '../../interface/engineer_details';
 import { TostService } from 'src/app/providers/tost.service';
@@ -11,44 +10,51 @@ declare const $: any;
   styleUrls: ['./service-engineer.component.scss']
 })
 export class ServiceEngineerComponent implements OnInit {
-  currentId: number;
-  assignpincode = [];
+ 
+ 
   editPinShow = false;
   addCatShow = false;
   removeCatShow = false;
   pinChangeSuccessfuly = false;
+  pinIstrue = true;
+  loadingButton = false;
   categoryChangeSuccessfuly = false;
-  catarray: Array<number>;
-  subCatArray = [];
+  isDataLoad = true;
+
   productType = [];
+  assignpincode = [];
+  editpins = [];
+  assignedProductType = [];
+  assignedProductTypeId = [];
+  addCategoryTypeId = []
+
+  catarray: Array<number>;
+  selectedProductCategories: Array<any>;
+  selectedProductCategoryChildren: Array<any>;
+  ProductCategoryTypeIds: Array<number>
+
+  headerRow = ['S.No.', 'Name', 'User Name', 'Email', 'Phone No', 'Specialization', 'Action']
+  addressTypeOptions = ['Home', 'Office', 'Permanent'];
+
+  currentId: number;
+  searchText:any;
+  dataRows: any;
+  imgfile: any;
+  productCategory: any
+  pins: any;
+  currentRow: any;
+
+  urlTOShowImg: string;
+
+  engineerDetails = new EngineerDetails
+
   constructor(
-    private router: Router,
     private tostservice: TostService,
     private engineerService: ServiceEngineerService,
   ) { }
 
-  dataRows: any;
-  isDataLoad: boolean = true;
-  imgfile: any;
-  urlTOShowImg: string;
-  headerRow: Array<string> = ['S.No.', 'Name', 'User Name', 'Email', 'Phone No', 'Specialization', 'Action']
-  engineerDetails = new EngineerDetails
-  pinIstrue: boolean = true;
-  loadingButton: boolean = false;
-  productCategory: any
-  selectedProductCategories: Array<any>;
-  selectedProductCategoryChildren: Array<any>;
-  addressTypeOptions = ['Home', 'Office', 'Permanent'];
-  pins: any;
-  editpins = [];
-  ProductCategoryTypeIds: Array<number>
-  subCatArray1 = [];
 
-  assignedProductType = [];
-  assignedProductTypeId = [];
 
-  addCategoryTypeId = []
-  currentRow: any;
   ngOnInit() {
     this.getEngineers();
     this.getPincodes();
@@ -58,14 +64,13 @@ export class ServiceEngineerComponent implements OnInit {
 
 
 
-
+  // get engineers from server
   getEngineers() {
     this.engineerService.getEngineer()
       .subscribe((res: any) => {
         this.dataRows = res;
 
         this.isDataLoad = false;
-        console.log(res);
 
       },
         (err) => {
@@ -74,6 +79,8 @@ export class ServiceEngineerComponent implements OnInit {
         })
   }
 
+
+  // get pincodes from server
   getPincodes() {
     this.engineerService.getPincode()
       .subscribe((res: any) => {
@@ -92,12 +99,12 @@ export class ServiceEngineerComponent implements OnInit {
   }
 
 
+  //  get product category from  serve
   getProductCategorys() {
     this.engineerService.getProductCategory()
       .subscribe((res: any) => {
         this.productCategory = res;
         this.selectedProductCategories = res[0];
-        console.log(this.productCategory);
 
 
       },
@@ -106,8 +113,9 @@ export class ServiceEngineerComponent implements OnInit {
         })
   }
 
+
+  // get product sub category  on the bases of selected product category
   onProductTypeIdChange() {
-    console.log(this.selectedProductCategories);
     if (this.selectedProductCategories) {
       this.selectedProductCategoryChildren = [];
       this.selectedProductCategories.forEach(product => {
@@ -117,13 +125,15 @@ export class ServiceEngineerComponent implements OnInit {
   }
 
 
-  getId(row) {
+  //  function trigger when table row click  and store the data related to row
+typeName=[];
+  setId(row) {
     this.assignpincode = []
     this.assignedProductTypeId = [];
     this.assignedProductType = []
-    this.selectedProductCategories=[];
+    this.selectedProductCategories = [];
     this.selectedProductCategoryChildren = [];
-    this.productType =[];
+    this.productType = [];
 
     this.currentRow = row;
     this.addCatShow = false;
@@ -132,7 +142,9 @@ export class ServiceEngineerComponent implements OnInit {
     this.assignedProductType = row.productTypes.slice(0);
     this.assignedProductType.forEach(element => {
       this.assignedProductTypeId.push(element.id)
+      this.typeName.push(element.name)
     });
+console.log(this.assignedProductType);
 
     this.currentId = row.id;
 
@@ -142,10 +154,8 @@ export class ServiceEngineerComponent implements OnInit {
 
   }
 
-  editManager() {
 
-  }
-
+  // delete engineer
   deleteEngineer() {
     this.engineerService.deleteEngineer(this.currentId)
       .subscribe((res: any) => {
@@ -156,6 +166,7 @@ export class ServiceEngineerComponent implements OnInit {
   }
 
 
+  // get product type id from server on the bases of selected category or sub category
   getProdutId() {
     this.engineerService.getProductTypeIds(this.ProductCategoryTypeIds)
       .subscribe((res: any) => {
@@ -165,6 +176,7 @@ export class ServiceEngineerComponent implements OnInit {
   }
 
 
+  //  for  img upload
   onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
@@ -176,6 +188,9 @@ export class ServiceEngineerComponent implements OnInit {
       }
     }
   }
+
+
+  // creat a new engineer 
 
   creatEngineer() {
 
@@ -224,17 +239,15 @@ export class ServiceEngineerComponent implements OnInit {
 
   ////////////////pincode Change start here////////////////
 
-  removePincode(pin) {
-    this.assignpincode = this.assignpincode.filter(element => element != pin);
-    this.editpins.push(pin);
-  }
-
-
   showEditPin() {
     this.editPinShow = true;
     this.filterPincode();
+  }
 
 
+  removePincode(pin) {
+    this.assignpincode = this.assignpincode.filter(element => element != pin);
+    this.editpins.push(pin);
   }
 
 
@@ -244,9 +257,11 @@ export class ServiceEngineerComponent implements OnInit {
 
   }
 
+
   filterPincode() {
     this.editpins = this.editpins.filter(element => this.assignpincode.indexOf(element) == -1);
   }
+
 
   canclePinchanges(row) {
     this.assignpincode = [];
@@ -309,7 +324,6 @@ export class ServiceEngineerComponent implements OnInit {
   }
 
 
-
   removeCategory(type) {
     this.assignedProductType = this.assignedProductType.filter(element => element.id != type.id);
     this.assignedProductTypeId = this.assignedProductTypeId.filter(element => element != type.id);
@@ -317,15 +331,13 @@ export class ServiceEngineerComponent implements OnInit {
   }
 
 
-
   cancleChange() {
-    this.getId(this.currentRow);
+    this.setId(this.currentRow);
     this.assignedProductType = this.currentRow.productTypes.slice(0);
     this.addCatShow = false;
     this.removeCatShow = false;
     this.addCategoryTypeId = []
   }
-
 
 
   changeCategory() {
@@ -363,18 +375,17 @@ export class ServiceEngineerComponent implements OnInit {
   }
 
 
-
-
-
-
   /////////product categor ends here////////////
 
+
+  // reset engineer form
 
   resetform() {
 
     this.imgfile = null;
     this.engineerDetails = new EngineerDetails();
   }
+
 
   closeEngineerFormModal() {
     $('#EngineerFormModal').modal('hide')

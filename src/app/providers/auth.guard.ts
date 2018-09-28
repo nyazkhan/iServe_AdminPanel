@@ -7,23 +7,23 @@ import { LoginService } from '../components/login/login.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
- constructor(private loginservice : LoginService, private router: Router){
+  constructor(private loginservice: LoginService, private router: Router) {
 
- }
+  }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-if(this.loginservice.isLoggedIn()&&(localStorage.getItem("currentUserName")=="superadmin")){
+    if (this.loginservice.isLoggedIn() && (localStorage.getItem("currentUserName") == "superadmin")) {
 
-return true;
-}
+      return true;
+    }
 
-else(!this.loginservice.isLoggedIn())
-{
+    else (!this.loginservice.isLoggedIn())
+    {
 
-this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
 
-    return false;
+      return false;
+    }
   }
-}
 }

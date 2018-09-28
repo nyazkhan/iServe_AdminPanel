@@ -102,32 +102,6 @@ export class CustomHttpService {
             errorInfo.status = err.status;
             errorInfo.msg= err.error.error_description;
 
-            // if (err.status === 403) {
-            //     // unauthorized users
-            //    errorInfo.msg= " unauthorized users " + err.error.error_description
-            //     // alert(" unauthorized users " + err.error.error_description)
-            //   } else if (err.status === 401) {
-            //     // access rights issue
-            //     localStorage.clear();
-            //     alert(" unauthorized access")
-            //   } else if (err.status === 400) {
-            //     // DO NOTHING HERE
-            //     // Bad Login credentials, this error has been handled at the login page itself, 
-            //     // hence ignored here
-            //     errorInfo.msg="wrong Login credentials please try again"
-            //   } else if (err.status === 502) {
-            //     // server issue
-            //     errorInfo.msg="Server Issue";
-        
-            //   } else if (err.status === 404) {
-            //     // server issue
-            //     errorInfo.msg=err.message;
-            //   }else if (err.hasOwnProperty('error') && (err.error.hasOwnProperty('message')) || err.error.hasOwnProperty('error')) {
-            //         errorInfo.msg=`${err.error.message || err.error.error} `;
-            //     }
-
-
-
 
 
 

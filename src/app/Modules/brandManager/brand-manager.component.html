@@ -5,8 +5,9 @@
             <div class="dropdown">
                 <a class="nav-link ">
                     <!-- <i class="material-icons" (click)="managerForm.reset()" data-toggle="modal" data-target="#ManagerFormModal"> add_to_photos</i> -->
-                    <button class="btn btn-primary transparent"  (click)="managerForm.reset()" data-toggle="modal" data-target="#ManagerFormModal" ><i class="material-icons" style="font-size: 30px;">
-                        person_add
+                    <button class="btn btn-primary transparent" (click)="managerForm.reset()" data-toggle="modal"
+                        data-target="#ManagerFormModal"><i class="material-icons" style="font-size: 30px;">
+                            person_add
                         </i></button>
                 </a>
 
@@ -36,7 +37,8 @@
                         </td>
 
                         <td>
-                            <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}">                            &nbsp;
+                            <img *ngIf="row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" src="{{row.picUrl}}">
+                            &nbsp;
                             <i *ngIf="!row.picUrl" style="width: 45px;height: 45px;border-radius: 25px;" class="material-icons mainColor">person</i>
 
                             {{row.name}}
@@ -51,9 +53,9 @@
                             <b>{{row.contactNo}}</b>
                         </td>
                         <td class="change-icon">
-                            
+
                             <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteIcon">delete</i>
-                            
+
                             <i (click)="getId(row.id)" data-toggle="modal" data-target="#deleteModal" class="material-icons mainColor deleteChange-icon">delete_forever</i>
 
                         </td>
@@ -82,113 +84,115 @@
 
 <!-- barand manager form -->
 
-<div class="modal fade" id="ManagerFormModal" tabindex="-1" role="dialog" aria-labelledby="ManagerFormModal" aria-hidden="true">
+<div class="modal fade" id="ManagerFormModal" tabindex="-1" role="dialog" aria-labelledby="ManagerFormModal"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content   card card-stats">
             <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon"> 
+                <div class="card-icon">
                     <i class="material-icons">person_add
                     </i>
                 </div>
                 <h3 class="card-title">ADD MANAGER</h3>
             </div>
-            
-            <!-- <new code> -->
-                    <div class="modal-body">
-                            <form (ngSubmit)="onSubmit()" #managerForm="ngForm">
-            
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="name"> Name <span style="color: red;">*</span></label>
-                                            <br>
-                                            <input type="text" placeholder="Name" required class="form-control" id="name" name="name" [(ngModel)]="managerDetails.name" #name="ngModel">
-                                             <small [hidden]="name.valid || name.untouched" style="color: red">
-                                                Name is required
-                                             </small>
-                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <label>Profile Picture</label>
-                                            <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control ">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                        <label>Email Id <span style="color: red;">*</span> </label>
-                                             <input type="email" required [(ngModel)]="managerDetails.email" name="email" id="email" class="form-control " #email="ngModel"
-                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}">
-                                     <small [hidden]="email.valid || email.untouched" style="color: red">
-                                    Email Id is required
-                                    </small>
-                                </div>
-                                </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="userName">User Name <span style="color: red;">*</span></label>
-                                            <br>
-                                            <input type="text" placeholder="User Name"  required minlength="4" maxlength="20" class="form-control" id="userName" name="userName" [(ngModel)]="managerDetails.username" #userName="ngModel">
-                                            <small [hidden]="userName.valid || userName.untouched" style="color: red">
-                                                User Name is required at
-                                            </small>
-                                         </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="password">Password <span style="color: red;">*</span></label>
-                                            <br>
-                                            <input type="password" placeholder="Password" required class="form-control" id="password" name="password" [(ngModel)]="managerDetails.password" #password="ngModel">
-                                            <small [hidden]="password.valid || password.untouched" style="color: red">
-                                                password is required with minimum length 6
-                                            </small>
-                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="contactNo">Contact No <span style="color: red;">*</span></label>
-                                            
-                                            <input type="number" placeholder="Contact" required minlength="10" maxlength="13" class="form-control" id="contactNo" name="contactNo" [(ngModel)]="managerDetails.contactNo"
-                                                #contactNo="ngModel">
-                                                <small [hidden]="contactNo.valid || contactNo.untouched" style="color: red">
-                                                    Contect No. is required
-                                                </small>
 
-                                                
-                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect1" >Brand Id</label>
-                                                <select class="form-control  selectpicker" name="brnad" [(ngModel)]="managerDetails.brandId" #brand="ngModel" id="exampleFormControlSelect1">
-                                                        <option *ngFor="let brand of brands" [value]="brand.id"> {{brand.name}} </option>
-                    
-                                                </select>
-                                            </div>
-                                        </div>
-                                </div>
-                                
-                                <div class="modal-footer">
-            
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" [disabled]="!managerForm.valid" class="btn btn-success">Submit</button>
-                                </div>
-                            </form>
-            
+            <div class="modal-body">
+                <form (ngSubmit)="onSubmit()" #managerForm="ngForm">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name"> Name <span style="color: red;">*</span></label>
+                                <br>
+                                <input type="text" required class="form-control" id="name" name="name" [(ngModel)]="managerDetails.name"
+                                    #name="ngModel">
+                                <small [hidden]="name.valid || name.untouched" style="color: red">
+                                    Name is required
+                                </small>
+                            </div>
                         </div>
-            
+                        <div class="col-md-6">
+                            <label>Profile Picture</label>
+                            <input type="file" (change)="onSelectFile($event)" name="pic" id="pic" class="form-control ">
+                        </div>
                     </div>
-                </div>
-            </div>  
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email Id <span style="color: red;">*</span> </label>
+                                <input type="email" required [(ngModel)]="managerDetails.email" name="email" id="email"
+                                    class="form-control " #email="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}">
+                                <small [hidden]="email.valid || email.untouched" style="color: red">
+                                    Email Id is required
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="userName">User Name <span style="color: red;">*</span></label>
+                                <br>
+                                <input type="text" required minlength="4" maxlength="20" class="form-control" id="userName"
+                                    name="userName" [(ngModel)]="managerDetails.username" #userName="ngModel">
+                                <small [hidden]="userName.valid || userName.untouched" style="color: red">
+                                    User Name is required at
+                                </small>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="password">Password <span style="color: red;">*</span></label>
+                                <br>
+                                <input type="password" required class="form-control" id="password" name="password"
+                                    [(ngModel)]="managerDetails.password" #password="ngModel">
+                                <small [hidden]="password.valid || password.untouched" style="color: red">
+                                    password is required with minimum length 6
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="contactNo">Contact No <span style="color: red;">*</span></label>
+
+                                <input type="number" required minlength="10" maxlength="13" class="form-control" id="contactNo"
+                                    name="contactNo" [(ngModel)]="managerDetails.contactNo" #contactNo="ngModel">
+                                <small [hidden]="contactNo.valid || contactNo.untouched" style="color: red">
+                                    Contect No. is required
+                                </small>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Brand Id</label>
+                                <select class="form-control  selectpicker" name="brnad" [(ngModel)]="managerDetails.brandId"
+                                    #brand="ngModel" id="exampleFormControlSelect1">
+                                    <option *ngFor="let brand of brands" [value]="brand.id"> {{brand.name}} </option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" [disabled]="!managerForm.valid" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
     </div>
-</div> -->
+</div>
+
+
 <!-- brand manager form end -->
 
 

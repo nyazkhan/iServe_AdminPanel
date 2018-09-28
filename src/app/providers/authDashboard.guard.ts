@@ -18,7 +18,7 @@ if(this.loginservice.isLoggedIn()){
 return true;
 }
 
-else(!this.loginservice.isLoggedIn())
+else
 {
 
 this.router.navigate(['/login']);

@@ -6,9 +6,7 @@
                           <span *ngIf="role=='superadmin'">
                             Super Admin Panel
                         </span>
-                        <!-- <span *ngIf="role=='management'">
-                                Manager Panel
-                            </span> -->
+                      
                       </a>
                   </div>
 
@@ -21,15 +19,8 @@
                   <div class="collapse navbar-collapse justify-content-end" id="navigation">
                       
                       <ul class="navbar-nav">
-                          <!-- <li class="nav-item">
-                              <a class="nav-link" >
-                                  <i class="material-icons">dashboard</i>
-                                  <p>
-                                      <span class="d-lg-none d-md-block">Stats</span>
-                                  </p>
-                              </a>
-                          </li> -->
-                          <li class="nav-item dropdown">
+                       
+                          <li *ngIf="role=='management'" class="nav-item dropdown">
                               <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   <i class="material-icons">notifications</i>
                                   <span class="notification"> {{totalCount}} </span>
@@ -45,6 +36,8 @@
                               </div>
                               </div>
                           </li>
+
+                          <!-- user details  starts here -->
                           <li class="nav-item">
                               <a class="nav-link"   id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   <i class="material-icons hover-cursor" >person</i>
@@ -62,14 +55,12 @@
                                             <img class="userImage" [src]=" picUrl!=='null'? picUrl:'assets/img/avatar.png'"/>
                                            
                                     </div>
-                                    <!-- <i class="material-icons">create</i> -->
 
                                     <div style="padding: 28px;font-size: 14px;"> 
                                         <div style="font-weight: 700;font-size: 14px; margin-top:-5px;" >{{userType}}</div>
 
                                         <div style="font-weight: 700"><b>{{name}}</b></div>
                                         
-                                        <!-- <div style="font-weight: 300"><b>{{username}}</b></div> -->
                                         <div *ngIf=" email !=='null'"> {{email}} </div>
                                        
                                         <div *ngIf=" contactNo !=='null'"> {{contactNo}} </div>
@@ -90,6 +81,8 @@
                               </div>
                             
                           </li>
+                       <!-- user details ends here -->
+
                       </ul>
                   </div>
               </div>

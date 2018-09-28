@@ -7,73 +7,67 @@ import { CustomHttpService } from '../../providers/custom-http.service';
 export class ServiceEngineerService {
 
   constructor(private customHttp: CustomHttpService) { }
- 
- 
- 
- 
- 
+
+
+
+
+
   //add engineer
-  addEngineer(fd){
-        // const engineer_api = `/sa/service-engineer`
-    return this.customHttp.post("/sa/service-engineer", fd, )
-   
+  addEngineer(fd) {
+    return this.customHttp.post("/sa/service-engineer", fd)
+
   }
 
 
   // get pincodes from server
-  getPincode(){
-        // const pincode_api =`/sa/pincode-detail`
+  getPincode() {
     return this.customHttp.get("/sa/pincode-detail")
   }
 
 
 
   // get product category from server
-  getProductCategory(){
-        // const productCategory_api =`/sa/product-category`
+  getProductCategory() {
     return this.customHttp.get("/sa/product-category")
   }
 
-getProductTypeIds(ids:Array<number>){
-  const idss = ids.join(',');
-  console.log(idss);
-  
-  return this.customHttp.get(`/sa/product-type?categoryIds=${idss}`)
-}
 
-  // //get brand id
-  // getBrandIds(){
-  //       // const brandIds_api =`/sa/product-category`
-  //   return this.customHttp.get("/sa/product-category")
-  // }
+  // get product type id from server
+  getProductTypeIds(ids: Array<number>) {
+    const idss = ids.join(',');
+
+    return this.customHttp.get(`/sa/product-type?categoryIds=${idss}`)
+  }
+
 
 
 
 
   //get service engineer details  from server 
-  getEngineer(){
-    
-        return this.customHttp.get("/sa/service-engineer" )
-   
+  getEngineer() {
+
+    return this.customHttp.get("/sa/service-engineer")
+
 
   }
 
 
-
-deleteEngineer(delete_id){
-  return this.customHttp.delete(`/sa/service-engineer/${delete_id}`)
-}
-
-editPincodes(fd){
-  console.log(fd);
-  return this.customHttp.post(`/sa/pincode-service-engineer`, fd)
-}
+  //  delete engineer
+  deleteEngineer(delete_id) {
+    return this.customHttp.delete(`/sa/service-engineer/${delete_id}`)
+  }
 
 
+  // change pincode of engineer
+  editPincodes(fd) {
+    return this.customHttp.post(`/sa/pincode-service-engineer`, fd)
+  }
 
-editProductCategoryType(fd,id){
-  return this.customHttp.post(`/sa/product-type-service-engineer`,{"productTypeIds":fd,"serviceEngineerId":id})
-}
+
+  // change product type id of engineer
+  editProductCategoryType(fd, id) {
+    return this.customHttp.post(`/sa/product-type-service-engineer`, { "productTypeIds": fd, "serviceEngineerId": id })
+  }
 
 
 

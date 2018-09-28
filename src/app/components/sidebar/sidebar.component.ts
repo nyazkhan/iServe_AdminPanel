@@ -41,7 +41,6 @@ this.subscribeUserPictureChanges();
         }
       ];
 
-      console.log(this.picUrl);
       
     }
     if (localStorage.getItem("currentUserName") === 'superadmin') {

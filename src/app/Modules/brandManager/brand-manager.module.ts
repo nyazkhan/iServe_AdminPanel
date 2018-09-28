@@ -9,17 +9,16 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    
+
     RouterModule.forChild([
 
       { path: '', component: BrandManagerComponent },
 
-      // { path: 'edit', component: EditEngineerComponent },
 
     ])
   ],
   declarations: [
     BrandManagerComponent,
-      ]
+  ]
 })
 export class BrandManagerModule { }

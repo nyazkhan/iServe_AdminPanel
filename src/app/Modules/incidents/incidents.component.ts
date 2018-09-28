@@ -12,12 +12,20 @@ declare let $: any;
   styleUrls: ['./incidents.component.scss']
 })
 export class IncidentsComponent implements OnInit {
+
+  loadingHistory = false;
+  assignButtonHide = false;
+  rejectButtonHide = false;
+  valTrue = true;
+  showGraphHeader = false;
+  showLoader = false;
+  showNoMore = false;
+  isAsc = true;
+
   selectedHeadingId;
-  loadingHistory: boolean = false;
+
   assignTitle: string;
   currentIndex: number;
-  assignButtonHide: boolean = false;
-  rejectButtonHide: boolean = false;
   currentStatusId: number;
 
   statusId: number;
@@ -27,18 +35,36 @@ export class IncidentsComponent implements OnInit {
   categoryType: string;
   type: string;
   warranty: string;
-  rating: number;
   duration: string;
-  filterDashboardIncidents = {};
   startDate: any;
   endDate: any;
-  valTrue = true;
-  showGraphHeader = false;
+  filterDashboardIncidents = {};
 
   sortActive: string
+  urlTOShowImg: string;
+  comment: string;
+  rating: number;
+
   filterBy = {};
   filterbysort = {}
-  isAsc = true;
+
+  starWidth: string
+
+  currentId: number;
+  imgfile: any;
+  commentsHistory: any;
+  filtercomplaints = [];
+  currentPage = 1;
+  statusHeading: Array<any>
+  allHeading = [{ name: 'All', color: "#FFD600", id: 0, },];
+  headerRow = ["Incident_No. ", "Date", "Name", "Description", "Category", "Incident_Category", "Priority", "Status"];
+
+  rejectComplaint = new RejectComplaint;
+
+  assingedEngineer = new AssingedEngineer;
+
+  listServiceEngineer: Array<any>;
+
 
   constructor(
     private incidentService: IncidentsService,
@@ -51,54 +77,21 @@ export class IncidentsComponent implements OnInit {
   }
 
 
-  currentId: number;
-  imgfile: any;
-  urlTOShowImg: string;
-  // complaints: Array<any>;
-  commentsHistory: any;
-  showLoader: boolean = false;
-  showNoMore = false;
-  filtercomplaints = [];
-  currentPage = 1;
-  comment: string;
-  RejectId: number;
-  statusHeading: Array<any>
-  allHeading = [
-    {
-      name: 'All',
-      color: "#FFD600",
-      id: 0,
-
-    },
-  ];
-  selectedHeadingIndex = 0;
-  headerRow = ["Incident_No. ", "Date", "Name", "Description", "Category", "Incident_Category", "Priority", "Status"];
-  down: any;
-  isDown: boolean = false;
-
-  rejectComplaint = new RejectComplaint;
-
-  assingedEngineer = new AssingedEngineer;
-
-  listServiceEngineer: Array<any>;
-
-
-
 
 
   ngOnInit() {
-    // this.getComplaints(0);
     this.getComplaintStatus();
     this.subscribeRouteChanges();
   }
-  starWidth:string
-  setId(row, i,) {
+
+
+
+  setId(row, i, ) {
     this.currentIndex = i;
     this.currentId = row.id;
     this.currentStatusId = row.statusId;
-     this.starWidth=  row.rating *20 +"%";
-     console.log(this.starWidth);
-     
+    this.starWidth = row.rating * 20 + "%";
+
   }
 
 
@@ -106,8 +99,17 @@ export class IncidentsComponent implements OnInit {
     this.router.navigate(["/" + place]);
     this.showGraphHeader = false;
   }
+  filterClick() {
+    $('.fitlerDiv').on('click', (e) => {
+      e.stopPropagation()
+    });
+  }
+
+
 
   subscribeRouteChanges() {
+
+
     this.activatedRoute.queryParams
       .subscribe((e: Params) => {
         if (e.sId || e.duration || e.pcId) {
@@ -129,12 +131,10 @@ export class IncidentsComponent implements OnInit {
             this.getComplaints(this.statusId);
           }
 
-          // pcId: 0, gType: 0, duration: 0
           if (e.duration) {
 
             this.showGraphHeader = true;
             this.getDashboardIncidents();
-            // this.router.navigate(['/incidents'], { queryParams: { pcId: 0, gType: '', duration: '',Type:'',cType:'', stId:'', warranty:'',rating: 0 } });
 
           }
         }
@@ -145,13 +145,11 @@ export class IncidentsComponent implements OnInit {
       });
   }
 
+  // filter by status headings
   onHeadingClick(statusId: number) {
     this.router.navigate(['/incidents'], { queryParams: { sId: statusId, } });
     this.sortActive = "";
-
   }
-
-
 
 
   getDashboardIncidents() {
@@ -295,6 +293,8 @@ export class IncidentsComponent implements OnInit {
     }
 
   }
+
+
   getComplaintStatus() {
     this.incidentService.getCompStatus()
       .subscribe((res: any) => {
@@ -306,6 +306,8 @@ export class IncidentsComponent implements OnInit {
 
         })
   }
+
+
   getAllComplaints() {
 
     this.showLoader = true;
@@ -324,30 +326,17 @@ export class IncidentsComponent implements OnInit {
         })
   }
 
+
   //get filter complaints
   getFilterComplants(sId: number, ) {
+
     this.filtercomplaints = [];
     this.showLoader = true;
     this.showNoMore = false;
     this.currentPage = 1;
-    // if ( this.statusId) {
     if (this.statusId) {
       this.filterBy['statusId'] = this.statusId || sId;
     }
-    // if (this.ProductCategoryId) {
-    //   this.filterBy["categoryId"] = this.ProductCategoryId;
-    // }
-    // if (this.stateId != "0" && this.stateId != "") {
-    //   this.filterBy['location'] = this.stateId;
-    // }
-    // if (this.incidentCategoryId) {
-    //   this.filterBy['complaintCategoryId'] = this.incidentCategoryId;
-    // }
-    // } else {
-    //   this.getAllComplaints();
-    // }
-
-
 
     this.incidentService.getFillterComplaint(this.filterBy, this.currentPage)
       .subscribe((res: any) => {
@@ -384,12 +373,7 @@ export class IncidentsComponent implements OnInit {
 
 
     if (this.duration) {
-
-      this.getDashboardIncidents()
-
-
-
-
+      this.getDashboardIncidents();
     } else {
       if (this.selectedHeadingId === 0) {
         this.incidentService.getAllComplaint(this.currentPage + 1)
@@ -412,8 +396,7 @@ export class IncidentsComponent implements OnInit {
 
               this.tostservice.showNotificationFailure(err)
             })
-      }
-      else {
+      } else {
         this.incidentService.getFillterComplaint({ "statusId": this.statusId }, this.currentPage + 1)
           .subscribe((res: Array<any>) => {
             this.x = false;
@@ -445,7 +428,7 @@ export class IncidentsComponent implements OnInit {
 
   isAscn(val) {
     this.isAsc = val;
-    if(this.sortActive){
+    if (this.sortActive) {
 
       this.sortBy(this.sortActive);
     }
@@ -492,15 +475,7 @@ export class IncidentsComponent implements OnInit {
       if (key == "sId" && query[key] != "0") {
         this.filterbysort['statusId'] = query[key];
       }
-      // if (key == "pcId" && query[key] != "0") {
-      //   this.filterbysort['categoryId'] = query[key];
-      // }
-      // if (key == "stId" && query[key] != "0" || "") {
-      //   this.filterbysort['location'] = query[key];
-      // }
-      // if (key == "icId" && query[key] != "0") {
-      //   this.filterbysort['complaintCategoryId'] = query[key];
-      // }
+
 
       console.log(query[key])
       console.log(this.filterbysort)
@@ -511,7 +486,6 @@ export class IncidentsComponent implements OnInit {
 
 
   clearSortBy(i) {
-    console.log(i)
 
     this.getFilterComplants(i)
 
@@ -524,7 +498,7 @@ export class IncidentsComponent implements OnInit {
 
 
 
-
+  // get service engineer against incidents
   getAssingedId(id, AssignEngName?) {
     if (AssignEngName) {
       this.assignTitle = "Change";
@@ -544,17 +518,13 @@ export class IncidentsComponent implements OnInit {
       })
   }
 
-
-
-
-
+  // get comment history of a incidents or complaint
   getCommentsId(id) {
     this.loadingHistory = false;
     this.incidentService.getComplaintsHistory(id)
       .subscribe((res: number) => {
         this.commentsHistory = res;
         this.loadingHistory = true;
-        console.log(res)
       }, (err) => {
         this.loadingHistory = true
         this.tostservice.showNotificationFailure(err)
@@ -566,8 +536,9 @@ export class IncidentsComponent implements OnInit {
 
   getRejectId(id) {
     this.resetform();
-    this.RejectId = id;
   }
+
+  // upload img 
 
   onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
@@ -584,18 +555,15 @@ export class IncidentsComponent implements OnInit {
 
 
 
-
+  // incident reject form submit
   onSubmit() {
     this.rejectButtonHide = true;
-    // console.log(this.assingedEngineer)
-    // console.log(this.comment + "nothing to")
     const fd = new FormData();
     fd.append("comment", this.rejectComplaint.comment);
     fd.append("pic", this.imgfile);
     fd.append("updateInfo ", "reject");
     this.incidentService.rejectComplaint(fd, this.currentId)
       .subscribe((res: number) => {
-        console.log(res)
         this.rejectButtonHide = false;
         this.filtercomplaints.splice(this.currentIndex, 1)
         this.closeRejectModal();

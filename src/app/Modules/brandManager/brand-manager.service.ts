@@ -7,33 +7,30 @@ import { CustomHttpService } from '../../providers/custom-http.service';
 export class BrandManagerService {
 
   constructor(private customHttp: CustomHttpService) { }
-  
+
 
   //add manager
-  addManager(fd){
-    // const manager_api = `/sa/employee`
-    return this.customHttp.post("/sa/employee", fd,  )
+  addManager(fd) {
+    return this.customHttp.post("/sa/employee", fd)
   }
 
-//get brand id
-getBrandIds(){
-  
-  // const brandIds_api =`${BASEURL}/sa/product-category`
-  return this.customHttp.get("/sa/brand")
-}
+  //get brand id
+  getBrandIds() {
+
+    return this.customHttp.get("/sa/brand")
+  }
 
   //get manager details
-  getManager(){
-    // const manager_api = `/sa/brand-manager/page/1`
+  getManager() {
     return this.customHttp.get("/sa/brand-manager/page/1")
   }
 
 
-  
 
 
+  // delete Manager
 
-  deleteManager(delete_id){
-  return this.customHttp.delete(`/sa/employee/${delete_id}`)
+  deleteManager(delete_id) {
+    return this.customHttp.delete(`/sa/employee/${delete_id}`)
   }
 }

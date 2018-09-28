@@ -9,21 +9,17 @@ import { PipeModule } from '../../providers/pipe.module';
 @NgModule({
   imports: [
     CommonModule,
-    InfiniteScrollModule ,
+    InfiniteScrollModule,
     FormsModule,
-  PipeModule,
+    PipeModule,
     ReactiveFormsModule,
-    
-    
-    
+
+
+
     RouterModule.forChild([
-      // {path:'', component:ServiceEngineerComponent},
-      {path:'',component:IncidentsComponent},
-      // children: [
-          
-      // ]
-    // },
-    ]) 
+      { path: '', component: IncidentsComponent },
+
+    ])
   ],
   declarations: [
     IncidentsComponent,

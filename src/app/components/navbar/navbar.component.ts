@@ -27,9 +27,12 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
 
     this.name = localStorage.getItem("name");
+
     this.picUrl = typeof localStorage.getItem("picUrl")==='object'?'null':localStorage.getItem("picUrl");
     
    
+    //  for management logging
+
     if (localStorage.getItem("currentUserName") == 'management') {
       this.email = localStorage.getItem("email");
       this.username = localStorage.getItem("username");
@@ -37,10 +40,11 @@ export class NavbarComponent implements OnInit {
     this.userType = localStorage.getItem("roles");
     
     
-    this.getchart();
+    this.getStatusCount();
     
   }
   
+
   this.subscribeUserContactNoChanges();
   this.subscribeUserEmailChanges();
   this.subscribeUsernameChanges();
@@ -58,8 +62,10 @@ logout(){
   this.router.navigate(['/login']);
 }
 
-getchart() {
-  this.incidentService.getChartData()
+//  get   incidents count
+
+getStatusCount() {
+  this.incidentService.getStatusByCount()
   .subscribe((res: any) => {
     this.countStatus = res;
     this.countStatus.forEach(element=>{
@@ -71,9 +77,11 @@ getchart() {
 
 
 gotoIncidents(id){
-this.router.navigate(["/incidents"],
-{ queryParams: { sId: id}})
+this.router.navigate(["/incidents"],{ queryParams: { sId: id}})
 }
+
+
+
 accountSetting(){
   this.router.navigate(["/edit"])
 }

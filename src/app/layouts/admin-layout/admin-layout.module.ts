@@ -17,13 +17,13 @@ import { AuthDashboardGuard } from '../../providers/authDashboard.guard';
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     ComponentsModule,
-    
+
   ],
   declarations: [
     AdminLayoutComponent,
     DashboardComponent,
   ],
-  providers:[Auth1Guard,AuthGuard,AuthDashboardGuard]
+  providers: [Auth1Guard, AuthGuard, AuthDashboardGuard]
 })
 
-export class AdminLayoutModule {}
+export class AdminLayoutModule { }

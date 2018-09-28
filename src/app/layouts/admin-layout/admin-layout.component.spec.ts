@@ -8,9 +8,9 @@ describe('AdminLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminLayoutComponent ]
+      declarations: [AdminLayoutComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

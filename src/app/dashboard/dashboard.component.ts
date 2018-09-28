@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
   role: string;
 
   statusCount: any;
+  today: Date;
 
   startDate: Date;
   endDate: Date;
@@ -311,7 +312,7 @@ export class DashboardComponent implements OnInit {
 
         });
 
-        this.product_status_Chart();
+        // this.product_status_Chart();
         this.carryFroward_Chart();
         this.New_chart();
         this.rejected_Chart();
@@ -321,55 +322,56 @@ export class DashboardComponent implements OnInit {
       })
   }
 
-  product_status_Chart() {
-    let data = google.visualization.arrayToDataTable(this.statusByProductCat);
+  // product_status_Chart() {
+  //   let data = google.visualization.arrayToDataTable(this.statusByProductCat);
 
 
-    let options = {
-      height: 200,
+  //   let options = {
+  //     height: 200,
 
 
-      seriesType: 'bars',
-      series: { 6: { type: 'line' } },
-      vAxis: {
+  //     seriesType: 'bars',
+  //     series: { 6: { type: 'line' } },
+  //     vAxis: {
 
-      },
+  //     },
 
-      legend: { position: 'top', maxLines: 3 },
-      colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
-      // animation: {
-      //   "startup": true,
-      //   duration: 600,
-      //   easing: 'in-out'
-      // }
-    };
+  //     legend: { position: 'top', maxLines: 3 },
+  //     colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+  //     animation: {
+  //       "startup": true,
+  //       duration: 600,
+  //       easing: 'in-out'
+  //     }
+  //   };
 
-    let chart = new google.visualization.ComboChart(document.getElementById('product_status_Chart'));
+  //   let chart = new google.visualization.ComboChart(document.getElementById('product_status_Chart'));
 
-    google.visualization.events.addListener(chart, 'select', () => {
-      var selectedItem = chart.getSelection()[0];
+  //   google.visualization.events.addListener(chart, 'select', () => {
+  //     var selectedItem = chart.getSelection()[0];
 
-      if (selectedItem) {
+  //     if (selectedItem) {
 
-        this.routeToIncidents(this.statusIdChart[selectedItem.row], 'status', this.statusType[selectedItem.column - 1], '', '', '');
+  //       this.routeToIncidents(this.statusIdChart[selectedItem.row], 'status', this.statusType[selectedItem.column - 1], '', '', '');
 
-      }
-    });
-
-
-
-    google.visualization.events.addListener(chart, 'onmouseover', () => {
-
-      document.getElementById('product_status_Chart').style.cursor = "pointer";
-    });
-    google.visualization.events.addListener(chart, 'select', () => {
-
-    });
-    chart.draw(data, options);
+  //     }
+  //   });
 
 
-  }
 
+  //   google.visualization.events.addListener(chart, 'onmouseover', () => {
+
+  //     document.getElementById('product_status_Chart').style.cursor = "pointer";
+  //   });
+  //   google.visualization.events.addListener(chart, 'select', () => {
+
+  //   });
+  //   chart.draw(data, options);
+
+
+  // }
+
+  
   carryFroward_Chart() {
     var data = google.visualization.arrayToDataTable(this.carryforwardChart);
 
@@ -686,13 +688,15 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.outOfWarranty);
 
     var options = {
+      height:300,
+      
       title: ' out of warranty',
       // is3D: true,
-      chartArea: {
-        height: 120,
+      // chartArea: {
+      //   height: 120,
 
-      },
-      legend: { position: 'bottom', maxLines: 8 },
+      // },
+      legend: { position: 'top', maxLines: 7 },
 
       // pieSliceText:"value",
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
@@ -728,11 +732,9 @@ export class DashboardComponent implements OnInit {
     var data = google.visualization.arrayToDataTable(this.inWarranty);
     var options = {
       title: 'In warranty',
-      chartArea:{
-length:120,
-      },
+      height:300,
      // is3D: true,
-      legend: { position: 'bottom', maxLines: 8 },
+      legend: { position: 'top', maxLines: 7 },
       // pieSliceText: "value",
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
 
@@ -904,43 +906,24 @@ length:120,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   //  all managent charts load on managment loggin
   getAllManagmentCharts() {
     google.charts.load('current', { packages: ['corechart', 'bar'] });
 
     google.charts.setOnLoadCallback(() => {
       this.getCharts();
-
-
     })
-
 
   }
 
 
   getCharts() {
-    // this.getFilter(data,id,range);
     this.get_Product_Incident_Age();
     this.getMeanTime();
     this.getDashboardDetails();
     this.get_Product_Status();
     this.getStatusByState();
     this.get_Out_Warranty_Status();
-    // this.get_In_Warranty_Status();
     this.get_MeanTime_Till_Date();
     this.getProductCategorys();
     this.get_product_rating_chart();
@@ -948,18 +931,8 @@ length:120,
 
 
 
-  Test() {
-    this.dashboardservice.getProductCategory()
-      .subscribe((res: any) => {
-        // console.log(res);
-      })
-  }
 
 
-
-
-
-  today: any
   ngOnInit() {
     this.role = localStorage.getItem("currentUserName");
     this.getFilter();

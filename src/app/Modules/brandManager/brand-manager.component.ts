@@ -11,23 +11,28 @@ declare const $: any;
   styleUrls: ['./brand-manager.component.scss']
 })
 export class BrandManagerComponent implements OnInit {
-  imgfile: any;
-  urlTOShowImg: any;
-  currentId: number;
 
-  constructor(private router: Router, private brandService: BrandManagerService,private tostservice: TostService) { 
-   
-  }
-
-  dataRows: any;
   isDataLoad: boolean = true;
   loadingButton: boolean = false;
   isBrandId: boolean = false;
+  submitButtonHide: boolean = false;
+
+  headerRow = ['S.No.', 'Name', 'User Name', 'Email', 'Phone No', "Action"]
+
+  imgfile: any;
+  urlTOShowImg: any;
+  dataRows: any;
   brands: any;
-  submitButtonHide:boolean= false;
+
+  currentId: number;
+
   managerDetails = new ManagerDetails;
 
-  headerRow: Array<string> = ['S.No.','Name','User Name','Email','Phone No',"Action"]
+  constructor(
+    private brandService: BrandManagerService,
+    private tostservice: TostService
+  ) { }
+
   ngOnInit() {
 
     this.getManagers();
@@ -40,7 +45,6 @@ export class BrandManagerComponent implements OnInit {
       .subscribe((res: any) => {
         this.dataRows = res;
         this.isDataLoad = false;
-        console.log(res)
       },
         (err) => {
           this.tostservice.showNotificationFailure(err)
@@ -52,15 +56,15 @@ export class BrandManagerComponent implements OnInit {
     this.brandService.getBrandIds()
       .subscribe((res: any) => {
         this.brands = res;
-        console.log(res)
         this.isBrandId = false;
       },
         (err) => {
           this.tostservice.showNotificationFailure(err)
-                })
+        })
   }
 
 
+  // upload manager img 
   onSelectFile(event) { // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
@@ -72,68 +76,65 @@ export class BrandManagerComponent implements OnInit {
       }
     }
   }
- 
+
+
+  // creat new manager
   onSubmit() {
-    this.submitButtonHide=true;
-    // this.closeManagerFormModal();
-    // $('#loaderModel').modal('show')
+    this.submitButtonHide = true;
+
     this.loadingButton = true;
     const fd = new FormData();
 
     for (const key in this.managerDetails) {
       fd.append(key, this.managerDetails[key]);
-      if(this.imgfile){
-        fd.append("pic",this.imgfile)
+      if (this.imgfile) {
+        fd.append("pic", this.imgfile)
       }
     }
 
     this.brandService.addManager(fd)
       .subscribe((res: any) => {
         this.resetform();
-            this.closeManagerFormModal();
+        this.closeManagerFormModal();
         this.dataRows.unshift(res)
         this.tostservice.showNotificationSuccess("Manager add successfuly");
       }, (err) => {
         this.loadingButton = false;
 
-        this.tostservice.showNotificationFailure(err)        
+        this.tostservice.showNotificationFailure(err)
       })
 
 
   }
 
 
+  getId(id) {
+    this.currentId = id;
+  }
 
 
- 
-getId( id){
-  this.currentId= id;
-}
-
-deleteManager(){
-this.brandService.deleteManager(this.currentId)
-.subscribe((res:any)=>{
-this.tostservice.showNotificationSuccess("Manager Delete successfuly");
-},(err)=>{
- this.tostservice.showNotificationFailure(err) 
-})
-}
+  // delete manager 
+  deleteManager() {
+    this.brandService.deleteManager(this.currentId)
+      .subscribe((res: any) => {
+        this.tostservice.showNotificationSuccess("Manager Delete successfuly");
+      }, (err) => {
+        this.tostservice.showNotificationFailure(err)
+      })
+  }
 
 
-
+  // reset manager form
   resetform() {
-this.imgfile=null;
+    this.imgfile = null;
     this.managerDetails = new ManagerDetails();
   }
 
 
   closeManagerFormModal() {
     $('#ManagerFormModal').modal('hide')
-
-    
   }
 
-  
-     
+
 
 }

@@ -58,7 +58,6 @@ export class EditUserDetailsComponent implements OnInit {
 
     if (this.toBeEdit == 'Name') {
 
-      // localStorage.setItem("name", data.name)
       this.loginService.updateUsername(data.name);
     }
     if (this.toBeEdit == 'Email') {

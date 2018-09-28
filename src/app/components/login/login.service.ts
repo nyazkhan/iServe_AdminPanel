@@ -41,7 +41,6 @@ export class LoginService {
 
      //get user info after login 
   getUserInfo(){
-    // let header = this.getAccessToken();
     const userInfo_api = `/user-info`
     return this.customHttp.get(userInfo_api)
   }
@@ -67,23 +66,27 @@ return localStorage.clear()
 }
 
 
+//whenever manager change his name its reflect to its subscribers
 updateUsername(updateName:string){
         localStorage.setItem("name", updateName);
   this.username.next(updateName);
 }
 
+//whenever manager change his email id its reflect to its subscribers
 
 updateUserEmail(updateEmail:string){
   localStorage.setItem("email", updateEmail);
 this.useremail.next(updateEmail);
 }
 
+//whenever manager change his phone no its reflect to its subscribers
 
 updateUserContactNo(updateContactNo:string){
   localStorage.setItem("contactNo", updateContactNo);
 this.usercontactno.next(updateContactNo);
 }
 
+//whenever manager change his  picture its reflect to its subscribers
 
 updateUserPicture(updatePicture:string){
   localStorage.setItem("picUrl", updatePicture);
@@ -95,27 +98,28 @@ this.userpicture.next(updatePicture);
 // edit brand manager details
 
 editManagerdetails(fd){
-  // console.log(JSON.stringify(fd))
     return this.customHttp.put(`/m`,fd)
   }
   
+  // for change profile pic
   changePicture(fd){
     return this.customHttp.post(`/m/picture`,fd)
   }
   
   
+  // for change password
   changeManagerPassword(fd){
   
     return this.customHttp.put(`/m/password`,fd)
   }
   
 
-
+//  for get otp on register phn no.
   getOtp(username){
     return this.customHttp.get(`/generate-otp/${username}`)
   }
 
-
+//  forget password click request form change by entering username 
   forgetPwdChange(fd){
     return this.customHttp.put(`/forgot-password`,fd)
   }

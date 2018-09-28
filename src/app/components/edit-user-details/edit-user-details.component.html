@@ -111,6 +111,7 @@
           <img style="width: 150px; height: 150px;" [src]=" editManagerDetails.pic!=='null'? editManagerDetails.pic:'assets/img/avatar.png'" />
           <br>
         </h5>
+        
         <button type="button" (click)="toEdit('Profile Picture')" data-toggle="modal" data-target="#editFormModel"
           class="btn btn-rose  btn-md">
           <i class=" tiny material-icons">create</i> Edit Picture</button>
@@ -124,7 +125,7 @@
   </div>
 
 
-  <!-- edit form model starting -->
+  <!-- edit form model starting img -->
    <div class="modal fade" data-keyboard="false" data-backdrop="static" id="editFormModel" tabindex="-1" role="dialog" aria-labelledby="editFormModel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -161,7 +162,7 @@
   <!-- edit form model ending -->
 
 
-  <!-- change password model start here -->
+  <!-- change password model start here  img-->
 
   <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModal"
     aria-hidden="true">

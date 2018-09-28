@@ -1,47 +1,47 @@
-<div class="sidebar" data-color="purple"  >
-   <div style="background-color: #000000b0;height: 100%;">
-  <div class="logo text-center">
-      <a href="#" class="simple-text logo-normal " class="lightColor" >
-          iServe
-      </a>
-  </div>
-  <div class="sidebar-wrapper">
-        <div class="user">
+<div class="sidebar" data-color="purple">
+    <div style="background-color: #000000b0;height: 100%;">
+        <div class="logo text-center">
+            <a href="#" class="simple-text logo-normal " class="lightColor">
+                iServe
+            </a>
+        </div>
+        <div class="sidebar-wrapper">
+            <div class="user">
                 <div class="d-flex">
                     <div>
-                    <img  [src]=" picUrl!=='null'? picUrl:'assets/img/avatar.png'"/>
+                        <img [src]=" picUrl!=='null'? picUrl:'assets/img/avatar.png'" />
 
-                </div>
+                    </div>
                     <span class="lightColor" style=" padding: .5rem 15px;">{{name}}</span>
                 </div>
-    
-        </div>
-      <ul class="nav">
-         
-        
-        <li routerLinkActive="active" class="nav-item" *ngFor="let page of list">
-              <a class="nav-link" [routerLink]="page.route">
-                  <i class="material-icons">{{ page.icon }}</i>
-                  <p>{{ page.name }}</p>
-              </a>
-          </li>
 
-         
-          <li class="nav-item ">
-                <a class="nav-link"(click)="logout()" >
+            </div>
+            <ul class="nav">
+
+
+                <li routerLinkActive="active" class="nav-item" *ngFor="let page of list">
+                    <a class="nav-link" [routerLink]="page.route">
+                        <i class="material-icons">{{ page.icon }}</i>
+                        <p>{{ page.name }}</p>
+                    </a>
+                </li>
+
+
+                <li class="nav-item ">
+                    <a class="nav-link" (click)="logout()">
                         <i class="material-icons">
-                                power_settings_new
-                                </i>
-                    <p>Logout</p>
-                </a>
-            </li>
-          <li class="nav-item active-pro">
-              <a class="simple-text logo-normal lightColor nav-link" href="#">
-                  <i class="material-icons">public</i>
-                  Visit Website
-              </a>
-          </li> 
-      </ul>
-  </div>
-</div>
+                            power_settings_new
+                        </i>
+                        <p>Logout</p>
+                    </a>
+                </li>
+                <li class="nav-item active-pro">
+                    <a class="simple-text logo-normal lightColor nav-link" href="#">
+                        <i class="material-icons">public</i>
+                        Visit Website
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
