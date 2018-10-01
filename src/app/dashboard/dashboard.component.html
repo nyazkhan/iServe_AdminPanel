@@ -113,13 +113,13 @@
 </div> -->
 
 
-  <div class="card-header  dekstopHeader" style="margin-bottom:20px; margin-top: 5px;height: 40px;  background-color: #ffffff ">
+  <div class="card-header  dekstopHeader" style="margin-bottom:13px;height: 36px;  background-color: #ffffff ">
       <div class="nav-tabs-navigation">
         <div class="nav-tabs-wrapper space-between">
           <div *ngIf="!showCategory" style="width: 100%">
             <ul *ngFor="let element of ProCategoryName" style="display: inline-block;" class="nav nav-tabs" data-tabs="tabs">
               <li style="display: inline-block" class="nav-item hover-cursor">
-                {{element.color  }}  {{   element.name }}  ,
+               <button class="colorButton" [style.background]="element.color" > </button>   {{   element.name }}&nbsp;
               </li>
             </ul>
             
@@ -127,7 +127,7 @@
           <div *ngIf="showCategory" style="width: 100%">
               <ul *ngFor="let element of showcolor" class="nav nav-tabs" style="display: inline-block;">
                   <li style="display: inline-block" class="nav-item hover-cursor">
-                    {{element.color  }}  {{  element.name   }}  ,
+                    <button class="colorButton" [style.background]="element.color" > </button>  {{   element.name }}  &nbsp;
                   </li>
                 </ul>
               

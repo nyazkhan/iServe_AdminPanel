@@ -57,7 +57,7 @@
 
                       <form class="form-inline ml-auto">
                         <div class=" no-border">
-                          <input type="text" class="form-control" placeholder="Search">
+                          <input type="text" class="form-control"  name="search" [(ngModel)]="searchPin" placeholder="search text goes here">
                         </div>
                         <button type="submit" class="btn btn-just-icon btn-round " style="background: purple">
                           <i class="material-icons">search</i>
@@ -71,7 +71,7 @@
                     <div class="row scroll" style="padding-top: 13px;">
                       <div class="col-md-6">
 
-                        <ul *ngFor="let pin of assignpincode">
+                        <ul *ngFor="let pin of assignpincode | filterSearch : searchPin">
 
                           <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;">
                             {{pin}}
@@ -83,7 +83,7 @@
 
                       </div>
                       <div class="col-md-6" *ngIf="editPinShow">
-                        <ul *ngFor="let pin of editpins">
+                        <ul *ngFor="let pin of editpins | filterSearch : searchPin">
 
                           <li class="badge badge-pill badge-primary" style="position: relative;    width: 87px;">{{pin}}
                             <i (click)="addPin(pin)" class="material-icons iconPosition">
@@ -183,10 +183,10 @@
                   <div class="row " style="padding-top: 13px;">
                     <div *ngIf="!addCatShow" class="col-md-6 scroll">
 
-                      <ul *ngFor="let type of assignedProductType">
+                      <ul *ngFor="let type of assignedProductType | filterSearch : searchText">
 
                         <li class="badge badge-pill badge-primary" style="position: relative;  height: 21px;  width: 200px;">
-                          <p>{{i }} . {{type.name }}
+                          <p> {{type.name }}
                           </p>
                           <i *ngIf="removeCatShow" (click)="removeCategory(type)" class="material-icons iconPosition">
                             remove_circle
@@ -195,11 +195,11 @@
                       </ul>
                     </div>
                     <div class="col-md-6">
-                      <!-- <ul>
+                       <!-- <ul>
                         <li *ngFor="let c of typeName | filterSearch : searchText">
                           {{c}}
                         </li>
-                      </ul> -->
+                      </ul>  -->
                     </div>
                   </div>
                   <div class="row">

@@ -293,11 +293,11 @@ this.ProCategoryName=[];
       // isStacked: true,
 
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
-      // animation: {
-      //   "startup": true,
-      //   duration: 600,
-      //   easing: 'in-out'
-      // }
+      animation: {
+        "startup": true,
+        duration: 600,
+        easing: 'in-out'
+      }
     };
 
     let chart = new google.visualization.ComboChart(document.getElementById('Rating_Chart'));
@@ -578,7 +578,7 @@ this.ProCategoryName=[];
         },
         region: 'IN',
         resolution: 'provinces',
-        colorAxis: { colors: ['#01bcd7'] },
+        colorAxis: { colors: ['#9c27b0'] },
         animation: {
           "startup": true,
           duration: 600,
@@ -732,11 +732,12 @@ this.ProCategoryName=[];
 
       title: ' out of warranty',
       // is3D: true,
-      // chartArea: {
-      //   height: 120,
+      chartArea: {
+        height: 200,
+        width:200,
 
-      // },
-      legend: { position: 'top', maxLines: 7 },
+      },
+      legend: { position: 'none', },
 
       // pieSliceText:"value",
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
@@ -773,8 +774,13 @@ this.ProCategoryName=[];
     var options = {
       title: 'In warranty',
       height: 300,
+      chartArea: {
+        height: 200,
+        width:200,
+
+      },
       // is3D: true,
-      legend: { position: 'top', maxLines: 7 },
+      legend: { position: 'none', maxLines: 7 },
       // pieSliceText: "value",
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
 
@@ -840,7 +846,7 @@ this.ProCategoryName=[];
 
 
       seriesType: 'bars',
-      legend: { position: 'top', maxLines: 8 },
+      legend: { position: 'none', maxLines: 8 },
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
 
     };
@@ -906,7 +912,7 @@ this.ProCategoryName=[];
       //   left: 80,
       // },
 
-      legend: { position: 'top', maxLines: 7 },
+      legend: { position: 'none', maxLines: 7 },
       bar: { groupWidth: '75%' },
       isStacked: true,
 

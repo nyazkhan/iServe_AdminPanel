@@ -43,7 +43,7 @@ export class ServiceEngineerComponent implements OnInit {
   productCategory: any
   pins: any;
   currentRow: any;
-
+  searchPin:any
   urlTOShowImg: string;
 
   engineerDetails = new EngineerDetails
@@ -144,7 +144,6 @@ typeName=[];
       this.assignedProductTypeId.push(element.id)
       this.typeName.push(element.name)
     });
-console.log(this.assignedProductType);
 
     this.currentId = row.id;
 
