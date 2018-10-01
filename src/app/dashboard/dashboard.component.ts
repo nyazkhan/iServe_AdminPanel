@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   statusRejected: Number;
   productCategoryName: Array<any>
 
-  filterByDate = "month";
+  filterByDate = "today";
   
   filterId: number;
   showRange = false;
