@@ -6,16 +6,22 @@ import { Pipe, PipeTransform } from '@angular/core';
   }
 )
 export class FilterSearch implements PipeTransform {
-    transform(items: Array<object>, searchText: string): any[] {
+    transform(items: Array<any>, searchText: string): any[] {
         if(!items) return [];
         if(!searchText) return items;
     searchText = searchText.toLowerCase();
-   items.forEach(element => {
-     element["name"] 
-   });
+  //  items.forEach(element => {
+  //    element["name"] 
+  //  });
    
-    return items["name"].filter( it => {
-          return it.toLowerCase().includes(searchText);
-        });
+   if (items[0].name) {
+    return items.filter( element => {
+      return element.name.toLowerCase().includes(searchText);
+    });
+   } else {
+    return items.filter( element => {
+      return element.toLowerCase().includes(searchText);
+    });
+   }
        }
 }
