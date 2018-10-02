@@ -10,9 +10,7 @@ export class FilterSearch implements PipeTransform {
         if(!items) return [];
         if(!searchText) return items;
     searchText = searchText.toLowerCase();
-  //  items.forEach(element => {
-  //    element["name"] 
-  //  });
+  
    
    if (items[0].name) {
     return items.filter( element => {

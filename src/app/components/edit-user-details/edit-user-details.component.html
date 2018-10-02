@@ -9,12 +9,12 @@
   <div class="modal-body">
 
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <div>
           <span><b>Name : </b></span>
-          <span *ngIf="(editManagerDetails.name)" id="filed">
+          <span *ngIf="!(toBeEdit === 'Name')">
             &nbsp; &nbsp;{{editManagerDetails.name}} &nbsp; &nbsp; &nbsp; <i class=" tiny material-icons editAccount"
-              (click)="toEdit('Name')" >create</i>
+              (click)="toEdit('Name')">create</i>
           </span>
           <form #editForm="ngForm" *ngIf="showForm" style="display: inline-block;">
             <div class="row" *ngIf="toBeEdit==='Name'">
@@ -54,10 +54,10 @@
         <!-- <email edit> -->
         <div>
           <span><b>Email : </b></span>
-          <span *ngIf="(editManagerDetails.email)" id="filedmail">
+          <span *ngIf="!(toBeEdit === 'Email')">
 
             &nbsp; &nbsp;{{editManagerDetails.email}} &nbsp; &nbsp; &nbsp;
-            <i class=" tiny material-icons" (click)="toEdit('Email')" >create</i>
+            <i class=" tiny material-icons" (click)="toEdit('Email')">create</i>
           </span>
           <form #editForm="ngForm" *ngIf="showForm" style="display: inline-block;">
             <div class="row" *ngIf="toBeEdit==='Email'">
@@ -81,9 +81,8 @@
         <!-- <Phone edit>  -->
         <div>
           <span><b>Phone No : </b></span>
-          <span *ngIf="(editManagerDetails.contactNo)" id="filedPhone">
-            &nbsp; &nbsp;{{editManagerDetails.contactNo}} &nbsp; &nbsp; &nbsp; <i class=" tiny material-icons" (click)="toEdit('Contact No')"
-             >create</i></span>
+          <span *ngIf="!(toBeEdit === 'Contact No')">
+            &nbsp; &nbsp;{{editManagerDetails.contactNo}} &nbsp; &nbsp; &nbsp; <i class=" tiny material-icons" (click)="toEdit('Contact No')">create</i></span>
           <form #editForm="ngForm" *ngIf="showForm" style="display: inline-block;">
             <div class="row" *ngIf="toBeEdit==='Contact No'">
               <span>
@@ -96,8 +95,8 @@
               <button type="button" class="btn btn-secondary" (click)="resetForm()"><i class="material-icons">
                   clear
                 </i></button>
-              <button *ngIf="!(formButtonHide || toBeEdit=='Profile Picture')" type="submit" (click)="editValue(editForm.value)"
-                [disabled]="!editForm.valid" class="btn btn-rose"><i class="material-icons">
+              <button *ngIf="!(formButtonHide)" type="submit" (click)="editValue(editForm.value)" [disabled]="!editForm.valid"
+                class="btn btn-rose"><i class="material-icons">
                   done
                 </i></button>
             </div>
@@ -105,114 +104,119 @@
         </div>
       </div>
 
-      <div class="col-md-4">
-        <h5><b>Profile Picture:</b>
-          <br>
-          <img style="width: 150px; height: 150px;" [src]=" editManagerDetails.pic!=='null'? editManagerDetails.pic:'assets/img/avatar.png'" />
-          <br>
-        </h5>
-        
-        <button type="button" (click)="toEdit('Profile Picture')" data-toggle="modal" data-target="#editFormModel"
-          class="btn btn-rose  btn-md">
-          <i class=" tiny material-icons">create</i> Edit Picture</button>
-          
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <span><b>Profile Picture:</b> 
+                      </span>
+            <br>
 
-      
-    </div>
-    <button type="button" data-toggle="modal" data-target="#changePasswordModal" class="btn btn-rose  btn-lg"> Change
-        Password
-      </button>
-  </div>
-
-
-  <!-- edit form model starting img -->
-   <div class="modal fade" data-keyboard="false" data-backdrop="static" id="editFormModel" tabindex="-1" role="dialog" aria-labelledby="editFormModel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content card ">
-      <div class="card-header card-header-rose card-header-icon">
-        <div class="card-icon">
-          <i class="material-icons">add_to_photos</i>
-        </div>
-        <h3 class="card-title">Enter Your New {{toBeEdit}}</h3>
-      </div>
-      <div class="modal-body">
-        <form #editForm="ngForm" *ngIf="showForm">
-          <div class="row" >
-            <div class="col-md-6">
-              <input type="file" required (change)="onSelectFile($event)" name="pic" placeholder="pic">
-            </div>
-
-            <div *ngIf="urlTOShowImg" class="col-md-6">
-              <img [src]="urlTOShowImg" style="height: 150px;">
-            </div>
+            <img 
+            class="userImage" [src]=" editManagerDetails.pic!=='null'? editManagerDetails.pic:'assets/img/avatar.png'" />
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" (click)="resetForm()">Close</button>
-            <button *ngIf="!(formButtonHide || toBeEdit !=='Profile Picture')" type="submit" (click)="changePicture()" [disabled]="!urlTOShowImg" class="btn btn-rose">Change picture</button>
-            <button *ngIf="!(formButtonHide || toBeEdit=='Profile Picture')" type="submit" (click)="editValue(editForm.value)" [disabled]="!editForm.valid" class="btn btn-rose">Save Changes</button>
+          
+        
+          <div *ngIf="urlTOShowImg" class="col-md-6">
+            <span><b> Selected Profile Picture:</b></span>
+            <br>
+
+            <img [src]="urlTOShowImg" class="userImage">
+          </div>
+<br>
+</div>
+            <span style="margin-left: 100px" *ngIf="!(toBeEdit === 'Profile Picture')" >
+              <i style="margin-top: -7px" class=" tiny material-icons" (click)="toEdit('Profile Picture')">create</i></span>
+
+        <form #editForm="ngForm" *ngIf="showForm" style="display: inline-block;">
+          <div class="row" *ngIf="toBeEdit==='Profile Picture'">
+            <span>
+              <input type="file" required (change)="onSelectFile($event)" name="pic" placeholder="pic">
+            </span>
+
+
+            <button type="button" class="btn btn-secondary" (click)="resetForm()"><i class="material-icons">
+                clear
+              </i></button>
+            <button *ngIf="!(formButtonHide)" type="submit" (click)="changePicture()" [disabled]="!editForm.valid"
+              class="btn btn-rose"><i class="material-icons">
+                done
+              </i></button>
+
             <button *ngIf="formButtonHide" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin mainColor"></i>submitting</button>
 
           </div>
         </form>
+
+
+
+
+
+
+
+        
+
+
       </div>
+      <button type="button" data-toggle="modal" data-target="#changePasswordModal" class="btn btn-rose  btn-lg"> Change
+        Password
+      </button>
     </div>
-  </div>
-</div> 
-  <!-- edit form model ending -->
 
 
-  <!-- change password model start here  img-->
 
-  <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModal"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content card ">
-        <div class="card-header card-header-danger card-header-icon">
-          <div class="card-icon">
-            <i class="material-icons">close</i>
+
+
+    <!-- change password model start here  img-->
+
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModal"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content card ">
+          <div class="card-header card-header-danger card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">close</i>
+            </div>
+            <h3 class="card-title">Change Password</h3>
           </div>
-          <h3 class="card-title">Change Password</h3>
-        </div>
-        <div class="modal-body">
+          <div class="modal-body">
 
-          <form #changePasswordForm="ngForm">
-            <div class="row">
-              <div class="col-md-12">
+            <form #changePasswordForm="ngForm">
+              <div class="row">
+                <div class="col-md-12">
 
-                <div class="form-group">
-                  <label for="comment">Enter your Old Password</label>
-                  <br>
-                  <input type="password" required class="form-control" id="oldPassword" name="oldPassword" [(ngModel)]="changePassword.oldPassword"
-                    #oldPassword="ngModel"> </div>
-                <h5 [hidden]="oldPassword.valid || oldPassword.untouched" style="color: red">
-                  Password minimum length 6
-                </h5>
+                  <div class="form-group">
+                    <label for="comment">Enter your Old Password</label>
+                    <br>
+                    <input type="password" required class="form-control" id="oldPassword" name="oldPassword"
+                      [(ngModel)]="changePassword.oldPassword" #oldPassword="ngModel"> </div>
+                  <h5 [hidden]="oldPassword.valid || oldPassword.untouched" style="color: red">
+                    Password minimum length 6
+                  </h5>
 
-                <div class="form-group">
-                  <label for="comment">Enter your New Password</label>
-                  <br>
-                  <input type="password" required class="form-control" id="newPassword" name="newPassword" [(ngModel)]="changePassword.newPassword"
-                    #newPassword="ngModel"> </div>
-                <h5 [hidden]="newPassword.valid || newPassword.untouched" style="color: red">
-                  New Password minimum length 6
-                </h5>
+                  <div class="form-group">
+                    <label for="comment">Enter your New Password</label>
+                    <br>
+                    <input type="password" required class="form-control" id="newPassword" name="newPassword"
+                      [(ngModel)]="changePassword.newPassword" #newPassword="ngModel"> </div>
+                  <h5 [hidden]="newPassword.valid || newPassword.untouched" style="color: red">
+                    New Password minimum length 6
+                  </h5>
+                </div>
+
+
+
               </div>
-
-
-
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button *ngIf="!passwordFormShow" type="submit" (click)="PasswordForm()" [disabled]="!changePasswordForm.valid"
-                class="btn btn-danger">Change
-                Password</button>
-              <button *ngIf="passwordFormShow" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin"></i>submitting</button>
-            </div>
-          </form>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button *ngIf="!passwordFormShow" type="submit" (click)="PasswordForm()" [disabled]="!changePasswordForm.valid"
+                  class="btn btn-danger">Change
+                  Password</button>
+                <button *ngIf="passwordFormShow" type="button" class="btn btn-default"> <i class="fa fa-spinner fa-spin"></i>submitting</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- change password model end here -->
+    <!-- change password model end here -->

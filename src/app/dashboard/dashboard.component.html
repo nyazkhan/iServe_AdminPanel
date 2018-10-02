@@ -113,20 +113,20 @@
 </div> -->
 
 
-  <div class="card-header  dekstopHeader" style="margin-bottom:13px;height: 36px;  background-color: #ffffff ">
+  <div class="card-header  " style="margin-bottom:13px;height: 36px;  background-color: #ffffff ">
       <div class="nav-tabs-navigation">
         <div class="nav-tabs-wrapper space-between">
-          <div *ngIf="!showCategory" style="width: 100%">
-            <ul *ngFor="let element of ProCategoryName" style="display: inline-block;" class="nav nav-tabs" data-tabs="tabs">
-              <li style="display: inline-block" class="nav-item hover-cursor">
+          <div *ngIf="!showCategory" style="width: 100% ; text-align: center">
+            <ul *ngFor="let element of ProCategoryName" style="display: inline-block; " class="nav nav-tabs" data-tabs="tabs">
+              <li style="display: inline-block ; margin-left: 20px; margin-right: 20px;" class="nav-item hover-cursor">
                <button class="colorButton" [style.background]="element.color" > </button>   {{   element.name }}&nbsp;
               </li>
             </ul>
             
           </div>
-          <div *ngIf="showCategory" style="width: 100%">
+          <div *ngIf="showCategory" style="width: 100% ; text-align: center">
               <ul *ngFor="let element of showcolor" class="nav nav-tabs" style="display: inline-block;">
-                  <li style="display: inline-block" class="nav-item hover-cursor">
+                  <li style="display: inline-block ; margin-left: 20px; margin-right: 20px;" class="nav-item hover-cursor">
                     <button class="colorButton" [style.background]="element.color" > </button>  {{   element.name }}  &nbsp;
                   </li>
                 </ul>

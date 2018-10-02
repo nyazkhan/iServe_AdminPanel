@@ -35,7 +35,7 @@ export class TostService {
     $.notify({
 
       icon: "error_outline",
-      message: err.msg,
+      message: err.status+ " " + err.msg,
 
 
 

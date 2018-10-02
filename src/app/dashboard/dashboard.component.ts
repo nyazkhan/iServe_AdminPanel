@@ -3,7 +3,7 @@ import { DashboardService } from './dashboard.service';
 import { TostService } from '../providers/tost.service';
 import { DateRange } from '../interface/user';
 import { Router } from '@angular/router';
-import { element } from 'protractor';
+import { element, $ } from 'protractor';
 
 declare var google: any;
 
@@ -33,7 +33,8 @@ export class DashboardComponent implements OnInit {
   meanTiming = [];
   inWarranty = [];
   outOfWarranty = [];
-
+  totalOutOfWarranty=0;
+  totalInWarranty=0;
   incidentAge = [];
   filter = {};
   statusCarryForward: number
@@ -50,7 +51,8 @@ export class DashboardComponent implements OnInit {
   ratingId = [];
   avgId = [];
   mttrId = [];
-  warrantyId = [];
+  inWarrantyId = [];
+  outWarrantyId=[]
   statusIdChart = [];
   incidentId = [];
   carryforwardChart = [];
@@ -289,7 +291,7 @@ this.ProCategoryName=[];
       series: { 6: { type: 'line' } },
 
       // bar: { groupWidth: '75%' },
-      legend: { position: 'top', maxLines: 6 },
+      legend: { position: 'none', maxLines: 6 },
       // isStacked: true,
 
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
@@ -555,6 +557,8 @@ this.ProCategoryName=[];
     this.dashboardservice.getStateByStatus(this.filter, this.valFalse)
       .subscribe((res: any) => {
         // console.log(res)
+        this.stateCount = [];
+
         this.stateCount.push(['provinces', 'Open Incidents'])
 
         res.forEach(element => {
@@ -597,7 +601,7 @@ this.ProCategoryName=[];
 
 
 
-          this.routeToIncidents('', 'region', '', this.stateCount[selectedItem.row + 1][0], '', '');
+          this.routeToIncidents(this.filterId || 0, 'region', '', this.stateCount[selectedItem.row + 1][0], '', '');
         }
       });
 
@@ -613,6 +617,9 @@ this.ProCategoryName=[];
 
     this.dashboardservice.getAVG(this.filter, this.valFalse)
       .subscribe((res: any) => {
+        this.mttrTillDate = [];
+        this.avgId = [];
+
         this.mttrTillDate.push(['Appliances', 'Customer', 'Engineer', 'Repair', 'avg'])
         res[0]["avgResolveTimeInfo"].forEach(element => {
 
@@ -680,30 +687,40 @@ this.ProCategoryName=[];
 
 
 
-
   get_Out_Warranty_Status() {
 
-    this.outOfWarranty = [];
-    this.inWarranty = [];
     this.dashboardservice.getProductWarrantyStatus(this.filter, this.valFalse)
-      .subscribe((res: Array<any>) => {
+    .subscribe((res: Array<any>) => {
+      this.outOfWarranty = [];
+      this.outWarrantyId=[];
+      this.totalOutOfWarranty=0;
+      
+      
+      
+      this.outOfWarranty.push(["Product Name", "Count"])
+      
+      res[1]["warrantyInfo"].forEach(element => {
+        this.outWarrantyId.push([element.id])
+        this.totalOutOfWarranty = this.totalOutOfWarranty + element.count;
+        this.outOfWarranty.push([element.name, element.count]);
+        
+      });
+      
+      
+      this.inWarranty = [];
+this.inWarrantyId=[];
 
-        this.outOfWarranty.push(["Product Name", "Count"])
-
-        res[0]["warrantyInfo"].forEach(element => {
-          this.warrantyId.push([element.id])
-          this.outOfWarranty.push([element.name, element.count]);
-
-        });
-
-
+this.totalInWarranty=0;
 
 
         this.inWarranty.push(["Product Name", "Count"])
 
-        res[1]["warrantyInfo"].forEach(element => {
+        res[0]["warrantyInfo"].forEach(element => {
+          this.inWarrantyId.push([element.id])
 
           this.inWarranty.push([element.name, element.count]);
+          this.totalInWarranty = this.totalInWarranty + element.count;
+
         });
 
 
@@ -730,7 +747,7 @@ this.ProCategoryName=[];
     var options = {
       height: 300,
 
-      title: ' out of warranty',
+      title: `${  this.totalOutOfWarranty}`+ '    out of warranty  '  ,
       // is3D: true,
       chartArea: {
         height: 200,
@@ -741,7 +758,11 @@ this.ProCategoryName=[];
 
       // pieSliceText:"value",
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
-
+      animation: {
+        "startup": true,
+        duration: 600,
+        easing: 'in-out'
+      }
     }
 
 
@@ -758,7 +779,7 @@ this.ProCategoryName=[];
 
         // routeToIncidents(pc?,gtype?,type?,stid?,wrnty?,rating?) {
 
-        this.routeToIncidents(this.warrantyId[selectedItem.row], 'warranty', '', '', 'outsideWarranty', '');
+        this.routeToIncidents(this.outWarrantyId[selectedItem.row], 'warranty', '', '', 'outsideWarranty', '');
       }
     });
 
@@ -772,7 +793,7 @@ this.ProCategoryName=[];
 
     var data = google.visualization.arrayToDataTable(this.inWarranty);
     var options = {
-      title: 'In warranty',
+      title: `${  this.totalInWarranty} ` + '      In warranty   ',
       height: 300,
       chartArea: {
         height: 200,
@@ -797,7 +818,7 @@ this.ProCategoryName=[];
 
         // routeToIncidents(pc?,gtype?,type?,stid?,wrnty?,rating?) {
 
-        this.routeToIncidents(this.warrantyId[selectedItem.row], 'warranty', '', '', 'inWarranty', '');
+        this.routeToIncidents(this.inWarrantyId[selectedItem.row], 'warranty', '', '', 'inWarranty', '');
       }
     });
 
@@ -846,9 +867,13 @@ this.ProCategoryName=[];
 
 
       seriesType: 'bars',
-      legend: { position: 'none', maxLines: 8 },
+      legend: { position: 'top', },
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
-
+      animation: {
+        "startup": true,
+        duration: 600,
+        easing: 'in-out'
+      }
     };
 
 
@@ -874,7 +899,7 @@ this.ProCategoryName=[];
 
   // mean time to repair start here
   getMeanTime() {
-    // this.meanTiming=[];
+    this.meanTiming=[[]];
 
     this.dashboardservice.getMTTR(this.filter, this.valFalse)
       .subscribe((res: any) => {
@@ -913,7 +938,8 @@ this.ProCategoryName=[];
       // },
 
       legend: { position: 'none', maxLines: 7 },
-      bar: { groupWidth: '75%' },
+      seriesType: 'bars',
+  
       isStacked: true,
 
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
