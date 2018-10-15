@@ -255,6 +255,18 @@ export class IncidentsComponent implements OnInit {
         }
         )
     }
+    if (this.graphType === "time") {
+      this.dashboardService.getTimeChart(this.filterDashboardIncidents, this.valTrue)
+        .subscribe((res: any) => {
+          this.showLoader = false;
+          this.showNoMore = true;
+          this.filtercomplaints = res;
+        }, (err) => {
+          this.tostservice.showNotificationFailure(err);
+          this.showLoader = false;
+        }
+        )
+    }
     if (this.graphType === "avg") {
       this.dashboardService.getAVG(this.filterDashboardIncidents, this.valTrue)
         .subscribe((res: any) => {

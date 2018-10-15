@@ -98,6 +98,14 @@ getProductRating(fd,x){
 }
 
 
+
+
+getTimeChart( fd,x){
+    return this.customHttp.post(`/m/complaint/dashboard/time/${x}`,fd)
+ 
+}
+
+
 getProductWarrantyStatus(fd,x){
 
     return this.customHttp.post(`/m/complaint/dashboard/warranty/${x}`, fd)

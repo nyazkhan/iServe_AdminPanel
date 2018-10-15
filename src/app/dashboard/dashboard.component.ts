@@ -827,36 +827,109 @@ this.totalInWarranty=0;
 
 
 
-  get_Product_Incident_Age() {
-    this.incidentAge = [];
-    this.dashboardservice.getProductIncidentAge(this.filter, this.valFalse)
-      .subscribe((res: any) => {
+  // get_Product_Incident_Age() {
+  //   this.dashboardservice.getProductIncidentAge(this.filter, this.valFalse)
+  //     .subscribe((res: any) => {
 
-        this.Product_Incident_Age_chart(res);
+  //       this.Product_Incident_Age_chart(res);
+  //     }, (err) => {
+  //       this.tostservice.showNotificationFailure(err)
+  //     }
+  //     );
+
+  // }
+  // Product_Incident_Age_chart(data: any[]) {
+  //   this.incidentId = [];
+  //   var dataTable: any = [[]];
+
+  //   dataTable[0].push('range');
+  //   for (let i = 0; i < data[0].ageInfo.length; i++) {
+  //     dataTable[0].push(data[0].ageInfo[i].name);
+  //   }
+
+  //   for (let k = 0; k < data[0].ageInfo.length; k++) {
+  //     this.incidentId.push(data[0].ageInfo[k].id);
+  //   }
+
+  //   for (let i = 0; i < data.length; i++) {
+  //     dataTable[i + 1] = [];
+  //     dataTable[i + 1].push(data[i].range);
+  //     for (let j = 0; j < data[i].ageInfo.length; j++) {
+  //       dataTable[i + 1].push(data[i].ageInfo[j].count);
+  //     }
+  //   }
+
+
+  //   var data1 = google.visualization.arrayToDataTable(dataTable);
+  //   var options = {
+  //     height: 200,
+
+
+  //     seriesType: 'bars',
+  //     legend: { position: 'none', },
+  //     colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
+  //     animation: {
+  //       "startup": true,
+  //       duration: 600,
+  //       easing: 'in-out'
+  //     }
+  //   };
+
+
+  //   var chart = new google.visualization.ComboChart(document.getElementById('Product_Incident_Age'));
+
+
+  //   google.visualization.events.addListener(chart, 'select', () => {
+  //     var selectedItem = chart.getSelection()[0];
+  //     console.log(selectedItem)
+
+
+  //     if (selectedItem) {
+  //       console.log(this.incidentId[selectedItem.column - 1]);
+
+
+  //       this.routeToIncidents(this.incidentId[selectedItem.column - 1], 'incident-age', dataTable[selectedItem.row + 1][0], '', '', '');
+  //     }
+  //   });
+
+
+  //   chart.draw(data1, options);
+  // }
+
+
+
+
+  get_time_Chart() {
+    this.incidentAge = [];
+    this.dashboardservice.getTimeChart(this.filter, this.valFalse)
+      .subscribe((res: any) => {
+console.log(res);
+
+        this.Time_Chart(res);
       }, (err) => {
         this.tostservice.showNotificationFailure(err)
       }
       );
 
   }
-  Product_Incident_Age_chart(data: any[]) {
-    this.incidentId = [];
+  Time_Chart(data: any[]) {
+    this.incidentAge = [];
     var dataTable: any = [[]];
 
     dataTable[0].push('range');
-    for (let i = 0; i < data[0].ageInfo.length; i++) {
-      dataTable[0].push(data[0].ageInfo[i].name);
+    for (let i = 0; i < data[0].productAgeInfo.length; i++) {
+      dataTable[0].push(data[0].productAgeInfo[i].name);
     }
 
-    for (let k = 0; k < data[0].ageInfo.length; k++) {
-      this.incidentId.push(data[0].ageInfo[k].id);
+    for (let k = 0; k < data[0].productAgeInfo.length; k++) {
+      this.incidentAge.push(data[0].productAgeInfo[k].id);
     }
 
     for (let i = 0; i < data.length; i++) {
       dataTable[i + 1] = [];
       dataTable[i + 1].push(data[i].range);
-      for (let j = 0; j < data[i].ageInfo.length; j++) {
-        dataTable[i + 1].push(data[i].ageInfo[j].count);
+      for (let j = 0; j < data[i].productAgeInfo.length; j++) {
+        dataTable[i + 1].push(data[i].productAgeInfo[j].count);
       }
     }
 
@@ -867,7 +940,7 @@ this.totalInWarranty=0;
 
 
       seriesType: 'bars',
-      legend: { position: 'top', },
+      legend: { position: 'none', },
       colors: ['#e91e63', '#01adc2', '#fd9710', '#4ba64f', '#9d36b3', '#FFFF00', '#AA00FF', '#9E9D24'],
       animation: {
         "startup": true,
@@ -877,7 +950,7 @@ this.totalInWarranty=0;
     };
 
 
-    var chart = new google.visualization.ComboChart(document.getElementById('Product_Incident_Age'));
+    var chart = new google.visualization.ComboChart(document.getElementById('Time_chart'));
 
 
     google.visualization.events.addListener(chart, 'select', () => {
@@ -886,16 +959,18 @@ this.totalInWarranty=0;
 
 
       if (selectedItem) {
-        console.log(this.incidentId[selectedItem.column - 1]);
+        console.log(this.incidentAge[selectedItem.column - 1]);
 
 
-        this.routeToIncidents(this.incidentId[selectedItem.column - 1], 'incident-age', dataTable[selectedItem.row + 1][0], '', '', '');
+        this.routeToIncidents(this.incidentAge[selectedItem.column - 1], 'time', dataTable[selectedItem.row + 1][0], '', '', '');
       }
     });
 
 
     chart.draw(data1, options);
   }
+
+
 
   // mean time to repair start here
   getMeanTime() {
@@ -990,7 +1065,7 @@ this.totalInWarranty=0;
 
 
   getCharts() {
-    this.get_Product_Incident_Age();
+    // this.get_Product_Incident_Age();
     this.getMeanTime();
     this.getDashboardDetails();
     this.get_Product_Status();
@@ -999,6 +1074,7 @@ this.totalInWarranty=0;
     this.get_MeanTime_Till_Date();
     this.getProductCategorys();
     this.get_product_rating_chart();
+    this.get_time_Chart();
   }
 
 
